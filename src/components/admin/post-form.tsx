@@ -45,10 +45,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { Textarea } from "@/components/ui/textarea";
 
 
 const formSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters long."),
+  excerpt: z.string().min(10, "Meta Description must be at least 10 characters.").max(160, "Meta Description should be under 160 characters for best SEO results."),
   content: z.string().min(100, "Content must be at least 100 characters long to allow for proper formatting."),
   imageUrl: z.string().url("Please enter a valid URL."),
   category: z.string({ required_error: "Please select a category."}).min(1, "Please select a category."),
@@ -73,6 +75,7 @@ export function PostForm({ allTags, allCategories }: PostFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
+      excerpt: "",
       content: "",
       imageUrl: "",
       category: "",
@@ -165,6 +168,23 @@ export function PostForm({ allTags, allCategories }: PostFormProps) {
                   <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input placeholder="Enter your post title" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="excerpt"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Meta Description / Excerpt</FormLabel>
+                  <FormControl>
+                    <Textarea 
+                      placeholder="A short, compelling summary for search results and social sharing (under 160 characters)." 
+                      {...field} 
+                      rows={3}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

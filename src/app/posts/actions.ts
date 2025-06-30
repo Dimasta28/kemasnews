@@ -5,6 +5,7 @@ import { addPost } from '@/lib/posts';
 
 interface PostData {
   title: string;
+  excerpt: string;
   content: string;
   imageUrl: string;
   category: string;

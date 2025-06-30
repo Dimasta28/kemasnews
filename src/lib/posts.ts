@@ -262,14 +262,7 @@ export const deleteTag = async (name: string): Promise<{success: boolean, messag
   return { success: true };
 }
 
-function generateExcerpt(content: string, length = 150) {
-  const textContent = content.replace(/<[^>]*>?/gm, ' ').replace(/\s\s+/g, ' ').trim();
-  if (textContent.length <= length) return textContent;
-  const trimmed = textContent.substring(0, length).trim();
-  return `${trimmed.substring(0, trimmed.lastIndexOf(' '))}...`;
-}
-
-export const addPost = async (data: { title: string, content: string, imageUrl: string, category: string, tags: string[] }): Promise<{success: boolean, message?: string, newSlug?: string}> => {
+export const addPost = async (data: { title: string; excerpt: string; content: string; imageUrl: string; category: string; tags: string[]; }): Promise<{success: boolean, message?: string, newSlug?: string}> => {
     const newSlug = data.title.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
     
     if (posts.some(p => p.slug === newSlug)) {
@@ -279,7 +272,7 @@ export const addPost = async (data: { title: string, content: string, imageUrl: 
     const newPost: Post = {
         slug: newSlug,
         title: data.title,
-        excerpt: generateExcerpt(data.content),
+        excerpt: data.excerpt,
         content: data.content,
         imageUrl: data.imageUrl,
         date: new Date().toISOString().split('T')[0],
