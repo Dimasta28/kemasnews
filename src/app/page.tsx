@@ -18,7 +18,7 @@ export default function LoginPage() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    router.push('/dashboard');
+    router.push('/admin/dashboard');
   };
 
   return (
