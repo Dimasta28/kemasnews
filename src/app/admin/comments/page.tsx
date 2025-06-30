@@ -1,8 +1,4 @@
-import { MoreHorizontal } from 'lucide-react';
-import Link from 'next/link';
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -10,13 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import {
   Table,
   TableBody,
@@ -30,18 +19,14 @@ import {
   AvatarFallback,
   AvatarImage,
 } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import Link from 'next/link';
+import { getAllComments, type Comment } from '@/services/commentService';
+import { CommentActions } from './comment-actions';
 
-const mockComments: { 
-  author: string;
-  authorEmail: string;
-  avatar: string;
-  comment: string;
-  post: string;
-  date: string;
-  status: 'Approved' | 'Pending' | 'Spam';
-}[] = [];
+export default async function CommentsPage() {
+  const comments: Comment[] = await getAllComments();
 
-export default function CommentsPage() {
   return (
     <Card>
       <CardHeader>
@@ -63,17 +48,17 @@ export default function CommentsPage() {
                 In Response To
               </TableHead>
               <TableHead className="hidden sm:table-cell">Status</TableHead>
-              <TableHead>
+              <TableHead className="text-right">
                 <span className="sr-only">Actions</span>
               </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {mockComments.map((comment, index) => (
-              <TableRow key={index}>
+            {comments.map((comment) => (
+              <TableRow key={comment.id}>
                 <TableCell className="hidden sm:table-cell">
                   <Avatar className="h-9 w-9">
-                    <AvatarImage src={comment.avatar} alt="Avatar" data-ai-hint="person avatar"/>
+                    <AvatarImage src={comment.avatar} alt="Avatar" data-ai-hint="person avatar" />
                     <AvatarFallback>{comment.author.charAt(0)}</AvatarFallback>
                   </Avatar>
                 </TableCell>
@@ -84,12 +69,15 @@ export default function CommentsPage() {
                   </div>
                 </TableCell>
                 <TableCell>
-                  <div className="text-sm font-medium">{comment.comment.substring(0, 60)}...</div>
+                  <div className="text-sm font-medium">
+                    {comment.comment.substring(0, 60)}
+                    {comment.comment.length > 60 && '...'}
+                  </div>
                   <div className="text-xs text-muted-foreground">{comment.date}</div>
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
-                  <Link href="#" className="hover:underline">
-                    {comment.post}
+                  <Link href={`/post/${comment.postId}`} className="hover:underline">
+                    {comment.postTitle}
                   </Link>
                 </TableCell>
                 <TableCell className="hidden sm:table-cell">
@@ -105,27 +93,18 @@ export default function CommentsPage() {
                     {comment.status}
                   </Badge>
                 </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button aria-haspopup="true" size="icon" variant="ghost">
-                        <MoreHorizontal className="h-4 w-4" />
-                        <span className="sr-only">Toggle menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem>Approve</DropdownMenuItem>
-                      <DropdownMenuItem>Reply</DropdownMenuItem>
-                      <DropdownMenuItem>Mark as Spam</DropdownMenuItem>
-                      <DropdownMenuItem className="text-red-500">Delete</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                <TableCell className="text-right">
+                  <CommentActions comment={comment} />
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
+        {comments.length === 0 && (
+          <div className="text-center text-muted-foreground p-8">
+            No comments found.
+          </div>
+        )}
       </CardContent>
     </Card>
   );
