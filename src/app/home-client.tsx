@@ -16,10 +16,21 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
-import { ChevronDownIcon } from 'lucide-react';
+import { ChevronDownIcon, Search } from 'lucide-react';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 
 // Helper for category styling
@@ -107,45 +118,45 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
         </section>
 
         <section
-          className={`sticky z-40 bg-[#EFECE9] dark:bg-[#050505] p-4 border-b border-[#DDD9CE] dark:border-[#AC9C8D] shadow-sm top-0`}
+          className={`sticky z-40 bg-background/95 p-4 border-b border-border shadow-sm top-0 backdrop-blur-sm`}
         >
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0">
-            <div className="flex space-x-4 overflow-x-auto pb-2 scrollbar-hide">
-              {['All', 'Trends', 'Design', 'Innovation'].map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveFilter(tab)}
-                  className={cn("px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors", {
-                    'bg-[#610C27] text-[#EFECE9] dark:bg-[#E3C1B4] dark:text-[#050505]': activeFilter === tab,
-                    'bg-[#DDD9CE] hover:bg-[#AC9C8D] dark:bg-[#AC9C8D] dark:hover:bg-[#E3C1B4]': activeFilter !== tab
-                  })}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-
-            <div className="flex items-center space-x-3 w-full md:w-auto">
-              <div className="relative inline-block text-left">
-                <button
-                  type="button"
-                  className="inline-flex justify-center w-full rounded-full border border-[#AC9C8D] dark:border-[#DDD9CE] shadow-sm px-4 py-2 bg-[#EFECE9] dark:bg-[#050505] text-sm font-medium hover:bg-[#DDD9CE] dark:hover:bg-[#AC9C8D]"
-                  id="menu-button"
-                  aria-expanded="true"
-                  aria-haspopup="true"
-                >
-                  Categories
-                  <ChevronDownIcon
-                    className="-mr-1 ml-2 h-5 w-5"
-                    aria-hidden="true"
-                  />
-                </button>
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <Tabs value={activeFilter} onValueChange={setActiveFilter} className="overflow-x-auto scrollbar-hide">
+              <TabsList>
+                {['All', 'Trends', 'Design', 'Innovation'].map((tab) => (
+                  <TabsTrigger key={tab} value={tab}>
+                    {tab}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
+        
+            <div className="flex items-center gap-2 w-full md:w-auto">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="flex-shrink-0">
+                    Categories
+                    <ChevronDownIcon className="ml-2 h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>Filter by Category</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>Technology</DropdownMenuItem>
+                  <DropdownMenuItem>Lifestyle</DropdownMenuItem>
+                  <DropdownMenuItem>Business</DropdownMenuItem>
+                  <DropdownMenuItem>Design</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+        
+              <div className="relative w-full md:w-auto">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="search"
+                  placeholder="Search articles..."
+                  className="pl-9 w-full md:w-auto"
+                />
               </div>
-              <input
-                type="text"
-                placeholder="Search here..."
-                className="flex-grow md:flex-none px-4 py-2 rounded-full border border-[#AC9C8D] dark:border-[#DDD9CE] bg-[#EFECE9] dark:bg-[#050505] focus:outline-none focus:ring-2 focus:ring-[#610C27] text-sm"
-              />
             </div>
           </div>
         </section>
