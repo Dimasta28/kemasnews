@@ -24,7 +24,6 @@
     --border: 31 13% 70%;
     --input: 31 13% 70%;
     --ring: 338 81% 21%;
-    --radius: 0.5rem;
   }
   .dark {
     --background: 0 0% 2%;
@@ -55,5 +54,25 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Custom prose styles */
+  .prose {
+    --tw-prose-body: hsl(var(--foreground));
+    --tw-prose-headings: hsl(var(--primary));
+    --tw-prose-lead: hsl(var(--foreground));
+    --tw-prose-links: hsl(var(--primary));
+    --tw-prose-bold: hsl(var(--foreground));
+    --tw-prose-counters: hsl(var(--muted-foreground));
+    --tw-prose-bullets: hsl(var(--border));
+    --tw-prose-hr: hsl(var(--border));
+    --tw-prose-quotes: hsl(var(--foreground));
+    --tw-prose-quote-borders: hsl(var(--primary));
+    --tw-prose-captions: hsl(var(--muted-foreground));
+    --tw-prose-code: hsl(var(--accent-foreground));
+    --tw-prose-pre-code: hsl(var(--accent-foreground));
+    --tw-prose-pre-bg: hsl(var(--accent) / 0.15);
+    --tw-prose-th-borders: hsl(var(--border));
+    --tw-prose-td-borders: hsl(var(--border));
   }
 }

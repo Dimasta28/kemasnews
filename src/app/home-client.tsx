@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from 'next-themes';
+import Link from 'next/link';
 import {
   Menu as MenuIcon,
   Search as SearchIcon,
@@ -13,7 +14,6 @@ import {
   Moon,
   ChevronDown as ChevronDownIcon,
   X as XIcon,
-  Share2 as Share2Icon,
 } from 'lucide-react';
 import {
   Popover,
@@ -421,6 +421,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
               }}
               whileTap={{ scale: 0.95 }}
               className="bg-[#610C27] hover:bg-opacity-90 text-[#EFECE9] font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300"
+              onClick={() => articlesSectionRef.current?.scrollIntoView({ behavior: 'smooth' })}
             >
               Read Articles
             </motion.button>
@@ -484,43 +485,40 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
                       article.category.toLowerCase() as keyof typeof categoryStyles
                     ] || categoryStyles.default;
                   return (
-                    <motion.div
-                      key={article.id}
-                      initial={{ opacity: 0, y: 50 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="bg-[#DDD9CE] dark:bg-[#AC9C8D] rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden"
-                    >
-                      <Image
-                        src={article.featuredImage}
-                        alt={article.title}
-                        width={600}
-                        height={400}
-                        className="w-full h-48 object-cover"
-                        data-ai-hint="cosmetics packaging"
-                      />
-                      <div className="p-5">
-                        <span
-                          className={`inline-block ${categoryStyle.className} text-xs font-semibold px-3 py-1 rounded-full mb-3`}
+                    <Link href={`/post/${article.id}`} key={article.id} className="block h-full">
+                        <motion.div
+                            initial={{ opacity: 0, y: 50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5 }}
+                            className="bg-[#DDD9CE] dark:bg-[#AC9C8D] rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden h-full flex flex-col"
                         >
-                          {categoryStyle.name}
-                        </span>
-                        <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-[#050505] dark:text-[#050505]">
-                          {article.title}
-                        </h3>
-                        <p className="text-gray-700 dark:text-gray-700 text-sm mb-4 line-clamp-3">
-                          {article.content.substring(0, 120)}...
-                        </p>
-                        <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-600">
-                          <span>
-                            {article.author} | {article.date}
-                          </span>
-                          <button className="p-2 rounded-full hover:bg-[#AC9C8D] dark:hover:bg-[#DDD9CE] transition-colors">
-                            <Share2Icon size={16} />
-                          </button>
-                        </div>
-                      </div>
-                    </motion.div>
+                            <div className="relative w-full h-48">
+                                <Image
+                                    src={article.featuredImage}
+                                    alt={article.title}
+                                    layout="fill"
+                                    objectFit="cover"
+                                    className="w-full h-full"
+                                    data-ai-hint="cosmetics packaging"
+                                />
+                            </div>
+                            <div className="p-5 flex-grow flex flex-col">
+                                <span
+                                className={`inline-block ${categoryStyle.className} text-xs font-semibold px-3 py-1 rounded-full mb-3 self-start`}
+                                >
+                                {categoryStyle.name}
+                                </span>
+                                <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-[#050505] dark:text-[#050505] flex-grow">
+                                {article.title}
+                                </h3>
+                                <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-600 mt-auto pt-4 border-t border-gray-400/30">
+                                <span>
+                                    {article.author} | {article.date}
+                                </span>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </Link>
                   );
                 })
               ) : (
@@ -636,9 +634,6 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
             </span>
           </div>
           <nav className="flex space-x-4 mb-4 md:mb-0">
-            <a href="#" className="hover:text-[#EFECE9] transition-colors">
-              Privacy Policy
-            </a>
             <a href="#" className="hover:text-[#EFECE9] transition-colors">
               Terms & Conditions
             </a>
