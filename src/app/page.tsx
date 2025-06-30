@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Menu, Search, Bell, Home, Rss, Tag, Mail, Share2, Sun, Moon, ChevronDown
+  Menu, Search, Bell, Home, Rss, Tag, Mail, Share2, Sun, Moon, ChevronDown, X
 } from 'lucide-react';
 
 // Define the type for a single article
@@ -116,6 +116,8 @@ export default function FrontendPage() {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const loadMoreRef = useRef(null); // Ref untuk IntersectionObserver
   const isLoadMoreVisible = useIntersectionObserver(loadMoreRef, { threshold: 0.5 }); // Deteksi elemen untuk infinite scroll
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
 
   // Efek untuk mendeteksi scroll dan mengubah tampilan header
   useEffect(() => {
@@ -200,37 +202,37 @@ export default function FrontendPage() {
           },
         }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[96%] max-w-6xl mx-auto rounded-full p-3 flex items-center justify-between transition-all duration-300 ease-out border border-gray-200 dark:border-gray-700 backdrop-blur-md"
+        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[96%] max-w-6xl mx-auto rounded-full p-2 px-4 flex items-center justify-between transition-all duration-300 ease-out border border-gray-200 dark:border-gray-700 backdrop-blur-md"
       >
         {/* Logo/Icon */}
         <Image
           src="https://placehold.co/120x40.png"
           alt="BlogKu Logo"
-          width={120}
-          height={40}
+          width={100}
+          height={33}
           data-ai-hint="logo company"
         />
 
-        {/* Menu Navigasi */}
-        <nav className="flex-grow flex justify-center">
-          <ul className="flex space-x-4 md:space-x-8 text-sm md:text-base">
+        {/* Menu Navigasi Desktop */}
+        <nav className="hidden md:flex flex-grow justify-center">
+          <ul className="flex space-x-8 text-base">
             <li>
-              <a href="#" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors flex items-center"><Home size={18} className="mr-1 md:hidden" /> Home</a>
+              <a href="#" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors flex items-center"><Home size={18} className="mr-2" /> Home</a>
             </li>
             <li>
-              <a href="#" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors flex items-center"><Rss size={18} className="mr-1 md:hidden" /> Blog</a>
+              <a href="#" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors flex items-center"><Rss size={18} className="mr-2" /> Blog</a>
             </li>
             <li>
-              <a href="#" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors flex items-center"><Tag size={18} className="mr-1 md:hidden" /> Kategori</a>
+              <a href="#" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors flex items-center"><Tag size={18} className="mr-2" /> Kategori</a>
             </li>
             <li>
-              <a href="#" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors flex items-center"><Mail size={18} className="mr-1 md:hidden" /> Kontak</a>
+              <a href="#" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors flex items-center"><Mail size={18} className="mr-2" /> Kontak</a>
             </li>
           </ul>
         </nav>
 
-        {/* Search Icon & Notifikasi/Profil */}
-        <div className="flex items-center space-x-3">
+        {/* Search Icon & Notifikasi & Tombol Menu Mobile */}
+        <div className="flex items-center space-x-2">
           <motion.div
             layout
             className="relative flex items-center"
@@ -267,8 +269,51 @@ export default function FrontendPage() {
           <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
             <Bell size={20} />
           </button>
+          
+          {/* Tombol Menu Mobile */}
+          <div className="md:hidden">
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            >
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
       </motion.header>
+
+      {/* Panel Menu Mobile */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, height: 0 }}
+            animate={{ opacity: 1, y: 0, height: 'auto' }}
+            exit={{ opacity: 0, y: -20, height: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="md:hidden fixed top-20 left-4 right-4 z-40"
+          >
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 p-4">
+              <nav>
+                <ul className="flex flex-col space-y-4">
+                  <li>
+                    <a href="#" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-blue-500 dark:hover:text-blue-400 transition-colors flex items-center"><Home size={18} className="mr-3" /> Home</a>
+                  </li>
+                  <li>
+                    <a href="#" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-blue-500 dark:hover:text-blue-400 transition-colors flex items-center"><Rss size={18} className="mr-3" /> Blog</a>
+                  </li>
+                  <li>
+                    <a href="#" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-blue-500 dark:hover:text-blue-400 transition-colors flex items-center"><Tag size={18} className="mr-3" /> Kategori</a>
+                  </li>
+                  <li>
+                    <a href="#" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-blue-500 dark:hover:text-blue-400 transition-colors flex items-center"><Mail size={18} className="mr-3" /> Kontak</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
 
       <main>
         {/* Hero Section */}
@@ -302,7 +347,7 @@ export default function FrontendPage() {
         </section>
 
         {/* Smart Filter Bar */}
-        <section className="sticky top-20 md:top-24 z-40 bg-white dark:bg-gray-800 p-4 border-b border-gray-200 dark:border-gray-700 shadow-sm">
+        <section className="sticky top-20 md:top-24 z-30 bg-white dark:bg-gray-800 p-4 border-b border-gray-200 dark:border-gray-700 shadow-sm">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0">
             {/* Tabs */}
             <div className="flex space-x-4 overflow-x-auto pb-2">
