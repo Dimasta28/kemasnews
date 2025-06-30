@@ -17,6 +17,14 @@ import {
   ChevronDown as ChevronDownIcon,
   X as XIcon,
 } from 'lucide-react';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
 
 // Define the Article type
 type Article = {
@@ -29,35 +37,7 @@ type Article = {
   date: string;
 };
 
-// Fungsi bantuan untuk meniru IntersectionObserver (untuk demo sederhana)
-const useIntersectionObserver = (
-  elementRef: React.RefObject<HTMLElement>,
-  options: IntersectionObserverInit
-) => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      setIsVisible(entry.isIntersecting);
-    }, options);
-
-    const currentElement = elementRef.current;
-    if (currentElement) {
-      observer.observe(currentElement);
-    }
-
-    return () => {
-      if (currentElement) {
-        observer.unobserve(currentElement);
-      }
-    };
-  }, [elementRef, options]);
-
-  return isVisible;
-};
-
-// Data Dummy untuk Artikel Blog
-const dummyArticles: Article[] = [
+const initialArticles: Article[] = [
   {
     id: 1,
     image: 'https://placehold.co/600x400.png',
@@ -120,6 +100,24 @@ const dummyArticles: Article[] = [
   },
 ];
 
+// Generate more dummy articles for pagination
+const moreArticles: Article[] = Array.from({ length: 34 }, (_, i) => {
+    const id = 7 + i;
+    const category = ['Teknologi', 'Gaya Hidup', 'Bisnis', 'Pendidikan', 'Desain', 'Inovasi', 'Tren'][i % 7];
+    const author = ['Tim Cosmaetic', 'Ayu Lestari', 'David Chandra', 'Rina Wijaya', 'Budi Santoso', 'Siti Aminah'][i % 6];
+    return {
+        id,
+        image: 'https://placehold.co/600x400.png',
+        category,
+        title: `Wawasan Baru: Topik Menarik #${id}`,
+        preview: `Ini adalah ringkasan artikel dummy ke-${id}. Jelajahi tren dan material terbaru dalam industri packaging kosmetik yang ramah lingkungan dan mewah...`,
+        author,
+        date: `${25 - (i % 25)} Juni 2025`,
+    };
+});
+
+const dummyArticles: Article[] = [...initialArticles, ...moreArticles];
+
 // Komponen Utama Aplikasi
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -128,31 +126,10 @@ export default function Home() {
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [articles, setArticles] = useState<Article[]>(dummyArticles);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const loadMoreRef = useRef(null);
-  const isLoadMoreVisible = useIntersectionObserver(loadMoreRef, {
-    threshold: 0.5,
-  });
-
-  const loadMoreArticles = React.useCallback(() => {
-    setIsLoadingMore(true);
-    setTimeout(() => {
-      const newArticles: Article[] = Array.from({ length: 3 }, (_, i) => ({
-        id: articles.length + i + 1,
-        image: `https://placehold.co/600x400.png`,
-        category: ['Desain', 'Inovasi', 'Tren'][(articles.length + i) % 3],
-        title: `Wawasan Baru: Topik Menarik #${articles.length + i + 1}`,
-        preview: `Ini adalah ringkasan artikel dummy ke-${
-          articles.length + i + 1
-        }. Baca selengkapnya untuk informasi lebih lanjut...`,
-        author: 'Tim Redaksi',
-        date: `Tanggal ${articles.length + i + 1} Juni 2025`,
-      }));
-      setArticles((prevArticles) => [...prevArticles, ...newArticles]);
-      setIsLoadingMore(false);
-    }, 1000);
-  }, [articles.length]);
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const articlesPerPage = 15;
+  const articlesSectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -184,12 +161,6 @@ export default function Home() {
     }
   }, [isDarkMode]);
 
-  useEffect(() => {
-    if (isLoadMoreVisible && !isLoadingMore) {
-      loadMoreArticles();
-    }
-  }, [isLoadMoreVisible, isLoadingMore, loadMoreArticles]);
-
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'Teknologi':
@@ -208,6 +179,19 @@ export default function Home() {
         return 'bg-[#AC9C8D] text-[#050505]';
       default:
         return 'bg-[#DDD9CE] text-[#050505]';
+    }
+  };
+
+  // Pagination logic
+  const totalPages = Math.ceil(dummyArticles.length / articlesPerPage);
+  const indexOfLastArticle = currentPage * articlesPerPage;
+  const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
+  const currentArticles = dummyArticles.slice(indexOfFirstArticle, indexOfLastArticle);
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+      articlesSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -450,13 +434,13 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="py-12 bg-[#EFECE9] dark:bg-[#050505]">
+        <section ref={articlesSectionRef} className="py-12 bg-[#EFECE9] dark:bg-[#050505]">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-center mb-10">
               Artikel Terbaru
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {articles.map((article) => (
+              {currentArticles.map((article) => (
                 <motion.div
                   key={article.id}
                   initial={{ opacity: 0, y: 50 }}
@@ -499,38 +483,47 @@ export default function Home() {
               ))}
             </div>
 
-            <div ref={loadMoreRef} className="flex justify-center mt-12">
-              {isLoadingMore ? (
-                <div className="flex items-center space-x-2 text-[#610C27] dark:text-[#E3C1B4]">
-                  <svg
-                    className="animate-spin h-5 w-5"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  <span>Lagi baca...</span>
-                </div>
-              ) : (
-                <button
-                  onClick={loadMoreArticles}
-                  className="bg-[#610C27] hover:bg-opacity-90 text-[#EFECE9] font-bold py-2 px-6 rounded-full shadow-lg transition-all duration-300"
-                >
-                  Muat Lebih Banyak
-                </button>
-              )}
+            <div className="flex justify-center mt-12">
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handlePageChange(currentPage - 1);
+                      }}
+                      className={currentPage === 1 ? 'pointer-events-none opacity-50' : undefined}
+                    />
+                  </PaginationItem>
+                  {Array.from({ length: totalPages }, (_, i) => (
+                    <PaginationItem key={i}>
+                      <PaginationLink
+                        href="#"
+                        isActive={currentPage === i + 1}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handlePageChange(i + 1);
+                        }}
+                      >
+                        {i + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
+                  <PaginationItem>
+                    <PaginationNext
+                       href="#"
+                       onClick={(e) => {
+                         e.preventDefault();
+                         handlePageChange(currentPage + 1);
+                       }}
+                       className={currentPage === totalPages ? 'pointer-events-none opacity-50' : undefined}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
             </div>
+
           </div>
         </section>
 
