@@ -1,4 +1,6 @@
 
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search } from 'lucide-react';
@@ -8,12 +10,9 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import type { Post } from '@/services/postService';
-import { getFrontendSettings } from '@/services/settingsService';
+import type { BannerSettings } from '@/services/settingsService';
 
-export async function Sidebar({ recentPosts }: { recentPosts: Post[] }) {
-  const settings = await getFrontendSettings();
-  const banner = settings.banner;
-
+export function Sidebar({ recentPosts, banner }: { recentPosts: Post[], banner: BannerSettings }) {
   return (
     <div className="sticky top-24 space-y-8">
       {/* Search Widget */}

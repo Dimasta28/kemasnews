@@ -1,3 +1,4 @@
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -24,41 +25,34 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
   const settingsDocRef = doc(db, 'settings', SETTINGS_DOC_ID);
   const docSnap = await getDoc(settingsDocRef);
 
+  const defaults = {
+    lightModeLogoUrl: 'https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png',
+    darkModeLogoUrl: 'https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png',
+    banner: {
+      imageUrl: 'https://placehold.co/600x400.png',
+      title: 'Our New Collection',
+      description: 'Discover the latest in sustainable packaging.',
+      buttonText: 'Learn More',
+      buttonLink: '#',
+    },
+  };
+
   if (docSnap.exists()) {
-    // Merge fetched data with defaults to prevent errors if some fields are missing
     const data = docSnap.data();
-    const defaults = {
-      lightModeLogoUrl: 'https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png',
-      darkModeLogoUrl: 'https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png',
-      banner: {
-        imageUrl: 'https://placehold.co/600x400.png',
-        title: 'Our New Collection',
-        description: 'Discover the latest in sustainable packaging.',
-        buttonText: 'Learn More',
-        buttonLink: '#',
-      },
+    // By explicitly picking properties, we avoid passing non-serializable
+    // data like Firestore Timestamps to client components.
+    const settings: FrontendSettings = {
+        lightModeLogoUrl: data.lightModeLogoUrl || defaults.lightModeLogoUrl,
+        darkModeLogoUrl: data.darkModeLogoUrl || defaults.darkModeLogoUrl,
+        banner: {
+            ...defaults.banner,
+            ...(data.banner || {}),
+        }
     };
-    return {
-      ...defaults,
-      ...data,
-      banner: {
-        ...defaults.banner,
-        ...(data.banner || {}),
-      },
-    } as FrontendSettings;
+    return settings;
   } else {
     // Return default settings if document doesn't exist
-    return {
-      lightModeLogoUrl: 'https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png',
-      darkModeLogoUrl: 'https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png',
-      banner: {
-        imageUrl: 'https://placehold.co/600x400.png',
-        title: 'Our New Collection',
-        description: 'Discover the latest in sustainable packaging.',
-        buttonText: 'Learn More',
-        buttonLink: '#',
-      },
-    };
+    return defaults;
   }
 }
 

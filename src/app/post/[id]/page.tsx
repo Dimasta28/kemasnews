@@ -12,15 +12,20 @@ import { CommentsSection } from './comments-section';
 import { BackToTopButton } from '@/components/back-to-top-button';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
+import { getFrontendSettings } from '@/services/settingsService';
 
 export default async function PostPage({ params }: { params: { id: string } }) {
-  const post = await getPost(params.id);
-  const allPosts = await getPosts();
-  const recentPosts = allPosts.filter(p => p.id !== params.id).slice(0, 5);
-
+  const [post, allPosts, settings] = await Promise.all([
+    getPost(params.id),
+    getPosts(),
+    getFrontendSettings(),
+  ]);
+  
   if (!post) {
     notFound();
   }
+  
+  const recentPosts = allPosts.filter(p => p.id !== params.id).slice(0, 5);
 
   return (
     <div className="bg-[#EFECE9] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9]">
@@ -95,7 +100,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
 
           {/* Sidebar */}
           <aside className="lg:col-span-1 mt-12 lg:mt-0">
-            <Sidebar recentPosts={recentPosts} />
+            <Sidebar recentPosts={recentPosts} banner={settings.banner} />
           </aside>
         </div>
       </main>
