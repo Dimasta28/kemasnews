@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -7,6 +6,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu, Search, Bell, Home, Rss, Tag, Mail, Share2, Sun, Moon, ChevronDown
 } from 'lucide-react';
+
+// Define the type for a single article
+type Article = {
+  id: number;
+  image: string;
+  category: string;
+  title: string;
+  preview: string;
+  author: string;
+  date: string;
+  imageHint: string;
+};
 
 // Fungsi bantuan untuk meniru IntersectionObserver (untuk demo sederhana)
 const useIntersectionObserver = (elementRef: React.RefObject<HTMLElement>, options: IntersectionObserverInit) => {
@@ -33,7 +44,7 @@ const useIntersectionObserver = (elementRef: React.RefObject<HTMLElement>, optio
 };
 
 // Data Dummy untuk Artikel Blog
-const dummyArticles = [
+const dummyArticles: Article[] = [
   {
     id: 1,
     image: "https://placehold.co/600x400.png",
@@ -101,7 +112,7 @@ export default function FrontendPage() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [articles, setArticles] = useState(dummyArticles);
+  const [articles, setArticles] = useState<Article[]>(dummyArticles);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const loadMoreRef = useRef(null); // Ref untuk IntersectionObserver
   const isLoadMoreVisible = useIntersectionObserver(loadMoreRef, { threshold: 0.5 }); // Deteksi elemen untuk infinite scroll
@@ -133,7 +144,7 @@ export default function FrontendPage() {
   const loadMoreArticles = () => {
     setIsLoadingMore(true);
     setTimeout(() => {
-      const newArticles = Array.from({ length: 3 }, (_, i) => ({
+      const newArticles: Article[] = Array.from({ length: 3 }, (_, i) => ({
         id: articles.length + i + 1,
         image: `https://placehold.co/600x400.png`,
         category: ["Sains", "Seni", "Sejarah"][(articles.length + i) % 3],
