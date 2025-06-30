@@ -31,46 +31,15 @@ import {
   AvatarImage,
 } from '@/components/ui/avatar';
 
-const mockComments = [
-  {
-    author: 'Jane Doe',
-    authorEmail: 'jane.doe@example.com',
-    avatar: 'https://placehold.co/100x100.png',
-    comment:
-      "This was incredibly helpful! I've been struggling with Next.js server components, and this guide made everything clear. Thank you!",
-    post: 'Getting Started with Next.js',
-    date: '2023-10-23',
-    status: 'Approved',
-  },
-  {
-    author: 'John Smith',
-    authorEmail: 'john.smith@example.com',
-    avatar: 'https://placehold.co/100x100.png',
-    comment:
-      "Great overview of Tailwind. I'd love to see a follow-up on advanced techniques.",
-    post: 'Tailwind CSS Best Practices',
-    date: '2023-10-24',
-    status: 'Pending',
-  },
-  {
-    author: 'Emily White',
-    authorEmail: 'emily.white@example.com',
-    avatar: 'https://placehold.co/100x100.png',
-    comment: 'React Hooks are a game-changer. This post is a must-read.',
-    post: 'Mastering React Hooks',
-    date: '2023-09-16',
-    status: 'Approved',
-  },
-  {
-    author: 'Michael Brown',
-    authorEmail: 'michael.brown@example.com',
-    avatar: 'https://placehold.co/100x100.png',
-    comment: 'This is spam.',
-    post: 'The Future of Web Development',
-    date: '2023-07-20',
-    status: 'Spam',
-  },
-];
+const mockComments: { 
+  author: string;
+  authorEmail: string;
+  avatar: string;
+  comment: string;
+  post: string;
+  date: string;
+  status: 'Approved' | 'Pending' | 'Spam';
+}[] = [];
 
 export default function CommentsPage() {
   return (

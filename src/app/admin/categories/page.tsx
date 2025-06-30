@@ -26,13 +26,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-const mockCategories = [
-  { name: 'Technology', slug: 'technology', postCount: 15 },
-  { name: 'Lifestyle', slug: 'lifestyle', postCount: 8 },
-  { name: 'Travel', slug: 'travel', postCount: 12 },
-  { name: 'Food', slug: 'food', postCount: 5 },
-  { name: 'Productivity', slug: 'productivity', postCount: 10 },
-];
+const mockCategories: { name: string; slug: string; postCount: number }[] = [];
 
 export default function CategoriesPage() {
   return (

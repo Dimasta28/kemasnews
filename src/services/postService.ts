@@ -2,43 +2,7 @@
 
 // In a real application, this would be your database.
 // For now, we'll use a mock data array.
-const mockPosts = [
-  {
-    id: '1',
-    title: 'Getting Started with Next.js',
-    status: 'Published',
-    date: '2023-10-23',
-    author: 'John Doe',
-  },
-  {
-    id: '2',
-    title: 'Tailwind CSS Best Practices',
-    status: 'Draft',
-    date: '2023-10-24',
-    author: 'Jane Smith',
-  },
-  {
-    id: '3',
-    title: 'Mastering React Hooks',
-    status: 'Published',
-    date: '2023-09-15',
-    author: 'John Doe',
-  },
-  {
-    id: '4',
-    title: 'A Guide to Server Components',
-    status: 'Published',
-    date: '2023-08-01',
-    author: 'Emily White',
-  },
-  {
-    id: '5',
-    title: 'The Future of Web Development',
-    status: 'Archived',
-    date: '2023-07-19',
-    author: 'Michael Brown',
-  },
-];
+const mockPosts: Post[] = [];
 
 export interface Post {
   id: string;

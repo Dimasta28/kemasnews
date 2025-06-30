@@ -25,13 +25,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-const mockTags = [
-  { name: 'Next.js', slug: 'next-js', postCount: 7 },
-  { name: 'React', slug: 'react', postCount: 12 },
-  { name: 'Tailwind CSS', slug: 'tailwind-css', postCount: 9 },
-  { name: 'Server Components', slug: 'server-components', postCount: 4 },
-  { name: 'UI/UX', slug: 'ui-ux', postCount: 6 },
-];
+const mockTags: { name: string; slug: string; postCount: number }[] = [];
 
 export default function TagsPage() {
   return (

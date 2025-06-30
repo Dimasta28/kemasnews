@@ -55,35 +55,9 @@ const rangeOptions: { value: DateRange; label: string }[] = [
   { value: '365days', label: '1 Year' },
 ];
 
-const mockPosts = [
-  {
-    title: 'Getting Started with Next.js',
-    description: 'A comprehensive guide for beginners.',
-    author: 'John Doe',
-    status: 'Published',
-    date: '2023-10-23',
-    views: '1,200',
-  },
-  {
-    title: 'Tailwind CSS Best Practices',
-    description: 'Tips and tricks for clean and scalable CSS.',
-    author: 'Jane Smith',
-    status: 'Draft',
-    date: '2023-10-24',
-    views: '530',
-  },
-  {
-    title: 'Mastering React Hooks',
-    description: 'Deep dive into useState, useEffect, and more.',
-    author: 'John Doe',
-    status: 'Published',
-    date: '2023-09-15',
-    views: '2,500',
-  },
-];
-
-const mockCommentsCount = 4;
-const mockPostsCount = 5;
+const mockPosts: any[] = [];
+const mockCommentsCount = 0;
+const mockPostsCount = 0;
 
 
 export function AnalyticsDashboard({
@@ -164,9 +138,6 @@ export function AnalyticsDashboard({
                 <FileText className="h-4 w-4" />
               </div>
               <div className="mt-1 text-2xl font-bold">{mockPostsCount}</div>
-              <p className="text-xs text-muted-foreground">
-                +2 since last month
-              </p>
             </div>
             <Separator />
             <div>
@@ -175,9 +146,6 @@ export function AnalyticsDashboard({
                 <MessageSquare className="h-4 w-4" />
               </div>
               <div className="mt-1 text-2xl font-bold">{mockCommentsCount}</div>
-              <p className="text-xs text-muted-foreground">
-                +4 since last month
-              </p>
             </div>
             <Separator />
             <div>

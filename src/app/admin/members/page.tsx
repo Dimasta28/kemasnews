@@ -31,32 +31,12 @@ import {
   AvatarImage,
 } from '@/components/ui/avatar';
 
-const mockMembers = [
-  {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    avatar: 'https://placehold.co/100x100.png',
-    status: 'Active',
-  },
-  {
-    name: 'Jane Smith',
-    email: 'jane.smith@example.com',
-    avatar: 'https://placehold.co/100x100.png',
-    status: 'Inactive',
-  },
-  {
-    name: 'Michael Johnson',
-    email: 'michael.j@example.com',
-    avatar: 'https://placehold.co/100x100.png',
-    status: 'Active',
-  },
-  {
-    name: 'Emily Davis',
-    email: 'emily.d@example.com',
-    avatar: 'https://placehold.co/100x100.png',
-    status: 'Active',
-  },
-];
+const mockMembers: {
+  name: string;
+  email: string;
+  avatar: string;
+  status: 'Active' | 'Inactive';
+}[] = [];
 
 export default function MembersPage() {
   return (
