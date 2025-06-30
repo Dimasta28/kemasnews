@@ -2,6 +2,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { ChevronLeft, Upload, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -26,23 +27,52 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { generatePost } from '@/ai/flows/generate-post-flow';
+import { createPost, Post } from '@/services/postService';
 
 export default function CreatePostPage() {
   const { toast } = useToast();
+  const router = useRouter();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('');
   const [tags, setTags] = useState('');
-  const [status, setStatus] = useState('draft');
+  const [status, setStatus] = useState<'Draft' | 'Published' | 'Archived'>('Draft');
   const [featuredImage, setFeaturedImage] = useState('https://placehold.co/300x300.png');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    toast({
-      title: 'Post Created!',
-      description: 'Your new post has been saved as a draft.',
-    });
+    if (isSaving) return;
+    setIsSaving(true);
+    
+    try {
+      const newPost: Omit<Post, 'id' | 'date' | 'author'> = {
+        title,
+        content,
+        status,
+        category,
+        tags: tags.split(',').map(tag => tag.trim()),
+        featuredImage,
+      };
+
+      await createPost(newPost);
+      
+      toast({
+        title: 'Post Created!',
+        description: 'Your new post has been successfully saved.',
+      });
+      router.push('/admin/posts');
+    } catch (error) {
+      console.error('Failed to create post:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Failed to Save Post',
+        description: 'An error occurred while saving your post. Please try again.',
+      });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleGeneratePost = async () => {
@@ -90,10 +120,12 @@ export default function CreatePostPage() {
             Create a New Post
           </h1>
           <div className="hidden items-center gap-2 md:ml-auto md:flex">
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" type="button" onClick={() => router.push('/admin/posts')}>
               Discard
             </Button>
-            <Button size="sm" type="submit">Save Post</Button>
+            <Button size="sm" type="submit" disabled={isSaving}>
+              {isSaving ? 'Saving...' : 'Save Post'}
+            </Button>
           </div>
         </div>
         <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
@@ -187,14 +219,14 @@ export default function CreatePostPage() {
                 <div className="grid gap-6">
                   <div className="grid gap-3">
                     <Label htmlFor="status">Status</Label>
-                    <Select value={status} onValueChange={setStatus}>
+                    <Select value={status} onValueChange={(value) => setStatus(value as 'Draft' | 'Published' | 'Archived')}>
                       <SelectTrigger id="status" aria-label="Select status">
                         <SelectValue placeholder="Select status" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="draft">Draft</SelectItem>
-                        <SelectItem value="published">Published</SelectItem>
-                        <SelectItem value="archived">Archived</SelectItem>
+                        <SelectItem value="Draft">Draft</SelectItem>
+                        <SelectItem value="Published">Published</SelectItem>
+                        <SelectItem value="Archived">Archived</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -230,10 +262,12 @@ export default function CreatePostPage() {
           </div>
         </div>
         <div className="flex items-center justify-center gap-2 md:hidden">
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" type="button" onClick={() => router.push('/admin/posts')}>
             Discard
           </Button>
-          <Button size="sm" type="submit">Save Post</Button>
+          <Button size="sm" type="submit" disabled={isSaving}>
+            {isSaving ? 'Saving...' : 'Save Post'}
+          </Button>
         </div>
       </div>
     </form>
