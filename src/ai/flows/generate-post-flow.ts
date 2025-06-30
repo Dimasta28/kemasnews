@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview A flow to generate a blog post with a title and a featured image.
@@ -8,12 +9,12 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
-export const GeneratePostInputSchema = z.object({
+const GeneratePostInputSchema = z.object({
   title: z.string().describe('The title of the blog post.'),
 });
 export type GeneratePostInput = z.infer<typeof GeneratePostInputSchema>;
 
-export const GeneratePostOutputSchema = z.object({
+const GeneratePostOutputSchema = z.object({
   content: z.string().describe('The generated blog post content in Markdown format.'),
   imageUrl: z.string().describe('A data URI for the generated featured image.'),
 });
