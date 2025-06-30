@@ -150,7 +150,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
           <Popover>
             <PopoverTrigger asChild>
               <button className="flex items-center gap-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition focus:outline-none">
-                PT. KEMAS <ChevronDownIcon size={16} />
+                PT. Kemas <ChevronDownIcon size={16} />
               </button>
             </PopoverTrigger>
             <PopoverContent className="w-[450px] bg-[#EFECE9]/95 dark:bg-[#050505]/95 backdrop-blur-md border-[#DDD9CE] dark:border-[#AC9C8D] p-6 rounded-2xl shadow-xl">
@@ -274,7 +274,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
                   <Accordion type="single" collapsible className="w-full">
                     <AccordionItem value="item-1" className="border-b-0">
                       <AccordionTrigger className="hover:no-underline text-xl py-0 justify-center [&>svg]:size-5">
-                        PT. KEMAS
+                        PT. Kemas
                       </AccordionTrigger>
                       <AccordionContent className="pt-4 overflow-hidden">
                         <ul className="space-y-4 text-lg text-gray-700 dark:text-gray-400">
