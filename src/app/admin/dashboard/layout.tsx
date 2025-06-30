@@ -47,7 +47,7 @@ export default function DashboardLayout({
               alt="Kemas Logo"
               width={150}
               height={37}
-              className="mx-auto hidden dark:block"
+              className="hidden dark:block"
               priority
             />
             <Image
@@ -55,7 +55,7 @@ export default function DashboardLayout({
               alt="Kemas Logo"
               width={150}
               height={37}
-              className="mx-auto block dark:hidden"
+              className="block dark:hidden"
               priority
             />
         </SidebarHeader>
