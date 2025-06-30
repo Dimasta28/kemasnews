@@ -16,7 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 
-const MOCK_LOGO_URL = 'https://placehold.co/120x40.png';
+const MOCK_LOGO_URL = 'https://ddujuwmrnfufdqnvgaqb.supabase.co/storage/v1/object/public/catalogimage2025tes/logo-baru-kemas-2023-01.png';
 
 export default function SettingsPage() {
   const [logoUrl, setLogoUrl] = useState(MOCK_LOGO_URL);
