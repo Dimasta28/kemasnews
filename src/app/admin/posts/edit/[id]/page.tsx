@@ -33,7 +33,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 export default function EditPostPage({ params }: { params: { id: string } }) {
   const { toast } = useToast();
   const router = useRouter();
-  const id = params.id;
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -46,6 +45,7 @@ export default function EditPostPage({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const id = params.id;
     if (!id) return;
     const fetchPost = async () => {
       setIsLoading(true);
@@ -78,10 +78,11 @@ export default function EditPostPage({ params }: { params: { id: string } }) {
       }
     };
     fetchPost();
-  }, [id, router, toast]);
+  }, [params.id, router, toast]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const id = params.id;
     if (isSaving || !id) return;
     setIsSaving(true);
     
