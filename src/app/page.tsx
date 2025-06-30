@@ -7,7 +7,6 @@ import {
   Menu as MenuIcon,
   Search as SearchIcon,
   Bell as BellIcon,
-  UserCircle as UserCircleIcon,
   Home as HomeIcon,
   Rss as RssIcon,
   Tag as TagIcon,
@@ -283,8 +282,11 @@ export default function Home() {
             <BellIcon size={20} />
           </button>
 
-          <button className="hidden md:block p-2 hover:bg-[#DDD9CE] dark:hover:bg-[#AC9C8D] rounded-full transition">
-            <UserCircleIcon size={20} />
+          <button
+            onClick={() => setIsDarkMode(!isDarkMode)}
+            className="hidden md:block p-2 hover:bg-[#DDD9CE] dark:hover:bg-[#AC9C8D] rounded-full transition"
+          >
+            {isDarkMode ? <Moon size={20} /> : <Sun size={20} />}
           </button>
 
           <button
