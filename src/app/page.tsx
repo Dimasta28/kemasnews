@@ -66,12 +66,12 @@ export default function LoginPage() {
            <Button type="submit" className="w-full">
             Login
           </Button>
+          <div className="mt-2 flex w-full items-center justify-between">
+            <span className="text-sm text-muted-foreground">Copyright @2025 PT. Kemas Indah Maju</span>
+            <ThemeToggle />
+          </div>
         </CardFooter>
       </Card>
-      <footer className="mt-8 flex w-full max-w-sm items-center justify-between text-sm text-muted-foreground">
-        <span>Copyright @2025 PT. Kemas Indah Maju</span>
-        <ThemeToggle />
-      </footer>
     </div>
   );
 }
