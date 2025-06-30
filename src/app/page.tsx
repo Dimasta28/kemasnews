@@ -192,12 +192,13 @@ export default function FrontendPage() {
         className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[96%] max-w-6xl mx-auto rounded-full p-3 flex items-center justify-between transition-all duration-300 ease-out border border-gray-200 dark:border-gray-700 backdrop-blur-md"
       >
         {/* Logo/Icon */}
-        <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
-            B
-          </div>
-          <span className="font-semibold text-lg hidden sm:block">BlogKu</span>
-        </div>
+        <Image
+          src="https://placehold.co/120x40.png"
+          alt="BlogKu Logo"
+          width={120}
+          height={40}
+          data-ai-hint="logo company"
+        />
 
         {/* Menu Navigasi */}
         <nav className="flex-grow flex justify-center">

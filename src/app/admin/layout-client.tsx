@@ -9,6 +9,7 @@ import {
   Home,
   MessageSquare,
   Search,
+  Settings,
   Tags,
 } from 'lucide-react';
 
@@ -22,6 +23,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
+  SidebarSeparator,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -61,7 +63,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
             priority
           />
         </SidebarHeader>
-        <SidebarContent>
+        <SidebarContent className="p-2">
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton
@@ -118,6 +120,18 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
+            <SidebarSeparator />
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname.startsWith('/admin/settings')}
+              >
+                <Link href="/admin/settings">
+                  <Settings />
+                  Settings
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
           </SidebarMenu>
         </SidebarContent>
         <SidebarFooter>
@@ -125,7 +139,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background/95 px-4 backdrop-blur-sm sm:px-6">
+        <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background/95 px-4 backdrop-blur-sm sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 sm:pt-4">
           <SidebarTrigger />
           <div className="flex-1" />
           <div className="relative">
@@ -165,7 +179,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
-        <main className="flex-1 overflow-y-auto p-4 sm:px-6 sm:py-6">{children}</main>
+        <main className="flex-1 overflow-y-auto p-4 sm:px-6 sm:py-4">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
