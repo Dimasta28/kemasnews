@@ -69,6 +69,10 @@ export function CommentsSection() {
                                 <Input id="email" type="email" placeholder="Your email" />
                             </div>
                         </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="company">Perusahaan Anda</Label>
+                            <Input id="company" placeholder="Nama perusahaan Anda" />
+                        </div>
                         <Button type="submit">Post Comment</Button>
                     </form>
                 </CardContent>
