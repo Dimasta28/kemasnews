@@ -209,10 +209,10 @@ export default function FrontendPage() {
           boxShadow: isScrolled ? '0 4px 12px rgba(0,0,0,0.1)' : '0px 0px 0px rgba(0,0,0,0)',
         }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[96%] max-w-6xl mx-auto rounded-full p-2 px-4 flex items-center transition-all duration-300 ease-out border border-gray-200 dark:border-gray-700 backdrop-blur-md"
+        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[96%] max-w-6xl mx-auto rounded-full p-2 px-4 flex items-center justify-between transition-all duration-300 ease-out border border-gray-200 dark:border-gray-700 backdrop-blur-md"
       >
         {/* Left: Logo */}
-        <div className="flex-1 flex justify-start">
+        <div className="flex-shrink-0">
             <Image
             src="https://placehold.co/120x40.png"
             alt="BlogKu Logo"
@@ -223,7 +223,7 @@ export default function FrontendPage() {
         </div>
 
         {/* Center: Menu Navigasi Desktop */}
-        <nav className="hidden md:flex">
+        <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2">
           <ul className="flex space-x-8 text-base">
             <li>
               <a href="#" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors flex items-center"><Home size={18} className="mr-2" /> Home</a>
@@ -241,7 +241,7 @@ export default function FrontendPage() {
         </nav>
 
         {/* Right: Actions */}
-        <div className="flex-1 flex justify-end">
+        <div className="flex-shrink-0">
             <div className="flex items-center space-x-2">
             <motion.div
                 layout
