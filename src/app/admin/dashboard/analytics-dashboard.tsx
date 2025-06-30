@@ -1,8 +1,9 @@
 'use client';
 
-import { FileText, MessageSquare, Eye, Users } from 'lucide-react';
+import { Eye, FileText, MessageSquare, Users } from 'lucide-react';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 
+import { Badge } from '@/components/ui/badge';
 import {
   Card,
   CardContent,
@@ -11,6 +12,13 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from '@/components/ui/chart';
+import { Separator } from '@/components/ui/separator';
+import {
   Table,
   TableBody,
   TableCell,
@@ -18,23 +26,16 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from '@/components/ui/chart';
 
 interface AnalyticsDashboardProps {
-    stats: {
-        totalViews: string;
-        totalUsers: string;
-    };
-    chartData: {
-        month: string;
-        views: number;
-    }[];
+  stats: {
+    totalViews: string;
+    totalUsers: string;
+  };
+  chartData: {
+    month: string;
+    views: number;
+  }[];
 }
 
 const chartConfig = {
@@ -44,86 +45,89 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function AnalyticsDashboard({ stats, chartData }: AnalyticsDashboardProps) {
+export function AnalyticsDashboard({
+  stats,
+  chartData,
+}: AnalyticsDashboardProps) {
   return (
     <div className="flex flex-col gap-4">
       <Card>
         <CardHeader>
-          <CardTitle>Post Statistics</CardTitle>
-          <CardDescription>Showing views for the last 6 months from Google Analytics</CardDescription>
+          <CardTitle>Dashboard Overview</CardTitle>
+          <CardDescription>
+            A summary of your blog&apos;s performance.
+          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-            <BarChart accessibilityLayer data={chartData}>
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="month"
-                tickLine={false}
-                tickMargin={10}
-                axisLine={false}
-                tickFormatter={(value) => value.slice(0, 3)}
-              />
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent indicator="line" />}
-              />
-              <Bar dataKey="views" fill="var(--color-views)" radius={4} />
-            </BarChart>
-          </ChartContainer>
+        <CardContent className="grid gap-8 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <ChartContainer
+              config={chartConfig}
+              className="min-h-[250px] w-full"
+            >
+              <BarChart accessibilityLayer data={chartData}>
+                <CartesianGrid vertical={false} />
+                <XAxis
+                  dataKey="month"
+                  tickLine={false}
+                  tickMargin={10}
+                  axisLine={false}
+                  tickFormatter={(value) => value.slice(0, 3)}
+                />
+                <ChartTooltip
+                  cursor={false}
+                  content={<ChartTooltipContent indicator="line" />}
+                />
+                <Bar dataKey="views" fill="var(--color-views)" radius={4} />
+              </BarChart>
+            </ChartContainer>
+          </div>
+          <div className="flex flex-col justify-around space-y-4 lg:col-span-1">
+            <div>
+              <div className="flex items-center justify-between text-sm font-medium text-muted-foreground">
+                <span>Total Posts</span>
+                <FileText className="h-4 w-4" />
+              </div>
+              <div className="mt-1 text-2xl font-bold">73</div>
+              <p className="text-xs text-muted-foreground">
+                +5 since last month
+              </p>
+            </div>
+            <Separator />
+            <div>
+              <div className="flex items-center justify-between text-sm font-medium text-muted-foreground">
+                <span>Total Comments</span>
+                <MessageSquare className="h-4 w-4" />
+              </div>
+              <div className="mt-1 text-2xl font-bold">128</div>
+              <p className="text-xs text-muted-foreground">
+                +12 since last month
+              </p>
+            </div>
+            <Separator />
+            <div>
+              <div className="flex items-center justify-between text-sm font-medium text-muted-foreground">
+                <span>Total Views (GA)</span>
+                <Eye className="h-4 w-4" />
+              </div>
+              <div className="mt-1 text-2xl font-bold">{stats.totalViews}</div>
+              <p className="text-xs text-muted-foreground">
+                in the last 28 days
+              </p>
+            </div>
+            <Separator />
+            <div>
+              <div className="flex items-center justify-between text-sm font-medium text-muted-foreground">
+                <span>Total Users (GA)</span>
+                <Users className="h-4 w-4" />
+              </div>
+              <div className="mt-1 text-2xl font-bold">{stats.totalUsers}</div>
+              <p className="text-xs text-muted-foreground">
+                in the last 28 days
+              </p>
+            </div>
+          </div>
         </CardContent>
       </Card>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Posts</CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">73</div>
-            <p className="text-xs text-muted-foreground">
-              +5 since last month
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Total Comments
-            </CardTitle>
-            <MessageSquare className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">128</div>
-            <p className="text-xs text-muted-foreground">
-              +12 since last month
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Views (GA)</CardTitle>
-            <Eye className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.totalViews}</div>
-            <p className="text-xs text-muted-foreground">
-              in the last 28 days
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Users (GA)</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.totalUsers}</div>
-            <p className="text-xs text-muted-foreground">
-              in the last 28 days
-            </p>
-          </CardContent>
-        </Card>
-      </div>
       <Card>
         <CardHeader>
           <CardTitle>Recent Posts</CardTitle>
