@@ -37,6 +37,12 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'idicdhrghiqmqtocapwq.supabase.co',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'kimcatalog.vercel.app',
         port: '',
         pathname: '/**',
