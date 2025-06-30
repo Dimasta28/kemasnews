@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -56,6 +57,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const { theme, setTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const [articles, setArticles] = useState<Post[]>(initialPosts);
   const [currentPage, setCurrentPage] = useState(1);
@@ -63,6 +65,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
   const articlesSectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
@@ -99,8 +102,6 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
       articlesSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
-  const isDarkMode = theme === 'dark';
 
   return (
     <div className="font-inter antialiased bg-[#EFECE9] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9] min-h-screen">
@@ -228,10 +229,10 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
           </button>
 
           <button
-            onClick={() => setTheme(isDarkMode ? 'light' : 'dark')}
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             className="hidden md:block p-2 hover:bg-[#DDD9CE] dark:hover:bg-[#AC9C8D] rounded-full transition"
           >
-            {isDarkMode ? <Moon size={20} /> : <Sun size={20} />}
+            {mounted && (theme === 'dark' ? <Moon size={20} /> : <Sun size={20} />)}
           </button>
 
           <button
@@ -385,10 +386,10 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
             </nav>
             <div className="mt-8">
               <button
-                onClick={() => setTheme(isDarkMode ? 'light' : 'dark')}
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                 className="p-3 rounded-full bg-[#DDD9CE] dark:bg-[#AC9C8D] hover:bg-[#AC9C8D] dark:hover:bg-[#E3C1B4] transition-colors"
               >
-                {isDarkMode ? <Moon size={24} /> : <Sun size={24} />}
+                {mounted && (theme === 'dark' ? <Moon size={24} /> : <Sun size={24} />)}
               </button>
             </div>
           </motion.div>
