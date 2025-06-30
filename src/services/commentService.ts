@@ -76,10 +76,11 @@ export async function submitComment(data: CommentFormState) {
 export async function getComments(postId: string): Promise<Comment[]> {
     try {
         const commentsRef = collection(db, "comments");
+        // This query was simplified to avoid the need for a composite index.
+        // We will filter for 'Approved' status after fetching.
         const q = query(
             commentsRef, 
             where("postId", "==", postId),
-            where("status", "==", "Approved"),
             orderBy("date", "desc")
         );
         const querySnapshot = await getDocs(q);
@@ -98,7 +99,7 @@ export async function getComments(postId: string): Promise<Comment[]> {
                 avatar: data.avatar,
                 date: `${formatDistanceToNow(date)} ago`,
             } as Comment;
-        });
+        }).filter(comment => comment.status === 'Approved');
 
         return comments;
     } catch (error) {
