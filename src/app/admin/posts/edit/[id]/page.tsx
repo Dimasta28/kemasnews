@@ -28,6 +28,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { generatePost } from '@/ai/flows/generate-post-flow';
 import { getPost, updatePost, Post } from '@/services/postService';
+import { getCategories, type Category } from '@/services/categoryService';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function EditPostPage() {
@@ -39,6 +40,7 @@ export default function EditPostPage() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('');
+  const [allCategories, setAllCategories] = useState<Category[]>([]);
   const [tags, setTags] = useState('');
   const [status, setStatus] = useState<'Draft' | 'Published' | 'Archived'>('Draft');
   const [featuredImage, setFeaturedImage] = useState('https://placehold.co/300x300.png');
@@ -48,6 +50,12 @@ export default function EditPostPage() {
 
   useEffect(() => {
     if (!id) return;
+    
+    const fetchCategories = async () => {
+      const categoriesData = await getCategories();
+      setAllCategories(categoriesData);
+    };
+
     const fetchPost = async () => {
       setIsLoading(true);
       try {
@@ -78,6 +86,8 @@ export default function EditPostPage() {
         setIsLoading(false);
       }
     };
+    
+    fetchCategories();
     fetchPost();
   }, [id, router, toast]);
 
@@ -262,9 +272,11 @@ export default function EditPostPage() {
                           <SelectValue placeholder="Select category" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="technology">Technology</SelectItem>
-                          <SelectItem value="lifestyle">Lifestyle</SelectItem>
-                          <SelectItem value="business">Business</SelectItem>
+                          {allCategories.map((cat) => (
+                            <SelectItem key={cat.id} value={cat.name}>
+                              {cat.name}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     </div>

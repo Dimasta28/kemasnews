@@ -3,11 +3,11 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useTheme } from 'next-themes';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 import type { Post } from '@/services/postService';
+import type { Category } from '@/services/categoryService';
 import {
   Pagination,
   PaginationContent,
@@ -19,7 +19,6 @@ import {
 import { ChevronDownIcon, Search } from 'lucide-react';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
-import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -47,13 +46,33 @@ const categoryStyles: { [key: string]: { name: string; className: string } } = {
 };
 
 // Main Application Component
-export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
+export default function HomeClient({ initialPosts, allCategories }: { initialPosts: Post[], allCategories: Category[] }) {
   const articlesSectionRef = useRef<HTMLElement>(null);
   
   const [articles, setArticles] = useState<Post[]>(initialPosts);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeFilter, setActiveFilter] = useState('All');
+  const [searchTerm, setSearchTerm] = useState('');
   const articlesPerPage = 15;
+
+  useEffect(() => {
+    let filtered = initialPosts;
+
+    // Filter by active category
+    if (activeFilter !== 'All') {
+      filtered = filtered.filter(post => post.category === activeFilter);
+    }
+
+    // Filter by search term
+    if (searchTerm) {
+      filtered = filtered.filter(post =>
+        post.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    
+    setArticles(filtered);
+    setCurrentPage(1); // Reset page on new filter
+  }, [activeFilter, searchTerm, initialPosts]);
 
   // Pagination logic
   const totalPages = Math.ceil(articles.length / articlesPerPage);
@@ -70,6 +89,11 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
       articlesSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const tabCategories = [...allCategories]
+    .sort((a, b) => b.postCount - a.postCount)
+    .slice(0, 3)
+    .map(c => c.name);
 
   return (
     <div className="font-inter antialiased bg-[#EFECE9] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9] min-h-screen">
@@ -123,9 +147,10 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
             <Tabs value={activeFilter} onValueChange={setActiveFilter} className="overflow-x-auto scrollbar-hide">
               <TabsList>
-                {['All', 'Trends', 'Design', 'Innovation'].map((tab) => (
-                  <TabsTrigger key={tab} value={tab}>
-                    {tab}
+                <TabsTrigger value="All">All</TabsTrigger>
+                {tabCategories.map((catName) => (
+                  <TabsTrigger key={catName} value={catName}>
+                    {catName}
                   </TabsTrigger>
                 ))}
               </TabsList>
@@ -142,10 +167,11 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
                 <DropdownMenuContent>
                   <DropdownMenuLabel>Filter by Category</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Technology</DropdownMenuItem>
-                  <DropdownMenuItem>Lifestyle</DropdownMenuItem>
-                  <DropdownMenuItem>Business</DropdownMenuItem>
-                  <DropdownMenuItem>Design</DropdownMenuItem>
+                  {allCategories.map((category) => (
+                    <DropdownMenuItem key={category.id} onSelect={() => setActiveFilter(category.name)}>
+                      {category.name}
+                    </DropdownMenuItem>
+                  ))}
                 </DropdownMenuContent>
               </DropdownMenu>
         
@@ -155,6 +181,8 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
                   type="search"
                   placeholder="Search articles..."
                   className="pl-9 w-full md:w-auto"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
             </div>
@@ -217,7 +245,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
               ) : (
                 <div className="col-span-full text-center py-10">
                   <p className="text-muted-foreground">
-                    No posts have been published yet.
+                    No posts found for the selected filter.
                   </p>
                 </div>
               )}

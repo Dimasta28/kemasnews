@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, Sparkles } from 'lucide-react';
 import Link from 'next/link';
@@ -28,6 +28,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { generatePost } from '@/ai/flows/generate-post-flow';
 import { createPost, Post } from '@/services/postService';
+import { getCategories, type Category } from '@/services/categoryService';
 
 export default function CreatePostPage() {
   const { toast } = useToast();
@@ -35,11 +36,20 @@ export default function CreatePostPage() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('');
+  const [allCategories, setAllCategories] = useState<Category[]>([]);
   const [tags, setTags] = useState('');
   const [status, setStatus] = useState<'Draft' | 'Published' | 'Archived'>('Draft');
   const [featuredImage, setFeaturedImage] = useState('https://placehold.co/300x300.png');
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const categoriesData = await getCategories();
+      setAllCategories(categoriesData);
+    };
+    fetchCategories();
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -190,9 +200,11 @@ export default function CreatePostPage() {
                           <SelectValue placeholder="Select category" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="technology">Technology</SelectItem>
-                          <SelectItem value="lifestyle">Lifestyle</SelectItem>
-                          <SelectItem value="business">Business</SelectItem>
+                          {allCategories.map((cat) => (
+                            <SelectItem key={cat.id} value={cat.name}>
+                              {cat.name}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     </div>
