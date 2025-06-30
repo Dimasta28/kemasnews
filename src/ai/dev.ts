@@ -3,3 +3,4 @@ config();
 
 // Import your Genkit flows here.
 import './flows/chat-flow';
+import './flows/generate-post-flow';

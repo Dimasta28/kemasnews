@@ -1,10 +1,8 @@
 
 'use client';
 
-import {
-  ChevronLeft,
-  Upload,
-} from 'lucide-react';
+import { useState } from 'react';
+import { ChevronLeft, Upload, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -27,19 +25,56 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { generatePost } from '@/ai/flows/generate-post-flow';
 
 export default function CreatePostPage() {
   const { toast } = useToast();
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [category, setCategory] = useState('');
+  const [tags, setTags] = useState('');
+  const [status, setStatus] = useState('draft');
+  const [featuredImage, setFeaturedImage] = useState('https://placehold.co/300x300.png');
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // In a real application, you would handle form submission here,
-    // likely using a Server Action to save the data to a database.
     toast({
       title: 'Post Created!',
       description: 'Your new post has been saved as a draft.',
     });
   };
+
+  const handleGeneratePost = async () => {
+    if (!title) {
+      toast({
+        variant: 'destructive',
+        title: 'Judul Diperlukan',
+        description: 'Silakan masukkan judul sebelum menghasilkan konten.',
+      });
+      return;
+    }
+    setIsGenerating(true);
+    try {
+      const result = await generatePost({ title });
+      setContent(result.content);
+      setFeaturedImage(result.imageUrl);
+      toast({
+        title: 'Konten Dihasilkan!',
+        description: 'Draf postingan Anda telah dibuat oleh AI.',
+      });
+    } catch (error) {
+      console.error('Failed to generate post:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Gagal Menghasilkan',
+        description: 'Terjadi kesalahan saat membuat konten. Silakan coba lagi.',
+      });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
 
   return (
     <form onSubmit={handleSubmit}>
@@ -79,15 +114,31 @@ export default function CreatePostPage() {
                       type="text"
                       className="w-full"
                       placeholder="Enter post title"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
                       required
                     />
                   </div>
                   <div className="grid gap-3">
-                    <Label htmlFor="content">Content</Label>
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="content">Content</Label>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={handleGeneratePost}
+                        disabled={isGenerating}
+                      >
+                        <Sparkles className="mr-2 h-4 w-4" />
+                        {isGenerating ? 'Generating...' : 'Generate with AI'}
+                      </Button>
+                    </div>
                     <Textarea
                       id="content"
-                      placeholder="Write your post content here..."
+                      placeholder="Write your post content here or generate it with AI..."
                       className="min-h-[300px]"
+                      value={content}
+                      onChange={(e) => setContent(e.target.value)}
                       required
                     />
                   </div>
@@ -102,7 +153,7 @@ export default function CreatePostPage() {
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div className="grid gap-3">
                       <Label htmlFor="category">Category</Label>
-                       <Select>
+                       <Select value={category} onValueChange={setCategory}>
                         <SelectTrigger id="category" aria-label="Select category">
                           <SelectValue placeholder="Select category" />
                         </SelectTrigger>
@@ -115,7 +166,13 @@ export default function CreatePostPage() {
                     </div>
                     <div className="grid gap-3">
                       <Label htmlFor="tags">Tags</Label>
-                      <Input id="tags" type="text" placeholder="Add tags, comma separated" />
+                      <Input
+                        id="tags"
+                        type="text"
+                        placeholder="Add tags, comma separated"
+                        value={tags}
+                        onChange={(e) => setTags(e.target.value)}
+                      />
                     </div>
                   </div>
                 </CardContent>
@@ -130,7 +187,7 @@ export default function CreatePostPage() {
                 <div className="grid gap-6">
                   <div className="grid gap-3">
                     <Label htmlFor="status">Status</Label>
-                    <Select defaultValue="draft">
+                    <Select value={status} onValueChange={setStatus}>
                       <SelectTrigger id="status" aria-label="Select status">
                         <SelectValue placeholder="Select status" />
                       </SelectTrigger>
@@ -154,10 +211,10 @@ export default function CreatePostPage() {
               <CardContent>
                  <div className="grid gap-2">
                   <Image
-                    alt="Placeholder"
+                    alt="Featured image preview"
                     className="aspect-square w-full rounded-md object-cover"
                     height="300"
-                    src="https://placehold.co/300x300.png"
+                    src={featuredImage}
                     width="300"
                     data-ai-hint="placeholder image"
                   />
