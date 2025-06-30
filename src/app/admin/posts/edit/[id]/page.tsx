@@ -285,7 +285,7 @@ export default function EditPostPage({ params }: { params: { id: string } }) {
             <Card>
               <CardHeader>
                 <CardTitle>Post Status</CardTitle>
-              </Header>
+              </CardHeader>
               <CardContent>
                 <div className="grid gap-6">
                   <div className="grid gap-3">
