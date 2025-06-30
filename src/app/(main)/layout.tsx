@@ -7,9 +7,6 @@ import {
   Search,
   Tag,
   User,
-  Github,
-  Linkedin,
-  Twitter,
 } from "lucide-react";
 
 import {
@@ -24,17 +21,17 @@ import {
   SidebarInset,
   SidebarTrigger,
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { getCategories, getTags } from "@/lib/posts";
+import { getCategories, getSocialLinks, getTags } from "@/lib/posts";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CategoryList } from "@/components/categories/category-list";
 import { TagList } from "@/components/tags/tag-list";
+import { SocialList } from "@/components/socials/social-list";
 
 export default async function MainLayout({
   children,
@@ -43,6 +40,7 @@ export default async function MainLayout({
 }) {
   const categories = await getCategories();
   const tags = await getTags();
+  const socialLinks = await getSocialLinks();
 
   return (
     <SidebarProvider>
@@ -81,33 +79,7 @@ export default async function MainLayout({
               
               <SidebarSeparator />
 
-              <SidebarGroup>
-                <SidebarGroupLabel>Social</SidebarGroupLabel>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-                      <Github />
-                      <span>GitHub</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
-                      <Linkedin />
-                      <span>LinkedIn</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                      <Twitter />
-                      <span>Twitter</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </SidebarGroup>
+              <SocialList socialLinks={socialLinks} />
 
               <SidebarSeparator />
 

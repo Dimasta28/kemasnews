@@ -14,6 +14,13 @@ export interface Post {
   category: string;
 }
 
+export interface SocialLink {
+  id: string;
+  name: string;
+  url: string;
+  icon: string;
+}
+
 const posts: Post[] = [
   {
     slug: "journey-into-canvas",
@@ -139,6 +146,11 @@ const posts: Post[] = [
 
 let categories: string[] = [...new Set(posts.map(post => post.category))].sort();
 let tags: string[] = [...new Set(posts.flatMap(post => post.tags))].sort();
+let socialLinks: SocialLink[] = [
+  { id: '1', name: 'GitHub', url: 'https://github.com', icon: 'Github' },
+  { id: '2', name: 'LinkedIn', url: 'https://www.linkedin.com', icon: 'Linkedin' },
+  { id: '3', name: 'Twitter', url: 'https://twitter.com', icon: 'Twitter' },
+];
 
 export const getPosts = async (): Promise<Post[]> => {
   // In a real app, you'd fetch this from a database or CMS
@@ -283,3 +295,38 @@ export const addPost = async (data: { title: string, content: string, imageUrl: 
     posts.unshift(newPost);
     return { success: true, newSlug };
 };
+
+export const getSocialLinks = async (): Promise<SocialLink[]> => {
+  return Promise.resolve(socialLinks);
+}
+
+export const addSocialLink = async (data: Omit<SocialLink, 'id'>): Promise<{success: boolean, message?: string}> => {
+  if (socialLinks.find(s => s.name.toLowerCase() === data.name.toLowerCase())) {
+    return { success: false, message: 'Social link with this name already exists.' };
+  }
+  const newLink: SocialLink = {
+    id: new Date().getTime().toString(), // simple unique id
+    ...data
+  };
+  socialLinks.push(newLink);
+  return { success: true };
+}
+
+export const updateSocialLink = async (id: string, data: Omit<SocialLink, 'id'>): Promise<{success: boolean, message?: string}> => {
+  const index = socialLinks.findIndex(s => s.id === id);
+  if (index === -1) {
+    return { success: false, message: 'Social link not found.' };
+  }
+  const existing = socialLinks.find(s => s.name.toLowerCase() === data.name.toLowerCase());
+  if (existing && existing.id !== id) {
+     return { success: false, message: 'Social link with this name already exists.' };
+  }
+
+  socialLinks[index] = { id, ...data };
+  return { success: true };
+}
+
+export const deleteSocialLink = async (id: string): Promise<{success: boolean, message?: string}> => {
+  socialLinks = socialLinks.filter(s => s.id !== id);
+  return { success: true };
+}
