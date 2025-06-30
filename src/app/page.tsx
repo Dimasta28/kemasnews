@@ -5,13 +5,12 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ThemeToggle } from '@/components/theme-toggle';
 
 export default function LoginPage() {
   return (
@@ -69,8 +68,9 @@ export default function LoginPage() {
           </Button>
         </CardFooter>
       </Card>
-      <footer className="mt-8 text-center text-sm text-muted-foreground">
-        Copyright @2025 PT. Kemas Indah Maju
+      <footer className="mt-8 flex w-full max-w-sm items-center justify-between text-sm text-muted-foreground">
+        <span>Copyright @2025 PT. Kemas Indah Maju</span>
+        <ThemeToggle />
       </footer>
     </div>
   );
