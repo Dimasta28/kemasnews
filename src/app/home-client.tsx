@@ -8,16 +8,17 @@ import {
   Menu as MenuIcon,
   Search as SearchIcon,
   Bell as BellIcon,
-  Home as HomeIcon,
-  Rss as RssIcon,
-  Tag as TagIcon,
-  Mail as MailIcon,
-  Share2 as Share2Icon,
   Sun,
   Moon,
   ChevronDown as ChevronDownIcon,
   X as XIcon,
+  Share2 as Share2Icon,
 } from 'lucide-react';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import {
   Pagination,
   PaginationContent,
@@ -26,12 +27,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import {
   Accordion,
   AccordionContent,
@@ -151,36 +146,28 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
           >
             HOME
           </a>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+          <Popover>
+            <PopoverTrigger asChild>
               <button className="flex items-center gap-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition focus:outline-none">
                 PT. KEMAS <ChevronDownIcon size={16} />
               </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-[#EFECE9] dark:bg-[#050505]">
-              <DropdownMenuItem asChild>
-                <a href="#">News</a>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <a href="#">Press Release</a>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <a href="#">Careers</a>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <a href="#">CSR (Corporate Social Responsibility)</a>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <a href="#">Kemas</a>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <a href="#">Love It</a>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <a href="#">Privacy Policy</a>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+            </PopoverTrigger>
+            <PopoverContent className="w-[450px] bg-[#EFECE9]/95 dark:bg-[#050505]/95 backdrop-blur-md border-[#DDD9CE] dark:border-[#AC9C8D] p-6 rounded-2xl shadow-xl">
+              <div className="grid grid-cols-2 gap-x-8 gap-y-2">
+                <div className="col-span-2 mb-2">
+                  <h3 className="font-bold text-lg text-[#610C27] dark:text-[#E3C1B4]">Tentang Perusahaan</h3>
+                  <p className="text-sm text-muted-foreground mt-1">Jelajahi lebih dalam tentang perusahaan kami.</p>
+                </div>
+                <a href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">News</a>
+                <a href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Press Release</a>
+                <a href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Careers</a>
+                <a href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">CSR</a>
+                <a href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Kemas</a>
+                <a href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Love It</a>
+                <a href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Privacy Policy</a>
+              </div>
+            </PopoverContent>
+          </Popover>
 
           <a
             href="#"
