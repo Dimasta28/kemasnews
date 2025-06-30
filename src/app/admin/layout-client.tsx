@@ -12,6 +12,7 @@ import {
   Settings,
   Tags,
   Users,
+  Megaphone,
 } from 'lucide-react';
 
 import {
@@ -129,6 +130,17 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 <Link href="/admin/members">
                   <Users />
                   Members
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname.startsWith('/admin/promo-banner')}
+              >
+                <Link href="/admin/promo-banner">
+                  <Megaphone />
+                  Promo Banner
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

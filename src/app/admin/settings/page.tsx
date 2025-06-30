@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -20,7 +19,6 @@ import {
   getFrontendSettings,
   updateFrontendSettings,
   type FrontendSettings,
-  type BannerSettings,
 } from '@/services/settingsService';
 
 export default function SettingsPage() {
@@ -48,18 +46,11 @@ export default function SettingsPage() {
     fetchSettings();
   }, [toast]);
 
-  const handleInputChange = (field: keyof FrontendSettings, value: string) => {
+  const handleInputChange = (
+    field: keyof FrontendSettings,
+    value: string
+  ) => {
     setSettings((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleBannerChange = (field: keyof BannerSettings, value: string) => {
-    setSettings((prev) => ({
-      ...prev,
-      banner: {
-        ...prev.banner!,
-        [field]: value,
-      },
-    }));
   };
 
   const handleSaveChanges = async () => {
@@ -94,17 +85,8 @@ export default function SettingsPage() {
             <Skeleton className="h-40 w-full" />
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader>
-            <Skeleton className="h-7 w-56" />
-            <Skeleton className="h-4 w-72" />
-          </CardHeader>
-          <CardContent>
-            <Skeleton className="h-64 w-full" />
-          </CardContent>
-        </Card>
         <div className="flex justify-start">
-            <Skeleton className="h-10 w-32" />
+          <Skeleton className="h-10 w-32" />
         </div>
       </div>
     );
@@ -198,101 +180,6 @@ export default function SettingsPage() {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Sidebar Banner Promo</CardTitle>
-          <CardDescription>
-            Manage the promotional banner that appears in the sidebar on post
-            pages.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="grid gap-6">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div className="space-y-4">
-              <div className="grid gap-2">
-                <Label htmlFor="banner-image-url">Image URL</Label>
-                <Input
-                  id="banner-image-url"
-                  value={settings.banner?.imageUrl || ''}
-                  onChange={(e) => handleBannerChange('imageUrl', e.target.value)}
-                  placeholder="https://placehold.co/600x400.png"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="banner-title">Title</Label>
-                <Input
-                  id="banner-title"
-                  value={settings.banner?.title || ''}
-                  onChange={(e) => handleBannerChange('title', e.target.value)}
-                  placeholder="Our New Collection"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="banner-description">Description</Label>
-                <Input
-                  id="banner-description"
-                  value={settings.banner?.description || ''}
-                  onChange={(e) => handleBannerChange('description', e.target.value)}
-                  placeholder="Discover the latest..."
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="banner-button-text">Button Text</Label>
-                <Input
-                  id="banner-button-text"
-                  value={settings.banner?.buttonText || ''}
-                  onChange={(e) => handleBannerChange('buttonText', e.target.value)}
-                  placeholder="Learn More"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="banner-button-link">Button Link</Label>
-                <Input
-                  id="banner-button-link"
-                  value={settings.banner?.buttonLink || ''}
-                  onChange={(e) => handleBannerChange('buttonLink', e.target.value)}
-                  placeholder="/products/new-collection"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label>Banner Preview</Label>
-              <Card className="overflow-hidden">
-                <CardContent className="p-0">
-                  <div className="relative aspect-video w-full">
-                    <Image
-                      src={
-                        settings.banner?.imageUrl ||
-                        'https://placehold.co/600x400.png'
-                      }
-                      alt="Promo banner preview"
-                      fill
-                      className="object-cover"
-                      data-ai-hint="advertisement banner"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold">
-                      {settings.banner?.title || 'Our New Collection'}
-                    </h3>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {settings.banner?.description ||
-                        'Discover the latest in sustainable packaging.'}
-                    </p>
-                    <Button size="sm" className="mt-3 w-full" asChild>
-                      <Link href={settings.banner?.buttonLink || '#'}>
-                        {settings.banner?.buttonText || 'Learn More'}
-                      </Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-      
       <div className="flex justify-start">
         <Button onClick={handleSaveChanges} disabled={isSaving}>
           {isSaving ? 'Saving...' : 'Save All Changes'}
