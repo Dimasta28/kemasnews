@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Menu, Search, Bell, UserCircle, Home, Rss, Tag, Mail, Share2, Sun, Moon, ChevronDown
+  Menu, Search, Bell, Home, Rss, Tag, Mail, Share2, Sun, Moon, ChevronDown
 } from 'lucide-react';
 
 // Fungsi bantuan untuk meniru IntersectionObserver (untuk demo sederhana)
@@ -254,9 +254,6 @@ export default function FrontendPage() {
           </motion.div>
           <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
             <Bell size={20} />
-          </button>
-          <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors hidden md:block">
-            <UserCircle size={20} />
           </button>
         </div>
       </motion.header>
