@@ -1,3 +1,4 @@
+
 import { MoreHorizontal, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 
@@ -40,7 +41,7 @@ export default async function PostsPage() {
           </CardDescription>
         </div>
         <Button asChild size="sm" className="gap-1">
-          <Link href="#">
+          <Link href="/admin/posts/create">
             <PlusCircle className="h-4 w-4" />
             Create Post
           </Link>
