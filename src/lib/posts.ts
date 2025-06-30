@@ -8,6 +8,7 @@ export interface Post {
   author: {
     name: string;
     imageUrl: string;
+    bio: string;
   };
   tags: string[];
   category: string;
@@ -19,11 +20,12 @@ const posts: Post[] = [
     title: "A Journey into the World of HTML5 Canvas",
     excerpt: "Exploring the powerful capabilities of the HTML5 canvas element for creating dynamic graphics and animations on the web.",
     content: `<h2>Mastering the Canvas</h2><p>The HTML5 canvas is a versatile tool for web developers. It allows for rendering graphics, animations, and interactive visualizations directly in the browser.</p><p>In this post, we'll dive deep into its core concepts, from drawing basic shapes to complex animations and data visualizations. We'll cover:</p><ul><li>The 2D rendering context</li><li>Path manipulation</li><li>Transformations and image handling</li></ul><p>Join us as we unlock the <strong>creative potential</strong> of the canvas.</p>`,
-    imageUrl: "https://placehold.co/600x400.png",
+    imageUrl: "https://placehold.co/1200x600.png",
     date: "2024-05-15",
     author: {
       name: "Alex Johnson",
       imageUrl: "https://placehold.co/100x100.png",
+      bio: "Alex is a front-end developer with a passion for creative coding and interactive web experiences. He loves exploring new technologies that push the boundaries of the browser."
     },
     tags: ["HTML5", "Canvas", "Web Development", "JavaScript"],
     category: "Web Development",
@@ -33,11 +35,12 @@ const posts: Post[] = [
     title: "Principles of Modern UI Design",
     excerpt: "A look at the key principles that guide the creation of beautiful, intuitive, and effective user interfaces.",
     content: `<h2>The Core of UI Design</h2><p>Modern UI design is more than just aesthetics; it's about creating seamless and intuitive user experiences. This article explores fundamental principles like <strong>clarity</strong>, <strong>consistency</strong>, <strong>feedback</strong>, and <strong>flexibility</strong>.</p><p>We'll analyze real-world examples from popular applications, highlighting how these principles are applied to create user-centric designs. Whether you're a seasoned designer or just starting, these guidelines will help you elevate your UI work.</p>`,
-    imageUrl: "https://placehold.co/600x400.png",
+    imageUrl: "https://placehold.co/1200x600.png",
     date: "2024-05-10",
     author: {
       name: "Samantha Lee",
       imageUrl: "https://placehold.co/100x100.png",
+      bio: "Samantha is a UI/UX designer who believes that great design is about solving problems and creating joy. She specializes in mobile apps and design systems."
     },
     tags: ["UI Design", "UX", "Design Principles", "Modern"],
     category: "Design",
@@ -47,25 +50,27 @@ const posts: Post[] = [
     title: "Getting Started with React Hooks",
     excerpt: "A beginner-friendly introduction to React Hooks and how they simplify state management and side effects in functional components.",
     content: `<p>React Hooks revolutionized how we write components. They allow us to use state and other React features without writing a class. This guide will walk you through the most common hooks like <code>useState</code>, <code>useEffect</code>, and <code>useContext</code>.</p><h3>Key Hooks to Learn:</h3><ul><li><code>useState</code> for managing local state.</li><li><code>useEffect</code> for handling side effects.</li><li><code>useContext</code> for accessing context.</li></ul><p>We'll build practical examples to demonstrate how hooks can make your code more readable, reusable, and concise. Say goodbye to class components and embrace the power of hooks!</p>`,
-    imageUrl: "https://placehold.co/600x400.png",
+    imageUrl: "https://placehold.co/1200x600.png",
     date: "2024-05-05",
     author: {
       name: "Chris Williams",
       imageUrl: "https://placehold.co/100x100.png",
+      bio: "Chris is a full-stack engineer who loves building scalable and maintainable applications. He's an advocate for open-source and enjoys mentoring junior developers."
     },
     tags: ["React", "JavaScript", "Frontend", "Web Development"],
     category: "Web Development",
   },
-    {
+  {
     slug: "ai-in-creative-coding",
     title: "The Role of AI in Creative Coding",
     excerpt: "How artificial intelligence is transforming the landscape of art, design, and creative expression through code.",
     content: `<h2>Art Meets Algorithm</h2><p>Artificial intelligence is no longer just for data scientists. It's becoming an incredibly powerful tool for artists and creative coders. From generative art created with GANs to interactive installations that respond to human emotion, AI is pushing the boundaries of what's possible.</p><p>This post explores various <strong>AI techniques and platforms</strong> that creatives can use to bring their visions to life, showcasing stunning examples of AI-driven art.</p>`,
-    imageUrl: "https://placehold.co/600x400.png",
+    imageUrl: "https://placehold.co/1200x600.png",
     date: "2024-04-28",
     author: {
       name: "Alex Johnson",
       imageUrl: "https://placehold.co/100x100.png",
+      bio: "Alex is a front-end developer with a passion for creative coding and interactive web experiences. He loves exploring new technologies that push the boundaries of the browser."
     },
     tags: ["AI", "Creative Coding", "Art", "Technology"],
     category: "Technology",
@@ -75,11 +80,12 @@ const posts: Post[] = [
     title: "The Art of Minimalism in Web Design",
     excerpt: "Discover how 'less is more' can lead to more engaging and user-friendly websites. A deep dive into minimalist design.",
     content: `<h2>Less is More</h2><p>Minimalism in web design focuses on simplicity and functionality. By stripping away unnecessary elements, we can create a cleaner, more focused user experience. This article covers the core tenets of minimalist design, including:</p><ul><li>Whitespace</li><li>Typography</li><li>Color palettes</li><li>Grid layouts</li></ul><p>We'll look at how this approach can improve loading times, enhance readability, and guide users towards their goals effectively.</p>`,
-    imageUrl: "https://placehold.co/600x400.png",
+    imageUrl: "https://placehold.co/1200x600.png",
     date: "2024-04-22",
     author: {
       name: "Samantha Lee",
       imageUrl: "https://placehold.co/100x100.png",
+      bio: "Samantha is a UI/UX designer who believes that great design is about solving problems and creating joy. She specializes in mobile apps and design systems."
     },
     tags: ["Web Design", "Minimalism", "UI", "UX"],
     category: "Design",
@@ -89,15 +95,46 @@ const posts: Post[] = [
     title: "Why Next.js is a Game-Changer for Modern Web Apps",
     excerpt: "An overview of Next.js features like Server-Side Rendering, Static Site Generation, and API routes that make it a top choice.",
     content: `<h2>The Next Big Thing in React</h2><p>Next.js has become the go-to framework for building production-ready React applications. Its hybrid approach to rendering, combining <strong>Server-Side Rendering (SSR)</strong> and <strong>Static Site Generation (SSG)</strong>, offers unparalleled performance and SEO benefits.</p><p>This post breaks down the key features of Next.js, including its file-system based router, image optimization, and built-in API routes. Find out why developers are flocking to Next.js for their projects.</p>`,
-    imageUrl: "https://placehold.co/600x400.png",
+    imageUrl: "https://placehold.co/1200x600.png",
     date: "2024-04-15",
     author: {
       name: "Chris Williams",
       imageUrl: "https://placehold.co/100x100.png",
+      bio: "Chris is a full-stack engineer who loves building scalable and maintainable applications. He's an advocate for open-source and enjoys mentoring junior developers."
     },
     tags: ["Next.js", "React", "Web Development", "Framework"],
     category: "Web Development",
-  }
+  },
+  {
+    slug: "ethical-design-in-tech",
+    title: "Navigating Ethical Dilemmas in Design",
+    excerpt: "A critical look at the responsibility of designers to create products that are not only user-friendly but also ethical and socially responsible.",
+    content: `<h2>Designing with a Conscience</h2><p>In an age of data privacy concerns and digital addiction, ethical design has never been more important. This article delves into the principles of ethical design, such as fairness, accountability, and transparency. We'll discuss dark patterns to avoid and how to advocate for users' well-being in the product development lifecycle.</p>`,
+    imageUrl: "https://placehold.co/1200x600.png",
+    date: "2024-03-20",
+    author: {
+      name: "Samantha Lee",
+      imageUrl: "https://placehold.co/100x100.png",
+      bio: "Samantha is a UI/UX designer who believes that great design is about solving problems and creating joy. She specializes in mobile apps and design systems."
+    },
+    tags: ["Design", "Ethics", "UX", "Technology"],
+    category: "Design",
+  },
+  {
+    slug: "demystifying-web-apis",
+    title: "Demystifying Web APIs: A Beginner's Guide",
+    excerpt: "Understand what APIs are, how they work, and why they are fundamental to the modern web. This guide breaks down REST, GraphQL, and more.",
+    content: `<h2>The Connective Tissue of the Web</h2><p>APIs (Application Programming Interfaces) are the backbone of modern web applications, enabling different services to communicate with each other. This guide provides a gentle introduction to the world of APIs. We'll cover the basic concepts behind RESTful APIs, explore the rise of GraphQL, and walk through practical examples of how to consume an API in your own projects.</p>`,
+    imageUrl: "https://placehold.co/1200x600.png",
+    date: "2024-03-12",
+    author: {
+      name: "Chris Williams",
+      imageUrl: "https://placehold.co/100x100.png",
+      bio: "Chris is a full-stack engineer who loves building scalable and maintainable applications. He's an advocate for open-source and enjoys mentoring junior developers."
+    },
+    tags: ["API", "Web Development", "JavaScript", "Backend"],
+    category: "Web Development",
+  },
 ];
 
 let categories: string[] = [...new Set(posts.map(post => post.category))].sort();
@@ -112,6 +149,15 @@ export const getPostBySlug = async (slug: string): Promise<Post | undefined> => 
   return new Promise(resolve => {
     const post = posts.find((post) => post.slug === slug);
     setTimeout(() => resolve(post), 300);
+  });
+};
+
+export const getRelatedPosts = async ({ currentSlug, category }: { currentSlug: string; category: string }): Promise<Post[]> => {
+  return new Promise(resolve => {
+    const related = posts
+      .filter(post => post.category === category && post.slug !== currentSlug)
+      .slice(0, 3);
+    setTimeout(() => resolve(related), 300);
   });
 };
 
