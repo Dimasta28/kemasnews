@@ -1,4 +1,3 @@
-
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search } from 'lucide-react';
@@ -8,8 +7,12 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import type { Post } from '@/services/postService';
+import { getFrontendSettings } from '@/services/settingsService';
 
-export function Sidebar({ recentPosts }: { recentPosts: Post[] }) {
+export async function Sidebar({ recentPosts }: { recentPosts: Post[] }) {
+  const settings = await getFrontendSettings();
+  const banner = settings.banner;
+
   return (
     <div className="sticky top-24 space-y-8">
       {/* Search Widget */}
@@ -61,19 +64,23 @@ export function Sidebar({ recentPosts }: { recentPosts: Post[] }) {
       {/* Campaign/Banner Widget */}
       <Card className="overflow-hidden">
         <CardContent className="p-0">
-          <div className="relative aspect-video w-full">
-             <Image
-                src="https://placehold.co/600x400.png"
-                alt="Promo banner"
-                fill
-                className="object-cover"
-                data-ai-hint="advertisement banner"
-            />
-          </div>
+          <Link href={banner.buttonLink || '#'} className="block">
+            <div className="relative aspect-video w-full">
+               <Image
+                  src={banner.imageUrl}
+                  alt={banner.title}
+                  fill
+                  className="object-cover"
+                  data-ai-hint="advertisement banner"
+              />
+            </div>
+          </Link>
            <div className="p-4">
-            <h3 className="font-semibold">Our New Collection</h3>
-            <p className="text-sm text-muted-foreground mt-1">Discover the latest in sustainable packaging.</p>
-            <Button size="sm" className="mt-3 w-full">Learn More</Button>
+            <h3 className="font-semibold">{banner.title}</h3>
+            <p className="text-sm text-muted-foreground mt-1">{banner.description}</p>
+            <Button size="sm" className="mt-3 w-full" asChild>
+                <Link href={banner.buttonLink || '#'}>{banner.buttonText}</Link>
+            </Button>
           </div>
         </CardContent>
       </Card>
