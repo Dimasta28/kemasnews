@@ -1,13 +1,10 @@
 'use client';
 
-import Link from "next/link";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -55,14 +52,6 @@ export default function LoginPage() {
             Login
           </Button>
         </CardContent>
-        <CardFooter className="flex justify-center">
-          <div className="text-sm">
-            Don&apos;t have an account?{" "}
-            <Link href="/signup" className="underline">
-              Sign up
-            </Link>
-          </div>
-        </CardFooter>
       </Card>
     </main>
   );
