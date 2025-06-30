@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 import { AdminLayoutClient } from '../layout-client';
 
 export const metadata: Metadata = {
-  title: 'Dashboard',
-  description: 'Admin Dashboard',
+  title: 'Posts',
+  description: 'Manage your blog posts.',
 };
 
-export default function DashboardLayout({
+export default function PostsLayout({
   children,
 }: {
   children: React.ReactNode;
