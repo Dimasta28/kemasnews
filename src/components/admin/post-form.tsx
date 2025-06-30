@@ -13,17 +13,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getTagSuggestions } from "@/app/actions";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Wand2, X } from "lucide-react";
+import { RichTextEditor } from "@/components/editor/rich-text-editor";
 
 const formSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters long."),
-  content: z.string().min(50, "Content must be at least 50 characters long."),
+  content: z.string().min(100, "Content must be at least 100 characters long to allow for proper formatting."),
   imageUrl: z.string().url("Please enter a valid URL."),
   tags: z.array(z.string()).min(1, "Please add at least one tag."),
 });
@@ -52,7 +52,9 @@ export function PostForm() {
 
   const handleSuggestTags = async () => {
     const content = form.getValues("content");
-    if (content.length < 50) {
+    // A simple regex to strip HTML tags for a more accurate word count
+    const textContent = content.replace(/<[^>]*>?/gm, '');
+    if (textContent.length < 50) {
       toast({
         variant: "destructive",
         title: "Content too short",
@@ -135,10 +137,9 @@ export function PostForm() {
                 <FormItem>
                   <FormLabel>Content</FormLabel>
                   <FormControl>
-                    <Textarea
-                      placeholder="Write your amazing blog post here..."
-                      className="min-h-[250px]"
-                      {...field}
+                    <RichTextEditor
+                      value={field.value}
+                      onChange={field.onChange}
                     />
                   </FormControl>
                   <FormMessage />

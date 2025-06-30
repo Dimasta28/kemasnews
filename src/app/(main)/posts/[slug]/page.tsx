@@ -51,10 +51,10 @@ export default async function PostPage({ params }: { params: { slug: string } })
         />
       </div>
 
-      <div className="prose prose-lg dark:prose-invert max-w-none">
-        <p className="lead">{post.excerpt}</p>
-        <p>{post.content}</p>
-      </div>
+      <div 
+        className="prose prose-lg dark:prose-invert max-w-none"
+        dangerouslySetInnerHTML={{ __html: post.content }}
+      />
       
       <footer className="mt-12 pt-8 border-t">
         <h3 className="text-lg font-semibold mb-4">Tags</h3>
