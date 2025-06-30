@@ -2,6 +2,8 @@
 
 import { Eye, FileText, MessageSquare, Users } from 'lucide-react';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
+import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 import { Badge } from '@/components/ui/badge';
 import {
@@ -26,16 +28,17 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import type { DateRange, ChartData } from '@/lib/analytics';
+import { cn } from '@/lib/utils';
 
 interface AnalyticsDashboardProps {
   stats: {
     totalViews: string;
     totalUsers: string;
   };
-  chartData: {
-    month: string;
-    views: number;
-  }[];
+  chartData: ChartData;
+  range: DateRange;
 }
 
 const chartConfig = {
@@ -45,19 +48,62 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
+const rangeOptions: { value: DateRange; label: string }[] = [
+  { value: '7days', label: '7 Days' },
+  { value: '28days', label: '28 Days' },
+  { value: '90days', label: '90 Days' },
+  { value: '365days', label: '1 Year' },
+];
+
 export function AnalyticsDashboard({
   stats,
   chartData,
+  range,
 }: AnalyticsDashboardProps) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const createQueryString = (name: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(name, value);
+    return params.toString();
+  };
+
+  const rangeDescription = {
+    '7days': 'in the last 7 days',
+    '28days': 'in the last 28 days',
+    '90days': 'in the last 90 days',
+    '365days': 'in the last year',
+  }[range];
+
   return (
     <div className="flex flex-col gap-4">
       <Card>
-        <CardHeader>
-          <CardTitle>Dashboard Overview</CardTitle>
-          <CardDescription>
-            A summary of your blog&apos;s performance.
-          </CardDescription>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle>Dashboard Overview</CardTitle>
+            <CardDescription>
+              A summary of your blog&apos;s performance.
+            </CardDescription>
+          </div>
+          <ToggleGroup type="single" value={range} variant="outline" size="sm">
+            {rangeOptions.map((option) => (
+              <ToggleGroupItem
+                key={option.value}
+                value={option.value}
+                asChild
+                className={cn(
+                  range === option.value && 'bg-primary text-primary-foreground'
+                )}
+              >
+                <Link href={pathname + '?' + createQueryString('range', option.value)}>
+                  {option.label}
+                </Link>
+              </ToggleGroupItem>
+            ))}
+          </ToggleGroup>
         </CardHeader>
+
         <CardContent className="grid gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <ChartContainer
@@ -67,11 +113,10 @@ export function AnalyticsDashboard({
               <BarChart accessibilityLayer data={chartData}>
                 <CartesianGrid vertical={false} />
                 <XAxis
-                  dataKey="month"
+                  dataKey="period"
                   tickLine={false}
                   tickMargin={10}
                   axisLine={false}
-                  tickFormatter={(value) => value.slice(0, 3)}
                 />
                 <ChartTooltip
                   cursor={false}
@@ -111,7 +156,7 @@ export function AnalyticsDashboard({
               </div>
               <div className="mt-1 text-2xl font-bold">{stats.totalViews}</div>
               <p className="text-xs text-muted-foreground">
-                in the last 28 days
+                {rangeDescription}
               </p>
             </div>
             <Separator />
@@ -122,7 +167,7 @@ export function AnalyticsDashboard({
               </div>
               <div className="mt-1 text-2xl font-bold">{stats.totalUsers}</div>
               <p className="text-xs text-muted-foreground">
-                in the last 28 days
+                {rangeDescription}
               </p>
             </div>
           </div>
