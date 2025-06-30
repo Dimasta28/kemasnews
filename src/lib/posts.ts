@@ -100,6 +100,8 @@ const posts: Post[] = [
   }
 ];
 
+let categories: string[] = [...new Set(posts.map(post => post.category))].sort();
+
 export const getPosts = async (): Promise<Post[]> => {
   // In a real app, you'd fetch this from a database or CMS
   return new Promise(resolve => setTimeout(() => resolve(posts), 500));
@@ -113,11 +115,50 @@ export const getPostBySlug = async (slug: string): Promise<Post | undefined> => 
 };
 
 export const getCategories = async (): Promise<string[]> => {
-  const categories = posts.map(post => post.category);
-  return [...new Set(categories)];
+  return Promise.resolve(categories);
 }
 
 export const getTags = async (): Promise<string[]> => {
     const allTags = posts.flatMap(post => post.tags);
     return [...new Set(allTags)];
+}
+
+export const addCategory = async (name: string): Promise<{success: boolean, message?: string}> => {
+  if (categories.find(c => c.toLowerCase() === name.toLowerCase())) {
+    return { success: false, message: 'Category already exists.' };
+  }
+  categories.push(name);
+  categories.sort();
+  return { success: true };
+}
+
+export const updateCategory = async (oldName: string, newName:string): Promise<{success: boolean, message?: string}> => {
+  if (oldName.toLowerCase() !== newName.toLowerCase() && categories.find(c => c.toLowerCase() === newName.toLowerCase())) {
+    return { success: false, message: 'New category name already exists.' };
+  }
+  
+  const index = categories.findIndex(c => c.toLowerCase() === oldName.toLowerCase());
+  if (index === -1) {
+    return { success: false, message: 'Category not found.' };
+  }
+  
+  categories[index] = newName;
+
+  posts.forEach(post => {
+    if (post.category === oldName) {
+      post.category = newName;
+    }
+  });
+
+  categories.sort();
+  return { success: true };
+}
+
+export const deleteCategory = async (name: string): Promise<{success: boolean, message?: string}> => {
+  const isUsed = posts.some(post => post.category.toLowerCase() === name.toLowerCase());
+  if (isUsed) {
+    return { success: false, message: 'Cannot delete category as it is in use by one or more posts.' };
+  }
+  categories = categories.filter(c => c.toLowerCase() !== name.toLowerCase());
+  return { success: true };
 }

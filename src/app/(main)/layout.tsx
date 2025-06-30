@@ -30,6 +30,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { getCategories, getTags } from "@/lib/posts";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
+import { CategoryList } from "@/components/categories/category-list";
 
 export default async function MainLayout({
   children,
@@ -76,21 +77,7 @@ export default async function MainLayout({
               
               <SidebarSeparator />
 
-              <SidebarGroup>
-                <SidebarGroupLabel className="flex items-center gap-2">
-                  <Folder />
-                  Categories
-                </SidebarGroupLabel>
-                {categories.map((category) => (
-                  <SidebarMenuItem key={category}>
-                    <SidebarMenuButton size="sm" asChild>
-                      <Link href={`/categories/${category.toLowerCase()}`}>
-                        {category}
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarGroup>
+              <CategoryList categories={categories} />
               
               <SidebarSeparator />
 
