@@ -478,17 +478,17 @@ export default function Home() {
                     >
                       {article.category}
                     </span>
-                    <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-[#050505] dark:text-[#EFECE9]">
+                    <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-[#050505] dark:text-[#050505]">
                       {article.title}
                     </h3>
-                    <p className="text-gray-700 dark:text-gray-300 text-sm mb-4 line-clamp-3">
+                    <p className="text-gray-700 dark:text-gray-700 text-sm mb-4 line-clamp-3">
                       {article.preview}
                     </p>
-                    <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-400">
+                    <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-600">
                       <span>
                         {article.author} | {article.date}
                       </span>
-                      <button className="p-2 rounded-full hover:bg-[#AC9C8D] dark:hover:bg-[#050505] transition-colors">
+                      <button className="p-2 rounded-full hover:bg-[#AC9C8D] dark:hover:bg-[#DDD9CE] transition-colors">
                         <Share2Icon size={16} />
                       </button>
                     </div>
@@ -541,13 +541,13 @@ export default function Home() {
                 terbaru dari kami.
               </p>
             </div>
-            <div className="md:col-span-1 bg-[#EFECE9] dark:bg-[#AC9C8D] rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-bold mb-4 text-[#050505] dark:text-[#EFECE9]">Trending Post</h3>
-              <ul className="space-y-3 mb-6 text-[#050505] dark:text-[#EFECE9]">
+            <div className="md:col-span-1 bg-[#EFECE9] dark:bg-[#AC9C8D] rounded-lg shadow-md p-6 text-[#050505] dark:text-[#050505]">
+              <h3 className="text-xl font-bold mb-4">Trending Post</h3>
+              <ul className="space-y-3 mb-6">
                 <li>
                   <a
                     href="#"
-                    className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors"
+                    className="hover:text-[#610C27] dark:hover:text-[#610C27] transition-colors"
                   >
                     1. Desain Packaging Minimalis
                   </a>
@@ -555,7 +555,7 @@ export default function Home() {
                 <li>
                   <a
                     href="#"
-                    className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors"
+                    className="hover:text-[#610C27] dark:hover:text-[#610C27] transition-colors"
                   >
                     2. Bahan Ramah Lingkungan untuk Kosmetik
                   </a>
@@ -563,14 +563,14 @@ export default function Home() {
                 <li>
                   <a
                     href="#"
-                    className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors"
+                    className="hover:text-[#610C27] dark:hover:text-[#610C27] transition-colors"
                   >
                     3. Strategi Marketing Sensual
                   </a>
                 </li>
               </ul>
 
-              <h3 className="text-xl font-bold mb-4 text-[#050505] dark:text-[#EFECE9]">Kategori</h3>
+              <h3 className="text-xl font-bold mb-4">Kategori</h3>
               <div className="flex flex-wrap gap-2 mb-6">
                 {[
                   'Teknologi',
@@ -582,22 +582,22 @@ export default function Home() {
                 ].map((cat) => (
                   <span
                     key={cat}
-                    className="bg-[#DDD9CE] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9] text-xs px-3 py-1 rounded-full"
+                    className="bg-[#DDD9CE] dark:bg-[#DDD9CE] text-[#050505] dark:text-[#050505] text-xs px-3 py-1 rounded-full"
                   >
                     {cat}
                   </span>
                 ))}
               </div>
 
-              <h3 className="text-xl font-bold mb-4 text-[#050505] dark:text-[#EFECE9]">Newsletter</h3>
-              <p className="text-gray-500 dark:text-gray-400 text-sm mb-3">
+              <h3 className="text-xl font-bold mb-4">Newsletter</h3>
+              <p className="text-gray-500 dark:text-gray-500 text-sm mb-3">
                 Dapatkan wawasan terbaru langsung ke inbox Anda.
               </p>
               <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="email"
                   placeholder="Email Anda"
-                  className="flex-grow px-4 py-2 rounded-md border border-[#AC9C8D] dark:border-[#DDD9CE] bg-[#EFECE9] dark:bg-[#050505] focus:outline-none focus:ring-2 focus:ring-[#610C27] text-sm"
+                  className="flex-grow px-4 py-2 rounded-md border border-[#AC9C8D] dark:border-[#DDD9CE] bg-[#EFECE9] dark:bg-[#EFECE9] focus:outline-none focus:ring-2 focus:ring-[#610C27] text-sm text-black"
                 />
                 <button className="bg-[#610C27] hover:bg-opacity-90 text-[#EFECE9] font-bold py-2 px-4 rounded-md transition-colors text-sm">
                   Subscribe
@@ -605,10 +605,10 @@ export default function Home() {
               </div>
 
               <div className="mt-6 flex items-center justify-between">
-                <span className="font-semibold text-[#050505] dark:text-[#EFECE9]">Tema</span>
+                <span className="font-semibold">Tema</span>
                 <button
                   onClick={() => setIsDarkMode(!isDarkMode)}
-                  className="p-2 rounded-full bg-[#DDD9CE] dark:bg-[#AC9C8D] hover:bg-[#AC9C8D] dark:hover:bg-[#E3C1B4] transition-colors"
+                  className="p-2 rounded-full bg-[#DDD9CE] dark:bg-[#DDD9CE] hover:bg-[#AC9C8D] dark:hover:bg-[#AC9C8D] transition-colors"
                 >
                   {isDarkMode ? <Moon size={20} /> : <Sun size={20} />}
                 </button>
