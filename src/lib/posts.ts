@@ -101,6 +101,7 @@ const posts: Post[] = [
 ];
 
 let categories: string[] = [...new Set(posts.map(post => post.category))].sort();
+let tags: string[] = [...new Set(posts.flatMap(post => post.tags))].sort();
 
 export const getPosts = async (): Promise<Post[]> => {
   // In a real app, you'd fetch this from a database or CMS
@@ -119,8 +120,7 @@ export const getCategories = async (): Promise<string[]> => {
 }
 
 export const getTags = async (): Promise<string[]> => {
-    const allTags = posts.flatMap(post => post.tags);
-    return [...new Set(allTags)];
+    return Promise.resolve(tags);
 }
 
 export const addCategory = async (name: string): Promise<{success: boolean, message?: string}> => {
@@ -160,5 +160,46 @@ export const deleteCategory = async (name: string): Promise<{success: boolean, m
     return { success: false, message: 'Cannot delete category as it is in use by one or more posts.' };
   }
   categories = categories.filter(c => c.toLowerCase() !== name.toLowerCase());
+  return { success: true };
+}
+
+export const addTag = async (name: string): Promise<{success: boolean, message?: string}> => {
+  if (tags.find(t => t.toLowerCase() === name.toLowerCase())) {
+    return { success: false, message: 'Tag already exists.' };
+  }
+  tags.push(name);
+  tags.sort();
+  return { success: true };
+}
+
+export const updateTag = async (oldName: string, newName:string): Promise<{success: boolean, message?: string}> => {
+  if (oldName.toLowerCase() !== newName.toLowerCase() && tags.find(t => t.toLowerCase() === newName.toLowerCase())) {
+    return { success: false, message: 'New tag name already exists.' };
+  }
+  
+  const index = tags.findIndex(t => t.toLowerCase() === oldName.toLowerCase());
+  if (index === -1) {
+    return { success: false, message: 'Tag not found.' };
+  }
+  
+  tags[index] = newName;
+
+  posts.forEach(post => {
+    const tagIndex = post.tags.findIndex(t => t.toLowerCase() === oldName.toLowerCase());
+    if (tagIndex !== -1) {
+      post.tags[tagIndex] = newName;
+    }
+  });
+
+  tags.sort();
+  return { success: true };
+}
+
+export const deleteTag = async (name: string): Promise<{success: boolean, message?: string}> => {
+  const isUsed = posts.some(post => post.tags.some(t => t.toLowerCase() === name.toLowerCase()));
+  if (isUsed) {
+    return { success: false, message: 'Cannot delete tag as it is in use by one or more posts.' };
+  }
+  tags = tags.filter(t => t.toLowerCase() !== name.toLowerCase());
   return { success: true };
 }

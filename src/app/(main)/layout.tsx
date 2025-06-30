@@ -29,8 +29,8 @@ import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { getCategories, getTags } from "@/lib/posts";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Badge } from "@/components/ui/badge";
 import { CategoryList } from "@/components/categories/category-list";
+import { TagList } from "@/components/tags/tag-list";
 
 export default async function MainLayout({
   children,
@@ -81,19 +81,7 @@ export default async function MainLayout({
               
               <SidebarSeparator />
 
-              <SidebarGroup>
-                <SidebarGroupLabel className="flex items-center gap-2">
-                  <Tag />
-                  Tags
-                </SidebarGroupLabel>
-                <div className="flex flex-wrap gap-2 px-2">
-                    {tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="cursor-pointer hover:bg-primary/20">
-                            {tag}
-                        </Badge>
-                    ))}
-                </div>
-              </SidebarGroup>
+              <TagList tags={tags} />
             </SidebarMenu>
           </ScrollArea>
         </SidebarContent>
