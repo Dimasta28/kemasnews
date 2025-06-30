@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,10 +18,14 @@ export default function LoginPage() {
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account.
-          </CardDescription>
+          <Image
+            src="https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png"
+            alt="Kemas Logo"
+            width={250}
+            height={62}
+            className="mx-auto"
+            priority
+          />
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid grid-cols-1 gap-6">
