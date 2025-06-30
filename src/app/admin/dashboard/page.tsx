@@ -1,9 +1,7 @@
-import {
-  FileText,
-  MessageSquare,
-  Eye,
-  Users,
-} from "lucide-react";
+'use client';
+
+import { FileText, MessageSquare, Eye, Users } from 'lucide-react';
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 
 import {
   Card,
@@ -11,7 +9,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from '@/components/ui/card';
 import {
   Table,
   TableBody,
@@ -19,12 +17,59 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+} from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from '@/components/ui/chart';
+
+const chartData = [
+  { month: 'January', views: 186 },
+  { month: 'February', views: 305 },
+  { month: 'March', views: 237 },
+  { month: 'April', views: 273 },
+  { month: 'May', views: 209 },
+  { month: 'June', views: 214 },
+];
+
+const chartConfig = {
+  views: {
+    label: 'Views',
+    color: 'hsl(var(--primary))',
+  },
+} satisfies ChartConfig;
 
 export default function Dashboard() {
   return (
     <div className="flex flex-col gap-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Post Statistics</CardTitle>
+          <CardDescription>Showing views for the last 6 months</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+            <BarChart accessibilityLayer data={chartData}>
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="month"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+                tickFormatter={(value) => value.slice(0, 3)}
+              />
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent indicator="line" />}
+              />
+              <Bar dataKey="views" fill="var(--color-views)" radius={4} />
+            </BarChart>
+          </ChartContainer>
+        </CardContent>
+      </Card>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -40,7 +85,9 @@ export default function Dashboard() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Comments</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Comments
+            </CardTitle>
             <MessageSquare className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -96,7 +143,9 @@ export default function Dashboard() {
             <TableBody>
               <TableRow>
                 <TableCell>
-                  <div className="font-medium">Getting Started with Next.js</div>
+                  <div className="font-medium">
+                    Getting Started with Next.js
+                  </div>
                   <div className="hidden text-sm text-muted-foreground md:inline">
                     A comprehensive guide for beginners.
                   </div>
@@ -107,23 +156,31 @@ export default function Dashboard() {
                     Published
                   </Badge>
                 </TableCell>
-                <TableCell className="hidden md:table-cell">2023-10-23</TableCell>
+                <TableCell className="hidden md:table-cell">
+                  2023-10-23
+                </TableCell>
                 <TableCell className="text-right">1,200</TableCell>
               </TableRow>
-               <TableRow>
+              <TableRow>
                 <TableCell>
-                  <div className="font-medium">Tailwind CSS Best Practices</div>
+                  <div className="font-medium">
+                    Tailwind CSS Best Practices
+                  </div>
                   <div className="hidden text-sm text-muted-foreground md:inline">
                     Tips and tricks for clean and scalable CSS.
                   </div>
                 </TableCell>
-                <TableCell className="hidden sm:table-cell">Jane Smith</TableCell>
+                <TableCell className="hidden sm:table-cell">
+                  Jane Smith
+                </TableCell>
                 <TableCell className="hidden sm:table-cell">
                   <Badge className="text-xs" variant="outline">
                     Draft
                   </Badge>
                 </TableCell>
-                <TableCell className="hidden md:table-cell">2023-10-24</TableCell>
+                <TableCell className="hidden md:table-cell">
+                  2023-10-24
+                </TableCell>
                 <TableCell className="text-right">530</TableCell>
               </TableRow>
               <TableRow>
@@ -141,7 +198,9 @@ export default function Dashboard() {
                     Published
                   </Badge>
                 </TableCell>
-                <TableCell className="hidden md:table-cell">2023-09-15</TableCell>
+                <TableCell className="hidden md:table-cell">
+                  2023-09-15
+                </TableCell>
                 <TableCell className="text-right">2,500</TableCell>
               </TableRow>
             </TableBody>
