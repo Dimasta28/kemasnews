@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { ChevronLeft, Upload, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -30,9 +30,11 @@ import { generatePost } from '@/ai/flows/generate-post-flow';
 import { getPost, updatePost, Post } from '@/services/postService';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export default function EditPostPage({ params }: { params: { id: string } }) {
+export default function EditPostPage() {
   const { toast } = useToast();
   const router = useRouter();
+  const params = useParams();
+  const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -45,7 +47,6 @@ export default function EditPostPage({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const id = params.id;
     if (!id) return;
     const fetchPost = async () => {
       setIsLoading(true);
@@ -78,11 +79,10 @@ export default function EditPostPage({ params }: { params: { id: string } }) {
       }
     };
     fetchPost();
-  }, [params.id, router, toast]);
+  }, [id, router, toast]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const id = params.id;
     if (isSaving || !id) return;
     setIsSaving(true);
     
