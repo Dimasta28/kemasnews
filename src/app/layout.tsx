@@ -16,6 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
+        <div className="absolute inset-0 -z-10 h-full w-full bg-background">
+          <div className="absolute bottom-auto left-0 right-0 top-0 h-[500px] w-[500px] -translate-x-[40%] -translate-y-[10%] rounded-full bg-primary/20 opacity-50 blur-[80px]"></div>
+          <div className="absolute bottom-0 right-0 top-auto h-[500px] w-[500px] translate-x-[20%] translate-y-[10%] rounded-full bg-primary/20 opacity-50 blur-[80px]"></div>
+        </div>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
