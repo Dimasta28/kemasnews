@@ -25,41 +25,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { getPosts, type Post } from '@/services/postService';
 
-const mockPosts = [
-  {
-    title: 'Getting Started with Next.js',
-    status: 'Published',
-    date: '2023-10-23',
-    author: 'John Doe',
-  },
-  {
-    title: 'Tailwind CSS Best Practices',
-    status: 'Draft',
-    date: '2023-10-24',
-    author: 'Jane Smith',
-  },
-  {
-    title: 'Mastering React Hooks',
-    status: 'Published',
-    date: '2023-09-15',
-    author: 'John Doe',
-  },
-  {
-    title: 'A Guide to Server Components',
-    status: 'Published',
-    date: '2023-08-01',
-    author: 'Emily White',
-  },
-  {
-    title: 'The Future of Web Development',
-    status: 'Archived',
-    date: '2023-07-19',
-    author: 'Michael Brown',
-  },
-];
+export default async function PostsPage() {
+  const posts: Post[] = await getPosts();
 
-export default function PostsPage() {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -90,8 +60,8 @@ export default function PostsPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {mockPosts.map((post, index) => (
-              <TableRow key={index}>
+            {posts.map((post) => (
+              <TableRow key={post.id}>
                 <TableCell className="font-medium">{post.title}</TableCell>
                 <TableCell className="hidden sm:table-cell">
                   {post.author}
