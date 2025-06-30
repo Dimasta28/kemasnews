@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -20,6 +21,7 @@ import { getTagSuggestions } from "@/app/actions";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Wand2, X } from "lucide-react";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
+import { Separator } from "@/components/ui/separator";
 
 const formSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters long."),
@@ -33,6 +35,7 @@ type PostFormValues = z.infer<typeof formSchema>;
 export function PostForm() {
   const [isSuggesting, setIsSuggesting] = useState(false);
   const [suggestedTags, setSuggestedTags] = useState<string[]>([]);
+  const [tagInput, setTagInput] = useState("");
   const { toast } = useToast();
 
   const form = useForm<PostFormValues>({
@@ -66,7 +69,9 @@ export function PostForm() {
     setSuggestedTags([]);
     try {
       const result = await getTagSuggestions({ content });
-      setSuggestedTags(result.tags);
+      const currentTags = form.getValues("tags");
+      const newSuggestions = result.tags.filter(tag => !currentTags.includes(tag));
+      setSuggestedTags(newSuggestions);
     } catch (error) {
       toast({
         variant: "destructive",
@@ -79,11 +84,25 @@ export function PostForm() {
   };
 
   const addTag = (tag: string) => {
-    const currentTags = form.getValues("tags");
-    if (!currentTags.includes(tag)) {
-      append(tag);
-      setSuggestedTags(prev => prev.filter(t => t !== tag));
+    const trimmedTag = tag.trim();
+    if (trimmedTag) {
+      const currentTags = form.getValues("tags");
+      if (!currentTags.includes(trimmedTag)) {
+        append(trimmedTag);
+        setSuggestedTags(prev => prev.filter(t => t !== trimmedTag));
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Duplicate Tag",
+          description: `The tag "${trimmedTag}" has already been added.`,
+        });
+      }
     }
+  };
+
+  const handleAddManualTag = () => {
+    addTag(tagInput);
+    setTagInput("");
   };
 
   const removeTag = (index: number) => {
@@ -170,23 +189,45 @@ export function PostForm() {
                 name="tags"
                 render={() => <FormMessage />}
               />
-              <Button type="button" variant="outline" onClick={handleSuggestTags} disabled={isSuggesting}>
-                {isSuggesting ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <Wand2 className="mr-2 h-4 w-4" />
+              <div className="flex items-center gap-2">
+                <Input
+                  placeholder="Type a new tag and press Enter"
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleAddManualTag();
+                    }
+                  }}
+                />
+                <Button type="button" variant="outline" onClick={handleAddManualTag}>
+                  Add
+                </Button>
+              </div>
+
+              <Separator />
+              
+              <div className="space-y-4">
+                <Button type="button" variant="outline" onClick={handleSuggestTags} disabled={isSuggesting}>
+                  {isSuggesting ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    <Wand2 className="mr-2 h-4 w-4" />
+                  )}
+                  AI Suggest Tags
+                </Button>
+                {suggestedTags.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                     <p className="text-sm text-muted-foreground w-full">Click a suggestion to add it:</p>
+                    {suggestedTags.map(tag => (
+                      <Badge key={tag} variant="secondary" className="cursor-pointer" onClick={() => addTag(tag)}>
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
                 )}
-                AI Suggest Tags
-              </Button>
-              {suggestedTags.length > 0 && (
-                <div className="flex flex-wrap gap-2 pt-4 border-t">
-                  {suggestedTags.map(tag => (
-                    <Badge key={tag} variant="secondary" className="cursor-pointer" onClick={() => addTag(tag)}>
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-              )}
+              </div>
             </div>
           </CardContent>
         </Card>
