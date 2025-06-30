@@ -1,12 +1,15 @@
 
 'use client';
 
+import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
+import { submitComment } from '@/services/commentService';
 
 const mockComments = [
     {
@@ -23,7 +26,46 @@ const mockComments = [
     }
 ];
 
-export function CommentsSection() {
+export function CommentsSection({ postId }: { postId: string }) {
+    const { toast } = useToast();
+    const [comment, setComment] = useState('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [company, setCompany] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        setIsSubmitting(true);
+
+        const result = await submitComment({
+            postId,
+            comment,
+            name,
+            email,
+            company,
+        });
+
+        if (result.success) {
+            toast({
+                title: 'Success!',
+                description: result.message,
+            });
+            // Clear form
+            setComment('');
+            setName('');
+            setEmail('');
+            setCompany('');
+        } else {
+            toast({
+                variant: 'destructive',
+                title: 'Error',
+                description: result.message,
+            });
+        }
+        setIsSubmitting(false);
+    };
+
     return (
         <div id="comments" className="mt-12 pt-10 border-t border-border">
             <h2 className="text-2xl font-bold mb-6">{mockComments.length} Comments</h2>
@@ -54,26 +96,28 @@ export function CommentsSection() {
                     <CardTitle>Leave a Reply</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <form className="space-y-4">
+                    <form className="space-y-4" onSubmit={handleSubmit}>
                          <div className="grid gap-2">
                             <Label htmlFor="comment">Your Comment</Label>
-                            <Textarea id="comment" placeholder="Write your comment here..." rows={4} />
+                            <Textarea id="comment" placeholder="Write your comment here..." rows={4} value={comment} onChange={(e) => setComment(e.target.value)} required />
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="grid gap-2">
                                 <Label htmlFor="name">Name</Label>
-                                <Input id="name" placeholder="Your name" />
+                                <Input id="name" placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} required />
                             </div>
                             <div className="grid gap-2">
                                 <Label htmlFor="email">Email</Label>
-                                <Input id="email" type="email" placeholder="Your email" />
+                                <Input id="email" type="email" placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                             </div>
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="company">Perusahaan Anda</Label>
-                            <Input id="company" placeholder="Nama perusahaan Anda" />
+                            <Input id="company" placeholder="Nama perusahaan Anda" value={company} onChange={(e) => setCompany(e.target.value)} />
                         </div>
-                        <Button type="submit">Post Comment</Button>
+                        <Button type="submit" disabled={isSubmitting}>
+                            {isSubmitting ? 'Posting...' : 'Post Comment'}
+                        </Button>
                     </form>
                 </CardContent>
             </Card>

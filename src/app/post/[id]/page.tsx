@@ -95,7 +95,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
                 </div>
             </div>
 
-            <CommentsSection />
+            <CommentsSection postId={post.id} />
           </article>
 
           {/* Sidebar */}
