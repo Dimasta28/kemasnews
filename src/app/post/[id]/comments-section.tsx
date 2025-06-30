@@ -9,26 +9,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { submitComment } from '@/services/commentService';
+import { submitComment, type Comment } from '@/services/commentService';
 
-const mockComments = [
-    {
-        author: 'Jane Doe',
-        avatar: 'https://placehold.co/100x100.png',
-        date: '2 days ago',
-        comment: 'This is such an insightful article! Really opened my eyes to the possibilities of sustainable packaging. Great job!'
-    },
-    {
-        author: 'John Smith',
-        avatar: 'https://placehold.co/100x100.png',
-        date: '1 day ago',
-        comment: 'I have a question about the LIMEX material. How does it compare to traditional plastics in terms of durability?'
-    }
-];
-
-export function CommentsSection({ postId }: { postId: string }) {
+export function CommentsSection({ postId, initialComments = [] }: { postId: string, initialComments: Comment[] }) {
     const { toast } = useToast();
-    const [comment, setComment] = useState('');
+    const [newComment, setNewComment] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [company, setCompany] = useState('');
@@ -40,7 +25,7 @@ export function CommentsSection({ postId }: { postId: string }) {
 
         const result = await submitComment({
             postId,
-            comment,
+            comment: newComment,
             name,
             email,
             company,
@@ -52,7 +37,7 @@ export function CommentsSection({ postId }: { postId: string }) {
                 description: result.message,
             });
             // Clear form
-            setComment('');
+            setNewComment('');
             setName('');
             setEmail('');
             setCompany('');
@@ -68,12 +53,12 @@ export function CommentsSection({ postId }: { postId: string }) {
 
     return (
         <div id="comments" className="mt-12 pt-10 border-t border-border">
-            <h2 className="text-2xl font-bold mb-6">{mockComments.length} Comments</h2>
+            <h2 className="text-2xl font-bold mb-6">{initialComments.length} Comments</h2>
 
             {/* Comments List */}
             <div className="space-y-8 mb-10">
-                {mockComments.map((comment, index) => (
-                    <div key={index} className="flex gap-4">
+                {initialComments.length > 0 ? initialComments.map((comment) => (
+                    <div key={comment.id} className="flex gap-4">
                         <Avatar>
                             <AvatarImage src={comment.avatar} alt={comment.author} data-ai-hint="person avatar" />
                             <AvatarFallback>{comment.author.substring(0, 2)}</AvatarFallback>
@@ -87,7 +72,9 @@ export function CommentsSection({ postId }: { postId: string }) {
                             <Button variant="link" size="sm" className="p-0 h-auto mt-1">Reply</Button>
                         </div>
                     </div>
-                ))}
+                )) : (
+                     <p className="text-sm text-muted-foreground">Be the first to leave a comment.</p>
+                )}
             </div>
 
             {/* Comment Form */}
@@ -99,7 +86,7 @@ export function CommentsSection({ postId }: { postId: string }) {
                     <form className="space-y-4" onSubmit={handleSubmit}>
                          <div className="grid gap-2">
                             <Label htmlFor="comment">Your Comment</Label>
-                            <Textarea id="comment" placeholder="Write your comment here..." rows={4} value={comment} onChange={(e) => setComment(e.target.value)} required />
+                            <Textarea id="comment" placeholder="Write your comment here..." rows={4} value={newComment} onChange={(e) => setNewComment(e.target.value)} required />
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="grid gap-2">

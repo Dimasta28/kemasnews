@@ -13,12 +13,14 @@ import { BackToTopButton } from '@/components/back-to-top-button';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 import { getFrontendSettings } from '@/services/settingsService';
+import { getComments } from '@/services/commentService';
 
 export default async function PostPage({ params }: { params: { id: string } }) {
-  const [post, allPosts, settings] = await Promise.all([
+  const [post, allPosts, settings, comments] = await Promise.all([
     getPost(params.id),
     getPosts(),
     getFrontendSettings(),
+    getComments(params.id),
   ]);
   
   if (!post) {
@@ -63,7 +65,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
               <span className="hidden sm:inline">&bull;</span>
               <div className="flex items-center gap-1.5">
                 <MessageCircle className="h-4 w-4" />
-                <span>3 Comments</span>
+                <span>{comments.length} Comments</span>
               </div>
             </div>
             
@@ -95,7 +97,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
                 </div>
             </div>
 
-            <CommentsSection postId={post.id} />
+            <CommentsSection postId={post.id} initialComments={comments} />
           </article>
 
           {/* Sidebar */}

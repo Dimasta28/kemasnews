@@ -2,7 +2,21 @@
 'use server';
 
 import { db } from '@/lib/firebase';
-import { collection, addDoc, getDocs, query, where, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, serverTimestamp, Timestamp, orderBy } from "firebase/firestore";
+import { formatDistanceToNow } from 'date-fns';
+
+
+export interface Comment {
+    id: string;
+    postId: string;
+    author: string;
+    authorEmail: string;
+    authorCompany: string;
+    comment: string;
+    status: 'Pending' | 'Approved' | 'Spam';
+    avatar: string;
+    date: string;
+}
 
 interface CommentFormState {
     postId: string;
@@ -55,5 +69,40 @@ export async function submitComment(data: CommentFormState) {
     } catch (error) {
         console.error("Error submitting comment: ", error);
         return { success: false, message: 'An unexpected error occurred. Please try again.' };
+    }
+}
+
+
+export async function getComments(postId: string): Promise<Comment[]> {
+    try {
+        const commentsRef = collection(db, "comments");
+        const q = query(
+            commentsRef, 
+            where("postId", "==", postId),
+            where("status", "==", "Approved"),
+            orderBy("date", "desc")
+        );
+        const querySnapshot = await getDocs(q);
+
+        const comments = querySnapshot.docs.map(doc => {
+            const data = doc.data();
+            const date = (data.date as Timestamp)?.toDate() || new Date();
+            return {
+                id: doc.id,
+                postId: data.postId,
+                author: data.author,
+                authorEmail: data.authorEmail,
+                authorCompany: data.authorCompany,
+                comment: data.comment,
+                status: data.status,
+                avatar: data.avatar,
+                date: `${formatDistanceToNow(date)} ago`,
+            } as Comment;
+        });
+
+        return comments;
+    } catch (error) {
+        console.error("Error fetching comments: ", error);
+        return [];
     }
 }
