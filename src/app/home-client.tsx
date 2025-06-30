@@ -38,18 +38,18 @@ import type { Post } from '@/services/postService';
 
 // Helper for category styling
 const categoryStyles: { [key: string]: { name: string; className: string } } = {
-  technology: { name: 'Teknologi', className: 'bg-[#610C27] text-[#EFECE9]' },
-  lifestyle: { name: 'Gaya Hidup', className: 'bg-[#E3C1B4] text-[#050505]' },
-  business: { name: 'Bisnis', className: 'bg-[#AC9C8D] text-[#050505]' },
-  desain: { name: 'Desain', className: 'bg-[#610C27] text-[#EFECE9]' },
-  inovasi: { name: 'Inovasi', className: 'bg-[#E3C1B4] text-[#050505]' },
-  tren: { name: 'Tren', className: 'bg-[#AC9C8D] text-[#050505]' },
-  pendidikan: { name: 'Pendidikan', className: 'bg-[#DDD9CE] text-[#050505]' },
+  technology: { name: 'Technology', className: 'bg-[#610C27] text-[#EFECE9]' },
+  lifestyle: { name: 'Lifestyle', className: 'bg-[#E3C1B4] text-[#050505]' },
+  business: { name: 'Business', className: 'bg-[#AC9C8D] text-[#050505]' },
+  desain: { name: 'Design', className: 'bg-[#610C27] text-[#EFECE9]' },
+  inovasi: { name: 'Innovation', className: 'bg-[#E3C1B4] text-[#050505]' },
+  tren: { name: 'Trends', className: 'bg-[#AC9C8D] text-[#050505]' },
+  pendidikan: { name: 'Education', className: 'bg-[#DDD9CE] text-[#050505]' },
   // A default style
-  default: { name: 'Lainnya', className: 'bg-[#DDD9CE] text-[#050505]' },
+  default: { name: 'Others', className: 'bg-[#DDD9CE] text-[#050505]' },
 };
 
-// Komponen Utama Aplikasi
+// Main Application Component
 export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
@@ -156,8 +156,8 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
             <PopoverContent className="w-[450px] bg-[#EFECE9]/95 dark:bg-[#050505]/95 backdrop-blur-md border-[#DDD9CE] dark:border-[#AC9C8D] p-6 rounded-2xl shadow-xl">
               <div className="grid grid-cols-2 gap-x-8 gap-y-2">
                 <div className="col-span-2 mb-2">
-                  <h3 className="font-bold text-lg text-[#610C27] dark:text-[#E3C1B4]">Tentang Perusahaan</h3>
-                  <p className="text-sm text-muted-foreground mt-1">Jelajahi lebih dalam tentang perusahaan kami.</p>
+                  <h3 className="font-bold text-lg text-[#610C27] dark:text-[#E3C1B4]">About Company</h3>
+                  <p className="text-sm text-muted-foreground mt-1">Explore more about our company.</p>
                 </div>
                 <a href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">News</a>
                 <a href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Press Release</a>
@@ -206,7 +206,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
                   exit={{ width: 0, opacity: 0 }}
                   transition={{ duration: 0.3 }}
                   type="text"
-                  placeholder="Cari..."
+                  placeholder="Search..."
                   className="px-3 py-1 rounded-full border border-[#AC9C8D] dark:border-[#DDD9CE] bg-[#EFECE9] dark:bg-[#050505] text-sm focus:outline-none focus:ring-2 focus:ring-[#610C27]"
                   onBlur={() => setIsSearchExpanded(false)}
                   autoFocus
@@ -404,7 +404,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-4xl md:text-6xl font-extrabold leading-tight mb-4 drop-shadow-lg"
             >
-              Wawasan Terbaru dari Dunia Kosmetik
+              Latest Insights from the World of Cosmetics
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -412,8 +412,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-lg md:text-xl mb-8 drop-shadow-md"
             >
-              Jelajahi artikel-artikel pilihan tentang tren, inovasi, dan
-              strategi packaging untuk kosmetik.
+              Explore selected articles on trends, innovation, and packaging strategies for cosmetics.
             </motion.p>
             <motion.button
               whileHover={{
@@ -423,7 +422,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
               whileTap={{ scale: 0.95 }}
               className="bg-[#610C27] hover:bg-opacity-90 text-[#EFECE9] font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300"
             >
-              Baca Artikel
+              Read Articles
             </motion.button>
           </div>
         </section>
@@ -434,7 +433,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
         >
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0">
             <div className="flex space-x-4 overflow-x-auto pb-2 scrollbar-hide">
-              {['Semua', 'Tren', 'Desain', 'Inovasi'].map((tab) => (
+              {['All', 'Trends', 'Design', 'Innovation'].map((tab) => (
                 <button
                   key={tab}
                   className="px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-[#DDD9CE] hover:bg-[#AC9C8D] dark:bg-[#AC9C8D] dark:hover:bg-[#E3C1B4] transition-colors"
@@ -453,7 +452,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
                   aria-expanded="true"
                   aria-haspopup="true"
                 >
-                  Kategori
+                  Categories
                   <ChevronDownIcon
                     className="-mr-1 ml-2 h-5 w-5"
                     aria-hidden="true"
@@ -462,7 +461,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
               </div>
               <input
                 type="text"
-                placeholder="Cari di sini..."
+                placeholder="Search here..."
                 className="flex-grow md:flex-none px-4 py-2 rounded-full border border-[#AC9C8D] dark:border-[#DDD9CE] bg-[#EFECE9] dark:bg-[#050505] focus:outline-none focus:ring-2 focus:ring-[#610C27] text-sm"
               />
             </div>
@@ -475,7 +474,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
         >
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-center mb-10">
-              Artikel Terbaru
+              Latest Articles
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentArticles.length > 0 ? (
@@ -527,7 +526,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
               ) : (
                 <div className="col-span-full text-center py-10">
                   <p className="text-muted-foreground">
-                    Belum ada postingan yang diterbitkan.
+                    No posts have been published yet.
                   </p>
                 </div>
               )}
@@ -589,16 +588,15 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
         <section className="py-20 bg-[#610C27] text-[#EFECE9] text-center">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
-              Jangan Lewatkan Wawasan Terbaru!
+              Don't Miss the Latest Insights!
             </h2>
             <p className="text-lg md:text-xl mb-8">
-              Bergabunglah dengan komunitas kami dan dapatkan artikel, tips,
-              serta berita eksklusif langsung ke email Anda.
+              Join our community and get exclusive articles, tips, and news delivered straight to your inbox.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <input
                 type="email"
-                placeholder="Masukkan alamat email Anda"
+                placeholder="Enter your email address"
                 className="w-full sm:w-80 p-3 rounded-full text-[#050505] focus:outline-none focus:ring-2 focus:ring-[#EFECE9]"
               />
               <motion.button
@@ -609,7 +607,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
                 whileTap={{ scale: 0.95 }}
                 className="bg-[#EFECE9] text-[#610C27] font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#DDD9CE] transition-colors duration-300"
               >
-                Langganan Sekarang
+                Subscribe Now
               </motion.button>
             </div>
           </div>
@@ -634,15 +632,15 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
               className="block dark:hidden"
             />
             <span className="ml-4">
-              © 2025 PT. Kemas. Semua Hak Dilindungi.
+              © 2025 PT. Kemas. All Rights Reserved.
             </span>
           </div>
           <nav className="flex space-x-4 mb-4 md:mb-0">
             <a href="#" className="hover:text-[#EFECE9] transition-colors">
-              Kebijakan Privasi
+              Privacy Policy
             </a>
             <a href="#" className="hover:text-[#EFECE9] transition-colors">
-              Syarat & Ketentuan
+              Terms & Conditions
             </a>
             <a href="#" className="hover:text-[#EFECE9] transition-colors">
               Sitemap
