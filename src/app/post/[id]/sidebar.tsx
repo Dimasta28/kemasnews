@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search } from 'lucide-react';
@@ -64,13 +65,13 @@ export async function Sidebar({ recentPosts }: { recentPosts: Post[] }) {
       {/* Campaign/Banner Widget */}
       <Card className="overflow-hidden">
         <CardContent className="p-0">
-          <Link href={banner.buttonLink || '#'} className="block">
-            <div className="relative aspect-video w-full">
+          <Link href={banner.buttonLink || '#'} className="block group">
+            <div className="relative aspect-video w-full overflow-hidden">
                <Image
                   src={banner.imageUrl}
                   alt={banner.title}
                   fill
-                  className="object-cover"
+                  className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
                   data-ai-hint="advertisement banner"
               />
             </div>
