@@ -168,6 +168,15 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
                 <a href="#">Careers</a>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
+                <a href="#">CSR (Corporate Social Responsibility)</a>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <a href="#">Kemas</a>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <a href="#">Love It</a>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <a href="#">Privacy Policy</a>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -306,6 +315,33 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
                               Careers
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              href="#"
+                              className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              CSR (Corporate Social Responsibility)
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              href="#"
+                              className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              Kemas
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              href="#"
+                              className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              Love It
                             </a>
                           </li>
                           <li>
