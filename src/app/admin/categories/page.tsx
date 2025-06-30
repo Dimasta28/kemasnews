@@ -1,7 +1,7 @@
-import { MoreHorizontal, PlusCircle } from 'lucide-react';
+
+import { PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -11,13 +11,6 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
   Table,
   TableBody,
   TableCell,
@@ -25,10 +18,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { getCategories, type Category } from '@/services/categoryService';
+import { CategoryActions } from './category-actions';
 
-const mockCategories: { name: string; slug: string; postCount: number }[] = [];
+export default async function CategoriesPage() {
+  const categories: Category[] = await getCategories();
 
-export default function CategoriesPage() {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -39,7 +34,7 @@ export default function CategoriesPage() {
           </CardDescription>
         </div>
         <Button asChild size="sm" className="gap-1">
-          <Link href="#">
+          <Link href="/admin/categories/create">
             <PlusCircle className="h-4 w-4" />
             Create Category
           </Link>
@@ -58,32 +53,28 @@ export default function CategoriesPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {mockCategories.map((category) => (
-              <TableRow key={category.slug}>
-                <TableCell className="font-medium">{category.name}</TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  {category.slug}
-                </TableCell>
-                <TableCell className="text-right">
-                  {category.postCount}
-                </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button aria-haspopup="true" size="icon" variant="ghost">
-                        <MoreHorizontal className="h-4 w-4" />
-                        <span className="sr-only">Toggle menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem>Edit</DropdownMenuItem>
-                      <DropdownMenuItem>Delete</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            ))}
+            {categories.length > 0 ? (
+              categories.map((category) => (
+                <TableRow key={category.id}>
+                  <TableCell className="font-medium">{category.name}</TableCell>
+                  <TableCell className="hidden sm:table-cell">
+                    {category.slug}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    {category.postCount}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <CategoryActions categoryId={category.id} />
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+                <TableRow>
+                    <TableCell colSpan={4} className="h-24 text-center">
+                    No categories found.
+                    </TableCell>
+                </TableRow>
+            )}
           </TableBody>
         </Table>
       </CardContent>
