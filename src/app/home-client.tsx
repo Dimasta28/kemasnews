@@ -142,7 +142,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
         </section>
 
         <section
-          className={`sticky z-40 bg-background/95 p-4 border-b border-border shadow-sm top-[72px] backdrop-blur-sm`}
+          className={`sticky z-40 bg-background/95 p-4 border-b border-border shadow-sm top-0 backdrop-blur-sm`}
         >
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
             <Tabs value={activeFilter} onValueChange={setActiveFilter} className="overflow-x-auto scrollbar-hide">
