@@ -1,6 +1,5 @@
 
 import type { Metadata } from 'next';
-import { AdminLayoutClient } from '../../layout-client';
 
 export const metadata: Metadata = {
   title: 'Create Post',
@@ -12,5 +11,5 @@ export default function CreatePostLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <AdminLayoutClient>{children}</AdminLayoutClient>;
+  return <>{children}</>;
 }
