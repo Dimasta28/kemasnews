@@ -19,9 +19,24 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getTagSuggestions } from "@/app/actions";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Wand2, X } from "lucide-react";
+import { Check, ChevronsUpDown, Loader2, Wand2, X } from "lucide-react";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
 import { Separator } from "@/components/ui/separator";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import { cn } from "@/lib/utils";
+
 
 const formSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters long."),
@@ -32,10 +47,14 @@ const formSchema = z.object({
 
 type PostFormValues = z.infer<typeof formSchema>;
 
-export function PostForm() {
+interface PostFormProps {
+  allTags: string[];
+}
+
+export function PostForm({ allTags }: PostFormProps) {
   const [isSuggesting, setIsSuggesting] = useState(false);
   const [suggestedTags, setSuggestedTags] = useState<string[]>([]);
-  const [tagInput, setTagInput] = useState("");
+  const [isTagPopoverOpen, setIsTagPopoverOpen] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<PostFormValues>({
@@ -55,7 +74,6 @@ export function PostForm() {
 
   const handleSuggestTags = async () => {
     const content = form.getValues("content");
-    // A simple regex to strip HTML tags for a more accurate word count
     const textContent = content.replace(/<[^>]*>?/gm, '');
     if (textContent.length < 50) {
       toast({
@@ -87,9 +105,9 @@ export function PostForm() {
     const trimmedTag = tag.trim();
     if (trimmedTag) {
       const currentTags = form.getValues("tags");
-      if (!currentTags.includes(trimmedTag)) {
+      if (!currentTags.find(t => t.toLowerCase() === trimmedTag.toLowerCase())) {
         append(trimmedTag);
-        setSuggestedTags(prev => prev.filter(t => t !== trimmedTag));
+        setSuggestedTags(prev => prev.filter(t => t.toLowerCase() !== trimmedTag.toLowerCase()));
       } else {
         toast({
           variant: "destructive",
@@ -98,11 +116,6 @@ export function PostForm() {
         });
       }
     }
-  };
-
-  const handleAddManualTag = () => {
-    addTag(tagInput);
-    setTagInput("");
   };
 
   const removeTag = (index: number) => {
@@ -189,22 +202,64 @@ export function PostForm() {
                 name="tags"
                 render={() => <FormMessage />}
               />
-              <div className="flex items-center gap-2">
-                <Input
-                  placeholder="Type a new tag and press Enter"
-                  value={tagInput}
-                  onChange={(e) => setTagInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
-                      handleAddManualTag();
-                    }
-                  }}
-                />
-                <Button type="button" variant="outline" onClick={handleAddManualTag}>
-                  Add
-                </Button>
-              </div>
+              
+              <Popover open={isTagPopoverOpen} onOpenChange={setIsTagPopoverOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={isTagPopoverOpen}
+                    className="w-full justify-between"
+                  >
+                    Add or create a tag...
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
+                  <Command>
+                    <CommandInput 
+                      placeholder="Search or create tag..."
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && e.currentTarget.value) {
+                          e.preventDefault();
+                          addTag(e.currentTarget.value);
+                          e.currentTarget.value = "";
+                          setIsTagPopoverOpen(false);
+                        }
+                      }}
+                    />
+                    <CommandList>
+                      <CommandEmpty>
+                        <p className="p-4 text-sm text-muted-foreground">
+                            No tag found. Press Enter to create a new tag.
+                        </p>
+                      </CommandEmpty>
+                      <CommandGroup>
+                          {allTags
+                            .filter(tag => !form.getValues("tags").find(t => t.toLowerCase() === tag.toLowerCase()))
+                            .map((tag) => (
+                              <CommandItem
+                                key={tag}
+                                value={tag}
+                                onSelect={(currentValue) => {
+                                  addTag(currentValue);
+                                  setIsTagPopoverOpen(false);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    form.getValues("tags").includes(tag) ? "opacity-100" : "opacity-0"
+                                  )}
+                                />
+                                {tag}
+                              </CommandItem>
+                          ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
 
               <Separator />
               
