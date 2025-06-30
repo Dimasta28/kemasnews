@@ -328,7 +328,7 @@ export default function FrontendPage() {
 
       <main>
         {/* Hero Section */}
-        <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center text-center overflow-hidden bg-cover bg-center" style={{ backgroundImage: "url('https://placehold.co/1920x1080.png')" }} data-ai-hint="insights knowledge">
+        <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center text-center overflow-hidden bg-cover bg-center" style={{ backgroundImage: "url('https://placehold.co/1920x1080.png')" }}>
           <div className="absolute inset-0 bg-black bg-opacity-40 dark:bg-opacity-60 z-10"></div>
           <div className="relative z-20 text-white p-6 max-w-3xl">
             <motion.h1
