@@ -19,11 +19,19 @@ export default function LoginPage() {
       <Card className="w-full max-w-sm">
         <CardHeader>
           <Image
+            src="https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png"
+            alt="Kemas Logo"
+            width={250}
+            height={62}
+            className="mx-auto block dark:hidden"
+            priority
+          />
+          <Image
             src="https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png"
             alt="Kemas Logo"
             width={250}
             height={62}
-            className="mx-auto"
+            className="mx-auto hidden dark:block"
             priority
           />
         </CardHeader>
