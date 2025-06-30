@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -25,6 +26,18 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 // Define the Article type
 type Article = {
@@ -214,24 +227,77 @@ export default function Home() {
           }`}
       >
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-[#610C27] rounded-full flex items-center justify-center text-white font-bold text-sm shadow">
-            C
-          </div>
-          <span className="font-semibold text-lg hidden sm:inline-block">
-            Cosmaetic Blog
-          </span>
+          <Image
+            src="https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png"
+            alt="Kemas Logo"
+            width={120}
+            height={30}
+            className="hidden dark:block"
+            priority
+          />
+          <Image
+            src="https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png"
+            alt="Kemas Logo"
+            width={120}
+            height={30}
+            className="block dark:hidden"
+            priority
+          />
         </div>
 
-        <nav className="hidden md:flex gap-6 text-sm">
-          {['Home', 'Blog', 'Kategori', 'Kontak'].map((item) => (
-            <a
-              key={item}
-              href="#"
-              className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition"
-            >
-              {item}
-            </a>
-          ))}
+        <nav className="hidden md:flex items-center gap-6 text-sm">
+          <a
+            href="#"
+            className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition"
+          >
+            HOME
+          </a>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center gap-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition focus:outline-none">
+                PT. KEMAS <ChevronDownIcon size={16} />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-[#EFECE9] dark:bg-[#050505]">
+              <DropdownMenuItem asChild>
+                <a href="#">News</a>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <a href="#">Press Release</a>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <a href="#">Careers</a>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <a href="#">Privacy Policy</a>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <a
+            href="#"
+            className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition"
+          >
+            Products
+          </a>
+          <a
+            href="#"
+            className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition"
+          >
+            Event
+          </a>
+          <a
+            href="#"
+            className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition"
+          >
+            LIMEX
+          </a>
+          <a
+            href="#"
+            className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition"
+          >
+            Sustainability
+          </a>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -297,42 +363,48 @@ export default function Home() {
             >
               <XIcon size={24} />
             </button>
-            <nav className="text-center">
-              <ul className="space-y-6 text-xl">
+            <nav className="text-center w-full px-8">
+               <ul className="space-y-6 text-xl">
                 <li>
-                  <a
-                    href="#"
-                    className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors flex items-center justify-center"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <HomeIcon size={24} className="mr-2" /> Home
+                  <a href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                    HOME
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors flex items-center justify-center"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <RssIcon size={24} className="mr-2" /> Blog
+                  <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="item-1" className="border-b-0">
+                      <AccordionTrigger className="hover:no-underline text-xl py-0 justify-center [&>svg]:size-5">
+                        PT. KEMAS
+                      </AccordionTrigger>
+                      <AccordionContent className="pt-4 overflow-hidden">
+                        <ul className="space-y-4 text-lg text-gray-700 dark:text-gray-400">
+                          <li><a href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>News</a></li>
+                          <li><a href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Press Release</a></li>
+                          <li><a href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Careers</a></li>
+                          <li><a href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Privacy Policy</a></li>
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </li>
+                 <li>
+                  <a href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                    Products
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors flex items-center justify-center"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <TagIcon size={24} className="mr-2" /> Kategori
+                  <a href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                    Event
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors flex items-center justify-center"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <MailIcon size={24} className="mr-2" /> Kontak
+                  <a href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                    LIMEX
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                    Sustainability
                   </a>
                 </li>
               </ul>
@@ -559,11 +631,22 @@ export default function Home() {
 
       <footer className="bg-[#050505] text-[#E3C1B4] py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between text-sm">
-          <div className="mb-4 md:mb-0 flex items-center space-x-2">
-            <div className="w-6 h-6 bg-[#610C27] rounded-full flex items-center justify-center text-[#EFECE9] font-bold text-xs">
-              C
-            </div>
-            <span>© 2025 Cosmaetic Packaging. Semua Hak Dilindungi.</span>
+          <div className="mb-4 md:mb-0 flex items-center">
+            <Image
+              src="https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png"
+              alt="Kemas Logo"
+              width={100}
+              height={25}
+              className="hidden dark:block"
+            />
+            <Image
+              src="https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png"
+              alt="Kemas Logo"
+              width={100}
+              height={25}
+              className="block dark:hidden"
+            />
+            <span className="ml-4">© 2025 PT. Kemas. Semua Hak Dilindungi.</span>
           </div>
           <nav className="flex space-x-4 mb-4 md:mb-0">
             <a href="#" className="hover:text-[#EFECE9] transition-colors">
