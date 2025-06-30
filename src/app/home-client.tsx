@@ -165,7 +165,6 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
                 <a href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">CSR</a>
                 <a href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Kemas</a>
                 <a href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Love It</a>
-                <a href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Privacy Policy</a>
               </div>
             </PopoverContent>
           </Popover>
@@ -330,15 +329,6 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
                               Love It
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors"
-                              onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                              Privacy Policy
                             </a>
                           </li>
                         </ul>
