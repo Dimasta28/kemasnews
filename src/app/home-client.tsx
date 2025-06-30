@@ -19,6 +19,7 @@ import {
 import { ChevronDownIcon } from 'lucide-react';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
+import { cn } from '@/lib/utils';
 
 
 // Helper for category styling
@@ -40,6 +41,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
   
   const [articles, setArticles] = useState<Post[]>(initialPosts);
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeFilter, setActiveFilter] = useState('All');
   const articlesPerPage = 15;
 
   // Pagination logic
@@ -112,7 +114,11 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
               {['All', 'Trends', 'Design', 'Innovation'].map((tab) => (
                 <button
                   key={tab}
-                  className="px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-[#DDD9CE] hover:bg-[#AC9C8D] dark:bg-[#AC9C8D] dark:hover:bg-[#E3C1B4] transition-colors"
+                  onClick={() => setActiveFilter(tab)}
+                  className={cn("px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors", {
+                    'bg-[#610C27] text-[#EFECE9] dark:bg-[#E3C1B4] dark:text-[#050505]': activeFilter === tab,
+                    'bg-[#DDD9CE] hover:bg-[#AC9C8D] dark:bg-[#AC9C8D] dark:hover:bg-[#E3C1B4]': activeFilter !== tab
+                  })}
                 >
                   {tab}
                 </button>
@@ -292,4 +298,3 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
     </div>
   );
 }
-
