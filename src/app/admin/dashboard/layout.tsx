@@ -3,10 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   Home,
-  LineChart,
-  Package,
-  ShoppingCart,
-  Users2,
+  FileText,
+  Folder,
+  Tags,
+  MessageSquare,
 } from "lucide-react";
 
 import {
@@ -72,32 +72,32 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <Link href="#">
-                  <ShoppingCart />
-                  Orders
+                  <FileText />
+                  Posts
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <Link href="#">
-                  <Package />
-                  Products
+                  <Folder />
+                  Categories
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
              <SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <Link href="#">
-                  <Users2 />
-                  Customers
+                  <Tags />
+                  Tags
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <Link href="#">
-                  <LineChart />
-                  Analytics
+                  <MessageSquare />
+                  Comments
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
