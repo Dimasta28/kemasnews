@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ChevronLeft, Upload, Sparkles } from 'lucide-react';
+import { ChevronLeft, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -309,24 +309,28 @@ export default function EditPostPage() {
               <CardHeader>
                 <CardTitle>Featured Image</CardTitle>
                 <CardDescription>
-                  Set a featured image for your post.
+                  Enter a URL for your post's featured image.
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                 <div className="grid gap-2">
+                 <div className="grid gap-4">
                   <Image
                     alt="Featured image preview"
                     className="aspect-square w-full rounded-md object-cover"
                     height="300"
-                    src={featuredImage}
+                    src={featuredImage || 'https://placehold.co/300x300.png'}
                     width="300"
                     data-ai-hint="placeholder image"
                   />
-                  <div className="grid grid-cols-3 items-center gap-2">
-                    <Button variant="outline" size="icon">
-                      <Upload className="h-4 w-4" />
-                      <span className="sr-only">Upload</span>
-                    </Button>
+                  <div className="grid gap-2">
+                    <Label htmlFor="featured-image-url">Image URL</Label>
+                    <Input
+                      id="featured-image-url"
+                      type="text"
+                      placeholder="https://example.com/image.png"
+                      value={featuredImage}
+                      onChange={(e) => setFeaturedImage(e.target.value)}
+                    />
                   </div>
                 </div>
               </CardContent>
