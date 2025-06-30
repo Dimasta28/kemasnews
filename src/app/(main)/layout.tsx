@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import {
   Folder,
@@ -6,6 +7,9 @@ import {
   Search,
   Tag,
   User,
+  Github,
+  Linkedin,
+  Twitter,
 } from "lucide-react";
 
 import {
@@ -75,6 +79,36 @@ export default async function MainLayout({
                 </SidebarMenuItem>
               </SidebarGroup>
               
+              <SidebarSeparator />
+
+              <SidebarGroup>
+                <SidebarGroupLabel>Social</SidebarGroupLabel>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+                      <Github />
+                      <span>GitHub</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+                      <Linkedin />
+                      <span>LinkedIn</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                      <Twitter />
+                      <span>Twitter</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarGroup>
+
               <SidebarSeparator />
 
               <CategoryList categories={categories} />
