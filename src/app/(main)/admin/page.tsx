@@ -1,8 +1,9 @@
 import { PostForm } from "@/components/admin/post-form";
-import { getTags } from "@/lib/posts";
+import { getCategories, getTags } from "@/lib/posts";
 
 export default async function AdminPage() {
   const allTags = await getTags();
+  const allCategories = await getCategories();
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -10,7 +11,7 @@ export default async function AdminPage() {
         <h1 className="font-headline text-4xl font-bold">Create New Post</h1>
         <p className="text-muted-foreground">Fill out the form below to publish a new article.</p>
       </header>
-      <PostForm allTags={allTags} />
+      <PostForm allTags={allTags} allCategories={allCategories} />
     </div>
   );
 }

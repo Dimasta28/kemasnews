@@ -249,3 +249,37 @@ export const deleteTag = async (name: string): Promise<{success: boolean, messag
   tags = tags.filter(t => t.toLowerCase() !== name.toLowerCase());
   return { success: true };
 }
+
+function generateExcerpt(content: string, length = 150) {
+  const textContent = content.replace(/<[^>]*>?/gm, ' ').replace(/\s\s+/g, ' ').trim();
+  if (textContent.length <= length) return textContent;
+  const trimmed = textContent.substring(0, length).trim();
+  return `${trimmed.substring(0, trimmed.lastIndexOf(' '))}...`;
+}
+
+export const addPost = async (data: { title: string, content: string, imageUrl: string, category: string, tags: string[] }): Promise<{success: boolean, message?: string, newSlug?: string}> => {
+    const newSlug = data.title.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+    
+    if (posts.some(p => p.slug === newSlug)) {
+        return { success: false, message: 'A post with a similar title already exists.' };
+    }
+
+    const newPost: Post = {
+        slug: newSlug,
+        title: data.title,
+        excerpt: generateExcerpt(data.content),
+        content: data.content,
+        imageUrl: data.imageUrl,
+        date: new Date().toISOString().split('T')[0],
+        author: {
+            name: "Admin User",
+            imageUrl: "https://placehold.co/100x100.png",
+            bio: "This post was created by a site administrator."
+        },
+        tags: data.tags,
+        category: data.category,
+    };
+
+    posts.unshift(newPost);
+    return { success: true, newSlug };
+};

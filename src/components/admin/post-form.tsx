@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useRouter } from "next/navigation";
 import {
   Form,
   FormControl,
@@ -18,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getTagSuggestions } from "@/app/actions";
+import { createPostAction } from "@/app/posts/actions";
 import { useToast } from "@/hooks/use-toast";
 import { Check, ChevronsUpDown, Loader2, Wand2, X } from "lucide-react";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
@@ -35,6 +37,13 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
 
@@ -42,6 +51,7 @@ const formSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters long."),
   content: z.string().min(100, "Content must be at least 100 characters long to allow for proper formatting."),
   imageUrl: z.string().url("Please enter a valid URL."),
+  category: z.string({ required_error: "Please select a category."}).min(1, "Please select a category."),
   tags: z.array(z.string()).min(1, "Please add at least one tag."),
 });
 
@@ -49,9 +59,11 @@ type PostFormValues = z.infer<typeof formSchema>;
 
 interface PostFormProps {
   allTags: string[];
+  allCategories: string[];
 }
 
-export function PostForm({ allTags }: PostFormProps) {
+export function PostForm({ allTags, allCategories }: PostFormProps) {
+  const router = useRouter();
   const [isSuggesting, setIsSuggesting] = useState(false);
   const [suggestedTags, setSuggestedTags] = useState<string[]>([]);
   const [isTagPopoverOpen, setIsTagPopoverOpen] = useState(false);
@@ -63,6 +75,7 @@ export function PostForm({ allTags }: PostFormProps) {
       title: "",
       content: "",
       imageUrl: "",
+      category: "",
       tags: [],
     },
   });
@@ -122,13 +135,21 @@ export function PostForm({ allTags }: PostFormProps) {
     remove(index);
   };
   
-  function onSubmit(data: PostFormValues) {
-    console.log(data);
-    toast({
-      title: "Post Submitted!",
-      description: "Check the console for the form data.",
-    });
-    form.reset();
+  async function onSubmit(data: PostFormValues) {
+    const result = await createPostAction(data);
+    if (result.success && result.newSlug) {
+      toast({
+        title: "Post Published!",
+        description: "Your new post is now live.",
+      });
+      router.push(`/posts/${result.newSlug}`);
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Error creating post",
+        description: result.message,
+      });
+    }
   }
 
   return (
@@ -183,10 +204,36 @@ export function PostForm({ allTags }: PostFormProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle>Tags</CardTitle>
+            <CardTitle>Organization</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-6">
+            <FormField
+              control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Category</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {allCategories.map((category) => (
+                        <SelectItem key={category} value={category}>
+                          {category}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <div className="space-y-4">
+              <FormLabel>Tags</FormLabel>
               <div className="flex flex-wrap gap-2">
                 {fields.map((field, index) => (
                   <Badge key={field.id} variant="default" className="flex items-center gap-1">
