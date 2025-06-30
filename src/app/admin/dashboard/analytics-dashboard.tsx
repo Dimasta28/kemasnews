@@ -55,6 +55,37 @@ const rangeOptions: { value: DateRange; label: string }[] = [
   { value: '365days', label: '1 Year' },
 ];
 
+const mockPosts = [
+  {
+    title: 'Getting Started with Next.js',
+    description: 'A comprehensive guide for beginners.',
+    author: 'John Doe',
+    status: 'Published',
+    date: '2023-10-23',
+    views: '1,200',
+  },
+  {
+    title: 'Tailwind CSS Best Practices',
+    description: 'Tips and tricks for clean and scalable CSS.',
+    author: 'Jane Smith',
+    status: 'Draft',
+    date: '2023-10-24',
+    views: '530',
+  },
+  {
+    title: 'Mastering React Hooks',
+    description: 'Deep dive into useState, useEffect, and more.',
+    author: 'John Doe',
+    status: 'Published',
+    date: '2023-09-15',
+    views: '2,500',
+  },
+];
+
+const mockCommentsCount = 4;
+const mockPostsCount = 5;
+
+
 export function AnalyticsDashboard({
   stats,
   chartData,
@@ -132,9 +163,9 @@ export function AnalyticsDashboard({
                 <span>Total Posts</span>
                 <FileText className="h-4 w-4" />
               </div>
-              <div className="mt-1 text-2xl font-bold">73</div>
+              <div className="mt-1 text-2xl font-bold">{mockPostsCount}</div>
               <p className="text-xs text-muted-foreground">
-                +5 since last month
+                +2 since last month
               </p>
             </div>
             <Separator />
@@ -143,9 +174,9 @@ export function AnalyticsDashboard({
                 <span>Total Comments</span>
                 <MessageSquare className="h-4 w-4" />
               </div>
-              <div className="mt-1 text-2xl font-bold">128</div>
+              <div className="mt-1 text-2xl font-bold">{mockCommentsCount}</div>
               <p className="text-xs text-muted-foreground">
-                +12 since last month
+                +4 since last month
               </p>
             </div>
             <Separator />
@@ -192,68 +223,28 @@ export function AnalyticsDashboard({
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
+              {mockPosts.map((post, index) => (
+              <TableRow key={index}>
                 <TableCell>
                   <div className="font-medium">
-                    Getting Started with Next.js
+                    {post.title}
                   </div>
                   <div className="hidden text-sm text-muted-foreground md:inline">
-                    A comprehensive guide for beginners.
+                    {post.description}
                   </div>
                 </TableCell>
-                <TableCell className="hidden sm:table-cell">John Doe</TableCell>
+                <TableCell className="hidden sm:table-cell">{post.author}</TableCell>
                 <TableCell className="hidden sm:table-cell">
-                  <Badge className="text-xs" variant="secondary">
-                    Published
+                  <Badge className="text-xs" variant={post.status === 'Published' ? 'secondary' : 'outline'}>
+                    {post.status}
                   </Badge>
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
-                  2023-10-23
+                  {post.date}
                 </TableCell>
-                <TableCell className="text-right">1,200</TableCell>
+                <TableCell className="text-right">{post.views}</TableCell>
               </TableRow>
-              <TableRow>
-                <TableCell>
-                  <div className="font-medium">
-                    Tailwind CSS Best Practices
-                  </div>
-                  <div className="hidden text-sm text-muted-foreground md:inline">
-                    Tips and tricks for clean and scalable CSS.
-                  </div>
-                </TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  Jane Smith
-                </TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  <Badge className="text-xs" variant="outline">
-                    Draft
-                  </Badge>
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  2023-10-24
-                </TableCell>
-                <TableCell className="text-right">530</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <div className="font-medium">Mastering React Hooks</div>
-                  <div className="hidden text-sm text-muted-foreground md:inline">
-                    Deep dive into useState, useEffect, and more.
-                  </div>
-                </TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  John Doe
-                </TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  <Badge className="text-xs" variant="secondary">
-                    Published
-                  </Badge>
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  2023-09-15
-                </TableCell>
-                <TableCell className="text-right">2,500</TableCell>
-              </TableRow>
+              ))}
             </TableBody>
           </Table>
         </CardContent>

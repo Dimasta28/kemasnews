@@ -1,7 +1,6 @@
 import { MoreHorizontal, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -26,53 +25,26 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-const mockPosts = [
-  {
-    title: 'Getting Started with Next.js',
-    status: 'Published',
-    date: '2023-10-23',
-    author: 'John Doe',
-  },
-  {
-    title: 'Tailwind CSS Best Practices',
-    status: 'Draft',
-    date: '2023-10-24',
-    author: 'Jane Smith',
-  },
-  {
-    title: 'Mastering React Hooks',
-    status: 'Published',
-    date: '2023-09-15',
-    author: 'John Doe',
-  },
-  {
-    title: 'A Guide to Server Components',
-    status: 'Published',
-    date: '2023-08-01',
-    author: 'Emily White',
-  },
-  {
-    title: 'The Future of Web Development',
-    status: 'Archived',
-    date: '2023-07-19',
-    author: 'Michael Brown',
-  },
+const mockTags = [
+  { name: 'Next.js', slug: 'next-js', postCount: 7 },
+  { name: 'React', slug: 'react', postCount: 12 },
+  { name: 'Tailwind CSS', slug: 'tailwind-css', postCount: 9 },
+  { name: 'Server Components', slug: 'server-components', postCount: 4 },
+  { name: 'UI/UX', slug: 'ui-ux', postCount: 6 },
 ];
 
-export default function PostsPage() {
+export default function TagsPage() {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
-          <CardTitle>Posts</CardTitle>
-          <CardDescription>
-            Manage your blog posts. Create, edit, and delete posts here.
-          </CardDescription>
+          <CardTitle>Tags</CardTitle>
+          <CardDescription>Manage your post tags.</CardDescription>
         </div>
         <Button asChild size="sm" className="gap-1">
           <Link href="#">
             <PlusCircle className="h-4 w-4" />
-            Create Post
+            Create Tag
           </Link>
         </Button>
       </CardHeader>
@@ -80,36 +52,22 @@ export default function PostsPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Title</TableHead>
-              <TableHead className="hidden sm:table-cell">Author</TableHead>
-              <TableHead className="hidden sm:table-cell">Status</TableHead>
-              <TableHead className="hidden md:table-cell">Date</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead className="hidden sm:table-cell">Slug</TableHead>
+              <TableHead className="text-right">Post Count</TableHead>
               <TableHead>
                 <span className="sr-only">Actions</span>
               </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {mockPosts.map((post, index) => (
-              <TableRow key={index}>
-                <TableCell className="font-medium">{post.title}</TableCell>
+            {mockTags.map((tag) => (
+              <TableRow key={tag.slug}>
+                <TableCell className="font-medium">{tag.name}</TableCell>
                 <TableCell className="hidden sm:table-cell">
-                  {post.author}
+                  {tag.slug}
                 </TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  <Badge
-                    variant={
-                      post.status === 'Published'
-                        ? 'secondary'
-                        : 'outline'
-                    }
-                  >
-                    {post.status}
-                  </Badge>
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {post.date}
-                </TableCell>
+                <TableCell className="text-right">{tag.postCount}</TableCell>
                 <TableCell>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>

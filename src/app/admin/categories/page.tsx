@@ -26,53 +26,28 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-const mockPosts = [
-  {
-    title: 'Getting Started with Next.js',
-    status: 'Published',
-    date: '2023-10-23',
-    author: 'John Doe',
-  },
-  {
-    title: 'Tailwind CSS Best Practices',
-    status: 'Draft',
-    date: '2023-10-24',
-    author: 'Jane Smith',
-  },
-  {
-    title: 'Mastering React Hooks',
-    status: 'Published',
-    date: '2023-09-15',
-    author: 'John Doe',
-  },
-  {
-    title: 'A Guide to Server Components',
-    status: 'Published',
-    date: '2023-08-01',
-    author: 'Emily White',
-  },
-  {
-    title: 'The Future of Web Development',
-    status: 'Archived',
-    date: '2023-07-19',
-    author: 'Michael Brown',
-  },
+const mockCategories = [
+  { name: 'Technology', slug: 'technology', postCount: 15 },
+  { name: 'Lifestyle', slug: 'lifestyle', postCount: 8 },
+  { name: 'Travel', slug: 'travel', postCount: 12 },
+  { name: 'Food', slug: 'food', postCount: 5 },
+  { name: 'Productivity', slug: 'productivity', postCount: 10 },
 ];
 
-export default function PostsPage() {
+export default function CategoriesPage() {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
-          <CardTitle>Posts</CardTitle>
+          <CardTitle>Categories</CardTitle>
           <CardDescription>
-            Manage your blog posts. Create, edit, and delete posts here.
+            Manage your post categories.
           </CardDescription>
         </div>
         <Button asChild size="sm" className="gap-1">
           <Link href="#">
             <PlusCircle className="h-4 w-4" />
-            Create Post
+            Create Category
           </Link>
         </Button>
       </CardHeader>
@@ -80,35 +55,23 @@ export default function PostsPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Title</TableHead>
-              <TableHead className="hidden sm:table-cell">Author</TableHead>
-              <TableHead className="hidden sm:table-cell">Status</TableHead>
-              <TableHead className="hidden md:table-cell">Date</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead className="hidden sm:table-cell">Slug</TableHead>
+              <TableHead className="text-right">Post Count</TableHead>
               <TableHead>
                 <span className="sr-only">Actions</span>
               </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {mockPosts.map((post, index) => (
-              <TableRow key={index}>
-                <TableCell className="font-medium">{post.title}</TableCell>
+            {mockCategories.map((category) => (
+              <TableRow key={category.slug}>
+                <TableCell className="font-medium">{category.name}</TableCell>
                 <TableCell className="hidden sm:table-cell">
-                  {post.author}
+                  {category.slug}
                 </TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  <Badge
-                    variant={
-                      post.status === 'Published'
-                        ? 'secondary'
-                        : 'outline'
-                    }
-                  >
-                    {post.status}
-                  </Badge>
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {post.date}
+                <TableCell className="text-right">
+                  {category.postCount}
                 </TableCell>
                 <TableCell>
                   <DropdownMenu>

@@ -67,7 +67,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild isActive={pathname.startsWith('/admin/categories')}>
-                <Link href="#">
+                <Link href="/admin/categories">
                   <Folder />
                   Categories
                 </Link>
@@ -75,7 +75,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild isActive={pathname.startsWith('/admin/tags')}>
-                <Link href="#">
+                <Link href="/admin/tags">
                   <Tags />
                   Tags
                 </Link>
@@ -83,7 +83,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild isActive={pathname.startsWith('/admin/comments')}>
-                <Link href="#">
+                <Link href="/admin/comments">
                   <MessageSquare />
                   Comments
                 </Link>
