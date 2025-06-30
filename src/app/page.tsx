@@ -236,7 +236,7 @@ export default function Home() {
             priority
           />
           <Image
-            src="https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png"
+            src="https://ddujuwmrnfufdqnvgaqb.supabase.co/storage/v1/object/public/catalogimage2025tes/logo-baru-kemas-2023-01.png"
             alt="Kemas Logo"
             width={120}
             height={30}
@@ -640,7 +640,7 @@ export default function Home() {
               className="hidden dark:block"
             />
             <Image
-              src="https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png"
+              src="https://ddujuwmrnfufdqnvgaqb.supabase.co/storage/v1/object/public/catalogimage2025tes/logo-baru-kemas-2023-01.png"
               alt="Kemas Logo"
               width={100}
               height={25}
