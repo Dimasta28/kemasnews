@@ -125,7 +125,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <header className="flex h-14 items-center gap-4 border-b bg-transparent px-4 sm:static sm:h-auto sm:border-0 sm:px-6">
+        <header className="flex h-14 items-center gap-4 border-b bg-transparent px-4 sm:static sm:h-auto sm:border-0 sm:px-6 sm:pt-6">
           <SidebarTrigger />
           <div className="flex-1" />
           <div className="relative">
