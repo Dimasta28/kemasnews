@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { Pencil, Plus, Tag, Trash2 } from "lucide-react";
+import { MoreHorizontal, Pencil, Plus, Tag, Trash2 } from "lucide-react";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -10,6 +10,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TagFormDialog } from './tag-form-dialog';
 import { DeleteTagDialog } from './delete-tag-dialog';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type TagListProps = {
   tags: string[];
@@ -50,16 +56,27 @@ export function TagList({ tags }: TagListProps) {
         <div className="flex flex-wrap gap-2 px-2">
             {tags.map((tag) => (
                 <div key={tag} className="group relative">
-                    <Badge variant="secondary" className="pr-7 cursor-pointer hover:bg-primary/20">
+                    <Badge variant="secondary" className="pr-7 hover:bg-primary/20">
                         {tag}
                     </Badge>
-                    <div className="absolute right-0 top-0 hidden h-full items-center pr-1 group-hover:flex">
-                         <button onClick={() => handleOpenEdit(tag)} className="h-4 w-4 flex items-center justify-center rounded-full hover:bg-black/10 dark:hover:bg-white/10">
-                            <Pencil className="h-2 w-2" />
-                         </button>
-                         <button onClick={() => handleOpenDelete(tag)} className="h-4 w-4 flex items-center justify-center rounded-full text-destructive/80 hover:text-destructive hover:bg-black/10 dark:hover:bg-white/10">
-                             <Trash2 className="h-2 w-2" />
-                         </button>
+                    <div className="absolute right-0 top-0 flex h-full items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <button className="h-full px-1 flex items-center justify-center rounded-r-full focus:outline-none focus:ring-1 focus:ring-ring">
+                                    <MoreHorizontal className="h-3 w-3" />
+                                </button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem onClick={() => handleOpenEdit(tag)} className="cursor-pointer">
+                                    <Pencil className="mr-2 h-3.5 w-3.5" />
+                                    Edit
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleOpenDelete(tag)} className="text-destructive cursor-pointer focus:text-destructive focus:bg-destructive/10">
+                                    <Trash2 className="mr-2 h-3.5 w-3.5" />
+                                    Delete
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                 </div>
             ))}

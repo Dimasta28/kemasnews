@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from "next/link";
-import { Folder, Pencil, Plus, Trash2 } from "lucide-react";
+import { Folder, MoreHorizontal, Pencil, Plus, Trash2 } from "lucide-react";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -12,6 +12,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { CategoryFormDialog } from './category-form-dialog';
 import { DeleteCategoryDialog } from './delete-category-dialog';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type CategoryListProps = {
   categories: string[];
@@ -51,20 +57,29 @@ export function CategoryList({ categories }: CategoryListProps) {
         </SidebarGroupLabel>
         {categories.map((category) => (
           <SidebarMenuItem key={category}>
-            <div className="group flex items-center w-full">
-              <SidebarMenuButton size="sm" asChild className="flex-grow">
-                <Link href={`/categories/${category.toLowerCase()}`}>
-                  {category}
-                </Link>
-              </SidebarMenuButton>
-              <div className="hidden group-hover:flex items-center pr-2">
-                <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => handleOpenEdit(category)}>
-                  <Pencil className="h-3 w-3" />
-                </Button>
-                <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive/80 hover:text-destructive" onClick={() => handleOpenDelete(category)}>
-                  <Trash2 className="h-3 w-3" />
-                </Button>
-              </div>
+            <SidebarMenuButton size="sm" asChild className="w-full justify-start pr-8">
+              <Link href={`/categories/${category.toLowerCase()}`}>
+                {category}
+              </Link>
+            </SidebarMenuButton>
+            <div className="absolute right-1 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="h-7 w-7">
+                    <MoreHorizontal className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => handleOpenEdit(category)} className="cursor-pointer">
+                    <Pencil className="mr-2 h-3.5 w-3.5" />
+                    Edit
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleOpenDelete(category)} className="text-destructive cursor-pointer focus:text-destructive focus:bg-destructive/10">
+                    <Trash2 className="mr-2 h-3.5 w-3.5" />
+                    Delete
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </SidebarMenuItem>
         ))}
