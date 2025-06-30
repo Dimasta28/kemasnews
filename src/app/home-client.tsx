@@ -90,10 +90,13 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
     }
   };
 
-  const tabCategories = [...allCategories]
-    .sort((a, b) => b.postCount - a.postCount)
-    .slice(0, 3)
-    .map(c => c.name);
+  // Create a unique list of categories, sort them, and get the top 3 for tabs
+  const uniqueCategories = allCategories.filter((category, index, self) =>
+    index === self.findIndex((c) => c.name === category.name)
+  );
+  const sortedUniqueCategories = [...uniqueCategories].sort((a, b) => b.postCount - a.postCount);
+  const tabCategories = sortedUniqueCategories.slice(0, 3);
+
 
   return (
     <div className="font-inter antialiased bg-[#EFECE9] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9] min-h-screen">
@@ -148,9 +151,9 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
             <Tabs value={activeFilter} onValueChange={setActiveFilter} className="overflow-x-auto scrollbar-hide">
               <TabsList>
                 <TabsTrigger value="All">All</TabsTrigger>
-                {tabCategories.map((catName) => (
-                  <TabsTrigger key={catName} value={catName}>
-                    {catName}
+                {tabCategories.map((category) => (
+                  <TabsTrigger key={category.id} value={category.name}>
+                    {category.name}
                   </TabsTrigger>
                 ))}
               </TabsList>
@@ -167,7 +170,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                 <DropdownMenuContent>
                   <DropdownMenuLabel>Filter by Category</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  {allCategories.map((category) => (
+                  {sortedUniqueCategories.map((category) => (
                     <DropdownMenuItem key={category.id} onSelect={() => setActiveFilter(category.name)}>
                       {category.name}
                     </DropdownMenuItem>
@@ -337,5 +340,3 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
     </div>
   );
 }
-
-    
