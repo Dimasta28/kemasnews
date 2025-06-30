@@ -125,7 +125,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <header className="flex h-14 items-center gap-4 border-b bg-transparent px-4 sm:static sm:h-auto sm:border-0 sm:px-6 sm:pt-6">
+        <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background/95 px-4 backdrop-blur-sm sm:px-6">
           <SidebarTrigger />
           <div className="flex-1" />
           <div className="relative">
@@ -165,7 +165,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
-        <main className="flex-1 p-4 sm:px-6 sm:py-6">{children}</main>
+        <main className="flex-1 overflow-y-auto p-4 sm:px-6 sm:py-6">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
