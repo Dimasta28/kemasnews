@@ -209,19 +209,21 @@ export default function FrontendPage() {
           boxShadow: isScrolled ? '0 4px 12px rgba(0,0,0,0.1)' : '0px 0px 0px rgba(0,0,0,0)',
         }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[96%] max-w-6xl mx-auto rounded-full p-2 px-4 flex items-center justify-between transition-all duration-300 ease-out border border-gray-200 dark:border-gray-700 backdrop-blur-md"
+        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[96%] max-w-6xl mx-auto rounded-full p-2 px-4 flex items-center transition-all duration-300 ease-out border border-gray-200 dark:border-gray-700 backdrop-blur-md"
       >
-        {/* Logo/Icon */}
-        <Image
-          src="https://placehold.co/120x40.png"
-          alt="BlogKu Logo"
-          width={100}
-          height={33}
-          data-ai-hint="logo company"
-        />
+        {/* Left: Logo */}
+        <div className="flex-1 flex justify-start">
+            <Image
+            src="https://placehold.co/120x40.png"
+            alt="BlogKu Logo"
+            width={100}
+            height={33}
+            data-ai-hint="logo company"
+            />
+        </div>
 
-        {/* Menu Navigasi Desktop */}
-        <nav className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        {/* Center: Menu Navigasi Desktop */}
+        <nav className="hidden md:flex">
           <ul className="flex space-x-8 text-base">
             <li>
               <a href="#" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors flex items-center"><Home size={18} className="mr-2" /> Home</a>
@@ -238,54 +240,56 @@ export default function FrontendPage() {
           </ul>
         </nav>
 
-        {/* Search Icon & Notifikasi & Tombol Menu Mobile */}
-        <div className="flex items-center space-x-2">
-          <motion.div
-            layout
-            className="relative flex items-center"
-            transition={{ type: "spring", stiffness: 700, damping: 50 }}
-          >
-            <AnimatePresence>
-              {isSearchExpanded ? (
-                <motion.input
-                  key="search-input"
-                  initial={{ width: 0, opacity: 0 }}
-                  animate={{ width: '150px', opacity: 1 }}
-                  exit={{ width: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  type="text"
-                  placeholder="Cari..."
-                  className="px-3 py-1 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm"
-                  onBlur={() => setIsSearchExpanded(false)}
-                  autoFocus
-                />
-              ) : (
-                <motion.button
-                  key="search-icon"
-                  initial={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.1 }}
-                  onClick={() => setIsSearchExpanded(true)}
-                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                >
-                  <Search size={20} />
-                </motion.button>
-              )}
-            </AnimatePresence>
-          </motion.div>
-          <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-            <Bell size={20} />
-          </button>
-          
-          {/* Tombol Menu Mobile */}
-          <div className="md:hidden">
-            <button 
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+        {/* Right: Actions */}
+        <div className="flex-1 flex justify-end">
+            <div className="flex items-center space-x-2">
+            <motion.div
+                layout
+                className="relative flex items-center"
+                transition={{ type: "spring", stiffness: 700, damping: 50 }}
             >
-              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                <AnimatePresence>
+                {isSearchExpanded ? (
+                    <motion.input
+                    key="search-input"
+                    initial={{ width: 0, opacity: 0 }}
+                    animate={{ width: '150px', opacity: 1 }}
+                    exit={{ width: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    type="text"
+                    placeholder="Cari..."
+                    className="px-3 py-1 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm"
+                    onBlur={() => setIsSearchExpanded(false)}
+                    autoFocus
+                    />
+                ) : (
+                    <motion.button
+                    key="search-icon"
+                    initial={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.1 }}
+                    onClick={() => setIsSearchExpanded(true)}
+                    className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    >
+                    <Search size={20} />
+                    </motion.button>
+                )}
+                </AnimatePresence>
+            </motion.div>
+            <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <Bell size={20} />
             </button>
-          </div>
+            
+            {/* Tombol Menu Mobile */}
+            <div className="md:hidden">
+                <button 
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                >
+                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                </button>
+            </div>
+            </div>
         </div>
       </motion.header>
 
