@@ -30,15 +30,11 @@ import {
   AvatarFallback,
   AvatarImage,
 } from '@/components/ui/avatar';
+import { getMembers, type Member } from '@/services/memberService';
 
-const mockMembers: {
-  name: string;
-  email: string;
-  avatar: string;
-  status: 'Active' | 'Inactive';
-}[] = [];
+export default async function MembersPage() {
+  const members: Member[] = await getMembers();
 
-export default function MembersPage() {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -48,7 +44,7 @@ export default function MembersPage() {
             Manage your registered members.
           </CardDescription>
         </div>
-        <Button asChild size="sm" className="gap-1">
+        <Button asChild size="sm" className="gap-1" disabled>
           <Link href="#">
             <PlusCircle className="h-4 w-4" />
             Create Member
@@ -64,6 +60,7 @@ export default function MembersPage() {
               </TableHead>
               <TableHead>Name</TableHead>
               <TableHead className="hidden md:table-cell">Email</TableHead>
+              <TableHead className="hidden md:table-cell">Company</TableHead>
               <TableHead className="hidden sm:table-cell">Status</TableHead>
               <TableHead>
                 <span className="sr-only">Actions</span>
@@ -71,49 +68,60 @@ export default function MembersPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {mockMembers.map((member, index) => (
-              <TableRow key={index}>
-                <TableCell className="hidden sm:table-cell">
-                  <Avatar className="h-9 w-9">
-                    <AvatarImage src={member.avatar} alt="Avatar" data-ai-hint="person avatar"/>
-                    <AvatarFallback>{member.name.substring(0, 2).toUpperCase()}</AvatarFallback>
-                  </Avatar>
-                </TableCell>
-                <TableCell className="font-medium">
-                  {member.name}
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {member.email}
-                </TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  <Badge
-                    variant={
-                      member.status === 'Active'
-                        ? 'secondary'
-                        : 'outline'
-                    }
-                  >
-                    {member.status}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button aria-haspopup="true" size="icon" variant="ghost">
-                        <MoreHorizontal className="h-4 w-4" />
-                        <span className="sr-only">Toggle menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem>Edit</DropdownMenuItem>
-                      <DropdownMenuItem>View Details</DropdownMenuItem>
-                      <DropdownMenuItem className="text-red-500">Delete</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+            {members.length > 0 ? (
+              members.map((member) => (
+                <TableRow key={member.id}>
+                  <TableCell className="hidden sm:table-cell">
+                    <Avatar className="h-9 w-9">
+                      <AvatarImage src={member.avatar} alt="Avatar" data-ai-hint="person avatar"/>
+                      <AvatarFallback>{member.name.substring(0, 2).toUpperCase()}</AvatarFallback>
+                    </Avatar>
+                  </TableCell>
+                  <TableCell className="font-medium">
+                    {member.name}
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {member.email}
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {member.company}
+                  </TableCell>
+                  <TableCell className="hidden sm:table-cell">
+                    <Badge
+                      variant={
+                        member.status === 'Active'
+                          ? 'secondary'
+                          : 'outline'
+                      }
+                    >
+                      {member.status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button aria-haspopup="true" size="icon" variant="ghost">
+                          <MoreHorizontal className="h-4 w-4" />
+                          <span className="sr-only">Toggle menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuItem>View Details</DropdownMenuItem>
+                        <DropdownMenuItem className="text-red-500">Delete</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={6} className="h-24 text-center">
+                  No members found.
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </CardContent>

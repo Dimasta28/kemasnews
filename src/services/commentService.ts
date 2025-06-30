@@ -1,4 +1,3 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -22,43 +21,25 @@ export interface Comment {
 interface CommentFormState {
     postId: string;
     comment: string;
-    name: string;
-    email: string;
-    company: string;
+    authorId: string;
+    authorName: string;
+    authorEmail: string;
 }
 
 export async function submitComment(data: CommentFormState) {
-    const { postId, comment, name, email, company } = data;
+    const { postId, comment, authorId, authorName, authorEmail } = data;
 
-    if (!postId || !comment || !name || !email) {
-        return { success: false, message: 'Please fill out all required fields.' };
+    if (!postId || !comment || !authorId) {
+        return { success: false, message: 'Missing required data to submit comment.' };
     }
 
     try {
-        // Check if member already exists
-        const membersRef = collection(db, "members");
-        const q = query(membersRef, where("email", "==", email));
-        const querySnapshot = await getDocs(q);
-
-        // If member doesn't exist, create one
-        if (querySnapshot.empty) {
-            await addDoc(membersRef, {
-                name,
-                email,
-                company,
-                avatar: `https://placehold.co/100x100.png`,
-                status: 'Active',
-                createdAt: serverTimestamp(),
-            });
-        }
-
-        // Add the comment
         const commentsRef = collection(db, "comments");
         await addDoc(commentsRef, {
             postId,
-            author: name,
-            authorEmail: email,
-            authorCompany: company,
+            author: authorName,
+            authorEmail: authorEmail,
+            authorId: authorId,
             comment,
             status: 'Pending',
             avatar: `https://placehold.co/100x100.png`,
@@ -93,7 +74,7 @@ export async function getComments(postId: string): Promise<Comment[]> {
                 postId: data.postId,
                 author: data.author,
                 authorEmail: data.authorEmail,
-                authorCompany: data.authorCompany,
+                authorCompany: data.authorCompany || '',
                 comment: data.comment,
                 status: data.status,
                 avatar: data.avatar,
@@ -128,7 +109,7 @@ export async function getAllComments(): Promise<Comment[]> {
                 postId: data.postId,
                 author: data.author,
                 authorEmail: data.authorEmail,
-                authorCompany: data.authorCompany,
+                authorCompany: data.authorCompany || '',
                 comment: data.comment,
                 status: data.status,
                 avatar: data.avatar,
