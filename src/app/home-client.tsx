@@ -145,7 +145,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
             href="#"
             className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition"
           >
-            HOME
+            Home
           </a>
           <Popover>
             <PopoverTrigger asChild>
@@ -267,7 +267,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: Post[] }) {
                     className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    HOME
+                    Home
                   </a>
                 </li>
                 <li>
