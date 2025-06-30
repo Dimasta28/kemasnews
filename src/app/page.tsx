@@ -114,19 +114,31 @@ export default function FrontendPage() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [articles, setArticles] = useState<Article[]>(dummyArticles);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const loadMoreRef = useRef(null); // Ref untuk IntersectionObserver
-  const isLoadMoreVisible = useIntersectionObserver(loadMoreRef, { threshold: 0.5 }); // Deteksi elemen untuk infinite scroll
+  const loadMoreRef = useRef(null);
+  const isLoadMoreVisible = useIntersectionObserver(loadMoreRef, { threshold: 0.5 });
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const lastScrollY = useRef(0);
+  const [headerVisible, setHeaderVisible] = useState(true);
 
 
   // Efek untuk mendeteksi scroll dan mengubah tampilan header
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) { // Setelah 50px scroll
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > 50) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
       }
+
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        setHeaderVisible(false);
+      } else {
+        setHeaderVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -187,19 +199,14 @@ export default function FrontendPage() {
     <div className="font-inter antialiased bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 min-h-screen">
       {/* Header Ala Dynamic Island */}
       <motion.header
-        initial={false}
-        animate={isScrolled ? "scrolled" : "top"}
-        variants={{
-          top: {
-            backgroundColor: isDarkMode ? 'rgba(31, 41, 55, 0)' : 'rgba(255, 255, 255, 0)',
-            backdropFilter: 'blur(0px)',
-            boxShadow: '0px 0px 0px rgba(0,0,0,0)',
-          },
-          scrolled: {
-            backgroundColor: isDarkMode ? 'rgba(31, 41, 55, 0.8)' : 'rgba(255, 255, 255, 0.8)',
-            backdropFilter: 'blur(10px)',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-          },
+        initial={{ y: 0 }}
+        animate={{
+          y: headerVisible ? 0 : '-120%',
+          backgroundColor: isScrolled
+            ? (isDarkMode ? 'rgba(31, 41, 55, 0.8)' : 'rgba(255, 255, 255, 0.8)')
+            : (isDarkMode ? 'rgba(31, 41, 55, 0)' : 'rgba(255, 255, 255, 0)'),
+          backdropFilter: isScrolled ? 'blur(10px)' : 'blur(0px)',
+          boxShadow: isScrolled ? '0 4px 12px rgba(0,0,0,0.1)' : '0px 0px 0px rgba(0,0,0,0)',
         }}
         transition={{ duration: 0.3, ease: "easeOut" }}
         className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[96%] max-w-6xl mx-auto rounded-full p-2 px-4 flex items-center justify-between transition-all duration-300 ease-out border border-gray-200 dark:border-gray-700 backdrop-blur-md"
