@@ -3,6 +3,7 @@ import Link from "next/link";
 import {
   Folder,
   Home,
+  LayoutDashboard,
   PenSquare,
   Search,
   Tag,
@@ -70,6 +71,14 @@ export default async function MainLayout({
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
                     <Link href="/admin">
+                      <LayoutDashboard />
+                      <span>Admin</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <Link href="/admin/posts/create">
                       <PenSquare />
                       <span>Create Post</span>
                     </Link>
