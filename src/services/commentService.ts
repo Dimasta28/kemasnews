@@ -2,7 +2,7 @@
 'use server';
 
 import { db } from '@/lib/firebase';
-import { collection, addDoc, getDocs, query, where, serverTimestamp, Timestamp, orderBy } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, serverTimestamp, Timestamp } from "firebase/firestore";
 import { formatDistanceToNow } from 'date-fns';
 
 
@@ -77,11 +77,10 @@ export async function getComments(postId: string): Promise<Comment[]> {
     try {
         const commentsRef = collection(db, "comments");
         // This query was simplified to avoid the need for a composite index.
-        // We will filter for 'Approved' status after fetching.
+        // We will filter and sort after fetching.
         const q = query(
             commentsRef, 
-            where("postId", "==", postId),
-            orderBy("date", "desc")
+            where("postId", "==", postId)
         );
         const querySnapshot = await getDocs(q);
 
@@ -97,9 +96,15 @@ export async function getComments(postId: string): Promise<Comment[]> {
                 comment: data.comment,
                 status: data.status,
                 avatar: data.avatar,
+                dateObj: date, // Temporary field for sorting
                 date: `${formatDistanceToNow(date)} ago`,
-            } as Comment;
-        }).filter(comment => comment.status === 'Approved');
+            };
+        })
+        .filter(comment => comment.status === 'Approved')
+        // Sort by date descending (newest first)
+        .sort((a, b) => b.dateObj.getTime() - a.dateObj.getTime())
+        // Remove temporary field and cast to Comment
+        .map(({ dateObj, ...rest }) => rest as Comment); 
 
         return comments;
     } catch (error) {
