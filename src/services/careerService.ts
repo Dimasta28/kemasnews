@@ -34,6 +34,7 @@ export interface CompanyBenefit {
 export interface CareerPageData {
   heroTitle: string;
   heroDescription: string;
+  heroImageUrl: string;
   positionsTitle: string;
   positionsDescription: string;
   whyJoinTitle: string;
@@ -51,6 +52,7 @@ export async function getCareerPageData(): Promise<CareerPageData> {
   const defaults: CareerPageData = {
     heroTitle: 'Build The Future With Us',
     heroDescription: 'We\'re looking for passionate people to join our mission. Explore our open positions and find your place at PT. Kemas.',
+    heroImageUrl: 'https://placehold.co/1920x1080.png',
     positionsTitle: 'Open Positions',
     positionsDescription: 'Find the role that\'s right for you. We\'re always looking for talented individuals to join our growing team.',
     whyJoinTitle: 'Why Join PT. Kemas?',
@@ -70,6 +72,7 @@ export async function getCareerPageData(): Promise<CareerPageData> {
     const pageData: CareerPageData = {
         heroTitle: data.heroTitle || defaults.heroTitle,
         heroDescription: data.heroDescription || defaults.heroDescription,
+        heroImageUrl: data.heroImageUrl || defaults.heroImageUrl,
         positionsTitle: data.positionsTitle || defaults.positionsTitle,
         positionsDescription: data.positionsDescription || defaults.positionsDescription,
         whyJoinTitle: data.whyJoinTitle || defaults.whyJoinTitle,

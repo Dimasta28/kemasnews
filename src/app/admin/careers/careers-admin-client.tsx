@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import Image from 'next/image';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -97,16 +98,36 @@ export function CareersAdminClient({ initialPageData, initialJobOpenings }: Care
       <Card>
         <CardHeader>
           <CardTitle>Hero Section</CardTitle>
-          <CardDescription>The main title and introductory text at the top of the page.</CardDescription>
+          <CardDescription>The main title, introductory text, and background image at the top of the page.</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid gap-2">
-            <Label htmlFor="heroTitle">Hero Title</Label>
-            <Input id="heroTitle" value={data.heroTitle || ''} onChange={(e) => handleInputChange('heroTitle', e.target.value)} />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="heroDescription">Hero Description</Label>
-            <Textarea id="heroDescription" value={data.heroDescription || ''} onChange={(e) => handleInputChange('heroDescription', e.target.value)} />
+        <CardContent>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div className="grid gap-2">
+                <Label htmlFor="heroTitle">Hero Title</Label>
+                <Input id="heroTitle" value={data.heroTitle || ''} onChange={(e) => handleInputChange('heroTitle', e.target.value)} />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="heroDescription">Hero Description</Label>
+                <Textarea id="heroDescription" value={data.heroDescription || ''} onChange={(e) => handleInputChange('heroDescription', e.target.value)} />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="heroImageUrl">Hero Image URL</Label>
+                <Input id="heroImageUrl" value={data.heroImageUrl || ''} onChange={(e) => handleInputChange('heroImageUrl', e.target.value)} placeholder="https://placehold.co/1920x1080.png" />
+              </div>
+            </div>
+            <div className="space-y-2">
+                <Label>Image Preview</Label>
+                <div className="relative aspect-video w-full overflow-hidden rounded-lg border bg-muted">
+                    <Image
+                        src={data.heroImageUrl || 'https://placehold.co/1920x1080.png'}
+                        alt="Hero image preview"
+                        fill
+                        className="object-cover"
+                        data-ai-hint="office team collaboration"
+                    />
+                </div>
+            </div>
           </div>
         </CardContent>
       </Card>

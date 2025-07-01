@@ -21,11 +21,10 @@ export default async function CareersPage() {
         {/* Hero Section */}
         <section className="relative h-[60vh] flex items-center justify-center text-center text-white bg-black">
             <Image
-                src="https://placehold.co/1920x1080.png"
+                src={pageData.heroImageUrl}
                 alt="Our team at work"
-                layout="fill"
-                objectFit="cover"
-                className="z-0 opacity-40"
+                fill
+                className="z-0 opacity-40 object-cover"
                 data-ai-hint="office team collaboration"
                 priority
             />
