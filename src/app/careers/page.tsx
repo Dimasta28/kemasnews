@@ -4,7 +4,7 @@ import { SiteFooter } from '@/components/site-footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import Image from 'next/image';
-import { Building, MapPin } from 'lucide-react';
+import { Building, MapPin, Calendar } from 'lucide-react';
 import { getCareerPageData, getJobOpenings } from '@/services/careerService';
 import { DynamicIcon } from '@/components/ui/dynamic-icon';
 import { Separator } from '@/components/ui/separator';
@@ -75,6 +75,10 @@ export default async function CareersPage() {
                                     <div className="flex items-center text-sm text-muted-foreground gap-2">
                                         <MapPin className="h-4 w-4 flex-shrink-0" />
                                         <span>{job.location}</span>
+                                    </div>
+                                    <div className="flex items-center text-sm text-muted-foreground gap-2">
+                                        <Calendar className="h-4 w-4 flex-shrink-0" />
+                                        <span>{job.createdAt}</span>
                                     </div>
                                 </div>
                                 {job.qualifications && (
