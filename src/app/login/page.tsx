@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -44,9 +45,29 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="flex min-h-screen w-full items-center justify-center bg-background p-4">
+    <main className="flex min-h-screen w-full flex-col items-center justify-center bg-background p-4">
+        <div className="mb-8">
+            <Link href="/" aria-label="Back to home">
+                <Image
+                    src="https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png"
+                    alt="Kemas Logo"
+                    width={180}
+                    height={45}
+                    className="hidden dark:block"
+                    priority
+                />
+                <Image
+                    src="https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png"
+                    alt="Kemas Logo"
+                    width={180}
+                    height={45}
+                    className="block dark:hidden"
+                    priority
+                />
+            </Link>
+        </div>
         <Card className="w-full max-w-md">
-          <CardHeader>
+          <CardHeader className="text-center">
             <CardTitle>Log In</CardTitle>
             <CardDescription>Enter your email and password to log in.</CardDescription>
           </CardHeader>
