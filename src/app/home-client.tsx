@@ -29,7 +29,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 
 // Helper for category styling
@@ -90,12 +89,11 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
     }
   };
 
-  // Create a unique list of categories, sort them, and get the top 3 for tabs
+  // Create a unique list of categories and sort them
   const uniqueCategories = allCategories.filter((category, index, self) =>
     index === self.findIndex((c) => c.name === category.name)
   );
   const sortedUniqueCategories = [...uniqueCategories].sort((a, b) => b.postCount - a.postCount);
-  const tabCategories = sortedUniqueCategories.slice(0, 3);
 
 
   return (
@@ -145,31 +143,23 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
         </section>
 
         <section
-          className={`sticky z-40 bg-background/95 p-4 border-b border-border shadow-sm top-0 backdrop-blur-sm`}
+          className={`sticky z-40 bg-background/95 p-4 border-b border-border shadow-sm top-[calc(var(--header-height,0px)+1rem)] backdrop-blur-sm`}
         >
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <Tabs value={activeFilter} onValueChange={setActiveFilter} className="overflow-x-auto scrollbar-hide">
-              <TabsList>
-                <TabsTrigger value="All">All</TabsTrigger>
-                {tabCategories.map((category) => (
-                  <TabsTrigger key={category.id} value={category.name}>
-                    {category.name}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </Tabs>
-        
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-end gap-4">
             <div className="flex items-center gap-2 w-full md:w-auto">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="flex-shrink-0">
-                    Categories
+                  <Button variant="outline" className="flex-shrink-0 w-[180px] justify-between">
+                    <span className="truncate">{activeFilter === 'All' ? 'All Categories' : activeFilter}</span>
                     <ChevronDownIcon className="ml-2 h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuLabel>Filter by Category</DropdownMenuLabel>
                   <DropdownMenuSeparator />
+                  <DropdownMenuItem onSelect={() => setActiveFilter('All')}>
+                      All Categories
+                  </DropdownMenuItem>
                   {sortedUniqueCategories.map((category) => (
                     <DropdownMenuItem key={category.id} onSelect={() => setActiveFilter(category.name)}>
                       {category.name}
