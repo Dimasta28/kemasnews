@@ -105,7 +105,7 @@ export function SiteHeader() {
                 </div>
                 <Link href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">News</Link>
                 <Link href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Press Release</Link>
-                <Link href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Careers</Link>
+                <Link href="/careers" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Careers</Link>
                 <Link href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">CSR</Link>
                 <Link href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Kemas</Link>
                 <Link href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Love It</Link>
@@ -206,7 +206,7 @@ export function SiteHeader() {
                         <ul className="space-y-4 text-lg text-gray-700 dark:text-gray-400">
                            <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>News</Link></li>
                            <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Press Release</Link></li>
-                           <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Careers</Link></li>
+                           <li><Link href="/careers" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Careers</Link></li>
                            <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>CSR</Link></li>
                            <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Kemas</Link></li>
                            <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Love It</Link></li>
