@@ -5,8 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ChevronLeft, MessageCircle, User, Calendar, Folder } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import React, { useState, useEffect } from 'react';
+import DOMPurify from 'dompurify';
 
 import type { Post } from '@/services/postService';
 import type { Comment } from '@/services/commentService';
@@ -28,6 +28,14 @@ interface PostClientProps {
 }
 
 export function PostClient({ post, recentPosts, comments, settings }: PostClientProps) {
+    const [sanitizedContent, setSanitizedContent] = useState('');
+
+    useEffect(() => {
+        // DOMPurify needs a browser environment, so we run it on the client side.
+        if (typeof window !== 'undefined') {
+            setSanitizedContent(DOMPurify.sanitize(post.content));
+        }
+    }, [post.content]);
 
     const variants = {
         hidden: { opacity: 0, y: 20 },
@@ -132,11 +140,8 @@ export function PostClient({ post, recentPosts, comments, settings }: PostClient
                             initial="hidden"
                             animate="visible"
                             variants={variants}
-                        >
-                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                {post.content}
-                            </ReactMarkdown>
-                        </motion.div>
+                            dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+                        />
 
                         <motion.div
                             className="mt-10 pt-6 border-t border-border"
