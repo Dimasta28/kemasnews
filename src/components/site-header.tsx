@@ -103,6 +103,7 @@ export function SiteHeader() {
                   <h3 className="font-bold text-lg text-[#610C27] dark:text-[#E3C1B4]">About Company</h3>
                   <p className="text-sm text-muted-foreground mt-1">Explore more about our company.</p>
                 </div>
+                <Link href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">About Us</Link>
                 <Link href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">News</Link>
                 <Link href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Press Release</Link>
                 <Link href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">CSR</Link>
@@ -206,6 +207,7 @@ export function SiteHeader() {
                       </AccordionTrigger>
                       <AccordionContent className="pt-4 overflow-hidden">
                         <ul className="space-y-4 text-lg text-gray-700 dark:text-gray-400">
+                           <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>About Us</Link></li>
                            <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>News</Link></li>
                            <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Press Release</Link></li>
                            <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>CSR</Link></li>
