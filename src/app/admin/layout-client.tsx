@@ -14,6 +14,7 @@ import {
   Settings,
   Tags,
   Megaphone,
+  Briefcase,
 } from 'lucide-react';
 
 import {
@@ -174,6 +175,17 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 <Link href="/admin/promo-banner">
                   <Megaphone />
                   Promo Banner
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+             <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname.startsWith('/admin/careers')}
+              >
+                <Link href="/admin/careers">
+                  <Briefcase />
+                  Careers
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
