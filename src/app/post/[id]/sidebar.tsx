@@ -1,8 +1,10 @@
+
 'use client';
 
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search, LogOut } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -86,7 +88,7 @@ export function Sidebar({ recentPosts, banner }: { recentPosts: Post[], banner: 
         <CardContent>
           <div className="space-y-4">
             {recentPosts.map((post, index) => (
-              <div key={post.id}>
+              <motion.div key={post.id} whileHover={{ x: 4 }} transition={{ type: 'spring', stiffness: 300 }}>
                 <Link href={`/post/${post.id}`} className="group flex items-center gap-4">
                   <div className="relative h-16 w-16 flex-shrink-0 rounded-md overflow-hidden">
                     <Image
@@ -105,7 +107,7 @@ export function Sidebar({ recentPosts, banner }: { recentPosts: Post[], banner: 
                   </div>
                 </Link>
                 {index < recentPosts.length - 1 && <Separator className="mt-4" />}
-              </div>
+              </motion.div>
             ))}
           </div>
         </CardContent>
