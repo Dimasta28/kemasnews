@@ -67,11 +67,8 @@ export default function LoginPage() {
               <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting ? 'Logging in...' : 'Log In'}
               </Button>
-              <div className="text-center text-sm text-muted-foreground">
-                Don't have an account?{' '}
-                <Link href="/register" className="font-semibold text-primary hover:underline">
-                  Register
-                </Link>
+              <div className="mt-4 text-center text-sm text-muted-foreground">
+                Access is restricted to authorized users.
               </div>
             </form>
           </CardContent>

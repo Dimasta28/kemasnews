@@ -58,7 +58,7 @@ export function Sidebar({ recentPosts, banner }: { recentPosts: Post[], banner: 
         <CardContent>
           <p className="text-sm text-muted-foreground mb-4">Login to access exclusive content and offers.</p>
           <Button className="w-full" asChild>
-            <Link href="/login">Login / Register</Link>
+            <Link href="/login">Login</Link>
           </Button>
         </CardContent>
       </Card>

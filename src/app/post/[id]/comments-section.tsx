@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -81,14 +82,9 @@ export function CommentsSection({ postId, initialComments = [] }: { postId: stri
                 </CardHeader>
                 <CardContent>
                     <p className="text-muted-foreground mb-4">You must be logged in to leave a comment.</p>
-                    <div className="flex gap-4 justify-center">
-                        <Button asChild>
-                            <Link href="/login">Log In</Link>
-                        </Button>
-                        <Button variant="secondary" asChild>
-                            <Link href="/register">Register</Link>
-                        </Button>
-                    </div>
+                    <Button asChild>
+                        <Link href="/login">Log In</Link>
+                    </Button>
                 </CardContent>
             </Card>
         );
