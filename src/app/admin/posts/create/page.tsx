@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { ChevronLeft, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -32,13 +31,7 @@ import { generateDescription } from '@/ai/flows/generate-description-flow';
 import { createPost, Post } from '@/services/postService';
 import { getCategories, type Category } from '@/services/categoryService';
 import { Skeleton } from '@/components/ui/skeleton';
-
-import 'react-quill/dist/quill.snow.css';
-
-const ReactQuill = dynamic(
-  () => import('react-quill'), 
-  { ssr: false, loading: () => <Skeleton className="h-[300px] w-full rounded-md" /> }
-);
+import QuillEditor from '@/components/quill-editor';
 
 
 export default function CreatePostPage() {
@@ -249,13 +242,11 @@ export default function CreatePostPage() {
                         {isGenerating ? 'Generating...' : 'Generate with AI'}
                       </Button>
                     </div>
-                    <div className="grid gap-3 [&_.ql-container]:min-h-[300px] [&_.ql-container]:rounded-b-md [&_.ql-toolbar]:rounded-t-md [&_.ql-toolbar]:border-input [&_.ql-container]:border-input">
-                      <ReactQuill
-                        theme="snow"
-                        value={content}
-                        onChange={setContent}
-                      />
-                    </div>
+                    <QuillEditor
+                      theme="snow"
+                      value={content}
+                      onChange={setContent}
+                    />
                   </div>
                 </div>
               </CardContent>
