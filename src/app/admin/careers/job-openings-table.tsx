@@ -69,6 +69,7 @@ export function JobOpeningsTable({ initialJobs, onJobsChange }: JobOpeningsTable
               <TableHead>Department</TableHead>
               <TableHead>Location</TableHead>
               <TableHead>Type</TableHead>
+              <TableHead>Date Created</TableHead>
               <TableHead><span className="sr-only">Actions</span></TableHead>
             </TableRow>
           </TableHeader>
@@ -89,6 +90,7 @@ export function JobOpeningsTable({ initialJobs, onJobsChange }: JobOpeningsTable
                 <TableCell>{job.department}</TableCell>
                 <TableCell>{job.location}</TableCell>
                 <TableCell>{job.type}</TableCell>
+                <TableCell>{job.createdAt}</TableCell>
                 <TableCell className="text-right">
                    <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -104,7 +106,7 @@ export function JobOpeningsTable({ initialJobs, onJobsChange }: JobOpeningsTable
               </TableRow>
             )) : (
               <TableRow>
-                <TableCell colSpan={6} className="h-24 text-center">No job openings found.</TableCell>
+                <TableCell colSpan={7} className="h-24 text-center">No job openings found.</TableCell>
               </TableRow>
             )}
           </TableBody>

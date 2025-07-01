@@ -13,8 +13,8 @@ import {
   serverTimestamp,
   orderBy,
   query,
+  Timestamp,
 } from 'firebase/firestore';
-import type { IconName } from '@/components/ui/dynamic-icon';
 
 export interface JobOpening {
   id: string;
@@ -24,10 +24,11 @@ export interface JobOpening {
   type: string;
   imageUrl?: string;
   qualifications?: string;
+  createdAt: string;
 }
 
 export interface CompanyBenefit {
-  icon: IconName;
+  icon: string;
   title: string;
   description: string;
 }
@@ -97,10 +98,11 @@ export async function updateCareerPageData(data: Partial<CareerPageData>): Promi
 // Get all job openings
 export async function getJobOpenings(): Promise<JobOpening[]> {
   const jobsCollection = collection(db, 'jobOpenings');
-  const q = query(jobsCollection, orderBy('title', 'asc'));
+  const q = query(jobsCollection, orderBy('createdAt', 'desc'));
   const snapshot = await getDocs(q);
   const jobs: JobOpening[] = snapshot.docs.map(doc => {
     const data = doc.data();
+    const createdAt = (data.createdAt as Timestamp)?.toDate() || new Date();
     return {
       id: doc.id,
       title: data.title || '',
@@ -109,13 +111,18 @@ export async function getJobOpenings(): Promise<JobOpening[]> {
       type: data.type || '',
       imageUrl: data.imageUrl || '',
       qualifications: data.qualifications || '',
+      createdAt: createdAt.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }),
     };
   });
   return jobs;
 }
 
 // Create a new job opening
-export async function createJobOpening(jobData: Omit<JobOpening, 'id'>): Promise<string> {
+export async function createJobOpening(jobData: Omit<JobOpening, 'id' | 'createdAt'>): Promise<string> {
   const docRef = await addDoc(collection(db, 'jobOpenings'), {
     ...jobData,
     createdAt: serverTimestamp(),
@@ -124,7 +131,7 @@ export async function createJobOpening(jobData: Omit<JobOpening, 'id'>): Promise
 }
 
 // Update a job opening
-export async function updateJobOpening(id: string, jobData: Partial<Omit<JobOpening, 'id'>>): Promise<void> {
+export async function updateJobOpening(id: string, jobData: Partial<Omit<JobOpening, 'id' | 'createdAt'>>): Promise<void> {
   const docRef = doc(db, 'jobOpenings', id);
   await updateDoc(docRef, {
     ...jobData,

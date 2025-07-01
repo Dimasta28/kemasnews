@@ -63,7 +63,7 @@ export function JobOpeningDialog({ isOpen, onOpenChange, onJobSaved, job }: JobO
         await updateJobOpening(job.id, data);
         toast({ title: 'Success!', description: 'Job opening has been updated.' });
       } else {
-        await createJobOpening(data as Omit<JobOpening, 'id'>);
+        await createJobOpening(data as Omit<JobOpening, 'id' | 'createdAt'>);
         toast({ title: 'Success!', description: 'New job opening has been created.' });
       }
       onJobSaved();

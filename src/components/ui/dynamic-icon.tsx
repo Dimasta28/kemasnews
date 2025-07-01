@@ -5,11 +5,11 @@ import { icons, LucideProps } from "lucide-react";
 type IconName = keyof typeof icons;
 
 interface DynamicIconProps extends LucideProps {
-  name: IconName;
+  name: string;
 }
 
 const DynamicIcon = ({ name, ...props }: DynamicIconProps) => {
-  const LucideIcon = icons[name];
+  const LucideIcon = icons[name as IconName];
 
   if (!LucideIcon) {
     // Fallback to a generic icon if the name is invalid
