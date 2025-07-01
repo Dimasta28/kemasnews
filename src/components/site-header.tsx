@@ -103,21 +103,19 @@ export function SiteHeader({ settings }: SiteHeaderProps) {
                 PT. Kemas <ChevronDownIcon size={16} />
               </button>
             </PopoverTrigger>
-            <PopoverContent className="w-[560px] bg-[#EFECE9]/95 dark:bg-[#050505]/95 backdrop-blur-md border-[#DDD9CE] dark:border-[#AC9C8D] p-4 rounded-2xl shadow-xl">
-               <div className="grid grid-cols-2 gap-4">
-                 {settings.dropdownLinks.map((link) => (
-                   <Link
-                     key={link.title}
-                     href={link.href}
-                     className="block p-3 rounded-lg hover:bg-muted/60"
-                   >
-                     <p className="font-semibold text-foreground">{link.title}</p>
-                     <p className="text-sm text-muted-foreground">
-                       {link.description}
-                     </p>
-                   </Link>
-                 ))}
-               </div>
+            <PopoverContent className="w-auto max-w-2xl bg-[#EFECE9]/95 dark:bg-[#050505]/95 backdrop-blur-md border-[#DDD9CE] dark:border-[#AC9C8D] p-4 rounded-2xl shadow-xl grid grid-cols-2 gap-4">
+              {settings.dropdownLinks.map((link) => (
+                <Link
+                  key={link.title}
+                  href={link.href}
+                  className="block p-3 rounded-lg hover:bg-muted/60"
+                >
+                  <p className="font-semibold text-foreground">{link.title}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {link.description}
+                  </p>
+                </Link>
+              ))}
             </PopoverContent>
           </Popover>
           <Link href="/careers" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
