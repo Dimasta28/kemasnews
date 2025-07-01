@@ -98,8 +98,8 @@ export async function getComments(postId: string): Promise<Comment[]> {
 export async function getAllComments(): Promise<Comment[]> {
     try {
         const commentsRef = collection(db, "comments");
-        const q = query(commentsRef, orderBy("date", "desc"));
-        const querySnapshot = await getDocs(q);
+        // Remove the orderBy clause to avoid needing a Firestore index
+        const querySnapshot = await getDocs(commentsRef);
 
         const commentsData = querySnapshot.docs.map(doc => {
             const data = doc.data();
@@ -113,9 +113,13 @@ export async function getAllComments(): Promise<Comment[]> {
                 comment: data.comment,
                 status: data.status,
                 avatar: data.avatar,
+                dateObj: date, // Temporary field for sorting
                 date: date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
-            } as Comment;
+            };
         });
+
+        // Sort by date descending (newest first) in code
+        commentsData.sort((a, b) => b.dateObj.getTime() - a.dateObj.getTime());
 
         const postTitleCache: { [key: string]: string } = {};
 
@@ -129,16 +133,15 @@ export async function getAllComments(): Promise<Comment[]> {
             }
         }
         
-        // Add post titles to comments
-        const commentsWithTitles = commentsData.map(comment => ({
+        // Add post titles to comments and remove temporary field
+        const commentsWithTitles = commentsData.map(({ dateObj, ...comment }) => ({
             ...comment,
             postTitle: postTitleCache[comment.postId] || 'Unknown Post'
-        }));
+        })) as Comment[];
 
         return commentsWithTitles;
     } catch (error) {
         console.error("Error fetching all comments: ", error);
-        // The query might fail if the index doesn't exist. Return empty for now.
         return [];
     }
 }
