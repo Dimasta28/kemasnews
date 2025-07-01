@@ -103,12 +103,8 @@ export function SiteHeader() {
                   <h3 className="font-bold text-lg text-[#610C27] dark:text-[#E3C1B4]">About Company</h3>
                   <p className="text-sm text-muted-foreground mt-1">Explore more about our company.</p>
                 </div>
-                <Link href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">About Us</Link>
+                <Link href="/about" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">About Us</Link>
                 <Link href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">News</Link>
-                <Link href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Press Release</Link>
-                <Link href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">CSR</Link>
-                <Link href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Kemas</Link>
-                <Link href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">Love It</Link>
               </div>
             </PopoverContent>
           </Popover>
@@ -120,6 +116,18 @@ export function SiteHeader() {
           </Link>
           <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
             Event
+          </Link>
+          <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
+            Press Release
+          </Link>
+          <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
+            CSR
+          </Link>
+          <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
+            Kemas
+          </Link>
+          <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
+            Love It
           </Link>
           <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
             LIMEX
@@ -207,12 +215,8 @@ export function SiteHeader() {
                       </AccordionTrigger>
                       <AccordionContent className="pt-4 overflow-hidden">
                         <ul className="space-y-4 text-lg text-gray-700 dark:text-gray-400">
-                           <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>About Us</Link></li>
+                           <li><Link href="/about" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>About Us</Link></li>
                            <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>News</Link></li>
-                           <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Press Release</Link></li>
-                           <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>CSR</Link></li>
-                           <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Kemas</Link></li>
-                           <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Love It</Link></li>
                         </ul>
                       </AccordionContent>
                     </AccordionItem>
@@ -225,6 +229,10 @@ export function SiteHeader() {
                 </li>
                 <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Products</Link></li>
                 <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Event</Link></li>
+                <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Press Release</Link></li>
+                <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>CSR</Link></li>
+                <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Kemas</Link></li>
+                <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Love It</Link></li>
                 <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>LIMEX</Link></li>
                 <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Sustainability</Link></li>
               </ul>
