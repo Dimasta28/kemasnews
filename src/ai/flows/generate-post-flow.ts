@@ -15,6 +15,7 @@ const GeneratePostInputSchema = z.object({
 export type GeneratePostInput = z.infer<typeof GeneratePostInputSchema>;
 
 const GeneratePostOutputSchema = z.object({
+  description: z.string().describe('A short, compelling summary of the blog post, around 1-2 sentences.'),
   content: z.string().describe('The generated blog post content in Markdown format.'),
   imageUrl: z.string().describe('A data URI for the generated featured image.'),
 });
@@ -28,8 +29,12 @@ export async function generatePost(input: GeneratePostInput): Promise<GeneratePo
 const contentPrompt = ai.definePrompt({
   name: 'postContentPrompt',
   input: { schema: GeneratePostInputSchema },
-  output: { schema: z.object({ content: z.string() }) },
+  output: { schema: z.object({ 
+    description: z.string().describe('A short, compelling summary of the blog post, around 1-2 sentences.'),
+    content: z.string().describe('The generated blog post content in Markdown format.') 
+  }) },
   prompt: `You are an expert content writer. Write a blog post based on the following title.
+Also, write a short, compelling summary of the blog post, around 1-2 sentences.
 The post should be engaging, well-structured, and formatted in Markdown.
 Include headings, lists, and bold text where appropriate.
 
@@ -56,13 +61,15 @@ const generatePostFlow = ai.defineFlow(
     ]);
 
     const content = contentResponse.output?.content || '';
+    const description = contentResponse.output?.description || '';
     const imageUrl = imageResponse.media?.url || '';
 
-    if (!content || !imageUrl) {
-      throw new Error('Failed to generate post content or image.');
+    if (!content || !imageUrl || !description) {
+      throw new Error('Failed to generate post content, description or image.');
     }
 
     return {
+      description,
       content,
       imageUrl,
     };

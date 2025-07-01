@@ -10,6 +10,7 @@ import { collection, addDoc, getDocs, serverTimestamp, Timestamp, doc, getDoc, u
 export interface Post {
   id: string;
   title: string;
+  description: string;
   content: string;
   status: 'Published' | 'Draft' | 'Archived';
   category: string;
@@ -30,6 +31,7 @@ export async function getPosts(): Promise<Post[]> {
     return {
         id: doc.id,
         title: data.title || '',
+        description: data.description || '',
         status: data.status || 'Draft',
         author: data.author || 'Admin', // Default author
         date: date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
@@ -54,6 +56,7 @@ export async function getPost(id: string): Promise<Post | null> {
       return {
           id: postSnap.id,
           title: data.title || '',
+          description: data.description || '',
           content: data.content || '',
           status: data.status || 'Draft',
           category: data.category || '',

@@ -94,10 +94,23 @@ export function PostClient({ post, recentPosts, comments, settings }: PostClient
                             </div>
                         </motion.div>
 
+                        {post.description && (
+                            <motion.p
+                                className="text-lg text-muted-foreground font-light mb-8 border-l-4 border-primary pl-4"
+                                custom={2}
+                                initial="hidden"
+                                animate="visible"
+                                variants={variants}
+                            >
+                                {post.description}
+                            </motion.p>
+                        )}
+
+
                         {post.featuredImage && (
                             <motion.div
                                 className="relative w-full aspect-video mb-8 rounded-lg overflow-hidden shadow-lg"
-                                custom={2}
+                                custom={3}
                                 initial="hidden"
                                 animate="visible"
                                 variants={variants}
@@ -115,7 +128,7 @@ export function PostClient({ post, recentPosts, comments, settings }: PostClient
 
                         <motion.div
                             className="prose prose-lg dark:prose-invert max-w-none"
-                            custom={3}
+                            custom={4}
                             initial="hidden"
                             animate="visible"
                             variants={variants}
@@ -127,7 +140,7 @@ export function PostClient({ post, recentPosts, comments, settings }: PostClient
 
                         <motion.div
                             className="mt-10 pt-6 border-t border-border"
-                            custom={4}
+                            custom={5}
                             initial="hidden"
                             animate="visible"
                             variants={variants}
