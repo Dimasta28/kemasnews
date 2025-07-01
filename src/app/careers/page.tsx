@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { Building, MapPin } from 'lucide-react';
 import { getCareerPageData, getJobOpenings } from '@/services/careerService';
 import { DynamicIcon } from '@/components/ui/dynamic-icon';
+import { Separator } from '@/components/ui/separator';
 
 export default async function CareersPage() {
   const [pageData, jobOpenings] = await Promise.all([
@@ -49,21 +50,42 @@ export default async function CareersPage() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {jobOpenings.length > 0 ? jobOpenings.map((job) => (
-                        <Card key={job.id} className="bg-card/80 hover:shadow-2xl transition-shadow duration-300">
+                        <Card key={job.id} className="bg-card/80 hover:shadow-2xl transition-shadow duration-300 flex flex-col overflow-hidden">
+                            {job.imageUrl && (
+                                <div className="relative w-full h-48">
+                                    <Image
+                                        src={job.imageUrl}
+                                        alt={job.title}
+                                        fill
+                                        className="object-cover"
+                                        data-ai-hint="office workspace job"
+                                    />
+                                </div>
+                            )}
                             <CardHeader>
                                 <CardTitle>{job.title}</CardTitle>
                                 <CardDescription>{job.type}</CardDescription>
                             </CardHeader>
-                            <CardContent className="space-y-4">
-                                <div className="flex items-center text-sm text-muted-foreground gap-2">
-                                    <Building className="h-4 w-4" />
-                                    <span>{job.department}</span>
+                            <CardContent className="space-y-4 flex-grow flex flex-col">
+                                <div className="space-y-2">
+                                    <div className="flex items-center text-sm text-muted-foreground gap-2">
+                                        <Building className="h-4 w-4 flex-shrink-0" />
+                                        <span>{job.department}</span>
+                                    </div>
+                                    <div className="flex items-center text-sm text-muted-foreground gap-2">
+                                        <MapPin className="h-4 w-4 flex-shrink-0" />
+                                        <span>{job.location}</span>
+                                    </div>
                                 </div>
-                                <div className="flex items-center text-sm text-muted-foreground gap-2">
-                                    <MapPin className="h-4 w-4" />
-                                    <span>{job.location}</span>
-                                </div>
-                                <Button className="w-full mt-4">View Details</Button>
+                                {job.qualifications && (
+                                    <div className="pt-4 mt-auto">
+                                        <Separator className="my-2" />
+                                        <h4 className="font-semibold text-sm mt-4 mb-2">Qualifications</h4>
+                                        <div className="text-sm text-muted-foreground space-y-2 whitespace-pre-wrap">
+                                            {job.qualifications}
+                                        </div>
+                                    </div>
+                                )}
                             </CardContent>
                         </Card>
                     )) : (

@@ -23,6 +23,8 @@ export interface JobOpening {
   department: string;
   location: string;
   type: string;
+  imageUrl?: string;
+  qualifications?: string;
 }
 
 export interface CompanyBenefit {

@@ -2,6 +2,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { MoreHorizontal, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -63,6 +64,7 @@ export function JobOpeningsTable({ initialJobs, onJobsChange }: JobOpeningsTable
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead className="w-[80px]">Image</TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Department</TableHead>
               <TableHead>Location</TableHead>
@@ -73,6 +75,16 @@ export function JobOpeningsTable({ initialJobs, onJobsChange }: JobOpeningsTable
           <TableBody>
             {initialJobs.length > 0 ? initialJobs.map((job) => (
               <TableRow key={job.id}>
+                <TableCell>
+                  <Image
+                    src={job.imageUrl || 'https://placehold.co/64x64.png'}
+                    alt={job.title}
+                    width={64}
+                    height={64}
+                    className="rounded-md object-cover"
+                    data-ai-hint="office workspace"
+                  />
+                </TableCell>
                 <TableCell className="font-medium">{job.title}</TableCell>
                 <TableCell>{job.department}</TableCell>
                 <TableCell>{job.location}</TableCell>
@@ -92,7 +104,7 @@ export function JobOpeningsTable({ initialJobs, onJobsChange }: JobOpeningsTable
               </TableRow>
             )) : (
               <TableRow>
-                <TableCell colSpan={5} className="h-24 text-center">No job openings found.</TableCell>
+                <TableCell colSpan={6} className="h-24 text-center">No job openings found.</TableCell>
               </TableRow>
             )}
           </TableBody>

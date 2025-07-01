@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { createJobOpening, updateJobOpening, type JobOpening } from '@/services/careerService';
 
@@ -18,6 +19,8 @@ const formSchema = z.object({
   department: z.string().min(1, 'Department is required.'),
   location: z.string().min(1, 'Location is required.'),
   type: z.string().min(1, 'Type is required (e.g., Full-time).'),
+  imageUrl: z.string().url({ message: 'Please enter a valid URL.' }).optional().or(z.literal('')),
+  qualifications: z.string().optional(),
 });
 
 type JobOpeningFormData = z.infer<typeof formSchema>;
@@ -40,6 +43,8 @@ export function JobOpeningDialog({ isOpen, onOpenChange, onJobSaved, job }: JobO
       department: '',
       location: '',
       type: '',
+      imageUrl: '',
+      qualifications: '',
     },
   });
 
@@ -47,7 +52,7 @@ export function JobOpeningDialog({ isOpen, onOpenChange, onJobSaved, job }: JobO
     if (job) {
       form.reset(job);
     } else {
-      form.reset({ title: '', department: '', location: '', type: '' });
+      form.reset({ title: '', department: '', location: '', type: '', imageUrl: '', qualifications: '' });
     }
   }, [job, form, isOpen]);
 
@@ -73,38 +78,54 @@ export function JobOpeningDialog({ isOpen, onOpenChange, onJobSaved, job }: JobO
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle>{job ? 'Edit Job Opening' : 'Create New Job Opening'}</DialogTitle>
           <DialogDescription>Fill in the details for the job position.</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField control={form.control} name="title" render={({ field }) => (
+             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <FormField control={form.control} name="title" render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Title</FormLabel>
+                    <FormControl><Input placeholder="e.g., Senior Frontend Developer" {...field} /></FormControl>
+                    <FormMessage />
+                </FormItem>
+                )} />
+                <FormField control={form.control} name="department" render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Department</FormLabel>
+                    <FormControl><Input placeholder="e.g., Engineering" {...field} /></FormControl>
+                    <FormMessage />
+                </FormItem>
+                )} />
+                <FormField control={form.control} name="location" render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Location</FormLabel>
+                    <FormControl><Input placeholder="e.g., Jakarta, Indonesia" {...field} /></FormControl>
+                    <FormMessage />
+                </FormItem>
+                )} />
+                <FormField control={form.control} name="type" render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Type</FormLabel>
+                    <FormControl><Input placeholder="e.g., Full-time, Contract" {...field} /></FormControl>
+                    <FormMessage />
+                </FormItem>
+                )} />
+            </div>
+            <FormField control={form.control} name="imageUrl" render={({ field }) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
-                <FormControl><Input placeholder="e.g., Senior Frontend Developer" {...field} /></FormControl>
+                <FormLabel>Image URL</FormLabel>
+                <FormControl><Input placeholder="https://placehold.co/600x400.png" {...field} value={field.value ?? ''} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
-            <FormField control={form.control} name="department" render={({ field }) => (
+            <FormField control={form.control} name="qualifications" render={({ field }) => (
               <FormItem>
-                <FormLabel>Department</FormLabel>
-                <FormControl><Input placeholder="e.g., Engineering" {...field} /></FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
-             <FormField control={form.control} name="location" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Location</FormLabel>
-                <FormControl><Input placeholder="e.g., Jakarta, Indonesia" {...field} /></FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
-            <FormField control={form.control} name="type" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Type</FormLabel>
-                <FormControl><Input placeholder="e.g., Full-time, Contract" {...field} /></FormControl>
+                <FormLabel>Qualifications</FormLabel>
+                <FormControl><Textarea placeholder="List the qualifications for the job..." className="min-h-[120px]" {...field} value={field.value ?? ''} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
