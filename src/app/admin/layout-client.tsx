@@ -1,6 +1,7 @@
+
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,9 +15,14 @@ import {
   Tags,
   Megaphone,
   Briefcase,
-  Network,
+  ChevronRight,
 } from 'lucide-react';
 
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
 import {
   Sidebar,
   SidebarContent,
@@ -78,12 +84,20 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { user, isLoading, logout } = useAuth();
   const router = useRouter();
+  const [isCareersOpen, setIsCareersOpen] = useState(false);
+
 
   useEffect(() => {
     if (!isLoading && !user) {
       router.replace('/login');
     }
   }, [isLoading, user, router]);
+  
+   useEffect(() => {
+    if (pathname.startsWith('/admin/careers') || pathname.startsWith('/admin/departments')) {
+        setIsCareersOpen(true);
+    }
+  }, [pathname]);
 
   if (isLoading || !user) {
     return <AdminLoadingScreen />;
@@ -145,17 +159,6 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
-             <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname.startsWith('/admin/departments')}
-              >
-                <Link href="/admin/departments">
-                  <Network />
-                  Departments
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
@@ -189,17 +192,38 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
-             <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname.startsWith('/admin/careers')}
-              >
-                <Link href="/admin/careers">
-                  <Briefcase />
-                  Careers
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+             <SidebarMenuItem asChild>
+                <Collapsible open={isCareersOpen} onOpenChange={setIsCareersOpen}>
+                    <SidebarMenuItem className="p-0">
+                        <CollapsibleTrigger asChild>
+                            <SidebarMenuButton
+                                isActive={pathname.startsWith('/admin/careers') || pathname.startsWith('/admin/departments')}
+                                className="w-full justify-between"
+                            >
+                                <div className="flex items-center gap-2">
+                                <Briefcase />
+                                <span>Careers</span>
+                                </div>
+                                <ChevronRight className="h-4 w-4 transition-transform duration-200 data-[state=open]:rotate-90" />
+                            </SidebarMenuButton>
+                        </CollapsibleTrigger>
+                    </SidebarMenuItem>
+                    <CollapsibleContent asChild>
+                    <SidebarMenuSub>
+                        <SidebarMenuSubItem>
+                        <SidebarMenuSubButton asChild isActive={pathname === '/admin/careers'}>
+                            <Link href="/admin/careers">Manage Page</Link>
+                        </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                        <SidebarMenuSubItem>
+                        <SidebarMenuSubButton asChild isActive={pathname.startsWith('/admin/departments')}>
+                            <Link href="/admin/departments">Departments</Link>
+                        </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                    </SidebarMenuSub>
+                    </CollapsibleContent>
+                </Collapsible>
+             </SidebarMenuItem>
             <SidebarSeparator />
             <SidebarMenuItem>
               <SidebarMenuButton
