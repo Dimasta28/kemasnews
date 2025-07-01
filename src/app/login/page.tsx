@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -59,10 +60,15 @@ export default function LoginPage() {
                 <Label htmlFor="password">Password</Label>
                 <Input id="password" type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required />
               </div>
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? 'Logging in...' : 'Log In'}
-              </Button>
-              <div className="mt-4 text-center text-sm text-muted-foreground">
+              <div className="flex flex-col gap-2 pt-2">
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                  {isSubmitting ? 'Logging in...' : 'Log In'}
+                </Button>
+                <Button variant="outline" className="w-full" asChild>
+                    <Link href="/">Back to Home</Link>
+                </Button>
+              </div>
+              <div className="text-center text-sm text-muted-foreground">
                 Access is restricted to authorized users.
               </div>
             </form>
