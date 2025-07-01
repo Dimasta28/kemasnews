@@ -10,7 +10,7 @@ import remarkGfm from 'remark-gfm';
 
 import type { Post } from '@/services/postService';
 import type { Comment } from '@/services/commentService';
-import type { BannerSettings } from '@/services/settingsService';
+import type { BannerSettings, FrontendSettings } from '@/services/settingsService';
 
 import { Badge } from '@/components/ui/badge';
 import { Sidebar } from './sidebar';
@@ -24,10 +24,10 @@ interface PostClientProps {
     post: Post;
     recentPosts: Post[];
     comments: Comment[];
-    banner: BannerSettings;
+    settings: FrontendSettings;
 }
 
-export function PostClient({ post, recentPosts, comments, banner }: PostClientProps) {
+export function PostClient({ post, recentPosts, comments, settings }: PostClientProps) {
 
     const variants = {
         hidden: { opacity: 0, y: 20 },
@@ -44,7 +44,7 @@ export function PostClient({ post, recentPosts, comments, banner }: PostClientPr
 
     return (
         <div className="bg-[#EFECE9] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9]">
-            <SiteHeader />
+            <SiteHeader settings={settings} />
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
                 <div className="mb-8">
                     <Link href="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
@@ -150,7 +150,7 @@ export function PostClient({ post, recentPosts, comments, banner }: PostClientPr
 
                     {/* Sidebar */}
                     <aside className="lg:col-span-1 mt-12 lg:mt-0">
-                        <Sidebar recentPosts={recentPosts} banner={banner} />
+                        <Sidebar recentPosts={recentPosts} banner={settings.banner} />
                     </aside>
                 </div>
             </main>

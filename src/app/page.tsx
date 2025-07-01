@@ -2,6 +2,7 @@
 import { getPosts } from '@/services/postService';
 import { getCategories } from '@/services/categoryService';
 import HomeClient from './home-client';
+import { SiteHeaderWrapper } from '@/components/site-header-wrapper';
 
 export default async function Home() {
   const allPosts = await getPosts();
@@ -9,5 +10,10 @@ export default async function Home() {
   const publishedPosts = allPosts.filter((post) => post.status === 'Published');
   const allCategories = await getCategories();
 
-  return <HomeClient initialPosts={publishedPosts} allCategories={allCategories} />;
+  return (
+    <>
+      <SiteHeaderWrapper />
+      <HomeClient initialPosts={publishedPosts} allCategories={allCategories} />
+    </>
+    );
 }

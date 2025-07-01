@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { PlusCircle, Trash2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -19,7 +20,9 @@ import {
   getFrontendSettings,
   updateFrontendSettings,
   type FrontendSettings,
+  type NavigationLink,
 } from '@/services/settingsService';
+import { Separator } from '@/components/ui/separator';
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState<Partial<FrontendSettings>>({});
@@ -47,11 +50,28 @@ export default function SettingsPage() {
   }, [toast]);
 
   const handleInputChange = (
-    field: keyof FrontendSettings,
+    field: keyof Omit<FrontendSettings, 'banner' | 'dropdownLinks'>,
     value: string
   ) => {
     setSettings((prev) => ({ ...prev, [field]: value }));
   };
+
+  const handleDropdownLinkChange = (index: number, field: keyof NavigationLink, value: string) => {
+    const updatedLinks = [...(settings.dropdownLinks || [])];
+    const linkToUpdate = { ...updatedLinks[index], [field]: value };
+    updatedLinks[index] = linkToUpdate;
+    setSettings(prev => ({...prev, dropdownLinks: updatedLinks}));
+  }
+
+  const handleAddDropdownLink = () => {
+    const newLink: NavigationLink = { title: '', description: '', href: '#'};
+    setSettings(prev => ({...prev, dropdownLinks: [...(prev.dropdownLinks || []), newLink]}));
+  }
+
+  const handleRemoveDropdownLink = (index: number) => {
+    const updatedLinks = (settings.dropdownLinks || []).filter((_, i) => i !== index);
+    setSettings(prev => ({...prev, dropdownLinks: updatedLinks}));
+  }
 
   const handleSaveChanges = async () => {
     setIsSaving(true);
@@ -85,6 +105,15 @@ export default function SettingsPage() {
             <Skeleton className="h-40 w-full" />
           </CardContent>
         </Card>
+        <Card>
+          <CardHeader>
+            <Skeleton className="h-7 w-56" />
+             <Skeleton className="h-4 w-72" />
+          </CardHeader>
+           <CardContent>
+            <Skeleton className="h-20 w-full" />
+          </CardContent>
+        </Card>
         <div className="flex justify-start">
           <Skeleton className="h-10 w-32" />
         </div>
@@ -94,6 +123,13 @@ export default function SettingsPage() {
 
   return (
     <div className="grid gap-6">
+      <div className="flex items-center justify-between">
+         <h1 className="text-2xl font-bold tracking-tight">Settings</h1>
+          <Button onClick={handleSaveChanges} disabled={isSaving}>
+            {isSaving ? 'Saving...' : 'Save All Changes'}
+          </Button>
+      </div>
+      
       <Card>
         <CardHeader>
           <CardTitle>General Settings</CardTitle>
@@ -180,7 +216,45 @@ export default function SettingsPage() {
         </CardContent>
       </Card>
 
-      <div className="flex justify-start">
+      <Card>
+        <CardHeader>
+          <CardTitle>Header Dropdown Navigation</CardTitle>
+          <CardDescription>
+            Manage the links that appear in the "PT. Kemas" dropdown menu in the main header.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {settings.dropdownLinks?.map((link, index) => (
+              <Card key={index} className="p-4 bg-muted/50">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_2fr_1fr_auto] gap-4 items-end">
+                  <div className="grid gap-1.5">
+                    <Label htmlFor={`link-title-${index}`}>Title</Label>
+                    <Input id={`link-title-${index}`} value={link.title} onChange={(e) => handleDropdownLinkChange(index, 'title', e.target.value)} />
+                  </div>
+                  <div className="grid gap-1.5">
+                    <Label htmlFor={`link-desc-${index}`}>Description</Label>
+                    <Input id={`link-desc-${index}`} value={link.description} onChange={(e) => handleDropdownLinkChange(index, 'description', e.target.value)} />
+                  </div>
+                   <div className="grid gap-1.5">
+                    <Label htmlFor={`link-href-${index}`}>URL (Link)</Label>
+                    <Input id={`link-href-${index}`} value={link.href} onChange={(e) => handleDropdownLinkChange(index, 'href', e.target.value)} />
+                  </div>
+                  <Button variant="ghost" size="icon" onClick={() => handleRemoveDropdownLink(index)}>
+                    <Trash2 className="h-4 w-4 text-destructive" />
+                    <span className="sr-only">Remove Link</span>
+                  </Button>
+                </div>
+              </Card>
+            ))}
+            <Button variant="outline" size="sm" onClick={handleAddDropdownLink}>
+              <PlusCircle className="mr-2 h-4 w-4" /> Add Link
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      <div className="flex justify-end">
         <Button onClick={handleSaveChanges} disabled={isSaving}>
           {isSaving ? 'Saving...' : 'Save All Changes'}
         </Button>

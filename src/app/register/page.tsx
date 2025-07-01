@@ -1,14 +1,14 @@
 
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { SiteHeader } from '@/components/site-header';
+import { SiteHeaderWrapper } from '@/components/site-header-wrapper';
 import { SiteFooter } from '@/components/site-footer';
 import { Button } from '@/components/ui/button';
 
 export default function RegisterPage() {
   return (
     <div className="flex flex-col min-h-screen bg-[#EFECE9] dark:bg-[#050505]">
-      <SiteHeader />
+      <SiteHeaderWrapper />
       <main className="flex-grow flex items-center justify-center p-4">
         <Card className="w-full max-w-md text-center">
           <CardHeader>

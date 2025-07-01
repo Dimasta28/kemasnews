@@ -24,7 +24,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
       post={post}
       recentPosts={recentPosts}
       comments={comments}
-      banner={settings.banner}
+      settings={settings}
     />
   );
 }

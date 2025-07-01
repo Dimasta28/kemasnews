@@ -17,21 +17,14 @@ import {
 } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import type { FrontendSettings } from '@/services/settingsService';
 
-const aboutLinks = [
-  { href: "#", title: "About Us", description: "Get to know who we are and what we stand for." },
-  { href: "#", title: "Our Story", description: "The journey behind PT. Kemas — from foundation to innovation." },
-  { href: "#", title: "Vision & Mission", description: "Our long-term goals and guiding principles." },
-  { href: "#", title: "Leadership Team", description: "Meet the people behind the company." },
-  { href: "#", title: "Facilities & Capabilities", description: "Explore our production sites and technological edge." },
-  { href: "#", title: "Certifications & Standards", description: "Our quality, safety, and sustainability accreditations." },
-  { href: "#", title: "Sustainability Commitment", description: "Our quest for eco-friendlier packaging and carbon reduction." },
-  { href: "#", title: "Awards & Recognition", description: "Milestones and achievements we’re proud of." },
-  { href: "#", title: "News & Media", description: "Press releases, events, and media coverage." },
-  { href: "#", title: "Contact Us", description: "Reach out to our team or find our locations." },
-];
+interface SiteHeaderProps {
+  settings: FrontendSettings;
+}
 
-export function SiteHeader() {
+
+export function SiteHeader({ settings }: SiteHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const lastScrollY = useRef(0);
@@ -83,7 +76,7 @@ export function SiteHeader() {
       >
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src="https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png"
+            src={settings.darkModeLogoUrl}
             alt="Kemas Logo"
             width={120}
             height={30}
@@ -91,7 +84,7 @@ export function SiteHeader() {
             priority
           />
           <Image
-            src="https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png"
+            src={settings.lightModeLogoUrl}
             alt="Kemas Logo"
             width={120}
             height={30}
@@ -112,7 +105,7 @@ export function SiteHeader() {
             </PopoverTrigger>
             <PopoverContent className="w-[560px] bg-[#EFECE9]/95 dark:bg-[#050505]/95 backdrop-blur-md border-[#DDD9CE] dark:border-[#AC9C8D] p-4 rounded-2xl shadow-xl">
                <div className="grid grid-cols-2 gap-4">
-                 {aboutLinks.map((link) => (
+                 {settings.dropdownLinks.map((link) => (
                    <Link
                      key={link.title}
                      href={link.href}
@@ -234,7 +227,7 @@ export function SiteHeader() {
                       </AccordionTrigger>
                       <AccordionContent className="pt-4 overflow-hidden">
                         <ul className="space-y-4 text-lg text-gray-700 dark:text-gray-400">
-                           {aboutLinks.map((link) => (
+                           {settings.dropdownLinks.map((link) => (
                              <li key={link.title}>
                                <Link href={link.href} className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                                  {link.title}

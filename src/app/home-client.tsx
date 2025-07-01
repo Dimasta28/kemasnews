@@ -17,7 +17,6 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 import { ChevronDownIcon, Search } from 'lucide-react';
-import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 import { Button } from '@/components/ui/button';
 import {
@@ -108,8 +107,6 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
 
   return (
     <div className="font-inter antialiased bg-[#EFECE9] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9] min-h-screen">
-      <SiteHeader />
-
       <main>
         {latestPost ? (
             <section className="relative h-[80vh] md:h-[90vh] flex items-end p-8 md:p-12 text-white bg-black">
