@@ -73,6 +73,11 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
     setCurrentPage(1); // Reset page on new filter
   }, [activeFilter, searchTerm, initialPosts]);
 
+  const handleFilterChange = (filter: string) => {
+    setActiveFilter(filter);
+    setCurrentPage(1);
+  };
+
   // Pagination logic
   const totalPages = Math.ceil(articles.length / articlesPerPage);
   const indexOfLastArticle = currentPage * articlesPerPage;
@@ -91,9 +96,10 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
 
   // Create a unique list of categories and sort them
   const uniqueCategories = allCategories.filter((category, index, self) =>
-    index === self.findIndex((c) => c.name === category.name)
+    index === self.findIndex((c) => c.name === category.name) && category.name
   );
   const sortedUniqueCategories = [...uniqueCategories].sort((a, b) => b.postCount - a.postCount);
+  const topCategories = sortedUniqueCategories.slice(0, 3);
 
 
   return (
@@ -115,39 +121,49 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
         <section
           className={`sticky z-40 bg-background/95 p-4 border-b border-border shadow-sm top-[calc(var(--header-height,0px)+1rem)] backdrop-blur-sm`}
         >
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-end gap-4">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex-grow flex items-center gap-2">
+                <Button variant={activeFilter === 'All' ? 'secondary' : 'ghost'} onClick={() => handleFilterChange('All')}>All</Button>
+                {topCategories.map((category) => (
+                    <Button 
+                        key={category.id} 
+                        variant={activeFilter === category.name ? 'secondary' : 'ghost'} 
+                        onClick={() => handleFilterChange(category.name)}
+                    >
+                        {category.name}
+                    </Button>
+                ))}
+            </div>
+            
             <div className="flex items-center gap-2 w-full md:w-auto">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="flex-shrink-0 w-[180px] justify-between">
-                    <span className="truncate">{activeFilter === 'All' ? 'All Categories' : activeFilter}</span>
-                    <ChevronDownIcon className="ml-2 h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuLabel>Filter by Category</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onSelect={() => setActiveFilter('All')}>
-                      All Categories
-                  </DropdownMenuItem>
-                  {sortedUniqueCategories.map((category) => (
-                    <DropdownMenuItem key={category.id} onSelect={() => setActiveFilter(category.name)}>
-                      {category.name}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-        
-              <div className="relative w-full md:w-auto">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Search articles..."
-                  className="pl-9 w-full md:w-auto"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" className="flex-shrink-0">
+                            <span>More</span>
+                            <ChevronDownIcon className="ml-2 h-4 w-4" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                        <DropdownMenuLabel>All Categories</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        {sortedUniqueCategories.map((category) => (
+                            <DropdownMenuItem key={category.id} onSelect={() => handleFilterChange(category.name)}>
+                            {category.name}
+                            </DropdownMenuItem>
+                        ))}
+                    </DropdownMenuContent>
+                </DropdownMenu>
+
+                <div className="relative w-full md:w-auto">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                        type="search"
+                        placeholder="Search articles..."
+                        className="pl-9 w-full md:w-auto"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
             </div>
           </div>
         </section>
