@@ -35,6 +35,9 @@ export function SiteFooter() {
             <Link href="#" className="hover:text-[#EFECE9] transition-colors">
               Sitemap
             </Link>
+            <Link href="/login" className="hover:text-[#EFECE9] transition-colors">
+              Login
+            </Link>
           </nav>
           <div className="flex space-x-4">
             <motion.a
