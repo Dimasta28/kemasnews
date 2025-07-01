@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Eye, FileText, MessageSquare, Users } from 'lucide-react';
@@ -30,6 +31,7 @@ import {
 } from '@/components/ui/table';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import type { DateRange, ChartData } from '@/lib/analytics';
+import type { Post } from '@/services/postService';
 import { cn } from '@/lib/utils';
 
 interface AnalyticsDashboardProps {
@@ -39,6 +41,9 @@ interface AnalyticsDashboardProps {
   };
   chartData: ChartData;
   range: DateRange;
+  recentPosts: Post[];
+  postsCount: number;
+  commentsCount: number;
 }
 
 const chartConfig = {
@@ -48,22 +53,21 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const rangeOptions: { value: DateRange; label: string }[] = [
+const rangeOptions: { value: DateRange; label:string }[] = [
   { value: '7days', label: '7 Days' },
   { value: '28days', label: '28 Days' },
   { value: '90days', label: '90 Days' },
   { value: '365days', label: '1 Year' },
 ];
 
-const mockPosts: any[] = [];
-const mockCommentsCount = 0;
-const mockPostsCount = 0;
-
 
 export function AnalyticsDashboard({
   stats,
   chartData,
   range,
+  recentPosts,
+  postsCount,
+  commentsCount,
 }: AnalyticsDashboardProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -137,7 +141,7 @@ export function AnalyticsDashboard({
                 <span>Total Posts</span>
                 <FileText className="h-4 w-4" />
               </div>
-              <div className="mt-1 text-2xl font-bold">{mockPostsCount}</div>
+              <div className="mt-1 text-2xl font-bold">{postsCount}</div>
             </div>
             <Separator />
             <div>
@@ -145,7 +149,7 @@ export function AnalyticsDashboard({
                 <span>Total Comments</span>
                 <MessageSquare className="h-4 w-4" />
               </div>
-              <div className="mt-1 text-2xl font-bold">{mockCommentsCount}</div>
+              <div className="mt-1 text-2xl font-bold">{commentsCount}</div>
             </div>
             <Separator />
             <div>
@@ -187,32 +191,35 @@ export function AnalyticsDashboard({
                 <TableHead className="hidden sm:table-cell">Author</TableHead>
                 <TableHead className="hidden sm:table-cell">Status</TableHead>
                 <TableHead className="hidden md:table-cell">Date</TableHead>
-                <TableHead className="text-right">Views</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {mockPosts.map((post, index) => (
-              <TableRow key={index}>
-                <TableCell>
-                  <div className="font-medium">
-                    {post.title}
-                  </div>
-                  <div className="hidden text-sm text-muted-foreground md:inline">
-                    {post.description}
-                  </div>
-                </TableCell>
-                <TableCell className="hidden sm:table-cell">{post.author}</TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  <Badge className="text-xs" variant={post.status === 'Published' ? 'secondary' : 'outline'}>
-                    {post.status}
-                  </Badge>
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {post.date}
-                </TableCell>
-                <TableCell className="text-right">{post.views}</TableCell>
-              </TableRow>
-              ))}
+              {recentPosts.length > 0 ? (
+                recentPosts.map((post) => (
+                <TableRow key={post.id}>
+                  <TableCell>
+                    <Link href={`/admin/posts/edit/${post.id}`} className="font-medium hover:underline">
+                      {post.title}
+                    </Link>
+                  </TableCell>
+                  <TableCell className="hidden sm:table-cell">{post.author}</TableCell>
+                  <TableCell className="hidden sm:table-cell">
+                    <Badge className="text-xs" variant={post.status === 'Published' ? 'secondary' : 'outline'}>
+                      {post.status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {post.date}
+                  </TableCell>
+                </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={4} className="h-24 text-center">
+                    No recent posts found.
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </CardContent>
