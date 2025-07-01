@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect } from 'react';
@@ -15,6 +14,7 @@ import {
   Tags,
   Megaphone,
   Briefcase,
+  Network,
 } from 'lucide-react';
 
 import {
@@ -142,6 +142,17 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 <Link href="/admin/categories">
                   <Folder />
                   Categories
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+             <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname.startsWith('/admin/departments')}
+              >
+                <Link href="/admin/departments">
+                  <Network />
+                  Departments
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

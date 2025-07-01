@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -11,8 +10,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogD
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { createJobOpening, updateJobOpening, type JobOpening } from '@/services/careerService';
+import { getDepartments, type Department } from '@/services/departmentService';
 
 const formSchema = z.object({
   title: z.string().min(1, 'Title is required.'),
@@ -35,6 +36,7 @@ interface JobOpeningFormDialogProps {
 export function JobOpeningDialog({ isOpen, onOpenChange, onJobSaved, job }: JobOpeningFormDialogProps) {
   const { toast } = useToast();
   const [isSaving, setIsSaving] = useState(false);
+  const [departments, setDepartments] = useState<Department[]>([]);
 
   const form = useForm<JobOpeningFormData>({
     resolver: zodResolver(formSchema),
@@ -47,6 +49,25 @@ export function JobOpeningDialog({ isOpen, onOpenChange, onJobSaved, job }: JobO
       qualifications: '',
     },
   });
+  
+  useEffect(() => {
+    async function fetchDepartments() {
+      try {
+        const fetchedDepartments = await getDepartments();
+        setDepartments(fetchedDepartments);
+      } catch (error) {
+        console.error("Failed to fetch departments", error);
+        toast({
+            variant: "destructive",
+            title: "Error",
+            description: "Could not load departments."
+        });
+      }
+    }
+    if (isOpen) {
+        fetchDepartments();
+    }
+  }, [isOpen, toast]);
 
   useEffect(() => {
     if (job) {
@@ -96,7 +117,18 @@ export function JobOpeningDialog({ isOpen, onOpenChange, onJobSaved, job }: JobO
                 <FormField control={form.control} name="department" render={({ field }) => (
                 <FormItem>
                     <FormLabel>Department</FormLabel>
-                    <FormControl><Input placeholder="e.g., Engineering" {...field} /></FormControl>
+                     <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a department" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {departments.map(dep => (
+                            <SelectItem key={dep.id} value={dep.name}>{dep.name}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     <FormMessage />
                 </FormItem>
                 )} />
