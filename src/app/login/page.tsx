@@ -3,7 +3,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import { Button } from '@/components/ui/button';
@@ -12,8 +11,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { auth } from '@/lib/firebase';
-import { SiteHeader } from '@/components/site-header';
-import { SiteFooter } from '@/components/site-footer';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -46,9 +43,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#EFECE9] dark:bg-[#050505]">
-      <SiteHeader />
-      <main className="flex-grow flex items-center justify-center p-4">
+    <main className="flex min-h-screen w-full items-center justify-center bg-background p-4">
         <Card className="w-full max-w-md">
           <CardHeader>
             <CardTitle>Log In</CardTitle>
@@ -74,7 +69,5 @@ export default function LoginPage() {
           </CardContent>
         </Card>
       </main>
-      <SiteFooter />
-    </div>
   );
 }
