@@ -27,6 +27,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { generatePost } from '@/ai/flows/generate-post-flow';
+import { generateDescription } from '@/ai/flows/generate-description-flow';
 import { getPost, updatePost, Post } from '@/services/postService';
 import { getCategories, type Category } from '@/services/categoryService';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -46,6 +47,7 @@ export default function EditPostPage() {
   const [status, setStatus] = useState<'Draft' | 'Published' | 'Archived'>('Draft');
   const [featuredImage, setFeaturedImage] = useState('https://placehold.co/300x300.png');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isGeneratingDesc, setIsGeneratingDesc] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -159,6 +161,35 @@ export default function EditPostPage() {
     }
   };
   
+  const handleGenerateDescription = async () => {
+    if (!content) {
+      toast({
+        variant: 'destructive',
+        title: 'Konten Diperlukan',
+        description: 'Silakan isi konten postingan terlebih dahulu untuk menghasilkan deskripsi.',
+      });
+      return;
+    }
+    setIsGeneratingDesc(true);
+    try {
+      const result = await generateDescription({ content });
+      setDescription(result.description);
+      toast({
+        title: 'Deskripsi Dihasilkan!',
+        description: 'Deskripsi postingan Anda telah dibuat oleh AI.',
+      });
+    } catch (error) {
+      console.error('Failed to generate description:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Gagal Menghasilkan Deskripsi',
+        description: 'Terjadi kesalahan saat membuat deskripsi. Silakan coba lagi.',
+      });
+    } finally {
+      setIsGeneratingDesc(false);
+    }
+  };
+  
   if (isLoading) {
     return (
       <div className="flex flex-col gap-4">
@@ -238,7 +269,19 @@ export default function EditPostPage() {
                     />
                   </div>
                   <div className="grid gap-3">
-                    <Label htmlFor="description">Description</Label>
+                    <div className="flex items-center justify-between">
+                        <Label htmlFor="description">Description</Label>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={handleGenerateDescription}
+                            disabled={isGeneratingDesc || !content}
+                        >
+                            <Sparkles className="mr-2 h-4 w-4" />
+                            {isGeneratingDesc ? 'Generating...' : 'Generate with AI'}
+                        </Button>
+                    </div>
                     <Textarea
                       id="description"
                       placeholder="Write a short summary of the post... (optional)"
