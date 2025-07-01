@@ -18,6 +18,19 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
+const aboutLinks = [
+  { href: "#", title: "About Us", description: "Get to know who we are and what we stand for." },
+  { href: "#", title: "Our Story", description: "The journey behind PT. Kemas — from foundation to innovation." },
+  { href: "#", title: "Vision & Mission", description: "Our long-term goals and guiding principles." },
+  { href: "#", title: "Leadership Team", description: "Meet the people behind the company." },
+  { href: "#", title: "Facilities & Capabilities", description: "Explore our production sites and technological edge." },
+  { href: "#", title: "Certifications & Standards", description: "Our quality, safety, and sustainability accreditations." },
+  { href: "#", title: "Sustainability Commitment", description: "Our quest for eco-friendlier packaging and carbon reduction." },
+  { href: "#", title: "Awards & Recognition", description: "Milestones and achievements we’re proud of." },
+  { href: "#", title: "News & Media", description: "Press releases, events, and media coverage." },
+  { href: "#", title: "Contact Us", description: "Reach out to our team or find our locations." },
+];
+
 export function SiteHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
@@ -97,18 +110,24 @@ export function SiteHeader() {
                 PT. Kemas <ChevronDownIcon size={16} />
               </button>
             </PopoverTrigger>
-            <PopoverContent className="w-[450px] bg-[#EFECE9]/95 dark:bg-[#050505]/95 backdrop-blur-md border-[#DDD9CE] dark:border-[#AC9C8D] p-6 rounded-2xl shadow-xl">
-              <div className="grid grid-cols-2 gap-x-8 gap-y-2">
-                <div className="col-span-2 mb-2">
-                  <h3 className="font-bold text-lg text-[#610C27] dark:text-[#E3C1B4]">About Company</h3>
-                  <p className="text-sm text-muted-foreground mt-1">Explore more about our company.</p>
-                </div>
-                <Link href="/about" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">About Us</Link>
-                <Link href="#" className="block text-sm py-1 hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors">News</Link>
-              </div>
+            <PopoverContent className="w-[560px] bg-[#EFECE9]/95 dark:bg-[#050505]/95 backdrop-blur-md border-[#DDD9CE] dark:border-[#AC9C8D] p-4 rounded-2xl shadow-xl">
+               <div className="grid grid-cols-2 gap-4">
+                 {aboutLinks.map((link) => (
+                   <Link
+                     key={link.title}
+                     href={link.href}
+                     className="block p-3 rounded-lg hover:bg-muted/60"
+                   >
+                     <p className="font-semibold text-foreground">{link.title}</p>
+                     <p className="text-sm text-muted-foreground">
+                       {link.description}
+                     </p>
+                   </Link>
+                 ))}
+               </div>
             </PopoverContent>
           </Popover>
-           <Link href="/careers" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
+          <Link href="/careers" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
             Careers
           </Link>
           <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
@@ -215,8 +234,13 @@ export function SiteHeader() {
                       </AccordionTrigger>
                       <AccordionContent className="pt-4 overflow-hidden">
                         <ul className="space-y-4 text-lg text-gray-700 dark:text-gray-400">
-                           <li><Link href="/about" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>About Us</Link></li>
-                           <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>News</Link></li>
+                           {aboutLinks.map((link) => (
+                             <li key={link.title}>
+                               <Link href={link.href} className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                                 {link.title}
+                               </Link>
+                             </li>
+                           ))}
                         </ul>
                       </AccordionContent>
                     </AccordionItem>
