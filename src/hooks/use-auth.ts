@@ -5,9 +5,14 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { onAuthStateChanged, User as FirebaseUser, signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import { getMemberProfile, type Member } from '@/services/memberService';
 
-export interface AuthUser extends Member {}
+// Simplified user interface. No longer tied to a "Member" profile.
+export interface AuthUser {
+  id: string;
+  email: string;
+  name: string;
+  avatar: string;
+}
 
 export function useAuth() {
   const [user, setUser] = useState<AuthUser | null>(null);
@@ -17,24 +22,13 @@ export function useAuth() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser: FirebaseUser | null) => {
       if (firebaseUser) {
-        // User is signed in, try to fetch the detailed profile from Firestore
-        const profile = await getMemberProfile(firebaseUser.uid);
-        
-        if (profile) {
-          // If a full profile exists, use it
-          setUser(profile);
-        } else {
-          // If no profile exists, create a basic user object from the auth data.
-          // This ensures that any authenticated user can access the admin panel.
-          setUser({
-            id: firebaseUser.uid,
-            email: firebaseUser.email || '',
-            name: firebaseUser.displayName || 'Admin',
-            company: '',
-            avatar: firebaseUser.photoURL || `https://placehold.co/100x100.png`,
-            status: 'Active',
-          });
-        }
+        // User is signed in. Create a user object directly from Firebase Auth data.
+        setUser({
+          id: firebaseUser.uid,
+          email: firebaseUser.email || '',
+          name: firebaseUser.displayName || 'Admin',
+          avatar: firebaseUser.photoURL || `https://placehold.co/100x100.png`,
+        });
       } else {
         // User is signed out
         setUser(null);

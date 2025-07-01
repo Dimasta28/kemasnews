@@ -13,7 +13,6 @@ import {
   Search,
   Settings,
   Tags,
-  Users,
   Megaphone,
 } from 'lucide-react';
 
@@ -164,17 +163,6 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 <Link href="/admin/comments">
                   <MessageSquare />
                   Comments
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname.startsWith('/admin/members')}
-              >
-                <Link href="/admin/members">
-                  <Users />
-                  Members
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

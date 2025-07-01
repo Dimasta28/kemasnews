@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, LogOut } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -12,59 +12,8 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import type { Post } from '@/services/postService';
 import type { BannerSettings } from '@/services/settingsService';
-import { useAuth } from '@/hooks/use-auth';
-import { Skeleton } from '@/components/ui/skeleton';
 
 export function Sidebar({ recentPosts, banner }: { recentPosts: Post[], banner: BannerSettings }) {
-  const { user, logout, isLoading } = useAuth();
-
-  const renderMemberArea = () => {
-    if (isLoading) {
-      return (
-        <Card>
-          <CardHeader>
-            <Skeleton className="h-6 w-32" />
-          </CardHeader>
-          <CardContent>
-            <Skeleton className="h-4 w-full mb-4" />
-            <Skeleton className="h-10 w-full" />
-          </CardContent>
-        </Card>
-      );
-    }
-
-    if (user) {
-      return (
-        <Card>
-          <CardHeader>
-            <CardTitle>Welcome, {user.name}!</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground mb-4">You can now comment on posts.</p>
-            <Button className="w-full" variant="outline" onClick={() => logout()}>
-              <LogOut className="mr-2 h-4 w-4" />
-              Logout
-            </Button>
-          </CardContent>
-        </Card>
-      );
-    }
-
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Member Area</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground mb-4">Login to access exclusive content and offers.</p>
-          <Button className="w-full" asChild>
-            <Link href="/login">Login</Link>
-          </Button>
-        </CardContent>
-      </Card>
-    );
-  };
-
   return (
     <div className="sticky top-24 space-y-8">
       {/* Search Widget */}
@@ -136,9 +85,6 @@ export function Sidebar({ recentPosts, banner }: { recentPosts: Post[], banner: 
           </div>
         </CardContent>
       </Card>
-
-      {/* Login Member Widget */}
-      {renderMemberArea()}
     </div>
   );
 }
