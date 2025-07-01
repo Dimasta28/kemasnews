@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -103,7 +102,7 @@ export function SiteHeader({ settings }: SiteHeaderProps) {
                 PT. Kemas <ChevronDownIcon size={16} />
               </button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto max-w-5xl bg-[#EFECE9]/95 dark:bg-[#050505]/95 backdrop-blur-md border-[#DDD9CE] dark:border-[#AC9C8D] p-4 rounded-2xl shadow-xl grid grid-cols-4 gap-4">
+            <PopoverContent sideOffset={12} className="w-auto max-w-5xl bg-[#EFECE9]/95 dark:bg-[#050505]/95 backdrop-blur-md border-[#DDD9CE] dark:border-[#AC9C8D] p-4 rounded-2xl shadow-xl grid grid-cols-4 gap-4">
               {settings.dropdownLinks.map((link) => (
                 <Link
                   key={link.title}
@@ -127,7 +126,7 @@ export function SiteHeader({ settings }: SiteHeaderProps) {
           <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
             Event
           </Link>
-          <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
+           <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
             Press Release
           </Link>
           <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
