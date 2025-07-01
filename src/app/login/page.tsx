@@ -71,7 +71,7 @@ export default function LoginPage() {
         title: 'Login Successful',
         description: `Welcome back!`,
       });
-      // router.push('/admin/dashboard'); // This was causing a race condition. The useEffect will handle redirection.
+      router.replace('/admin/dashboard');
     } catch (error: any)
       {
       console.error(error);
