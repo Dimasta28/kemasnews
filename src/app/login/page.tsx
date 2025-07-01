@@ -54,6 +54,7 @@ export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
+    // If the auth state is not loading and a user is found, redirect them.
     if (!isLoading && user) {
       router.replace('/admin/dashboard');
     }
@@ -71,7 +72,8 @@ export default function LoginPage() {
         description: `Welcome back!`,
       });
       router.push('/admin/dashboard');
-    } catch (error: any) {
+    } catch (error: any)
+      {
       console.error(error);
       toast({
         variant: 'destructive',
@@ -83,6 +85,8 @@ export default function LoginPage() {
     }
   };
 
+  // While loading the auth state, or if the user is already logged in,
+  // show a loading screen to prevent the form from flashing.
   if (isLoading || user) {
     return <LoginLoadingScreen />;
   }
