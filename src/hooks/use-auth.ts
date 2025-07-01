@@ -17,9 +17,24 @@ export function useAuth() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser: FirebaseUser | null) => {
       if (firebaseUser) {
-        // User is signed in, fetch profile
+        // User is signed in, try to fetch the detailed profile from Firestore
         const profile = await getMemberProfile(firebaseUser.uid);
-        setUser(profile);
+        
+        if (profile) {
+          // If a full profile exists, use it
+          setUser(profile);
+        } else {
+          // If no profile exists, create a basic user object from the auth data.
+          // This ensures that any authenticated user can access the admin panel.
+          setUser({
+            id: firebaseUser.uid,
+            email: firebaseUser.email || '',
+            name: firebaseUser.displayName || 'Admin',
+            company: '',
+            avatar: firebaseUser.photoURL || `https://placehold.co/100x100.png`,
+            status: 'Active',
+          });
+        }
       } else {
         // User is signed out
         setUser(null);
@@ -33,7 +48,8 @@ export function useAuth() {
 
   const logout = useCallback(async () => {
     await signOut(auth);
-    router.refresh();
+    // After logout, always redirect to the login page.
+    router.push('/login');
   }, [router]);
 
   return { user, logout, isLoading };
