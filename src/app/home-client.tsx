@@ -112,7 +112,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
 
       <main>
         {latestPost ? (
-            <section className="relative h-[70vh] md:h-[80vh] flex items-end p-8 md:p-12 text-white bg-black">
+            <section className="relative h-[80vh] md:h-[90vh] flex items-end p-8 md:p-12 text-white bg-black">
                 <Image
                     src={latestPost.featuredImage}
                     alt={latestPost.title}
@@ -141,7 +141,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                 </div>
             </section>
         ) : (
-            <section className="relative h-[70vh] md:h-[80vh] flex items-center justify-center text-center overflow-hidden bg-cover bg-center">
+            <section className="relative h-[80vh] md:h-[90vh] flex items-center justify-center text-center overflow-hidden bg-cover bg-center">
                  <Image
                     src="https://placehold.co/1920x1080.png"
                     alt="Hero background"
