@@ -120,30 +120,6 @@ export function SiteHeader({ settings }: SiteHeaderProps) {
           <Link href="/careers" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
             Careers
           </Link>
-          <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
-            Products
-          </Link>
-          <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
-            Event
-          </Link>
-           <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
-            Press Release
-          </Link>
-          <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
-            CSR
-          </Link>
-          <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
-            Kemas
-          </Link>
-          <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
-            Love It
-          </Link>
-          <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
-            LIMEX
-          </Link>
-          <Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
-            Sustainability
-          </Link>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -241,14 +217,6 @@ export function SiteHeader({ settings }: SiteHeaderProps) {
                     Careers
                   </Link>
                 </li>
-                <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Products</Link></li>
-                <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Event</Link></li>
-                <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Press Release</Link></li>
-                <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>CSR</Link></li>
-                <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Kemas</Link></li>
-                <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Love It</Link></li>
-                <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>LIMEX</Link></li>
-                <li><Link href="#" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Sustainability</Link></li>
               </ul>
             </nav>
             <div className="mt-8">
