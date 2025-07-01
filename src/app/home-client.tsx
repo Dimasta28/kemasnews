@@ -1,7 +1,6 @@
-
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import * as React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -45,17 +44,17 @@ const categoryStyles: { [key: string]: { name: string; className: string } } = {
 
 // Main Application Component
 export default function HomeClient({ initialPosts, allCategories }: { initialPosts: Post[], allCategories: Category[] }) {
-  const articlesSectionRef = useRef<HTMLElement>(null);
+  const articlesSectionRef = React.useRef<HTMLElement>(null);
   
   const latestPost: Post | null = initialPosts.length > 0 ? initialPosts[0] : null;
 
-  const [articles, setArticles] = useState<Post[]>(initialPosts);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [activeFilter, setActiveFilter] = useState('All');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [articles, setArticles] = React.useState<Post[]>(initialPosts);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [activeFilter, setActiveFilter] = React.useState('All');
+  const [searchTerm, setSearchTerm] = React.useState('');
   const articlesPerPage = 15;
 
-  useEffect(() => {
+  React.useEffect(() => {
     let filtered = initialPosts;
 
     // Filter by active category
@@ -113,9 +112,8 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                 <Image
                     src={latestPost.featuredImage}
                     alt={latestPost.title}
-                    layout="fill"
-                    objectFit="cover"
-                    className="z-0 opacity-50"
+                    fill
+                    className="z-0 opacity-50 object-cover"
                     data-ai-hint="blog post image"
                     priority
                 />
@@ -132,7 +130,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                             {latestPost.title}
                         </h1>
                         <p className="text-lg text-gray-300 line-clamp-2">
-                           {latestPost.content.substring(0, 150)}...
+                           {latestPost.description}
                         </p>
                     </Link>
                 </div>
@@ -142,9 +140,8 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                  <Image
                     src="https://placehold.co/1920x1080.png"
                     alt="Hero background"
-                    layout="fill"
-                    objectFit="cover"
-                    className="z-0"
+                    fill
+                    className="z-0 object-cover"
                     data-ai-hint="cosmetics background"
                  />
             </section>
@@ -228,9 +225,8 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                                 <Image
                                     src={article.featuredImage}
                                     alt={article.title}
-                                    layout="fill"
-                                    objectFit="cover"
-                                    className="w-full h-full"
+                                    fill
+                                    className="w-full h-full object-cover"
                                     data-ai-hint="cosmetics packaging"
                                 />
                             </div>
