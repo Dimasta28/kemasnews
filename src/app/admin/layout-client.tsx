@@ -195,22 +195,20 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
-             <SidebarMenuItem asChild>
+             <SidebarMenuItem>
                 <Collapsible open={isCareersOpen} onOpenChange={setIsCareersOpen}>
-                    <SidebarMenuItem className="p-0">
-                        <CollapsibleTrigger asChild>
-                            <SidebarMenuButton
-                                isActive={pathname.startsWith('/admin/careers') || pathname.startsWith('/admin/departments')}
-                                className="w-full justify-between"
-                            >
-                                <div className="flex items-center gap-2">
-                                <Briefcase />
-                                <span>Careers</span>
-                                </div>
-                                <ChevronRight className="h-4 w-4 transition-transform duration-200 data-[state=open]:rotate-90" />
-                            </SidebarMenuButton>
-                        </CollapsibleTrigger>
-                    </SidebarMenuItem>
+                    <CollapsibleTrigger asChild>
+                        <SidebarMenuButton
+                            isActive={pathname.startsWith('/admin/careers') || pathname.startsWith('/admin/departments')}
+                            className="w-full justify-between"
+                        >
+                            <div className="flex items-center gap-2">
+                            <Briefcase />
+                            <span>Careers</span>
+                            </div>
+                            <ChevronRight className="h-4 w-4 transition-transform duration-200 data-[state=open]:rotate-90" />
+                        </SidebarMenuButton>
+                    </CollapsibleTrigger>
                     <CollapsibleContent asChild>
                     <SidebarMenuSub>
                         <SidebarMenuSubItem>
