@@ -65,12 +65,18 @@ export async function getCareerPageData(): Promise<CareerPageData> {
 
   if (docSnap.exists()) {
     const data = docSnap.data();
-    // Merge defaults with existing data to ensure all fields are present
-    return {
-      ...defaults,
-      ...data,
-      benefits: data.benefits && data.benefits.length > 0 ? data.benefits : defaults.benefits,
+    // By explicitly picking properties, we avoid passing non-serializable
+    // data like Firestore Timestamps to client components.
+    const pageData: CareerPageData = {
+        heroTitle: data.heroTitle || defaults.heroTitle,
+        heroDescription: data.heroDescription || defaults.heroDescription,
+        positionsTitle: data.positionsTitle || defaults.positionsTitle,
+        positionsDescription: data.positionsDescription || defaults.positionsDescription,
+        whyJoinTitle: data.whyJoinTitle || defaults.whyJoinTitle,
+        whyJoinDescription: data.whyJoinDescription || defaults.whyJoinDescription,
+        benefits: data.benefits && data.benefits.length > 0 ? data.benefits : defaults.benefits,
     };
+    return pageData;
   } else {
     // If the document doesn't exist, create it with default values
     await setDoc(docRef, { ...defaults, createdAt: serverTimestamp() });
