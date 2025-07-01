@@ -1,10 +1,20 @@
+
 'use server';
 
-import { db } from '@/lib/firebase';
-import { collection, addDoc, getDocs, query, where, serverTimestamp } from 'firebase/firestore';
+import { db, auth } from '@/lib/firebase';
+import {
+  collection,
+  getDocs,
+  query,
+  serverTimestamp,
+  doc,
+  setDoc,
+  getDoc
+} from 'firebase/firestore';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 export interface Member {
-  id: string;
+  id: string; // This will be the UID from Firebase Auth
   name: string;
   email: string;
   company: string;
@@ -12,17 +22,16 @@ export interface Member {
   status: 'Active' | 'Inactive';
 }
 
-export async function registerMember(name: string, email: string, company: string) {
+// Refactored to use Firebase Auth
+export async function registerMember(name: string, email: string, company: string, password: string): Promise<{ success: boolean; message: string; }> {
   try {
-    const membersRef = collection(db, 'members');
-    const q = query(membersRef, where('email', '==', email));
-    const querySnapshot = await getDocs(q);
+    // Step 1: Create user in Firebase Authentication
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
-    if (!querySnapshot.empty) {
-      return { success: false, message: 'Email already registered.' };
-    }
-
-    await addDoc(membersRef, {
+    // Step 2: Create a corresponding member document in Firestore
+    const membersRef = doc(db, 'members', user.uid); // Use user.uid as the document ID
+    await setDoc(membersRef, {
       name,
       email,
       company,
@@ -32,38 +41,35 @@ export async function registerMember(name: string, email: string, company: strin
     });
 
     return { success: true, message: 'Registration successful!' };
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error registering member:', error);
-    return { success: false, message: 'An unexpected error occurred.' };
+    // Provide more specific error messages
+    if (error.code === 'auth/email-already-in-use') {
+        return { success: false, message: 'This email address is already in use.' };
+    }
+    if (error.code === 'auth/weak-password') {
+        return { success: false, message: 'The password is too weak. It should be at least 6 characters.' };
+    }
+    return { success: false, message: 'An unexpected error occurred during registration.' };
   }
 }
 
-export async function findMemberByEmail(email: string): Promise<{ success: boolean; member?: Member; message?: string }> {
-  try {
-    const membersRef = collection(db, 'members');
-    const q = query(membersRef, where('email', '==', email));
-    const querySnapshot = await getDocs(q);
-
-    if (querySnapshot.empty) {
-      return { success: false, message: 'No member found with this email.' };
+// New function to get member profile data from Firestore
+export async function getMemberProfile(uid: string): Promise<Member | null> {
+    const memberDocRef = doc(db, 'members', uid);
+    const docSnap = await getDoc(memberDocRef);
+    if (docSnap.exists()) {
+        const data = docSnap.data();
+        return {
+            id: docSnap.id,
+            name: data.name,
+            email: data.email,
+            company: data.company,
+            avatar: data.avatar,
+            status: data.status,
+        } as Member;
     }
-
-    const doc = querySnapshot.docs[0];
-    const data = doc.data();
-    const member: Member = {
-      id: doc.id,
-      name: data.name,
-      email: data.email,
-      company: data.company,
-      avatar: data.avatar,
-      status: data.status,
-    };
-
-    return { success: true, member };
-  } catch (error) {
-    console.error('Error finding member:', error);
-    return { success: false, message: 'An unexpected error occurred.' };
-  }
+    return null;
 }
 
 export async function getMembers(): Promise<Member[]> {

@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -19,13 +20,25 @@ export default function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (password !== confirmPassword) {
+        toast({
+            variant: 'destructive',
+            title: 'Registration Failed',
+            description: 'Passwords do not match.',
+        });
+        return;
+    }
+
     setIsSubmitting(true);
 
-    const result = await registerMember(name, email, company);
+    const result = await registerMember(name, email, company, password);
 
     if (result.success) {
       toast({
@@ -65,6 +78,14 @@ export default function RegisterPage() {
               <div className="grid gap-2">
                 <Label htmlFor="company">Company</Label>
                 <Input id="company" type="text" placeholder="Your company name" value={company} onChange={(e) => setCompany(e.target.value)} required />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="password">Password</Label>
+                <Input id="password" type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="confirm-password">Confirm Password</Label>
+                <Input id="confirm-password" type="password" placeholder="••••••••" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
               </div>
               <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting ? 'Registering...' : 'Register'}
