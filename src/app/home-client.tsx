@@ -110,36 +110,6 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
             className="z-0"
             data-ai-hint="cosmetics background"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-40 dark:bg-opacity-60 z-10"></div>
-          <div className="relative z-20 text-[#EFECE9] p-6 max-w-3xl">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-4xl md:text-6xl font-extrabold leading-tight mb-4 drop-shadow-lg"
-            >
-              Latest Insights from the World of Cosmetics
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-lg md:text-xl mb-8 drop-shadow-md"
-            >
-              Explore selected articles on trends, innovation, and packaging strategies for cosmetics.
-            </motion.p>
-            <motion.button
-              whileHover={{
-                scale: 1.05,
-                boxShadow: '0px 8px 20px rgba(0,0,0,0.3)',
-              }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-[#610C27] hover:bg-opacity-90 text-[#EFECE9] font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300"
-              onClick={() => articlesSectionRef.current?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              Read Articles
-            </motion.button>
-          </div>
         </section>
 
         <section
