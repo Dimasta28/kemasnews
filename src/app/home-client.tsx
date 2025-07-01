@@ -48,6 +48,8 @@ const categoryStyles: { [key: string]: { name: string; className: string } } = {
 export default function HomeClient({ initialPosts, allCategories }: { initialPosts: Post[], allCategories: Category[] }) {
   const articlesSectionRef = useRef<HTMLElement>(null);
   
+  const latestPost: Post | null = initialPosts.length > 0 ? initialPosts[0] : null;
+
   const [articles, setArticles] = useState<Post[]>(initialPosts);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeFilter, setActiveFilter] = useState('All');
@@ -100,6 +102,8 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
   );
   const sortedUniqueCategories = [...uniqueCategories].sort((a, b) => b.postCount - a.postCount);
   const topCategories = sortedUniqueCategories.slice(0, 3);
+  
+  const heroCategoryStyle = latestPost ? categoryStyles[latestPost.category.toLowerCase() as keyof typeof categoryStyles] || categoryStyles.default : null;
 
 
   return (
@@ -107,16 +111,47 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
       <SiteHeader />
 
       <main>
-        <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center text-center overflow-hidden bg-cover bg-center">
-          <Image
-            src="https://placehold.co/1920x1080.png"
-            alt="Hero background"
-            layout="fill"
-            objectFit="cover"
-            className="z-0"
-            data-ai-hint="cosmetics background"
-          />
-        </section>
+        {latestPost ? (
+            <section className="relative h-[60vh] md:h-[70vh] flex items-end p-8 md:p-12 text-white bg-black">
+                <Image
+                    src={latestPost.featuredImage}
+                    alt={latestPost.title}
+                    layout="fill"
+                    objectFit="cover"
+                    className="z-0 opacity-50"
+                    data-ai-hint="blog post image"
+                    priority
+                />
+                <div className="relative z-10 max-w-3xl">
+                    <Link href={`/post/${latestPost.id}`} className="block group">
+                        {heroCategoryStyle && (
+                            <span
+                                className={`inline-block ${heroCategoryStyle.className} text-xs font-semibold px-3 py-1 rounded-full mb-4`}
+                            >
+                                {heroCategoryStyle.name}
+                            </span>
+                        )}
+                        <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-4 group-hover:underline">
+                            {latestPost.title}
+                        </h1>
+                        <p className="text-lg text-gray-300 line-clamp-2">
+                           {latestPost.content.substring(0, 150)}...
+                        </p>
+                    </Link>
+                </div>
+            </section>
+        ) : (
+            <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center text-center overflow-hidden bg-cover bg-center">
+                 <Image
+                    src="https://placehold.co/1920x1080.png"
+                    alt="Hero background"
+                    layout="fill"
+                    objectFit="cover"
+                    className="z-0"
+                    data-ai-hint="cosmetics background"
+                 />
+            </section>
+        )}
 
         <section
           className={`sticky z-40 bg-background/95 p-4 border-b border-border shadow-sm top-[calc(var(--header-height,0px)+1rem)] backdrop-blur-sm`}
