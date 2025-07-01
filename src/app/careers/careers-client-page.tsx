@@ -7,6 +7,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Building, MapPin, Calendar } from 'lucide-react';
 import { DynamicIcon } from '@/components/ui/dynamic-icon';
 import { Separator } from '@/components/ui/separator';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { type CareerPageData, type JobOpening } from '@/services/careerService';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
@@ -118,12 +124,20 @@ export function CareersClientPage({ initialPageData, initialJobOpenings }: Caree
                                         </div>
                                     </div>
                                     {job.qualifications && (
-                                        <div className="pt-4 mt-auto">
-                                            <Separator className="my-2" />
-                                            <h4 className="font-semibold text-sm mt-4 mb-2">Qualifications</h4>
-                                            <div className="text-sm text-muted-foreground space-y-2 whitespace-pre-wrap">
-                                                {job.qualifications}
-                                            </div>
+                                        <div className="pt-2 mt-auto">
+                                            <Separator className="mb-0" />
+                                            <Accordion type="single" collapsible className="w-full">
+                                                <AccordionItem value={`job-${job.id}`} className="border-b-0">
+                                                    <AccordionTrigger className="py-3 text-sm font-semibold hover:no-underline">
+                                                        Qualifications
+                                                    </AccordionTrigger>
+                                                    <AccordionContent>
+                                                        <div className="text-sm text-muted-foreground space-y-2 whitespace-pre-wrap pt-0">
+                                                            {job.qualifications}
+                                                        </div>
+                                                    </AccordionContent>
+                                                </AccordionItem>
+                                            </Accordion>
                                         </div>
                                     )}
                                 </CardContent>
