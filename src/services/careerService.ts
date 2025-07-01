@@ -1,4 +1,3 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -100,7 +99,19 @@ export async function getJobOpenings(): Promise<JobOpening[]> {
   const jobsCollection = collection(db, 'jobOpenings');
   const q = query(jobsCollection, orderBy('title', 'asc'));
   const snapshot = await getDocs(q);
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as JobOpening));
+  const jobs: JobOpening[] = snapshot.docs.map(doc => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      title: data.title || '',
+      department: data.department || '',
+      location: data.location || '',
+      type: data.type || '',
+      imageUrl: data.imageUrl || '',
+      qualifications: data.qualifications || '',
+    };
+  });
+  return jobs;
 }
 
 // Create a new job opening
