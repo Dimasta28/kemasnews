@@ -103,7 +103,7 @@ export function SiteHeader({ settings }: SiteHeaderProps) {
                 PT. Kemas <ChevronDownIcon size={16} />
               </button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto max-w-2xl bg-[#EFECE9]/95 dark:bg-[#050505]/95 backdrop-blur-md border-[#DDD9CE] dark:border-[#AC9C8D] p-4 rounded-2xl shadow-xl grid grid-cols-2 gap-4">
+            <PopoverContent className="w-auto max-w-5xl bg-[#EFECE9]/95 dark:bg-[#050505]/95 backdrop-blur-md border-[#DDD9CE] dark:border-[#AC9C8D] p-4 rounded-2xl shadow-xl grid grid-cols-4 gap-4">
               {settings.dropdownLinks.map((link) => (
                 <Link
                   key={link.title}
