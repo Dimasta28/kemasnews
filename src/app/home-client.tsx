@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -87,13 +88,6 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
     indexOfFirstArticle,
     indexOfLastArticle
   );
-
-  const handlePageChange = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-      articlesSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   // Create a unique list of categories and sort them
   const uniqueCategories = allCategories.filter((category, index, self) =>
@@ -185,79 +179,83 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
         </section>
 
         <section ref={articlesSectionRef} className="pt-12 pb-12 px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
-                <h2 className="text-3xl font-bold self-start sm:self-center">
-                    {activeFilter === 'All' ? 'Latest Articles' : activeFilter}
-                </h2>
-                <div className="relative w-full sm:max-w-xs">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input
-                            type="search"
-                            placeholder="Search articles..."
-                            className="pl-9 w-full"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
+            <div className="max-w-7xl mx-auto">
+                <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
+                    <h2 className="text-3xl font-bold self-start sm:self-center">
+                        {activeFilter === 'All' ? 'Latest Articles' : activeFilter}
+                    </h2>
+                    <div className="relative w-full sm:max-w-xs">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                type="search"
+                                placeholder="Search articles..."
+                                className="pl-9 w-full"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                    </div>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {currentArticles.length > 0 ? (
-                currentArticles.map((article) => {
-                const firstCategory = article.categories?.[0] || '';
-                const categoryClass = categoryStyles[firstCategory.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
-                return (
-                    <Link href={`/post/${article.id}`} key={article.id} className="block h-full">
-                        <motion.div
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.2 }}
-                            transition={{ duration: 0.5 }}
-                            className="bg-card/80 dark:bg-card rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden h-full flex flex-col"
-                        >
-                            <div className="relative w-full aspect-video">
-                                <Image
-                                    src={article.featuredImage}
-                                    alt={article.title}
-                                    fill
-                                    className="object-cover"
-                                    data-ai-hint="cosmetics packaging"
-                                />
-                            </div>
-                            <div className="p-5 flex-grow flex flex-col">
-                                {firstCategory && (
-                                    <span
-                                    className={`inline-block ${categoryClass} text-xs font-semibold px-3 py-1 rounded-full mb-3 self-start`}
+                <div className="flex justify-center">
+                    <div className="inline-grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                        {currentArticles.map((article) => {
+                            const firstCategory = article.categories?.[0] || '';
+                            const categoryClass = categoryStyles[firstCategory.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
+                            return (
+                                <Link href={`/post/${article.id}`} key={article.id} className="block h-full">
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 50 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true, amount: 0.2 }}
+                                        transition={{ duration: 0.5 }}
+                                        className="bg-card/80 dark:bg-card rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden h-full flex flex-col"
                                     >
-                                    {firstCategory}
-                                    </span>
-                                )}
-                                <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-card-foreground">
-                                {article.title}
-                                </h3>
-                                {article.description && (
-                                <p className="text-sm text-muted-foreground/90 line-clamp-3 mb-4">
-                                    {article.description}
-                                </p>
-                                )}
-                                <div className="flex items-center justify-between text-xs text-muted-foreground mt-auto pt-4 border-t border-border/30">
-                                <span>
-                                    {article.author} | {article.date}
-                                </span>
-                                </div>
-                            </div>
-                        </motion.div>
-                    </Link>
-                );
-                })
+                                        <div className="relative w-full aspect-video">
+                                            <Image
+                                                src={article.featuredImage}
+                                                alt={article.title}
+                                                fill
+                                                className="object-cover"
+                                                data-ai-hint="cosmetics packaging"
+                                            />
+                                        </div>
+                                        <div className="p-5 flex-grow flex flex-col">
+                                            {firstCategory && (
+                                                <span
+                                                className={`inline-block ${categoryClass} text-xs font-semibold px-3 py-1 rounded-full mb-3 self-start`}
+                                                >
+                                                {firstCategory}
+                                                </span>
+                                            )}
+                                            <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-card-foreground">
+                                            {article.title}
+                                            </h3>
+                                            {article.description && (
+                                            <p className="text-sm text-muted-foreground/90 line-clamp-3 mb-4">
+                                                {article.description}
+                                            </p>
+                                            )}
+                                            <div className="flex items-center justify-between text-xs text-muted-foreground mt-auto pt-4 border-t border-border/30">
+                                            <span>
+                                                {article.author} | {article.date}
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                </Link>
+                            );
+                        })}
+                    </div>
+                </div>
             ) : (
-                <div className="col-span-full text-center py-10">
-                <p className="text-muted-foreground">
-                    No posts found for the selected filter.
-                </p>
+                <div className="text-center py-10">
+                    <p className="text-muted-foreground">
+                        No posts found for the selected filter.
+                    </p>
                 </div>
             )}
-            </div>
 
             {totalPages > 1 && (
             <div className="flex justify-center mt-12">
