@@ -1,4 +1,4 @@
-# **App Name**: CanvasBlog
+# **App Name**: Kemas News
 
 ## Core Features:
 
