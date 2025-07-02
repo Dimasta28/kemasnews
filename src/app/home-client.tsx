@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -165,7 +166,26 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
             </section>
         )}
         
-        <section ref={articlesSectionRef} className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <section className="py-8 bg-card/50">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ToggleGroup
+              type="single"
+              defaultValue="All"
+              value={activeFilter}
+              onValueChange={handleFilterChange}
+              className="flex-wrap justify-center gap-2"
+            >
+              <ToggleGroupItem value="All" aria-label="Filter by All">All Topics</ToggleGroupItem>
+              {sortedUniqueCategories.map((category) => (
+                <ToggleGroupItem key={category.id} value={category.name} aria-label={`Filter by ${category.name}`}>
+                  {category.name}
+                </ToggleGroupItem>
+              ))}
+            </ToggleGroup>
+          </div>
+        </section>
+
+        <section ref={articlesSectionRef} className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-12">
             <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
                 <h2 className="text-3xl font-bold self-start sm:self-center">
                     {activeFilter === 'All' ? 'Latest Articles' : activeFilter}
@@ -180,23 +200,6 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                 </div>
-            </div>
-
-            <div className="flex justify-center mb-10">
-                <ToggleGroup
-                    type="single"
-                    defaultValue="All"
-                    value={activeFilter}
-                    onValueChange={handleFilterChange}
-                    className="flex-wrap justify-center gap-2"
-                >
-                    <ToggleGroupItem value="All" aria-label="Filter by All">All Topics</ToggleGroupItem>
-                    {sortedUniqueCategories.map((category) => (
-                        <ToggleGroupItem key={category.id} value={category.name} aria-label={`Filter by ${category.name}`}>
-                            {category.name}
-                        </ToggleGroupItem>
-                    ))}
-                </ToggleGroup>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
