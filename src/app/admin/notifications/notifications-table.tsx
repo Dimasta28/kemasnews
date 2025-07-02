@@ -1,42 +1,26 @@
 'use client';
 
-import { useState, useCallback } from 'react';
-import { MoreHorizontal, PlusCircle } from 'lucide-react';
+import { useState } from 'react';
+import { MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useToast } from '@/hooks/use-toast';
-import { deleteNotification, type Notification, getNotifications } from '@/services/notificationService';
-import { NotificationDialog } from './notification-dialog';
+import { deleteNotification, type Notification } from '@/services/notificationService';
 import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 
-interface NotificationsTableProps {
-  initialNotifications: Notification[];
+interface NotificationsGridProps {
+  notifications: Notification[];
+  onEdit: (notification: Notification) => void;
+  onDelete: () => void;
 }
 
-export function NotificationsTable({ initialNotifications }: NotificationsTableProps) {
-  const [notifications, setNotifications] = useState<Notification[]>(initialNotifications);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
+export function NotificationsTable({ notifications, onEdit, onDelete }: NotificationsGridProps) {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [notificationToDelete, setNotificationToDelete] = useState<string | null>(null);
   const { toast } = useToast();
-
-  const refreshNotifications = useCallback(async () => {
-    const freshNotifications = await getNotifications();
-    setNotifications(freshNotifications);
-  }, []);
-
-  const handleCreate = () => {
-    setSelectedNotification(null);
-    setIsDialogOpen(true);
-  };
-
-  const handleEdit = (notification: Notification) => {
-    setSelectedNotification(notification);
-    setIsDialogOpen(true);
-  };
 
   const confirmDelete = (id: string) => {
     setNotificationToDelete(id);
@@ -48,7 +32,7 @@ export function NotificationsTable({ initialNotifications }: NotificationsTableP
     try {
       await deleteNotification(notificationToDelete);
       toast({ title: 'Success!', description: 'Notification deleted.' });
-      refreshNotifications();
+      onDelete();
     } catch (error) {
       console.error('Failed to delete notification:', error);
       toast({ variant: 'destructive', title: 'Error', description: 'Failed to delete notification.' });
@@ -57,67 +41,59 @@ export function NotificationsTable({ initialNotifications }: NotificationsTableP
     setNotificationToDelete(null);
   };
 
+  if (notifications.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-48 rounded-lg border border-dashed">
+        <p className="text-muted-foreground">No notifications found.</p>
+      </div>
+    );
+  }
+
   return (
     <>
-      <div className="flex justify-end mb-4">
-        <Button size="sm" onClick={handleCreate}>
-          <PlusCircle className="mr-2 h-4 w-4" /> Create Notification
-        </Button>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {notifications.map((notification) => (
+          <Card key={notification.id} className="flex flex-col">
+            <CardHeader>
+              <div className="flex justify-between items-start gap-4">
+                <CardTitle className="text-lg leading-snug">{notification.title}</CardTitle>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 flex-shrink-0">
+                      <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => onEdit(notification)}>Edit</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10" onClick={() => confirmDelete(notification.id)}>Delete</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </CardHeader>
+            <CardContent className="flex-grow space-y-3">
+              <p className="text-sm text-muted-foreground">{notification.description}</p>
+              <Separator />
+              <div className="space-y-2 text-sm">
+                 <div className="flex justify-between items-center">
+                   <span className="font-medium text-muted-foreground">Link:</span>
+                   <a href={notification.link} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline truncate ml-2 max-w-[150px]">{notification.link}</a>
+                 </div>
+                 <div className="flex justify-between items-center">
+                   <span className="font-medium text-muted-foreground">Status:</span>
+                   <Badge variant={notification.read ? "outline" : "secondary"}>
+                     {notification.read ? 'Read' : 'Unread'}
+                   </Badge>
+                 </div>
+                 <div className="flex justify-between items-center">
+                   <span className="font-medium text-muted-foreground">Created:</span>
+                   <span className="text-muted-foreground">{notification.createdAt}</span>
+                 </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Title</TableHead>
-              <TableHead>Description</TableHead>
-              <TableHead>Link</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Created</TableHead>
-              <TableHead><span className="sr-only">Actions</span></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {notifications.length > 0 ? notifications.map((notification) => (
-              <TableRow key={notification.id}>
-                <TableCell className="font-medium">{notification.title}</TableCell>
-                <TableCell>{notification.description}</TableCell>
-                <TableCell>
-                  <a href={notification.link} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{notification.link}</a>
-                </TableCell>
-                <TableCell>
-                  <Badge variant={notification.read ? "outline" : "secondary"}>
-                    {notification.read ? 'Read' : 'Unread'}
-                  </Badge>
-                </TableCell>
-                <TableCell>{notification.createdAt}</TableCell>
-                <TableCell className="text-right">
-                   <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon"><MoreHorizontal className="h-4 w-4" /></Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => handleEdit(notification)}>Edit</DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10" onClick={() => confirmDelete(notification.id)}>Delete</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            )) : (
-              <TableRow>
-                <TableCell colSpan={6} className="h-24 text-center">No notifications found.</TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-      
-      <NotificationDialog
-        isOpen={isDialogOpen}
-        onOpenChange={setIsDialogOpen}
-        onNotificationSaved={refreshNotifications}
-        notification={selectedNotification}
-      />
 
       <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
         <AlertDialogContent>
