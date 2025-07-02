@@ -291,14 +291,14 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
         )}
         
         <div className="px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 py-12">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
                 {/* Left Sidebar */}
                 <aside className="lg:col-span-1">
                     <LeftSidebar categories={sortedUniqueCategories} activeFilter={activeFilter} onFilterChange={handleFilterChange} featuredPost={featuredPost} />
                 </aside>
 
                 {/* Main Content */}
-                <section ref={articlesSectionRef} className="lg:col-span-2">
+                <section ref={articlesSectionRef} className="lg:col-span-3">
                     <div className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4">
                         <h2 className="text-3xl font-bold self-start sm:self-center">
                             {activeFilter === 'All' ? 'Latest Articles' : activeFilter}
