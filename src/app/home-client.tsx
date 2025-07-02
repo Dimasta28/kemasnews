@@ -59,6 +59,11 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
   const articlesPerPage = 12;
 
   React.useEffect(() => {
+    // This effect ensures the search term from the URL is applied.
+    setSearchTerm(q || '');
+  }, [q]);
+
+  React.useEffect(() => {
     let filtered = initialPosts;
 
     // Filter by active category
@@ -323,3 +328,5 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
     </div>
   );
 }
+
+    
