@@ -290,7 +290,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
             </section>
         )}
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 py-12">
                 {/* Left Sidebar */}
                 <aside className="lg:col-span-1">
