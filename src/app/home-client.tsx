@@ -291,14 +291,14 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
         )}
         
         <div className="px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
+            <div className="grid grid-cols-1 lg:grid-cols-10 gap-8 py-12">
                 {/* Left Sidebar */}
                 <aside className="lg:col-span-1">
                     <LeftSidebar categories={sortedUniqueCategories} activeFilter={activeFilter} onFilterChange={handleFilterChange} featuredPost={featuredPost} />
                 </aside>
 
                 {/* Main Content */}
-                <section ref={articlesSectionRef} className="lg:col-span-3">
+                <section ref={articlesSectionRef} className="lg:col-span-8">
                     <div className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4">
                         <h2 className="text-3xl font-bold self-start sm:self-center">
                             {activeFilter === 'All' ? 'Latest Articles' : activeFilter}
@@ -315,7 +315,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {currentArticles.length > 0 ? (
                         currentArticles.map((article) => {
                         const firstCategory = article.categories?.[0] || '';
