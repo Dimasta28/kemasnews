@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -40,25 +39,17 @@ export function Sidebar({ recentPosts, banner }: { recentPosts: Post[], banner: 
         </CardContent>
       </Card>
 
-      {/* Search Widget */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Search</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search articles..." className="pl-9" />
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Recent Posts Widget */}
       <Card>
         <CardHeader>
           <CardTitle>Recent Posts</CardTitle>
         </CardHeader>
         <CardContent>
+          <div className="relative mb-4">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input placeholder="Search articles..." className="pl-9" />
+          </div>
+          <Separator className="mb-4" />
           <div className="space-y-4">
             {recentPosts.map((post, index) => (
               <motion.div key={post.id} whileHover={{ x: 4 }} transition={{ type: 'spring', stiffness: 300 }}>
