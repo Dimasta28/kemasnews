@@ -29,6 +29,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { generatePost } from '@/ai/flows/generate-post-flow';
 import { generateDescription } from '@/ai/flows/generate-description-flow';
+import { generateTags } from '@/ai/flows/generate-tags-flow';
 import { getPost, updatePost, Post } from '@/services/postService';
 import { getCategories, type Category } from '@/services/categoryService';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -50,6 +51,7 @@ export default function EditPostPage() {
   const [featuredImage, setFeaturedImage] = useState('https://placehold.co/300x300.png');
   const [isGenerating, setIsGenerating] = useState(false);
   const [isGeneratingDesc, setIsGeneratingDesc] = useState(false);
+  const [isGeneratingTags, setIsGeneratingTags] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -119,7 +121,7 @@ export default function EditPostPage() {
         content,
         status,
         categories,
-        tags: tags.split(',').map(tag => tag.trim()),
+        tags: tags.split(',').map(tag => tag.trim()).filter(tag => tag),
         featuredImage,
       };
 
@@ -206,6 +208,39 @@ export default function EditPostPage() {
     }
   };
   
+  const handleGenerateTags = async () => {
+    if (!title || !content) {
+        toast({
+            variant: 'destructive',
+            title: 'Judul dan Konten Diperlukan',
+            description: 'Silakan isi judul dan konten postingan sebelum menghasilkan tag.',
+        });
+        return;
+    }
+    setIsGeneratingTags(true);
+    try {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = content;
+        const textContent = tempDiv.textContent || tempDiv.innerText || '';
+
+        const result = await generateTags({ title, content: textContent });
+        setTags(result.tags.join(', '));
+        toast({
+            title: 'Tag Dihasilkan!',
+            description: 'Tag yang relevan telah ditambahkan.',
+        });
+    } catch (error) {
+        console.error('Failed to generate tags:', error);
+        toast({
+            variant: 'destructive',
+            title: 'Gagal Menghasilkan Tag',
+            description: 'Terjadi kesalahan saat membuat tag. Silakan coba lagi.',
+        });
+    } finally {
+        setIsGeneratingTags(false);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex flex-col gap-4">
@@ -360,7 +395,19 @@ export default function EditPostPage() {
                       </div>
                     </div>
                     <div className="grid gap-3">
-                      <Label htmlFor="tags">Tags</Label>
+                      <div className="flex items-center justify-between">
+                          <Label htmlFor="tags">Tags</Label>
+                          <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={handleGenerateTags}
+                              disabled={isGeneratingTags || !title || !content}
+                          >
+                              <Sparkles className="mr-2 h-4 w-4" />
+                              {isGeneratingTags ? 'Generating...' : 'Generate with AI'}
+                          </Button>
+                      </div>
                       <Input
                         id="tags"
                         type="text"

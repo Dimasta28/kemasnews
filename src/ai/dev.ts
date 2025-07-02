@@ -5,3 +5,4 @@ config();
 import './flows/chat-flow';
 import './flows/generate-post-flow';
 import './flows/generate-description-flow';
+import './flows/generate-tags-flow';
