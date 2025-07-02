@@ -16,6 +16,7 @@ import {
   Megaphone,
   Briefcase,
   ChevronRight,
+  Shield,
 } from 'lucide-react';
 
 import {
@@ -195,6 +196,17 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
+             <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname.startsWith('/admin/privacy-policy')}
+                >
+                  <Link href="/admin/privacy-policy">
+                    <Shield />
+                    Privacy Policy
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
              <SidebarMenuItem>
                 <Collapsible open={isCareersOpen} onOpenChange={setIsCareersOpen}>
                     <CollapsibleTrigger asChild>
