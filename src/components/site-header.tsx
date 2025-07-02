@@ -12,14 +12,11 @@ import {
   Moon,
   ChevronDown as ChevronDownIcon,
   X as XIcon,
-  Search,
 } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import type { FrontendSettings } from '@/services/settingsService';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -41,8 +38,6 @@ export function SiteHeader({ settings, notifications: initialNotifications }: Si
   const { theme, setTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
   const [notifications, setNotifications] = useState(initialNotifications || []);
@@ -62,20 +57,10 @@ export function SiteHeader({ settings, notifications: initialNotifications }: Si
     try {
         await markAllNotificationsAsRead();
         setNotifications(notifications.map(n => ({...n, read: true})));
-        toast({ title: 'Success', description: 'All notifications marked as read.' });
     } catch (error) {
         toast({ variant: 'destructive', title: 'Error', description: 'Could not mark all as read.' });
     }
   };
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/?q=${searchQuery}`);
-      setIsSearchVisible(false);
-    }
-  };
-
 
   useEffect(() => {
     setMounted(true);
@@ -90,7 +75,6 @@ export function SiteHeader({ settings, notifications: initialNotifications }: Si
 
       if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
         setIsHeaderHidden(true);
-        setIsSearchVisible(false); // Close search on scroll down
       } else if (currentScrollY < lastScrollY.current || currentScrollY < 50) {
         setIsHeaderHidden(false);
       }
@@ -138,29 +122,6 @@ export function SiteHeader({ settings, notifications: initialNotifications }: Si
           />
         </Link>
         
-        <AnimatePresence>
-            {isSearchVisible && (
-                 <motion.div
-                    initial={{ width: 0, opacity: 0 }}
-                    animate={{ width: 'auto', opacity: 1 }}
-                    exit={{ width: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute left-1/2 -translate-x-1/2"
-                >
-                    <form onSubmit={handleSearchSubmit} className="relative">
-                        <Input 
-                            type="search"
-                            placeholder="Search articles..."
-                            className="w-full sm:w-64 md:w-96"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            autoFocus
-                        />
-                    </form>
-                </motion.div>
-            )}
-        </AnimatePresence>
-
         <nav className="hidden md:flex items-center gap-6 text-sm">
           <Link href="/" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
             Home
@@ -192,13 +153,6 @@ export function SiteHeader({ settings, notifications: initialNotifications }: Si
         </nav>
 
         <div className="flex items-center gap-2">
-           <button
-             onClick={() => setIsSearchVisible(!isSearchVisible)}
-             className="p-2 hover:bg-[#DDD9CE] dark:hover:bg-[#AC9C8D] rounded-full transition"
-            >
-                {isSearchVisible ? <XIcon size={20} /> : <Search size={20} />}
-            </button>
-
            <Popover>
             <PopoverTrigger asChild>
               <button className="p-2 hover:bg-[#DDD9CE] dark:hover:bg-[#AC9C8D] rounded-full transition relative">
