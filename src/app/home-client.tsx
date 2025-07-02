@@ -4,9 +4,11 @@ import * as React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Autoplay from 'embla-carousel-autoplay';
 
 import type { Post } from '@/services/postService';
 import type { Category } from '@/services/categoryService';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import {
   Pagination,
   PaginationContent,
@@ -45,8 +47,9 @@ const categoryStyles: { [key: string]: { name: string; className: string } } = {
 // Main Application Component
 export default function HomeClient({ initialPosts, allCategories }: { initialPosts: Post[], allCategories: Category[] }) {
   const articlesSectionRef = React.useRef<HTMLElement>(null);
+  const autoplayPlugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
   
-  const latestPost: Post | null = initialPosts.length > 0 ? initialPosts[0] : null;
+  const latestPosts = initialPosts.slice(0, 3);
 
   const [articles, setArticles] = React.useState<Post[]>(initialPosts);
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -101,40 +104,58 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
   const sortedUniqueCategories = [...uniqueCategories].sort((a, b) => b.postCount - a.postCount);
   const topCategories = sortedUniqueCategories.slice(0, 3);
   
-  const heroCategoryStyle = latestPost ? categoryStyles[latestPost.category.toLowerCase() as keyof typeof categoryStyles] || categoryStyles.default : null;
-
 
   return (
     <div className="font-inter antialiased bg-[#EFECE9] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9] min-h-screen">
       <main>
-        {latestPost ? (
-            <section className="relative h-[80vh] md:h-[90vh] flex items-end p-8 md:p-12 text-white bg-black">
-                <Image
-                    src={latestPost.featuredImage}
-                    alt={latestPost.title}
-                    fill
-                    className="z-0 opacity-50 object-cover"
-                    data-ai-hint="blog post image"
-                    priority
-                />
-                <div className="relative z-10 max-w-3xl">
-                    <Link href={`/post/${latestPost.id}`} className="block group">
-                        {heroCategoryStyle && (
-                            <span
-                                className={`inline-block ${heroCategoryStyle.className} text-xs font-semibold px-3 py-1 rounded-full mb-4`}
-                            >
-                                {heroCategoryStyle.name}
-                            </span>
-                        )}
-                        <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-4 group-hover:underline">
-                            {latestPost.title}
-                        </h1>
-                        <p className="text-lg text-gray-300 line-clamp-2">
-                           {latestPost.description}
-                        </p>
-                    </Link>
-                </div>
-            </section>
+        {latestPosts.length > 0 ? (
+          <section>
+            <Carousel
+              plugins={[autoplayPlugin.current]}
+              className="relative w-full"
+              onMouseEnter={autoplayPlugin.current.stop}
+              onMouseLeave={autoplayPlugin.current.reset}
+            >
+              <CarouselContent>
+                {latestPosts.map((post, index) => {
+                   const categoryStyle = categoryStyles[post.category.toLowerCase() as keyof typeof categoryStyles] || categoryStyles.default;
+                  return (
+                    <CarouselItem key={post.id}>
+                      <div className="relative h-[80vh] md:h-[90vh] flex items-end p-8 md:p-12 text-white bg-black">
+                          <Image
+                              src={post.featuredImage}
+                              alt={post.title}
+                              fill
+                              className="z-0 opacity-50 object-cover"
+                              data-ai-hint="blog post image"
+                              priority={index === 0}
+                          />
+                          <div className="relative z-10 max-w-3xl">
+                              <Link href={`/post/${post.id}`} className="block group">
+                                  {categoryStyle && (
+                                      <span
+                                          className={`inline-block ${categoryStyle.className} text-xs font-semibold px-3 py-1 rounded-full mb-4`}
+                                      >
+                                          {categoryStyle.name}
+                                      </span>
+                                  )}
+                                  <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-4 group-hover:underline">
+                                      {post.title}
+                                  </h1>
+                                  <p className="text-lg text-gray-300 line-clamp-2">
+                                     {post.description}
+                                  </p>
+                              </Link>
+                          </div>
+                      </div>
+                    </CarouselItem>
+                  );
+                })}
+              </CarouselContent>
+              <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 text-white bg-black/20 hover:bg-black/50 border-white/50 hover:border-white" />
+              <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 text-white bg-black/20 hover:bg-black/50 border-white/50 hover:border-white" />
+            </Carousel>
+          </section>
         ) : (
             <section className="relative h-[80vh] md:h-[90vh] flex items-center justify-center text-center overflow-hidden bg-cover bg-center">
                  <Image
