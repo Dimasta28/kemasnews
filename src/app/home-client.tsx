@@ -235,7 +235,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
             <h2 className="text-3xl font-bold text-center mb-10">
               Latest Articles
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {currentArticles.length > 0 ? (
                 currentArticles.map((article) => {
                   const firstCategory = article.categories?.[0] || '';
