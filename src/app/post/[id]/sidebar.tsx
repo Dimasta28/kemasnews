@@ -16,6 +16,30 @@ import type { BannerSettings } from '@/services/settingsService';
 export function Sidebar({ recentPosts, banner }: { recentPosts: Post[], banner: BannerSettings }) {
   return (
     <div className="sticky top-24 space-y-8">
+      {/* Campaign/Banner Widget */}
+      <Card className="overflow-hidden">
+        <CardContent className="p-0">
+          <Link href={banner.buttonLink || '#'} className="block group">
+            <div className="relative aspect-video w-full overflow-hidden">
+               <Image
+                  src={banner.imageUrl}
+                  alt={banner.title}
+                  fill
+                  className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+                  data-ai-hint="advertisement banner"
+              />
+            </div>
+          </Link>
+           <div className="p-4">
+            <h3 className="font-semibold">{banner.title}</h3>
+            <p className="text-sm text-muted-foreground mt-1">{banner.description}</p>
+            <Button size="sm" className="mt-3 w-full" asChild>
+                <Link href={banner.buttonLink || '#'}>{banner.buttonText}</Link>
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Search Widget */}
       <Card>
         <CardHeader>
@@ -58,30 +82,6 @@ export function Sidebar({ recentPosts, banner }: { recentPosts: Post[], banner: 
                 {index < recentPosts.length - 1 && <Separator className="mt-4" />}
               </motion.div>
             ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Campaign/Banner Widget */}
-      <Card className="overflow-hidden">
-        <CardContent className="p-0">
-          <Link href={banner.buttonLink || '#'} className="block group">
-            <div className="relative aspect-video w-full overflow-hidden">
-               <Image
-                  src={banner.imageUrl}
-                  alt={banner.title}
-                  fill
-                  className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
-                  data-ai-hint="advertisement banner"
-              />
-            </div>
-          </Link>
-           <div className="p-4">
-            <h3 className="font-semibold">{banner.title}</h3>
-            <p className="text-sm text-muted-foreground mt-1">{banner.description}</p>
-            <Button size="sm" className="mt-3 w-full" asChild>
-                <Link href={banner.buttonLink || '#'}>{banner.buttonText}</Link>
-            </Button>
           </div>
         </CardContent>
       </Card>
