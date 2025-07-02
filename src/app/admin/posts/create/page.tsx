@@ -24,6 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { generatePost } from '@/ai/flows/generate-post-flow';
@@ -40,7 +41,7 @@ export default function CreatePostPage() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [content, setContent] = useState('');
-  const [category, setCategory] = useState('');
+  const [categories, setCategories] = useState<string[]>([]);
   const [allCategories, setAllCategories] = useState<Category[]>([]);
   const [tags, setTags] = useState('');
   const [status, setStatus] = useState<'Draft' | 'Published' | 'Archived'>('Draft');
@@ -56,6 +57,16 @@ export default function CreatePostPage() {
     };
     fetchCategories();
   }, []);
+  
+  const handleCategoryChange = (categoryName: string, checked: boolean) => {
+    setCategories(prev => {
+      if (checked) {
+        return [...prev, categoryName];
+      } else {
+        return prev.filter((name) => name !== categoryName);
+      }
+    });
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -68,7 +79,7 @@ export default function CreatePostPage() {
         description,
         content,
         status,
-        category,
+        categories,
         tags: tags.split(',').map(tag => tag.trim()),
         featuredImage,
       };
@@ -257,19 +268,26 @@ export default function CreatePostPage() {
                 <CardContent>
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div className="grid gap-3">
-                      <Label htmlFor="category">Category</Label>
-                       <Select value={category} onValueChange={setCategory}>
-                        <SelectTrigger id="category" aria-label="Select category">
-                          <SelectValue placeholder="Select category" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {allCategories.map((cat) => (
-                            <SelectItem key={cat.id} value={cat.name}>
+                      <Label>Categories</Label>
+                      <div className="grid grid-cols-2 gap-2 rounded-md border p-4 max-h-48 overflow-y-auto">
+                        {allCategories.map((cat) => (
+                          <div key={cat.id} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={`cat-${cat.id}`}
+                              checked={categories.includes(cat.name)}
+                              onCheckedChange={(checked) => {
+                                handleCategoryChange(cat.name, !!checked);
+                              }}
+                            />
+                            <Label
+                              htmlFor={`cat-${cat.id}`}
+                              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                            >
                               {cat.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                            </Label>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                     <div className="grid gap-3">
                       <Label htmlFor="tags">Tags</Label>

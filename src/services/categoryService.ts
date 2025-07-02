@@ -50,7 +50,17 @@ export async function getCategories(): Promise<Category[]> {
     // Fetch all posts to calculate counts
     const postsCol = collection(db, 'posts');
     const postsSnapshot = await getDocs(postsCol);
-    const postCategories = postsSnapshot.docs.map(doc => doc.data().category);
+    const postCategories = postsSnapshot.docs.flatMap(doc => {
+      const data = doc.data();
+      // Handle both new 'categories' array and old 'category' string
+      if (data.categories && Array.isArray(data.categories)) {
+        return data.categories;
+      }
+      if (data.category && typeof data.category === 'string') {
+        return [data.category];
+      }
+      return [];
+    });
 
     // Create a map of category names to their counts
     const categoryCounts = postCategories.reduce((acc, categoryName) => {

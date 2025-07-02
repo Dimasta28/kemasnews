@@ -93,7 +93,7 @@ export function PostClient({ post, recentPosts, comments, settings }: PostClient
                             <span className="hidden sm:inline">&bull;</span>
                             <div className="flex items-center gap-1.5">
                                 <Folder className="h-4 w-4" />
-                                <span className="capitalize">{post.category}</span>
+                                <span className="capitalize">{post.categories?.join(', ')}</span>
                             </div>
                             <span className="hidden sm:inline">&bull;</span>
                             <div className="flex items-center gap-1.5">

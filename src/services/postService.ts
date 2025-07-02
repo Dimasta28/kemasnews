@@ -13,7 +13,7 @@ export interface Post {
   description: string;
   content: string;
   status: 'Published' | 'Draft' | 'Archived';
-  category: string;
+  categories: string[];
   tags: string[];
   featuredImage: string;
   date: string;
@@ -28,6 +28,15 @@ export async function getPosts(): Promise<Post[]> {
     const data = doc.data();
     // Use createdAt for date, fallback to current date
     const date = (data.createdAt as Timestamp)?.toDate() || new Date();
+    
+    // Backward compatibility for categories
+    let categories: string[] = [];
+    if (data.categories && Array.isArray(data.categories)) {
+      categories = data.categories;
+    } else if (data.category && typeof data.category === 'string') {
+      categories = [data.category];
+    }
+    
     return {
         id: doc.id,
         title: data.title || '',
@@ -35,9 +44,8 @@ export async function getPosts(): Promise<Post[]> {
         status: data.status || 'Draft',
         author: data.author || 'Admin', // Default author
         date: date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-        // Make sure other required fields have defaults
         content: data.content || '',
-        category: data.category || '',
+        categories: categories, // Use categories array
         tags: data.tags || [],
         featuredImage: data.featuredImage || 'https://placehold.co/600x400.png'
     } as Post;
@@ -53,13 +61,22 @@ export async function getPost(id: string): Promise<Post | null> {
     if (postSnap.exists()) {
       const data = postSnap.data();
       const date = (data.createdAt as Timestamp)?.toDate() || new Date();
+      
+      // Backward compatibility for categories
+      let categories: string[] = [];
+      if (data.categories && Array.isArray(data.categories)) {
+        categories = data.categories;
+      } else if (data.category && typeof data.category === 'string') {
+        categories = [data.category];
+      }
+      
       return {
           id: postSnap.id,
           title: data.title || '',
           description: data.description || '',
           content: data.content || '',
           status: data.status || 'Draft',
-          category: data.category || '',
+          categories: categories, // Use categories array
           tags: data.tags || [],
           featuredImage: data.featuredImage || 'https://placehold.co/300x300.png',
           author: data.author || 'Admin',

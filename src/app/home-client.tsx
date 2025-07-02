@@ -67,7 +67,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
 
     // Filter by active category
     if (activeFilter !== 'All') {
-      filtered = filtered.filter(post => post.category === activeFilter);
+      filtered = filtered.filter(post => post.categories.includes(activeFilter));
     }
 
     // Filter by search term
@@ -123,7 +123,8 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
             >
               <CarouselContent>
                 {latestPosts.map((post, index) => {
-                   const categoryClass = categoryStyles[post.category.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
+                   const firstCategory = post.categories?.[0] || '';
+                   const categoryClass = categoryStyles[firstCategory.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
                   return (
                     <CarouselItem key={post.id}>
                       <div className="relative h-[80vh] md:h-[90vh] flex items-end p-8 md:p-12 text-white bg-black">
@@ -137,11 +138,11 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                           />
                           <div className="relative z-10 max-w-3xl">
                               <Link href={`/post/${post.id}`} className="block group">
-                                  {post.category && (
+                                  {firstCategory && (
                                       <span
                                           className={`inline-block ${categoryClass} text-xs font-semibold px-3 py-1 rounded-full mb-4`}
                                       >
-                                          {post.category}
+                                          {firstCategory}
                                       </span>
                                   )}
                                   <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-4 group-hover:underline">
@@ -237,10 +238,8 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentArticles.length > 0 ? (
                 currentArticles.map((article) => {
-                  const categoryClass =
-                    categoryStyles[
-                      article.category.toLowerCase().trim() as keyof typeof categoryStyles
-                    ] || categoryStyles.default;
+                  const firstCategory = article.categories?.[0] || '';
+                  const categoryClass = categoryStyles[firstCategory.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
                   return (
                     <Link href={`/post/${article.id}`} key={article.id} className="block h-full">
                         <motion.div
@@ -260,11 +259,11 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                                 />
                             </div>
                             <div className="p-5 flex-grow flex flex-col">
-                                {article.category && (
+                                {firstCategory && (
                                     <span
                                     className={`inline-block ${categoryClass} text-xs font-semibold px-3 py-1 rounded-full mb-3 self-start`}
                                     >
-                                    {article.category}
+                                    {firstCategory}
                                     </span>
                                 )}
                                 <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-[#050505] dark:text-[#050505]">
