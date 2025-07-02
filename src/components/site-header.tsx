@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -16,6 +17,8 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import type { FrontendSettings } from '@/services/settingsService';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+
 
 interface SiteHeaderProps {
   settings: FrontendSettings;
@@ -121,9 +124,50 @@ export function SiteHeader({ settings }: SiteHeaderProps) {
         </nav>
 
         <div className="flex items-center gap-2">
-          <button className="p-2 hover:bg-[#DDD9CE] dark:hover:bg-[#AC9C8D] rounded-full transition">
-            <BellIcon size={20} />
-          </button>
+           <Popover>
+            <PopoverTrigger asChild>
+              <button className="p-2 hover:bg-[#DDD9CE] dark:hover:bg-[#AC9C8D] rounded-full transition relative">
+                <BellIcon size={20} />
+                <span className="absolute top-2 right-2 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-background" />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent align="end" className="w-80 p-0">
+                <div className="p-4 border-b">
+                    <h3 className="font-semibold">Notifications</h3>
+                </div>
+                <div className="p-2 max-h-[400px] overflow-y-auto">
+                    <Link href="#" className="block p-3 rounded-lg hover:bg-muted/50">
+                        <div className="flex items-start gap-3">
+                            <Avatar className="h-8 w-8 border">
+                                <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="person avatar" />
+                                <AvatarFallback>AD</AvatarFallback>
+                            </Avatar>
+                            <div>
+                                <p className="text-sm leading-tight">Your comment on <span className="font-semibold">The Future of Packaging</span> was approved.</p>
+                                <p className="text-xs text-muted-foreground mt-1">2 minutes ago</p>
+                            </div>
+                        </div>
+                    </Link>
+                    <Link href="#" className="block p-3 rounded-lg hover:bg-muted/50">
+                        <div className="flex items-start gap-3">
+                             <Avatar className="h-8 w-8 border">
+                                <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="person avatar" />
+                                <AvatarFallback>JD</AvatarFallback>
+                            </Avatar>
+                            <div>
+                                <p className="text-sm leading-tight"><span className="font-semibold">Jane Doe</span> started following you.</p>
+                                <p className="text-xs text-muted-foreground mt-1">1 hour ago</p>
+                            </div>
+                        </div>
+                    </Link>
+                </div>
+                <div className="p-2 border-t text-center">
+                    <Link href="#" className="text-sm text-primary hover:underline">
+                        View all notifications
+                    </Link>
+                </div>
+            </PopoverContent>
+          </Popover>
 
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
