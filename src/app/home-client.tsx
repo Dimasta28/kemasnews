@@ -33,16 +33,20 @@ import { Input } from '@/components/ui/input';
 
 
 // Helper for category styling
-const categoryStyles: { [key: string]: { name: string; className: string } } = {
-  technology: { name: 'Technology', className: 'bg-[#610C27] text-[#EFECE9]' },
-  lifestyle: { name: 'Lifestyle', className: 'bg-[#E3C1B4] text-[#050505]' },
-  business: { name: 'Business', className: 'bg-[#AC9C8D] text-[#050505]' },
-  desain: { name: 'Design', className: 'bg-[#610C27] text-[#EFECE9]' },
-  inovasi: { name: 'Innovation', className: 'bg-[#E3C1B4] text-[#050505]' },
-  tren: { name: 'Trends', className: 'bg-[#AC9C8D] text-[#050505]' },
-  pendidikan: { name: 'Education', className: 'bg-[#DDD9CE] text-[#050505]' },
+const categoryStyles: { [key: string]: string } = {
+  technology: 'bg-[#610C27] text-[#EFECE9]',
+  lifestyle: 'bg-[#E3C1B4] text-[#050505]',
+  business: 'bg-[#AC9C8D] text-[#050505]',
+  desain: 'bg-[#610C27] text-[#EFECE9]',
+  inovasi: 'bg-[#E3C1B4] text-[#050505]',
+  tren: 'bg-[#AC9C8D] text-[#050505]',
+  pendidikan: 'bg-[#DDD9CE] text-[#050505]',
+  event: 'bg-[#E3C1B4] text-[#050505]',
+  'press release': 'bg-[#610C27] text-[#EFECE9]',
+  products: 'bg-[#AC9C8D] text-[#050505]',
+  sustainability: 'bg-[#DDD9CE] text-[#050505]',
   // A default style
-  default: { name: 'Others', className: 'bg-[#DDD9CE] text-[#050505]' },
+  default: 'bg-muted text-muted-foreground',
 };
 
 // Main Application Component
@@ -119,7 +123,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
             >
               <CarouselContent>
                 {latestPosts.map((post, index) => {
-                   const categoryStyle = categoryStyles[post.category.toLowerCase() as keyof typeof categoryStyles] || categoryStyles.default;
+                   const categoryClass = categoryStyles[post.category.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
                   return (
                     <CarouselItem key={post.id}>
                       <div className="relative h-[80vh] md:h-[90vh] flex items-end p-8 md:p-12 text-white bg-black">
@@ -133,11 +137,11 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                           />
                           <div className="relative z-10 max-w-3xl">
                               <Link href={`/post/${post.id}`} className="block group">
-                                  {categoryStyle && (
+                                  {post.category && (
                                       <span
-                                          className={`inline-block ${categoryStyle.className} text-xs font-semibold px-3 py-1 rounded-full mb-4`}
+                                          className={`inline-block ${categoryClass} text-xs font-semibold px-3 py-1 rounded-full mb-4`}
                                       >
-                                          {categoryStyle.name}
+                                          {post.category}
                                       </span>
                                   )}
                                   <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-4 group-hover:underline">
@@ -233,9 +237,9 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentArticles.length > 0 ? (
                 currentArticles.map((article) => {
-                  const categoryStyle =
+                  const categoryClass =
                     categoryStyles[
-                      article.category.toLowerCase() as keyof typeof categoryStyles
+                      article.category.toLowerCase().trim() as keyof typeof categoryStyles
                     ] || categoryStyles.default;
                   return (
                     <Link href={`/post/${article.id}`} key={article.id} className="block h-full">
@@ -256,11 +260,13 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                                 />
                             </div>
                             <div className="p-5 flex-grow flex flex-col">
-                                <span
-                                className={`inline-block ${categoryStyle.className} text-xs font-semibold px-3 py-1 rounded-full mb-3 self-start`}
-                                >
-                                {categoryStyle.name}
-                                </span>
+                                {article.category && (
+                                    <span
+                                    className={`inline-block ${categoryClass} text-xs font-semibold px-3 py-1 rounded-full mb-3 self-start`}
+                                    >
+                                    {article.category}
+                                    </span>
+                                )}
                                 <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-[#050505] dark:text-[#050505]">
                                 {article.title}
                                 </h3>
