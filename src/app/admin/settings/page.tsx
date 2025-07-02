@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -14,6 +15,7 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
@@ -50,7 +52,7 @@ export default function SettingsPage() {
   }, [toast]);
 
   const handleInputChange = (
-    field: keyof Omit<FrontendSettings, 'banner' | 'dropdownLinks'>,
+    field: keyof Omit<FrontendSettings, 'banner' | 'dropdownLinks' | 'privacyPolicy'>,
     value: string
   ) => {
     setSettings((prev) => ({ ...prev, [field]: value }));
@@ -253,6 +255,63 @@ export default function SettingsPage() {
           </div>
         </CardContent>
       </Card>
+
+       <Card>
+        <CardHeader>
+          <CardTitle>SEO &amp; Social Sharing (Open Graph)</CardTitle>
+          <CardDescription>
+            Configure how your site appears when shared on social media.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-8">
+          <div className="grid gap-2">
+            <Label htmlFor="og-title">OG Title</Label>
+            <Input
+              id="og-title"
+              value={settings.ogTitle || ''}
+              onChange={(e) => handleInputChange('ogTitle', e.target.value)}
+              placeholder="Wellcome | Pt Kemas Indah Maju"
+            />
+            <p className="text-sm text-muted-foreground">The main title for social shares.</p>
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="og-description">OG Description</Label>
+            <Textarea
+              id="og-description"
+              value={settings.ogDescription || ''}
+              onChange={(e) => handleInputChange('ogDescription', e.target.value)}
+              placeholder="Since 1980, KEMAS delivers premium plastic & metal cosmetic packaging with European & Japanese tech."
+              className="min-h-24"
+            />
+            <p className="text-sm text-muted-foreground">A short summary (around 155 characters is best).</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6 items-start">
+            <div className="grid gap-2">
+              <Label htmlFor="og-image-url">OG Image URL</Label>
+              <Input
+                id="og-image-url"
+                value={settings.ogImageUrl || ''}
+                onChange={(e) => handleInputChange('ogImageUrl', e.target.value)}
+                placeholder="https://example.com/og-image.png"
+              />
+              <p className="text-sm text-muted-foreground">Recommended size: 1200x630 pixels.</p>
+            </div>
+            <div className="space-y-2">
+              <Label>OG Image Preview</Label>
+              <div className="relative aspect-[1.91/1] w-full overflow-hidden rounded-lg border bg-muted">
+                <Image
+                  src={settings.ogImageUrl || 'https://placehold.co/1200x630.png'}
+                  alt="OG Image preview"
+                  fill
+                  className="object-cover"
+                  data-ai-hint="social media preview"
+                />
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
 
       <div className="flex justify-end">
         <Button onClick={handleSaveChanges} disabled={isSaving}>
