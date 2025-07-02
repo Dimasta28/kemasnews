@@ -236,9 +236,14 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                                 >
                                 {categoryStyle.name}
                                 </span>
-                                <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-[#050505] dark:text-[#050505] flex-grow">
+                                <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-[#050505] dark:text-[#050505]">
                                 {article.title}
                                 </h3>
+                                {article.description && (
+                                  <p className="text-sm text-muted-foreground/90 line-clamp-3 mb-4">
+                                      {article.description}
+                                  </p>
+                                )}
                                 <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-600 mt-auto pt-4 border-t border-gray-400/30">
                                 <span>
                                     {article.author} | {article.date}
