@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -161,18 +162,17 @@ export default function PromoBannerPage() {
               <Label>Banner Preview</Label>
               <Card className="overflow-hidden">
                 <CardContent className="p-0">
-                  <div className="relative aspect-video w-full">
-                    <Image
-                      src={
-                        settings.banner?.imageUrl ||
-                        'https://placehold.co/600x400.png'
-                      }
-                      alt="Promo banner preview"
-                      fill
-                      className="object-cover"
-                      data-ai-hint="advertisement banner"
-                    />
-                  </div>
+                  <Image
+                    src={
+                      settings.banner?.imageUrl ||
+                      'https://placehold.co/600x400.png'
+                    }
+                    alt="Promo banner preview"
+                    width={600}
+                    height={400}
+                    className="h-auto w-full object-cover"
+                    data-ai-hint="advertisement banner"
+                  />
                   <div className="p-4">
                     <h3 className="font-semibold">
                       {settings.banner?.title || 'Our New Collection'}
