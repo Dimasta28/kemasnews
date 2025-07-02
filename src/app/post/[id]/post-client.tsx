@@ -11,6 +11,7 @@ import DOMPurify from 'dompurify';
 import type { Post } from '@/services/postService';
 import type { Comment } from '@/services/commentService';
 import type { BannerSettings, FrontendSettings } from '@/services/settingsService';
+import type { Notification } from '@/services/notificationService';
 
 import { Badge } from '@/components/ui/badge';
 import { Sidebar } from './sidebar';
@@ -25,9 +26,10 @@ interface PostClientProps {
     recentPosts: Post[];
     comments: Comment[];
     settings: FrontendSettings;
+    notifications: Notification[];
 }
 
-export function PostClient({ post, recentPosts, comments, settings }: PostClientProps) {
+export function PostClient({ post, recentPosts, comments, settings, notifications }: PostClientProps) {
     const [sanitizedContent, setSanitizedContent] = useState('');
 
     useEffect(() => {
@@ -52,7 +54,7 @@ export function PostClient({ post, recentPosts, comments, settings }: PostClient
 
     return (
         <div className="bg-[#EFECE9] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9]">
-            <SiteHeader settings={settings} />
+            <SiteHeader settings={settings} notifications={notifications} />
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
                 <div className="mb-8">
                     <Link href="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">

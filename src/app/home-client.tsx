@@ -1,7 +1,6 @@
-
 'use client';
 
-import * as React from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -44,26 +43,26 @@ const categoryStyles: { [key: string]: string } = {
 
 // Main Application Component
 export default function HomeClient({ initialPosts, allCategories }: { initialPosts: Post[], allCategories: Category[] }) {
-  const articlesSectionRef = React.useRef<HTMLElement>(null);
-  const autoplayPlugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
+  const articlesSectionRef = useRef<HTMLElement>(null);
+  const autoplayPlugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
   
   const latestPosts = initialPosts.slice(0, 3);
   
   const searchParams = useSearchParams();
   const q = searchParams.get('q');
 
-  const [articles, setArticles] = React.useState<Post[]>(initialPosts);
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const [activeFilter, setActiveFilter] = React.useState('All');
-  const [searchTerm, setSearchTerm] = React.useState(q || '');
+  const [articles, setArticles] = useState<Post[]>(initialPosts);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [activeFilter, setActiveFilter] = useState('All');
+  const [searchTerm, setSearchTerm] = useState(q || '');
   const articlesPerPage = 12;
 
-  React.useEffect(() => {
+  useEffect(() => {
     // This effect ensures the search term from the URL is applied.
     setSearchTerm(q || '');
   }, [q]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     let filtered = initialPosts;
 
     // Filter by active category
@@ -328,5 +327,3 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
     </div>
   );
 }
-
-    

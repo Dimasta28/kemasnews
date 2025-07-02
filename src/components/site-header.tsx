@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -46,9 +45,9 @@ export function SiteHeader({ settings, notifications: initialNotifications }: Si
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
-  const [notifications, setNotifications] = useState(initialNotifications);
+  const [notifications, setNotifications] = useState(initialNotifications || []);
 
-  const hasUnread = notifications.some(n => !n.read);
+  const hasUnread = (notifications || []).some(n => !n.read);
 
   const handleMarkAsRead = async (id: string) => {
     try {
@@ -217,7 +216,7 @@ export function SiteHeader({ settings, notifications: initialNotifications }: Si
                     )}
                 </div>
                 <div className="p-2 max-h-[400px] overflow-y-auto">
-                    {notifications.length > 0 ? notifications.map(notification => (
+                    {(notifications || []).length > 0 ? (notifications || []).map(notification => (
                         <Link 
                             key={notification.id}
                             href={notification.link}
