@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Members',
-  description: 'Manage your members.',
+  description: 'Member management has been removed.',
 };
 
 export default function MembersLayout({
