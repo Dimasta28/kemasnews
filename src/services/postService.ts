@@ -2,7 +2,7 @@
 'use server';
 
 import { db } from '@/lib/firebase';
-import { collection, addDoc, getDocs, serverTimestamp, Timestamp, doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore"; 
+import { collection, addDoc, getDocs, serverTimestamp, Timestamp, doc, getDoc, updateDoc, deleteDoc, query, orderBy } from "firebase/firestore"; 
 
 // In a real application, this would be your database.
 // For now, we'll use a mock data array.
@@ -23,7 +23,10 @@ export interface Post {
 // Simulate fetching data from a database
 export async function getPosts(): Promise<Post[]> {
   const postsCol = collection(db, 'posts');
-  const postSnapshot = await getDocs(postsCol);
+  // Query posts and order by 'createdAt' in descending order (newest first)
+  const q = query(postsCol, orderBy('createdAt', 'desc'));
+  const postSnapshot = await getDocs(q);
+
   const postList = postSnapshot.docs.map(doc => {
     const data = doc.data();
     // Use createdAt for date, fallback to current date
@@ -50,8 +53,8 @@ export async function getPosts(): Promise<Post[]> {
         featuredImage: data.featuredImage || 'https://placehold.co/600x400.png'
     } as Post;
   });
-   // Sort posts by date in descending order (newest first)
-  return postList.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  // The sorting is now handled by the Firestore query, so client-side sort is not needed.
+  return postList;
 }
 
 export async function getPost(id: string): Promise<Post | null> {
