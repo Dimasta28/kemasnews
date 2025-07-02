@@ -10,6 +10,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import type { Post } from '@/services/postService';
 import type { Category } from '@/services/categoryService';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import {
   Pagination,
   PaginationContent,
@@ -18,17 +19,9 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
-import { ChevronDownIcon, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { SiteFooter } from '@/components/site-footer';
 import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 
 
@@ -49,18 +42,142 @@ const categoryStyles: { [key: string]: string } = {
   default: 'bg-muted text-muted-foreground',
 };
 
+// Left Sidebar Component
+const LeftSidebar = ({ categories, activeFilter, onFilterChange, featuredPost }: { categories: Category[], activeFilter: string, onFilterChange: (filter: string) => void, featuredPost: Post | null }) => (
+  <div className="space-y-8">
+    <Card>
+      <CardHeader>
+        <CardTitle>Filter by Topic</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ul className="space-y-2">
+          <li>
+            <Button variant={activeFilter === 'All' ? 'secondary' : 'ghost'} onClick={() => onFilterChange('All')} className="w-full justify-start">All Topics</Button>
+          </li>
+          {categories.map((category) => (
+            <li key={category.id}>
+              <Button
+                variant={activeFilter === category.name ? 'secondary' : 'ghost'}
+                onClick={() => onFilterChange(category.name)}
+                className="w-full justify-start text-left h-auto"
+              >
+                {category.name}
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </CardContent>
+    </Card>
+
+    {featuredPost && (
+       <Card>
+        <CardHeader>
+          <CardTitle>Featured Article</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Link href={`/post/${featuredPost.id}`} className="block group">
+                <div className="relative w-full h-40 rounded-md overflow-hidden mb-4">
+                     <Image
+                        src={featuredPost.featuredImage}
+                        alt={featuredPost.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        data-ai-hint="featured article"
+                     />
+                </div>
+                <h3 className="font-semibold group-hover:text-primary">{featuredPost.title}</h3>
+                <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{featuredPost.description}</p>
+            </Link>
+        </CardContent>
+      </Card>
+    )}
+
+    <Card>
+      <CardContent className="p-4 flex justify-center items-center">
+         <Image
+            src="https://placehold.co/200x60.png"
+            alt="Kemas Quest Logo"
+            width={200}
+            height={60}
+            data-ai-hint="kemas quest logo"
+         />
+      </CardContent>
+    </Card>
+  </div>
+);
+
+// Right Sidebar Component
+const RightSidebar = () => (
+    <div className="space-y-8">
+        <Card>
+            <CardHeader>
+                <CardTitle>Newsletter</CardTitle>
+                <CardDescription>Get the latest insights directly to your inbox.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+                <Input type="email" placeholder="Enter your email" />
+                <Button className="w-full">Subscribe</Button>
+            </CardContent>
+        </Card>
+
+        <Card>
+            <CardHeader>
+                <CardTitle>Follow Us</CardTitle>
+            </CardHeader>
+            <CardContent className="flex justify-around text-muted-foreground">
+                <motion.a whileHover={{ y: -2 }} href="#" className="hover:text-primary transition-colors" aria-label="Facebook">
+                    <svg fill="currentColor" viewBox="0 0 24 24" className="w-6 h-6" aria-hidden="true"><path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.505 1.492-3.89 3.776-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33V22C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" /></svg>
+                </motion.a>
+                <motion.a whileHover={{ y: -2 }} href="#" className="hover:text-primary transition-colors" aria-label="Instagram">
+                    <svg fill="currentColor" viewBox="0 0 24 24" className="w-6 h-6" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163zm0 1.441c-3.117 0-3.483.01-4.69.066-2.88.132-4.11 1.34-4.243 4.243-.056 1.207-.066 1.573-.066 4.69s.01 3.483.066 4.69c.133 2.903 1.363 4.113 4.243 4.243 1.207.056 1.573.066 4.69.066s3.483-.01 4.69-.066c2.88-.132 4.11-1.34 4.243-4.243.056-1.207.066-1.573.066-4.69s-.01-3.483-.066-4.69c-.133-2.903-1.363-4.113-4.243-4.243-1.207-.056-1.573.066-4.69-.066z"></path><path d="M12 6.865a5.135 5.135 0 100 10.27 5.135 5.135 0 000-10.27zm0 8.87a3.735 3.735 0 110-7.47 3.735 3.735 0 010 7.47z"></path><path d="M16.965 6.57a1.29 1.29 0 100 2.58 1.29 1.29 0 000-2.58z"></path></svg>
+                </motion.a>
+                <motion.a whileHover={{ y: -2 }} href="#" className="hover:text-primary transition-colors" aria-label="LinkedIn">
+                    <svg fill="currentColor" viewBox="0 0 24 24" className="w-6 h-6" aria-hidden="true"><path d="M19.5 2h-15C2.012 2 0 3.968 0 6.44v11.124C0 20.032 2.012 22 4.5 22h15c2.488 0 4.5-1.968 4.5-4.436V6.44C24 3.968 21.988 2 19.5 2zM8.397 18.006H5.433V9.068h2.964v8.938zM6.918 8.007c-.957 0-1.73-.767-1.73-1.72s.773-1.72 1.73-1.72 1.73.767 1.73 1.72-.772 1.72-1.73 1.72zm11.393 9.998h-2.964V12.78c0-.792-.016-1.815-1.106-1.815-1.107 0-1.277.863-1.277 1.758v5.283h-2.963V9.068h2.846v1.298h.04c.394-.746 1.353-1.533 2.793-1.533 2.996 0 3.553 1.963 3.553 4.512v5.161z" /></svg>
+                </motion.a>
+            </CardContent>
+        </Card>
+
+        <Card>
+            <CardHeader>
+                <CardTitle>Upcoming Event</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <h4 className="font-semibold">Global Packaging Expo</h4>
+                <p className="text-sm text-muted-foreground">October 25-28, 2025</p>
+                <Button variant="outline" size="sm" className="mt-3 w-full" asChild>
+                    <Link href="#">Learn More</Link>
+                </Button>
+            </CardContent>
+        </Card>
+
+        <Card>
+            <CardHeader>
+                <CardTitle>Have a Project?</CardTitle>
+                <CardDescription>Let's work together to create something amazing.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Button className="w-full" asChild>
+                    <Link href="#">Contact Us</Link>
+                </Button>
+            </CardContent>
+        </Card>
+    </div>
+);
+
+
 // Main Application Component
 export default function HomeClient({ initialPosts, allCategories }: { initialPosts: Post[], allCategories: Category[] }) {
   const articlesSectionRef = React.useRef<HTMLElement>(null);
   const autoplayPlugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
   
   const latestPosts = initialPosts.slice(0, 3);
+  const featuredPost = initialPosts.length > 0 ? initialPosts[0] : null;
 
   const [articles, setArticles] = React.useState<Post[]>(initialPosts);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [activeFilter, setActiveFilter] = React.useState('All');
   const [searchTerm, setSearchTerm] = React.useState('');
-  const articlesPerPage = 15;
+  const articlesPerPage = 12; // Adjusted for new layout
 
   React.useEffect(() => {
     let filtered = initialPosts;
@@ -84,6 +201,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
   const handleFilterChange = (filter: string) => {
     setActiveFilter(filter);
     setCurrentPage(1);
+    articlesSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   // Pagination logic
@@ -107,9 +225,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
     index === self.findIndex((c) => c.name === category.name) && category.name
   );
   const sortedUniqueCategories = [...uniqueCategories].sort((a, b) => b.postCount - a.postCount);
-  const topCategories = sortedUniqueCategories.slice(0, 3);
   
-
   return (
     <div className="font-inter antialiased bg-[#EFECE9] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9] min-h-screen">
       <main>
@@ -173,206 +289,149 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                  />
             </section>
         )}
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 py-12">
+                {/* Left Sidebar */}
+                <aside className="lg:col-span-1">
+                    <LeftSidebar categories={sortedUniqueCategories} activeFilter={activeFilter} onFilterChange={handleFilterChange} featuredPost={featuredPost} />
+                </aside>
 
-        <section
-          className={`sticky z-40 bg-background/95 p-4 border-b border-border shadow-sm top-[calc(var(--header-height,0px)+1rem)] backdrop-blur-sm`}
-        >
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex-grow w-full md:w-auto overflow-hidden">
-                <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-2 -mb-2">
-                    <Button variant={activeFilter === 'All' ? 'secondary' : 'ghost'} onClick={() => handleFilterChange('All')} className="flex-shrink-0">All</Button>
-                    {topCategories.map((category) => (
-                        <Button 
-                            key={category.id} 
-                            variant={activeFilter === category.name ? 'secondary' : 'ghost'} 
-                            onClick={() => handleFilterChange(category.name)}
-                            className="flex-shrink-0"
-                        >
-                            {category.name}
-                        </Button>
-                    ))}
-                </div>
-            </div>
-            
-            <div className="flex items-center gap-2 w-full md:w-auto">
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="flex-shrink-0">
-                            <span>More</span>
-                            <ChevronDownIcon className="ml-2 h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuLabel>All Categories</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        {sortedUniqueCategories.map((category) => (
-                            <DropdownMenuItem key={category.id} onSelect={() => handleFilterChange(category.name)}>
-                            {category.name}
-                            </DropdownMenuItem>
-                        ))}
-                    </DropdownMenuContent>
-                </DropdownMenu>
-
-                <div className="relative w-full md:w-auto">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                        type="search"
-                        placeholder="Search articles..."
-                        className="pl-9 w-full md:w-auto"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
-            </div>
-          </div>
-        </section>
-
-        <section
-          ref={articlesSectionRef}
-          className="py-12 bg-[#EFECE9] dark:bg-[#050505]"
-        >
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-10">
-              Latest Articles
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {currentArticles.length > 0 ? (
-                currentArticles.map((article) => {
-                  const firstCategory = article.categories?.[0] || '';
-                  const categoryClass = categoryStyles[firstCategory.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
-                  return (
-                    <Link href={`/post/${article.id}`} key={article.id} className="block h-full">
-                        <motion.div
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.2 }}
-                            transition={{ duration: 0.5 }}
-                            className="bg-[#DDD9CE] dark:bg-[#AC9C8D] rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden h-full flex flex-col"
-                        >
-                            <div className="relative w-full h-48">
-                                <Image
-                                    src={article.featuredImage}
-                                    alt={article.title}
-                                    fill
-                                    className="w-full h-full object-cover"
-                                    data-ai-hint="cosmetics packaging"
+                {/* Main Content */}
+                <section ref={articlesSectionRef} className="lg:col-span-2">
+                    <div className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4">
+                        <h2 className="text-3xl font-bold self-start sm:self-center">
+                            {activeFilter === 'All' ? 'Latest Articles' : activeFilter}
+                        </h2>
+                        <div className="relative w-full sm:max-w-xs">
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                <Input
+                                    type="search"
+                                    placeholder="Search articles..."
+                                    className="pl-9 w-full"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
                                 />
-                            </div>
-                            <div className="p-5 flex-grow flex flex-col">
-                                {firstCategory && (
-                                    <span
-                                    className={`inline-block ${categoryClass} text-xs font-semibold px-3 py-1 rounded-full mb-3 self-start`}
-                                    >
-                                    {firstCategory}
-                                    </span>
-                                )}
-                                <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-[#050505] dark:text-[#050505]">
-                                {article.title}
-                                </h3>
-                                {article.description && (
-                                  <p className="text-sm text-muted-foreground/90 line-clamp-3 mb-4">
-                                      {article.description}
-                                  </p>
-                                )}
-                                <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-600 mt-auto pt-4 border-t border-gray-400/30">
-                                <span>
-                                    {article.author} | {article.date}
-                                </span>
-                                </div>
-                            </div>
-                        </motion.div>
-                    </Link>
-                  );
-                })
-              ) : (
-                <div className="col-span-full text-center py-10">
-                  <p className="text-muted-foreground">
-                    No posts found for the selected filter.
-                  </p>
-                </div>
-              )}
-            </div>
+                        </div>
+                    </div>
 
-            {totalPages > 1 && (
-              <div className="flex justify-center mt-12">
-                <Pagination>
-                  <PaginationContent>
-                    <PaginationItem>
-                      <PaginationPrevious
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handlePageChange(currentPage - 1);
-                        }}
-                        className={
-                          currentPage === 1
-                            ? 'pointer-events-none opacity-50'
-                            : undefined
-                        }
-                      />
-                    </PaginationItem>
-                    {Array.from({ length: totalPages }, (_, i) => (
-                      <PaginationItem key={i}>
-                        <PaginationLink
-                          href="#"
-                          isActive={currentPage === i + 1}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handlePageChange(i + 1);
-                          }}
-                        >
-                          {i + 1}
-                        </PaginationLink>
-                      </PaginationItem>
-                    ))}
-                    <PaginationItem>
-                      <PaginationNext
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handlePageChange(currentPage + 1);
-                        }}
-                        className={
-                          currentPage === totalPages
-                            ? 'pointer-events-none opacity-50'
-                            : undefined
-                        }
-                      />
-                    </PaginationItem>
-                  </PaginationContent>
-                </Pagination>
-              </div>
-            )}
-          </div>
-        </section>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {currentArticles.length > 0 ? (
+                        currentArticles.map((article) => {
+                        const firstCategory = article.categories?.[0] || '';
+                        const categoryClass = categoryStyles[firstCategory.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
+                        return (
+                            <Link href={`/post/${article.id}`} key={article.id} className="block h-full">
+                                <motion.div
+                                    initial={{ opacity: 0, y: 50 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, amount: 0.2 }}
+                                    transition={{ duration: 0.5 }}
+                                    className="bg-card/80 dark:bg-card rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden h-full flex flex-col"
+                                >
+                                    <div className="relative w-full h-48">
+                                        <Image
+                                            src={article.featuredImage}
+                                            alt={article.title}
+                                            fill
+                                            className="w-full h-full object-cover"
+                                            data-ai-hint="cosmetics packaging"
+                                        />
+                                    </div>
+                                    <div className="p-5 flex-grow flex flex-col">
+                                        {firstCategory && (
+                                            <span
+                                            className={`inline-block ${categoryClass} text-xs font-semibold px-3 py-1 rounded-full mb-3 self-start`}
+                                            >
+                                            {firstCategory}
+                                            </span>
+                                        )}
+                                        <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-card-foreground">
+                                        {article.title}
+                                        </h3>
+                                        {article.description && (
+                                        <p className="text-sm text-muted-foreground/90 line-clamp-3 mb-4">
+                                            {article.description}
+                                        </p>
+                                        )}
+                                        <div className="flex items-center justify-between text-xs text-muted-foreground mt-auto pt-4 border-t border-border/30">
+                                        <span>
+                                            {article.author} | {article.date}
+                                        </span>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            </Link>
+                        );
+                        })
+                    ) : (
+                        <div className="col-span-full text-center py-10">
+                        <p className="text-muted-foreground">
+                            No posts found for the selected filter.
+                        </p>
+                        </div>
+                    )}
+                    </div>
 
-        <section className="py-20 bg-[#610C27] text-[#EFECE9] text-center">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
-              Don't Miss the Latest Insights!
-            </h2>
-            <p className="text-lg md:text-xl mb-8">
-              Join our community and get exclusive articles, tips, and news delivered straight to your inbox.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                className="w-full sm:w-80 p-3 rounded-full text-[#050505] focus:outline-none focus:ring-2 focus:ring-[#EFECE9]"
-              />
-              <motion.button
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: '0px 6px 15px rgba(0,0,0,0.2)',
-                }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-[#EFECE9] text-[#610C27] font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#DDD9CE] transition-colors duration-300"
-              >
-                Subscribe Now
-              </motion.button>
+                    {totalPages > 1 && (
+                    <div className="flex justify-center mt-12">
+                        <Pagination>
+                        <PaginationContent>
+                            <PaginationItem>
+                            <PaginationPrevious
+                                href="#"
+                                onClick={(e) => {
+                                e.preventDefault();
+                                handlePageChange(currentPage - 1);
+                                }}
+                                className={
+                                currentPage === 1
+                                    ? 'pointer-events-none opacity-50'
+                                    : undefined
+                                }
+                            />
+                            </PaginationItem>
+                            {Array.from({ length: totalPages }, (_, i) => (
+                            <PaginationItem key={i}>
+                                <PaginationLink
+                                href="#"
+                                isActive={currentPage === i + 1}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handlePageChange(i + 1);
+                                }}
+                                >
+                                {i + 1}
+                                </PaginationLink>
+                            </PaginationItem>
+                            ))}
+                            <PaginationItem>
+                            <PaginationNext
+                                href="#"
+                                onClick={(e) => {
+                                e.preventDefault();
+                                handlePageChange(currentPage + 1);
+                                }}
+                                className={
+                                currentPage === totalPages
+                                    ? 'pointer-events-none opacity-50'
+                                    : undefined
+                                }
+                            />
+                            </PaginationItem>
+                        </PaginationContent>
+                        </Pagination>
+                    </div>
+                    )}
+                </section>
+
+                {/* Right Sidebar */}
+                <aside className="lg:col-span-1">
+                    <RightSidebar />
+                </aside>
             </div>
-          </div>
-        </section>
+        </div>
+
       </main>
 
       <SiteFooter />
