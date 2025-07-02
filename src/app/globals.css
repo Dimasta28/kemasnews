@@ -28,22 +28,22 @@
   .dark {
     --background: 0 0% 2%; /* 050505 */
     --foreground: 36 33% 92%; /* EFECE9 */
-    --card: 30 16% 67%; /* AC9C8D */
-    --card-foreground: 0 0% 2%;
+    --card: 0 0% 8%; /* A bit lighter than background */
+    --card-foreground: 36 33% 92%; /* Same as main foreground */
     --popover: 0 0% 2%;
     --popover-foreground: 36 33% 92%;
     --primary: 19 36% 83%; /* E3C1B4 */
     --primary-foreground: 345 74% 20%; /* 610C27 */
     --secondary: 345 74% 20%; /* 610C27 */
     --secondary-foreground: 36 33% 92%;
-    --muted: 36 22% 84%; /* DDD9CE */
-    --muted-foreground: 36 33% 92%;
+    --muted: 0 0% 10%; /* Dark gray */
+    --muted-foreground: 36 15% 65%; /* Mid-light gray */
     --accent: 19 36% 83%; /* E3C1B4 */
     --accent-foreground: 0 0% 2%;
     --destructive: 0 63% 31%;
     --destructive-foreground: 36 33% 92%;
-    --border: 30 16% 60%; /* Adjusted from card */
-    --input: 30 16% 60%;
+    --border: 0 0% 15%; /* Darker border */
+    --input: 0 0% 15%; /* Darker input */
     --ring: 19 36% 83%;
   }
 }
@@ -85,8 +85,8 @@
     --tw-prose-quotes: hsl(var(--foreground));
     --tw-prose-quote-borders: hsl(var(--primary));
     --tw-prose-code: hsl(var(--primary));
-    --tw-prose-pre-code: hsl(var(--primary-foreground));
-    --tw-prose-pre-bg: hsl(var(--secondary));
+    --tw-prose-pre-code: hsl(var(--foreground)); /* Light text for code blocks */
+    --tw-prose-pre-bg: hsl(0 0% 10%); /* Dark background for code blocks */
   }
 }
 
