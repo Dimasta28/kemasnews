@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Search } from 'lucide-react';
 import { motion } from 'framer-motion';
+import React from 'react';
+import { useRouter } from 'next/navigation';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -14,6 +16,16 @@ import type { Post } from '@/services/postService';
 import type { BannerSettings } from '@/services/settingsService';
 
 export function Sidebar({ recentPosts, banner }: { recentPosts: Post[], banner: BannerSettings }) {
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const router = useRouter();
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/?q=${searchQuery}`);
+    }
+  };
+
   return (
     <div className="sticky top-24 space-y-8">
       {/* Campaign/Banner Widget */}
@@ -45,10 +57,17 @@ export function Sidebar({ recentPosts, banner }: { recentPosts: Post[], banner: 
           <CardTitle>Recent Posts</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="relative mb-4">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search articles..." className="pl-9" />
-          </div>
+          <form onSubmit={handleSearchSubmit}>
+            <div className="relative mb-4">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input 
+                placeholder="Search articles..." 
+                className="pl-9"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+          </form>
           <Separator className="mb-4" />
           <div className="space-y-4">
             {recentPosts.map((post, index) => (

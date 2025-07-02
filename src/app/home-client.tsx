@@ -22,6 +22,7 @@ import { Search } from 'lucide-react';
 import { SiteFooter } from '@/components/site-footer';
 import { Input } from '@/components/ui/input';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { useSearchParams } from 'next/navigation';
 
 
 // Helper for category styling
@@ -47,11 +48,14 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
   const autoplayPlugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
   
   const latestPosts = initialPosts.slice(0, 3);
+  
+  const searchParams = useSearchParams();
+  const q = searchParams.get('q');
 
   const [articles, setArticles] = React.useState<Post[]>(initialPosts);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [activeFilter, setActiveFilter] = React.useState('All');
-  const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchTerm, setSearchTerm] = React.useState(q || '');
   const articlesPerPage = 12;
 
   React.useEffect(() => {
@@ -65,7 +69,8 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
     // Filter by search term
     if (searchTerm) {
       filtered = filtered.filter(post =>
-        post.title.toLowerCase().includes(searchTerm.toLowerCase())
+        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.description.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
     

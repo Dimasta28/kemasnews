@@ -17,6 +17,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import type { FrontendSettings } from '@/services/settingsService';
+import { useRouter } from 'next/navigation';
 
 interface SiteHeaderProps {
   settings: FrontendSettings;
@@ -28,9 +29,20 @@ export function SiteHeader({ settings }: SiteHeaderProps) {
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const lastScrollY = useRef(0);
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const router = useRouter();
   const { theme, setTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/?q=${searchQuery}`);
+      setSearchQuery('');
+      setIsSearchExpanded(false);
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -126,18 +138,22 @@ export function SiteHeader({ settings }: SiteHeaderProps) {
           <motion.div layout className="relative flex items-center">
             <AnimatePresence>
               {isSearchExpanded ? (
-                <motion.input
-                  key="search-input"
-                  initial={{ width: 0, opacity: 0 }}
-                  animate={{ width: 150, opacity: 1 }}
-                  exit={{ width: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  type="text"
-                  placeholder="Search..."
-                  className="px-3 py-1 rounded-full border border-[#AC9C8D] dark:border-[#DDD9CE] bg-[#EFECE9] dark:bg-[#050505] text-sm focus:outline-none focus:ring-2 focus:ring-[#610C27]"
-                  onBlur={() => setIsSearchExpanded(false)}
-                  autoFocus
-                />
+                <form onSubmit={handleSearchSubmit}>
+                  <motion.input
+                    key="search-input"
+                    initial={{ width: 0, opacity: 0 }}
+                    animate={{ width: 150, opacity: 1 }}
+                    exit={{ width: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    type="text"
+                    placeholder="Search..."
+                    className="px-3 py-1 rounded-full border border-[#AC9C8D] dark:border-[#DDD9CE] bg-[#EFECE9] dark:bg-[#050505] text-sm focus:outline-none focus:ring-2 focus:ring-[#610C27]"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onBlur={() => setIsSearchExpanded(false)}
+                    autoFocus
+                  />
+                </form>
               ) : (
                 <motion.button
                   key="search-icon"
