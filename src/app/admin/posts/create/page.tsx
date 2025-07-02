@@ -31,7 +31,7 @@ import { generateDescription } from '@/ai/flows/generate-description-flow';
 import { createPost, Post } from '@/services/postService';
 import { getCategories, type Category } from '@/services/categoryService';
 import { Skeleton } from '@/components/ui/skeleton';
-import QuillEditor from '@/components/quill-editor';
+import RichTextEditor from '@/components/quill-editor';
 
 
 export default function CreatePostPage() {
@@ -242,8 +242,7 @@ export default function CreatePostPage() {
                         {isGenerating ? 'Generating...' : 'Generate with AI'}
                       </Button>
                     </div>
-                    <QuillEditor
-                      theme="snow"
+                    <RichTextEditor
                       value={content}
                       onChange={setContent}
                     />
