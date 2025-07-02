@@ -203,56 +203,54 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
             </div>
 
             {currentArticles.length > 0 ? (
-                <div className="flex justify-center">
-                    <div className="inline-grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                        {currentArticles.map((article) => {
-                            const firstCategory = article.categories?.[0] || '';
-                            const categoryClass = categoryStyles[firstCategory.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
-                            return (
-                                <Link href={`/post/${article.id}`} key={article.id} className="block h-full group">
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 50 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true, amount: 0.2 }}
-                                        transition={{ duration: 0.5 }}
-                                        className="bg-card/80 dark:bg-card rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden h-full flex flex-col"
-                                    >
-                                        <div className="relative w-full aspect-video">
-                                            <Image
-                                                src={article.featuredImage}
-                                                alt={article.title}
-                                                fill
-                                                className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-                                                data-ai-hint="cosmetics packaging"
-                                            />
-                                        </div>
-                                        <div className="p-5 flex-grow flex flex-col">
-                                            {firstCategory && (
-                                                <span
-                                                className={`inline-block ${categoryClass} text-xs font-semibold px-3 py-1 rounded-full mb-3 self-start`}
-                                                >
-                                                {firstCategory}
-                                                </span>
-                                            )}
-                                            <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-card-foreground">
-                                            {article.title}
-                                            </h3>
-                                            {article.description && (
-                                            <p className="text-sm text-muted-foreground/90 line-clamp-3 mb-4">
-                                                {article.description}
-                                            </p>
-                                            )}
-                                            <div className="flex items-center justify-between text-xs text-muted-foreground mt-auto pt-4 border-t border-border/30">
-                                            <span>
-                                                {article.author} | {article.date}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-center">
+                    {currentArticles.map((article) => {
+                        const firstCategory = article.categories?.[0] || '';
+                        const categoryClass = categoryStyles[firstCategory.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
+                        return (
+                            <Link href={`/post/${article.id}`} key={article.id} className="block h-full group">
+                                <motion.div
+                                    initial={{ opacity: 0, y: 50 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, amount: 0.2 }}
+                                    transition={{ duration: 0.5 }}
+                                    className="bg-card/80 dark:bg-card rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden h-full flex flex-col"
+                                >
+                                    <div className="relative w-full aspect-video">
+                                        <Image
+                                            src={article.featuredImage}
+                                            alt={article.title}
+                                            fill
+                                            className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                                            data-ai-hint="cosmetics packaging"
+                                        />
+                                    </div>
+                                    <div className="p-5 flex-grow flex flex-col">
+                                        {firstCategory && (
+                                            <span
+                                            className={`inline-block ${categoryClass} text-xs font-semibold px-3 py-1 rounded-full mb-3 self-start`}
+                                            >
+                                            {firstCategory}
                                             </span>
-                                            </div>
+                                        )}
+                                        <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-card-foreground">
+                                        {article.title}
+                                        </h3>
+                                        {article.description && (
+                                        <p className="text-sm text-muted-foreground/90 line-clamp-3 mb-4">
+                                            {article.description}
+                                        </p>
+                                        )}
+                                        <div className="flex items-center justify-between text-xs text-muted-foreground mt-auto pt-4 border-t border-border/30">
+                                        <span>
+                                            {article.author} | {article.date}
+                                        </span>
                                         </div>
-                                    </motion.div>
-                                </Link>
-                            );
-                        })}
-                    </div>
+                                    </div>
+                                </motion.div>
+                            </Link>
+                        );
+                    })}
                 </div>
             ) : (
                 <div className="text-center py-10">
