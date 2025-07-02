@@ -17,6 +17,7 @@ import {
   Briefcase,
   ChevronRight,
   Shield,
+  Bell,
 } from 'lucide-react';
 
 import {
@@ -53,6 +54,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/hooks/use-auth';
+import { useToast } from '@/hooks/use-toast';
 
 function AdminLoadingScreen() {
     return (
@@ -89,6 +91,21 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
   const { user, isLoading, logout } = useAuth();
   const router = useRouter();
   const [isCareersOpen, setIsCareersOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const { toast } = useToast();
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/?q=${searchQuery}`);
+    } else {
+        toast({
+            variant: 'destructive',
+            title: 'Search query is empty',
+            description: 'Please enter a term to search for.',
+        });
+    }
+  };
 
 
   useEffect(() => {
@@ -188,6 +205,17 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
+                isActive={pathname.startsWith('/admin/notifications')}
+              >
+                <Link href="/admin/notifications">
+                  <Bell />
+                  Notifications
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
                 isActive={pathname.startsWith('/admin/promo-banner')}
               >
                 <Link href="/admin/promo-banner">
@@ -258,14 +286,17 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
       <SidebarInset>
         <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background/95 px-4 backdrop-blur-sm sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 sm:pt-4">
           <SidebarTrigger />
-          <div className="flex-1" />
-          <div className="relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search..."
-              className="rounded-lg bg-background pl-8 md:w-[200px] lg:w-[300px]"
-            />
+          <div className="relative ml-auto flex-1 md:grow-0">
+             <form onSubmit={handleSearchSubmit}>
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                type="search"
+                placeholder="Search..."
+                className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[320px]"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                />
+            </form>
           </div>
           <ThemeToggle />
           <DropdownMenu>

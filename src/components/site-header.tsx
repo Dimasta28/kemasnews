@@ -13,25 +13,70 @@ import {
   Moon,
   ChevronDown as ChevronDownIcon,
   X as XIcon,
+  Search,
 } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import type { FrontendSettings } from '@/services/settingsService';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/use-toast';
+import {
+  markAllNotificationsAsRead,
+  markNotificationAsRead,
+  type Notification,
+} from '@/services/notificationService';
 
 interface SiteHeaderProps {
   settings: FrontendSettings;
+  notifications: Notification[];
 }
 
 
-export function SiteHeader({ settings }: SiteHeaderProps) {
+export function SiteHeader({ settings, notifications: initialNotifications }: SiteHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const lastScrollY = useRef(0);
   const { theme, setTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const router = useRouter();
+  const { toast } = useToast();
+  const [notifications, setNotifications] = useState(initialNotifications);
+
+  const hasUnread = notifications.some(n => !n.read);
+
+  const handleMarkAsRead = async (id: string) => {
+    try {
+        await markNotificationAsRead(id);
+        setNotifications(notifications.map(n => n.id === id ? { ...n, read: true } : n));
+    } catch (error) {
+        toast({ variant: 'destructive', title: 'Error', description: 'Could not mark notification as read.' });
+    }
+  };
+  
+  const handleMarkAllAsRead = async () => {
+    try {
+        await markAllNotificationsAsRead();
+        setNotifications(notifications.map(n => ({...n, read: true})));
+        toast({ title: 'Success', description: 'All notifications marked as read.' });
+    } catch (error) {
+        toast({ variant: 'destructive', title: 'Error', description: 'Could not mark all as read.' });
+    }
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/?q=${searchQuery}`);
+      setIsSearchVisible(false);
+    }
+  };
+
 
   useEffect(() => {
     setMounted(true);
@@ -46,6 +91,7 @@ export function SiteHeader({ settings }: SiteHeaderProps) {
 
       if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
         setIsHeaderHidden(true);
+        setIsSearchVisible(false); // Close search on scroll down
       } else if (currentScrollY < lastScrollY.current || currentScrollY < 50) {
         setIsHeaderHidden(false);
       }
@@ -92,6 +138,29 @@ export function SiteHeader({ settings }: SiteHeaderProps) {
             priority
           />
         </Link>
+        
+        <AnimatePresence>
+            {isSearchVisible && (
+                 <motion.div
+                    initial={{ width: 0, opacity: 0 }}
+                    animate={{ width: 'auto', opacity: 1 }}
+                    exit={{ width: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute left-1/2 -translate-x-1/2"
+                >
+                    <form onSubmit={handleSearchSubmit} className="relative">
+                        <Input 
+                            type="search"
+                            placeholder="Search articles..."
+                            className="w-full sm:w-64 md:w-96"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            autoFocus
+                        />
+                    </form>
+                </motion.div>
+            )}
+        </AnimatePresence>
 
         <nav className="hidden md:flex items-center gap-6 text-sm">
           <Link href="/" className="hover:text-[#610C27] dark:hover:text-[#E3C1B4] transition">
@@ -124,46 +193,55 @@ export function SiteHeader({ settings }: SiteHeaderProps) {
         </nav>
 
         <div className="flex items-center gap-2">
+           <button
+             onClick={() => setIsSearchVisible(!isSearchVisible)}
+             className="p-2 hover:bg-[#DDD9CE] dark:hover:bg-[#AC9C8D] rounded-full transition"
+            >
+                {isSearchVisible ? <XIcon size={20} /> : <Search size={20} />}
+            </button>
+
            <Popover>
             <PopoverTrigger asChild>
               <button className="p-2 hover:bg-[#DDD9CE] dark:hover:bg-[#AC9C8D] rounded-full transition relative">
                 <BellIcon size={20} />
-                <span className="absolute top-2 right-2 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-background" />
+                {hasUnread && (
+                    <span className="absolute top-2 right-2 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-background" />
+                )}
               </button>
             </PopoverTrigger>
             <PopoverContent align="end" className="w-80 p-0">
-                <div className="p-4 border-b">
+                <div className="p-4 border-b flex justify-between items-center">
                     <h3 className="font-semibold">Notifications</h3>
+                    {hasUnread && (
+                        <Button variant="link" size="sm" className="p-0 h-auto" onClick={handleMarkAllAsRead}>Mark all as read</Button>
+                    )}
                 </div>
                 <div className="p-2 max-h-[400px] overflow-y-auto">
-                    <Link href="#" className="block p-3 rounded-lg hover:bg-muted/50">
-                        <div className="flex items-start gap-3">
-                            <Avatar className="h-8 w-8 border">
-                                <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="person avatar" />
-                                <AvatarFallback>AD</AvatarFallback>
-                            </Avatar>
-                            <div>
-                                <p className="text-sm leading-tight">Your comment on <span className="font-semibold">The Future of Packaging</span> was approved.</p>
-                                <p className="text-xs text-muted-foreground mt-1">2 minutes ago</p>
+                    {notifications.length > 0 ? notifications.map(notification => (
+                        <Link 
+                            key={notification.id}
+                            href={notification.link}
+                            className="block p-3 rounded-lg hover:bg-muted/50"
+                            onClick={() => handleMarkAsRead(notification.id)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <div className="flex items-start gap-3">
+                                <div>
+                                    <p className={`text-sm leading-tight ${!notification.read ? 'font-semibold' : ''}`}>{notification.title}</p>
+                                    <p className="text-sm text-muted-foreground mt-1">{notification.description}</p>
+                                    <p className="text-xs text-muted-foreground mt-1">{notification.createdAt}</p>
+                                </div>
+                                {!notification.read && <div className="h-2 w-2 rounded-full bg-primary mt-1.5 flex-shrink-0"></div>}
                             </div>
-                        </div>
-                    </Link>
-                    <Link href="#" className="block p-3 rounded-lg hover:bg-muted/50">
-                        <div className="flex items-start gap-3">
-                             <Avatar className="h-8 w-8 border">
-                                <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="person avatar" />
-                                <AvatarFallback>JD</AvatarFallback>
-                            </Avatar>
-                            <div>
-                                <p className="text-sm leading-tight"><span className="font-semibold">Jane Doe</span> started following you.</p>
-                                <p className="text-xs text-muted-foreground mt-1">1 hour ago</p>
-                            </div>
-                        </div>
-                    </Link>
+                        </Link>
+                    )) : (
+                        <p className="text-center text-sm text-muted-foreground p-4">No notifications yet.</p>
+                    )}
                 </div>
                 <div className="p-2 border-t text-center">
-                    <Link href="#" className="text-sm text-primary hover:underline">
-                        View all notifications
+                    <Link href="/admin/notifications" className="text-sm text-primary hover:underline">
+                        Manage notifications
                     </Link>
                 </div>
             </PopoverContent>
