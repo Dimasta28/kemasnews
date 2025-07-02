@@ -216,12 +216,12 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                             transition={{ duration: 0.5 }}
                             className="bg-card/80 dark:bg-card rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden h-full flex flex-col"
                         >
-                            <div className="relative w-full h-48">
+                            <div className="relative w-full aspect-video">
                                 <Image
                                     src={article.featuredImage}
                                     alt={article.title}
                                     fill
-                                    className="w-full h-full object-cover"
+                                    className="object-cover"
                                     data-ai-hint="cosmetics packaging"
                                 />
                             </div>
