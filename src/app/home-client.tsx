@@ -9,7 +9,6 @@ import Autoplay from 'embla-carousel-autoplay';
 import type { Post } from '@/services/postService';
 import type { Category } from '@/services/categoryService';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import {
   Pagination,
   PaginationContent,
@@ -20,8 +19,8 @@ import {
 } from '@/components/ui/pagination';
 import { Search } from 'lucide-react';
 import { SiteFooter } from '@/components/site-footer';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
 
 // Helper for category styling
@@ -41,83 +40,18 @@ const categoryStyles: { [key: string]: string } = {
   default: 'bg-muted text-muted-foreground',
 };
 
-// Left Sidebar Component
-const LeftSidebar = ({ categories, activeFilter, onFilterChange, featuredPost }: { categories: Category[], activeFilter: string, onFilterChange: (filter: string) => void, featuredPost: Post | null }) => (
-  <div className="space-y-8">
-    <Card>
-      <CardHeader>
-        <CardTitle>Filter by Topic</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <ul className="space-y-2">
-          <li>
-            <Button variant={activeFilter === 'All' ? 'secondary' : 'ghost'} onClick={() => onFilterChange('All')} className="w-full justify-start">All Topics</Button>
-          </li>
-          {categories.map((category) => (
-            <li key={category.id}>
-              <Button
-                variant={activeFilter === category.name ? 'secondary' : 'ghost'}
-                onClick={() => onFilterChange(category.name)}
-                className="w-full justify-start text-left h-auto"
-              >
-                {category.name}
-              </Button>
-            </li>
-          ))}
-        </ul>
-      </CardContent>
-    </Card>
-
-    {featuredPost && (
-       <Card>
-        <CardHeader>
-          <CardTitle>Featured Article</CardTitle>
-        </CardHeader>
-        <CardContent>
-            <Link href={`/post/${featuredPost.id}`} className="block group">
-                <div className="relative w-full h-40 rounded-md overflow-hidden mb-4">
-                     <Image
-                        src={featuredPost.featuredImage}
-                        alt={featuredPost.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                        data-ai-hint="featured article"
-                     />
-                </div>
-                <h3 className="font-semibold group-hover:text-primary">{featuredPost.title}</h3>
-                <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{featuredPost.description}</p>
-            </Link>
-        </CardContent>
-      </Card>
-    )}
-
-    <Card>
-      <CardContent className="p-4 flex justify-center items-center">
-         <Image
-            src="https://placehold.co/200x60.png"
-            alt="Kemas Quest Logo"
-            width={200}
-            height={60}
-            data-ai-hint="kemas quest logo"
-         />
-      </CardContent>
-    </Card>
-  </div>
-);
-
 // Main Application Component
 export default function HomeClient({ initialPosts, allCategories }: { initialPosts: Post[], allCategories: Category[] }) {
   const articlesSectionRef = React.useRef<HTMLElement>(null);
   const autoplayPlugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
   
   const latestPosts = initialPosts.slice(0, 3);
-  const featuredPost = initialPosts.length > 0 ? initialPosts[0] : null;
 
   const [articles, setArticles] = React.useState<Post[]>(initialPosts);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [activeFilter, setActiveFilter] = React.useState('All');
   const [searchTerm, setSearchTerm] = React.useState('');
-  const articlesPerPage = 12; // Adjusted for new layout
+  const articlesPerPage = 12;
 
   React.useEffect(() => {
     let filtered = initialPosts;
@@ -139,6 +73,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
   }, [activeFilter, searchTerm, initialPosts]);
 
   const handleFilterChange = (filter: string) => {
+    if (!filter) return; // Prevent unselecting the toggle
     setActiveFilter(filter);
     setCurrentPage(1);
     articlesSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -230,145 +165,153 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
             </section>
         )}
         
-        <div className="px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 py-12">
-                {/* Left Sidebar */}
-                <aside className="lg:col-span-1">
-                    <LeftSidebar categories={sortedUniqueCategories} activeFilter={activeFilter} onFilterChange={handleFilterChange} featuredPost={featuredPost} />
-                </aside>
-
-                {/* Main Content */}
-                <section ref={articlesSectionRef} className="lg:col-span-3">
-                    <div className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4">
-                        <h2 className="text-3xl font-bold self-start sm:self-center">
-                            {activeFilter === 'All' ? 'Latest Articles' : activeFilter}
-                        </h2>
-                        <div className="relative w-full sm:max-w-xs">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                <Input
-                                    type="search"
-                                    placeholder="Search articles..."
-                                    className="pl-9 w-full"
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                />
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {currentArticles.length > 0 ? (
-                        currentArticles.map((article) => {
-                        const firstCategory = article.categories?.[0] || '';
-                        const categoryClass = categoryStyles[firstCategory.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
-                        return (
-                            <Link href={`/post/${article.id}`} key={article.id} className="block h-full">
-                                <motion.div
-                                    initial={{ opacity: 0, y: 50 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true, amount: 0.2 }}
-                                    transition={{ duration: 0.5 }}
-                                    className="bg-card/80 dark:bg-card rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden h-full flex flex-col"
-                                >
-                                    <div className="relative w-full h-48">
-                                        <Image
-                                            src={article.featuredImage}
-                                            alt={article.title}
-                                            fill
-                                            className="w-full h-full object-cover"
-                                            data-ai-hint="cosmetics packaging"
-                                        />
-                                    </div>
-                                    <div className="p-5 flex-grow flex flex-col">
-                                        {firstCategory && (
-                                            <span
-                                            className={`inline-block ${categoryClass} text-xs font-semibold px-3 py-1 rounded-full mb-3 self-start`}
-                                            >
-                                            {firstCategory}
-                                            </span>
-                                        )}
-                                        <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-card-foreground">
-                                        {article.title}
-                                        </h3>
-                                        {article.description && (
-                                        <p className="text-sm text-muted-foreground/90 line-clamp-3 mb-4">
-                                            {article.description}
-                                        </p>
-                                        )}
-                                        <div className="flex items-center justify-between text-xs text-muted-foreground mt-auto pt-4 border-t border-border/30">
-                                        <span>
-                                            {article.author} | {article.date}
-                                        </span>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            </Link>
-                        );
-                        })
-                    ) : (
-                        <div className="col-span-full text-center py-10">
-                        <p className="text-muted-foreground">
-                            No posts found for the selected filter.
-                        </p>
-                        </div>
-                    )}
-                    </div>
-
-                    {totalPages > 1 && (
-                    <div className="flex justify-center mt-12">
-                        <Pagination>
-                        <PaginationContent>
-                            <PaginationItem>
-                            <PaginationPrevious
-                                href="#"
-                                onClick={(e) => {
-                                e.preventDefault();
-                                handlePageChange(currentPage - 1);
-                                }}
-                                className={
-                                currentPage === 1
-                                    ? 'pointer-events-none opacity-50'
-                                    : undefined
-                                }
-                            />
-                            </PaginationItem>
-                            {Array.from({ length: totalPages }, (_, i) => (
-                            <PaginationItem key={i}>
-                                <PaginationLink
-                                href="#"
-                                isActive={currentPage === i + 1}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    handlePageChange(i + 1);
-                                }}
-                                >
-                                {i + 1}
-                                </PaginationLink>
-                            </PaginationItem>
-                            ))}
-                            <PaginationItem>
-                            <PaginationNext
-                                href="#"
-                                onClick={(e) => {
-                                e.preventDefault();
-                                handlePageChange(currentPage + 1);
-                                }}
-                                className={
-                                currentPage === totalPages
-                                    ? 'pointer-events-none opacity-50'
-                                    : undefined
-                                }
-                            />
-                            </PaginationItem>
-                        </PaginationContent>
-                        </Pagination>
-                    </div>
-                    )}
-                </section>
+        <section ref={articlesSectionRef} className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                <h2 className="text-3xl font-bold self-start sm:self-center">
+                    {activeFilter === 'All' ? 'Latest Articles' : activeFilter}
+                </h2>
+                <div className="relative w-full sm:max-w-xs">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                            type="search"
+                            placeholder="Search articles..."
+                            className="pl-9 w-full"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                </div>
             </div>
-        </div>
+
+            <div className="flex justify-center mb-10">
+                <ToggleGroup
+                    type="single"
+                    defaultValue="All"
+                    value={activeFilter}
+                    onValueChange={handleFilterChange}
+                    className="flex-wrap justify-center gap-2"
+                >
+                    <ToggleGroupItem value="All" aria-label="Filter by All">All Topics</ToggleGroupItem>
+                    {sortedUniqueCategories.map((category) => (
+                        <ToggleGroupItem key={category.id} value={category.name} aria-label={`Filter by ${category.name}`}>
+                            {category.name}
+                        </ToggleGroupItem>
+                    ))}
+                </ToggleGroup>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {currentArticles.length > 0 ? (
+                currentArticles.map((article) => {
+                const firstCategory = article.categories?.[0] || '';
+                const categoryClass = categoryStyles[firstCategory.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
+                return (
+                    <Link href={`/post/${article.id}`} key={article.id} className="block h-full">
+                        <motion.div
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.2 }}
+                            transition={{ duration: 0.5 }}
+                            className="bg-card/80 dark:bg-card rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden h-full flex flex-col"
+                        >
+                            <div className="relative w-full h-48">
+                                <Image
+                                    src={article.featuredImage}
+                                    alt={article.title}
+                                    fill
+                                    className="w-full h-full object-cover"
+                                    data-ai-hint="cosmetics packaging"
+                                />
+                            </div>
+                            <div className="p-5 flex-grow flex flex-col">
+                                {firstCategory && (
+                                    <span
+                                    className={`inline-block ${categoryClass} text-xs font-semibold px-3 py-1 rounded-full mb-3 self-start`}
+                                    >
+                                    {firstCategory}
+                                    </span>
+                                )}
+                                <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-card-foreground">
+                                {article.title}
+                                </h3>
+                                {article.description && (
+                                <p className="text-sm text-muted-foreground/90 line-clamp-3 mb-4">
+                                    {article.description}
+                                </p>
+                                )}
+                                <div className="flex items-center justify-between text-xs text-muted-foreground mt-auto pt-4 border-t border-border/30">
+                                <span>
+                                    {article.author} | {article.date}
+                                </span>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </Link>
+                );
+                })
+            ) : (
+                <div className="col-span-full text-center py-10">
+                <p className="text-muted-foreground">
+                    No posts found for the selected filter.
+                </p>
+                </div>
+            )}
+            </div>
+
+            {totalPages > 1 && (
+            <div className="flex justify-center mt-12">
+                <Pagination>
+                <PaginationContent>
+                    <PaginationItem>
+                    <PaginationPrevious
+                        href="#"
+                        onClick={(e) => {
+                        e.preventDefault();
+                        handlePageChange(currentPage - 1);
+                        }}
+                        className={
+                        currentPage === 1
+                            ? 'pointer-events-none opacity-50'
+                            : undefined
+                        }
+                    />
+                    </PaginationItem>
+                    {Array.from({ length: totalPages }, (_, i) => (
+                    <PaginationItem key={i}>
+                        <PaginationLink
+                        href="#"
+                        isActive={currentPage === i + 1}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handlePageChange(i + 1);
+                        }}
+                        >
+                        {i + 1}
+                        </PaginationLink>
+                    </PaginationItem>
+                    ))}
+                    <PaginationItem>
+                    <PaginationNext
+                        href="#"
+                        onClick={(e) => {
+                        e.preventDefault();
+                        handlePageChange(currentPage + 1);
+                        }}
+                        className={
+                        currentPage === totalPages
+                            ? 'pointer-events-none opacity-50'
+                            : undefined
+                        }
+                    />
+                    </PaginationItem>
+                </PaginationContent>
+                </Pagination>
+            </div>
+            )}
+        </section>
 
       </main>
 
       <SiteFooter />
     </div>
   );
+}
