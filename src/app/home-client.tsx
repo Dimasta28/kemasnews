@@ -157,8 +157,6 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                   );
                 })}
               </CarouselContent>
-              <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 text-white bg-black/20 hover:bg-black/50 border-white/50 hover:border-white" />
-              <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 text-white bg-black/20 hover:bg-black/50 border-white/50 hover:border-white" />
             </Carousel>
           </section>
         ) : (
