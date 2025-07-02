@@ -238,11 +238,6 @@ export function SiteHeader({ settings, notifications: initialNotifications }: Si
                         <p className="text-center text-sm text-muted-foreground p-4">No notifications yet.</p>
                     )}
                 </div>
-                <div className="p-2 border-t text-center">
-                    <Link href="/admin/notifications" className="text-sm text-primary hover:underline">
-                        Manage notifications
-                    </Link>
-                </div>
             </PopoverContent>
           </Popover>
 
