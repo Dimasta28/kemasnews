@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -172,17 +173,20 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
           className={`sticky z-40 bg-background/95 p-4 border-b border-border shadow-sm top-[calc(var(--header-height,0px)+1rem)] backdrop-blur-sm`}
         >
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex-grow flex items-center gap-2">
-                <Button variant={activeFilter === 'All' ? 'secondary' : 'ghost'} onClick={() => handleFilterChange('All')}>All</Button>
-                {topCategories.map((category) => (
-                    <Button 
-                        key={category.id} 
-                        variant={activeFilter === category.name ? 'secondary' : 'ghost'} 
-                        onClick={() => handleFilterChange(category.name)}
-                    >
-                        {category.name}
-                    </Button>
-                ))}
+            <div className="flex-grow w-full md:w-auto overflow-hidden">
+                <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-2 -mb-2">
+                    <Button variant={activeFilter === 'All' ? 'secondary' : 'ghost'} onClick={() => handleFilterChange('All')} className="flex-shrink-0">All</Button>
+                    {topCategories.map((category) => (
+                        <Button 
+                            key={category.id} 
+                            variant={activeFilter === category.name ? 'secondary' : 'ghost'} 
+                            onClick={() => handleFilterChange(category.name)}
+                            className="flex-shrink-0"
+                        >
+                            {category.name}
+                        </Button>
+                    ))}
+                </div>
             </div>
             
             <div className="flex items-center gap-2 w-full md:w-auto">
