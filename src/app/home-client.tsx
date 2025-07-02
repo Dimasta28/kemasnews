@@ -79,6 +79,11 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
     setCurrentPage(1);
     articlesSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+  
+  const handlePageChange = (page: number) => {
+      setCurrentPage(page);
+      articlesSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }
 
   // Pagination logic
   const totalPages = Math.ceil(articles.length / articlesPerPage);
@@ -204,7 +209,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                             const firstCategory = article.categories?.[0] || '';
                             const categoryClass = categoryStyles[firstCategory.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
                             return (
-                                <Link href={`/post/${article.id}`} key={article.id} className="block h-full">
+                                <Link href={`/post/${article.id}`} key={article.id} className="block h-full group">
                                     <motion.div
                                         initial={{ opacity: 0, y: 50 }}
                                         whileInView={{ opacity: 1, y: 0 }}
@@ -217,7 +222,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                                                 src={article.featuredImage}
                                                 alt={article.title}
                                                 fill
-                                                className="object-cover"
+                                                className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
                                                 data-ai-hint="cosmetics packaging"
                                             />
                                         </div>
