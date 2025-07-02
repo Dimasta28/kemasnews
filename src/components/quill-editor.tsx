@@ -2,6 +2,7 @@
 
 import { useEditor, EditorContent, type Editor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import Image from '@tiptap/extension-image';
 import {
   Bold,
   Strikethrough,
@@ -13,6 +14,8 @@ import {
   Heading3,
   Quote,
   Code,
+  Link,
+  Image as ImageIcon,
 } from 'lucide-react';
 import { Toggle } from '@/components/ui/toggle';
 import React from 'react';
@@ -21,6 +24,34 @@ const TiptapToolbar = ({ editor }: { editor: Editor | null }) => {
   if (!editor) {
     return null;
   }
+  
+  const setLink = React.useCallback(() => {
+    const previousUrl = editor.getAttributes('link').href;
+    const url = window.prompt('URL', previousUrl);
+
+    // cancelled
+    if (url === null) {
+      return;
+    }
+
+    // empty
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink().run();
+      return;
+    }
+
+    // update link
+    editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+  }, [editor]);
+
+  const addImage = React.useCallback(() => {
+    const url = window.prompt('Image URL');
+
+    if (url) {
+      editor.chain().focus().setImage({ src: url }).run();
+    }
+  }, [editor]);
+
 
   return (
     <div className="border border-input bg-transparent rounded-t-md p-1 flex flex-wrap gap-1">
@@ -66,6 +97,13 @@ const TiptapToolbar = ({ editor }: { editor: Editor | null }) => {
       >
         <Strikethrough className="h-4 w-4" />
       </Toggle>
+       <Toggle
+        size="sm"
+        pressed={editor.isActive('link')}
+        onPressedChange={setLink}
+      >
+        <Link className="h-4 w-4" />
+      </Toggle>
       <Toggle
         size="sm"
         pressed={editor.isActive('bulletList')}
@@ -87,6 +125,12 @@ const TiptapToolbar = ({ editor }: { editor: Editor | null }) => {
       >
         <Quote className="h-4 w-4" />
       </Toggle>
+      <Toggle
+        size="sm"
+        onPressedChange={addImage}
+      >
+        <ImageIcon className="h-4 w-4" />
+      </Toggle>
        <Toggle
         size="sm"
         pressed={editor.isActive('codeBlock')}
@@ -105,12 +149,12 @@ interface RichTextEditorProps {
 
 export default function RichTextEditor({ value, onChange }: RichTextEditorProps) {
   const editor = useEditor({
-    extensions: [StarterKit.configure()],
+    extensions: [StarterKit.configure(), Image],
     content: value,
     editorProps: {
       attributes: {
         class:
-          'prose dark:prose-invert min-h-[300px] w-full rounded-b-md border border-t-0 border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+          'prose dark:prose-invert max-w-none min-h-[300px] w-full rounded-b-md border border-t-0 border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
       },
     },
     onUpdate: ({ editor }) => {
@@ -120,6 +164,7 @@ export default function RichTextEditor({ value, onChange }: RichTextEditorProps)
 
   React.useEffect(() => {
     if (editor) {
+      // Tiptap may not be initialized on the first render, so we check.
       const isSame = editor.getHTML() === value;
       if (isSame) {
         return;
