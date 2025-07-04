@@ -1,9 +1,8 @@
-
 'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, Eye } from 'lucide-react';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
@@ -63,12 +62,18 @@ export function PostActions({ postId }: { postId: string }) {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                 <DropdownMenuItem asChild>
+                    <Link href={`/post/${postId}`} target="_blank" rel="noopener noreferrer">
+                        <Eye className="mr-2 h-4 w-4" />
+                        Preview
+                    </Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                     <Link href={`/admin/posts/edit/${postId}`}>Edit</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem 
-                    className="text-red-500 hover:!text-red-500 focus:!text-red-500" 
+                    className="text-destructive focus:text-destructive focus:bg-destructive/10" 
                     onSelect={() => setIsAlertOpen(true)}>
                     Delete
                 </DropdownMenuItem>
