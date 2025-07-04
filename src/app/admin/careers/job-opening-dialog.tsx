@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -29,11 +30,10 @@ type JobOpeningFormData = z.infer<typeof formSchema>;
 interface JobOpeningFormDialogProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  onJobSaved: () => void;
   job?: JobOpening | null;
 }
 
-export function JobOpeningDialog({ isOpen, onOpenChange, onJobSaved, job }: JobOpeningFormDialogProps) {
+export function JobOpeningDialog({ isOpen, onOpenChange, job }: JobOpeningFormDialogProps) {
   const { toast } = useToast();
   const [isSaving, setIsSaving] = useState(false);
   const [departments, setDepartments] = useState<Department[]>([]);
@@ -87,7 +87,6 @@ export function JobOpeningDialog({ isOpen, onOpenChange, onJobSaved, job }: JobO
         await createJobOpening(data as Omit<JobOpening, 'id' | 'createdAt'>);
         toast({ title: 'Success!', description: 'New job opening has been created.' });
       }
-      onJobSaved();
       onOpenChange(false);
     } catch (error) {
       console.error('Failed to save job opening:', error);

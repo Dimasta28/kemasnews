@@ -3,6 +3,9 @@
 
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { db } from '@/lib/firebase';
+import { collection, onSnapshot, query, orderBy, Timestamp } from 'firebase/firestore';
 
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import type { DateRange, ChartData } from '@/lib/analytics';
@@ -36,12 +39,51 @@ export function AnalyticsDashboard({
   stats,
   chartData,
   range,
-  recentPosts,
-  postsCount,
-  commentsCount,
+  recentPosts: initialRecentPosts,
+  postsCount: initialPostsCount,
+  commentsCount: initialCommentsCount,
 }: AnalyticsDashboardProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const [postsCount, setPostsCount] = useState(initialPostsCount);
+  const [commentsCount, setCommentsCount] = useState(initialCommentsCount);
+  const [recentPosts, setRecentPosts] = useState(initialRecentPosts);
+
+  useEffect(() => {
+    const postsQuery = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
+    const commentsQuery = query(collection(db, 'comments'));
+
+    const unsubPosts = onSnapshot(postsQuery, (snapshot) => {
+      setPostsCount(snapshot.size);
+      const freshRecentPosts = snapshot.docs.slice(0, 5).map(doc => {
+        const data = doc.data();
+        const date = (data.createdAt as Timestamp)?.toDate() || new Date();
+        return {
+            id: doc.id,
+            title: data.title || '',
+            description: data.description || '',
+            status: data.status || 'Draft',
+            author: data.author || 'Admin',
+            date: date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+            content: data.content || '',
+            categories: data.categories || (data.category ? [data.category] : []),
+            tags: data.tags || [],
+            featuredImage: data.featuredImage || 'https://placehold.co/600x400.png'
+        } as Post;
+      });
+      setRecentPosts(freshRecentPosts);
+    });
+
+    const unsubComments = onSnapshot(commentsQuery, (snapshot) => {
+      setCommentsCount(snapshot.size);
+    });
+
+    return () => {
+      unsubPosts();
+      unsubComments();
+    };
+  }, []);
 
   const createQueryString = (name: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());

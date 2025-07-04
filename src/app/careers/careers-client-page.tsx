@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Building, MapPin, Calendar } from 'lucide-react';
@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/accordion";
 import { type CareerPageData, type JobOpening } from '@/services/careerService';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { db } from '@/lib/firebase';
+import { collection, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
 
 interface CareersClientPageProps {
   initialPageData: CareerPageData;
@@ -23,18 +25,48 @@ interface CareersClientPageProps {
 
 export function CareersClientPage({ initialPageData, initialJobOpenings }: CareersClientPageProps) {
     const [selectedDepartment, setSelectedDepartment] = useState('All');
+    const [jobOpenings, setJobOpenings] = useState<JobOpening[]>(initialJobOpenings);
+
+    useEffect(() => {
+        const jobsCollection = collection(db, 'jobOpenings');
+        const q = query(jobsCollection, orderBy('createdAt', 'desc'));
+
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const freshJobs: JobOpening[] = snapshot.docs.map(doc => {
+                const data = doc.data();
+                const createdAt = (data.createdAt as Timestamp)?.toDate() || new Date();
+                return {
+                    id: doc.id,
+                    title: data.title || '',
+                    department: data.department || '',
+                    location: data.location || '',
+                    type: data.type || '',
+                    imageUrl: data.imageUrl || '',
+                    qualifications: data.qualifications || '',
+                    createdAt: createdAt.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                    }),
+                };
+            });
+            setJobOpenings(freshJobs);
+        });
+
+        return () => unsubscribe();
+    }, []);
 
     const departments = useMemo(() => {
-        const uniqueDepartments = [...new Set(initialJobOpenings.map(job => job.department))];
+        const uniqueDepartments = [...new Set(jobOpenings.map(job => job.department))];
         return ['All', ...uniqueDepartments];
-    }, [initialJobOpenings]);
+    }, [jobOpenings]);
 
     const filteredJobs = useMemo(() => {
         if (selectedDepartment === 'All') {
-            return initialJobOpenings;
+            return jobOpenings;
         }
-        return initialJobOpenings.filter(job => job.department === selectedDepartment);
-    }, [initialJobOpenings, selectedDepartment]);
+        return jobOpenings.filter(job => job.department === selectedDepartment);
+    }, [jobOpenings, selectedDepartment]);
 
 
     return (

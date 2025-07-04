@@ -13,11 +13,10 @@ import { deleteJobOpening, type JobOpening } from '@/services/careerService';
 import { JobOpeningDialog } from './job-opening-dialog';
 
 interface JobOpeningsTableProps {
-  initialJobs: JobOpening[];
-  onJobsChange: () => void;
+  jobs: JobOpening[];
 }
 
-export function JobOpeningsTable({ initialJobs, onJobsChange }: JobOpeningsTableProps) {
+export function JobOpeningsTable({ jobs }: JobOpeningsTableProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState<JobOpening | null>(null);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
@@ -44,7 +43,6 @@ export function JobOpeningsTable({ initialJobs, onJobsChange }: JobOpeningsTable
     try {
       await deleteJobOpening(jobToDelete);
       toast({ title: 'Success!', description: 'Job opening deleted.' });
-      onJobsChange(); // Refresh the list from parent
     } catch (error) {
       console.error('Failed to delete job:', error);
       toast({ variant: 'destructive', title: 'Error', description: 'Failed to delete job.' });
@@ -74,7 +72,7 @@ export function JobOpeningsTable({ initialJobs, onJobsChange }: JobOpeningsTable
             </TableRow>
           </TableHeader>
           <TableBody>
-            {initialJobs.length > 0 ? initialJobs.map((job) => (
+            {jobs.length > 0 ? jobs.map((job) => (
               <TableRow key={job.id}>
                 <TableCell>
                   <Image
@@ -116,7 +114,6 @@ export function JobOpeningsTable({ initialJobs, onJobsChange }: JobOpeningsTable
       <JobOpeningDialog
         isOpen={isDialogOpen}
         onOpenChange={setIsDialogOpen}
-        onJobSaved={onJobsChange}
         job={selectedJob}
       />
 

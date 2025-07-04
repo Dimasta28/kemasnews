@@ -11,6 +11,7 @@ export default async function DashboardPage({
 }) {
   const range = (searchParams?.range || '28days') as DateRange;
 
+  // Fetch initial data on the server
   const [stats, chartData, allPosts, allComments] = await Promise.all([
     getStats(range),
     getChartData(range),

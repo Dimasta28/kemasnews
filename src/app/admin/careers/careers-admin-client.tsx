@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
@@ -9,10 +9,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { getCareerPageData, updateCareerPageData, getJobOpenings, type CareerPageData, type JobOpening, type CompanyBenefit } from '@/services/careerService';
+import { updateCareerPageData, type CareerPageData, type JobOpening, type CompanyBenefit } from '@/services/careerService';
 import { JobOpeningsTable } from './job-openings-table';
 import { PlusCircle, Trash2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import { db } from '@/lib/firebase';
+import { collection, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
 
 interface CareersAdminClientProps {
   initialPageData: CareerPageData;
@@ -25,22 +27,35 @@ export function CareersAdminClient({ initialPageData, initialJobOpenings }: Care
   const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();
 
-  const refreshData = useCallback(async () => {
-    try {
-      const [pageData, jobs] = await Promise.all([
-        getCareerPageData(),
-        getJobOpenings(),
-      ]);
-      setData(pageData);
-      setJobOpenings(jobs);
-    } catch (error) {
-      console.error('Failed to refresh career data:', error);
-      toast({
-        variant: 'destructive',
-        title: 'Failed to refresh data',
+  useEffect(() => {
+    const jobsCollection = collection(db, 'jobOpenings');
+    const q = query(jobsCollection, orderBy('createdAt', 'desc'));
+    
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const freshJobs: JobOpening[] = snapshot.docs.map(doc => {
+        const data = doc.data();
+        const createdAt = (data.createdAt as Timestamp)?.toDate() || new Date();
+        return {
+          id: doc.id,
+          title: data.title || '',
+          department: data.department || '',
+          location: data.location || '',
+          type: data.type || '',
+          imageUrl: data.imageUrl || '',
+          qualifications: data.qualifications || '',
+          createdAt: createdAt.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          }),
+        };
       });
-    }
-  }, [toast]);
+      setJobOpenings(freshJobs);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
 
   const handleInputChange = (field: keyof Omit<CareerPageData, 'benefits'>, value: string) => {
     setData((prev) => ({ ...prev, [field]: value }));
@@ -138,7 +153,7 @@ export function CareersAdminClient({ initialPageData, initialJobOpenings }: Care
            <CardDescription>Manage the list of available jobs.</CardDescription>
         </CardHeader>
         <CardContent>
-          <JobOpeningsTable initialJobs={jobOpenings} onJobsChange={refreshData} />
+          <JobOpeningsTable jobs={jobOpenings} />
         </CardContent>
       </Card>
       
