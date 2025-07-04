@@ -18,6 +18,7 @@ import {
   ChevronRight,
   Shield,
   Bell,
+  ExternalLink,
 } from 'lucide-react';
 
 import {
@@ -298,6 +299,12 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 />
             </form>
           </div>
+          <Button variant="outline" size="sm" className="hidden sm:inline-flex" asChild>
+            <Link href="/" target="_blank" rel="noopener noreferrer">
+              <ExternalLink className="mr-2 h-4 w-4" />
+              View Site
+            </Link>
+          </Button>
           <ThemeToggle />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
