@@ -26,7 +26,7 @@ import {
   type Notification,
 } from '@/services/notificationService';
 import { db } from '@/lib/firebase';
-import { collection, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
+import { doc, collection, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
 import { formatDistanceToNow } from 'date-fns';
 
 interface SiteHeaderProps {
@@ -35,7 +35,7 @@ interface SiteHeaderProps {
 }
 
 
-export function SiteHeader({ settings, notifications: initialNotifications }: SiteHeaderProps) {
+export function SiteHeader({ settings: initialSettings, notifications: initialNotifications }: SiteHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const lastScrollY = useRef(0);
@@ -43,14 +43,16 @@ export function SiteHeader({ settings, notifications: initialNotifications }: Si
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { toast } = useToast();
+  
   const [notifications, setNotifications] = useState(initialNotifications || []);
+  const [settings, setSettings] = useState(initialSettings);
 
-  // Set up a real-time listener for notifications
+
   useEffect(() => {
+    // Listener for notifications
     const notificationsCollection = collection(db, 'notifications');
     const q = query(notificationsCollection, orderBy('createdAt', 'desc'));
-
-    const unsubscribe = onSnapshot(q, (snapshot) => {
+    const unsubNotifications = onSnapshot(q, (snapshot) => {
         const freshNotifications: Notification[] = snapshot.docs.map(doc => {
             const data = doc.data();
             const createdAt = (data.createdAt as Timestamp)?.toDate() || new Date();
@@ -66,16 +68,30 @@ export function SiteHeader({ settings, notifications: initialNotifications }: Si
         setNotifications(freshNotifications);
     });
 
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
-  }, []); // Empty dependency array means this effect runs once on mount
+    // Listener for settings
+    const settingsDocRef = doc(db, 'settings', 'frontend');
+    const unsubSettings = onSnapshot(settingsDocRef, (docSnap) => {
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            // This ensures we update the settings state with the latest from the database
+            setSettings(prevSettings => ({
+                ...prevSettings,
+                ...(data as Partial<FrontendSettings>)
+            }));
+        }
+    });
+
+    return () => {
+        unsubNotifications();
+        unsubSettings();
+    };
+  }, []);
 
   const hasUnread = (notifications || []).some(n => !n.read);
 
   const handleMarkAsRead = async (id: string) => {
     try {
         await markNotificationAsRead(id);
-        // The UI will update automatically via the onSnapshot listener
     } catch (error) {
         toast({ variant: 'destructive', title: 'Error', description: 'Could not mark notification as read.' });
     }
@@ -84,7 +100,6 @@ export function SiteHeader({ settings, notifications: initialNotifications }: Si
   const handleMarkAllAsRead = async () => {
     try {
         await markAllNotificationsAsRead();
-        // The UI will update automatically via the onSnapshot listener
     } catch (error) {
         toast({ variant: 'destructive', title: 'Error', description: 'Could not mark all as read.' });
     }
