@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -10,6 +11,7 @@ import {
   Bell as BellIcon,
   Sun,
   Moon,
+  Search,
   ChevronDown as ChevronDownIcon,
   X as XIcon,
 } from 'lucide-react';
@@ -17,13 +19,15 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import type { FrontendSettings } from '@/services/settingsService';
 import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import {
   markAllNotificationsAsRead,
   markNotificationAsRead,
   type Notification,
 } from '@/services/notificationService';
+import { db } from '@/lib/firebase';
+import { collection, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
+import { formatDistanceToNow } from 'date-fns';
 
 interface SiteHeaderProps {
   settings: FrontendSettings;
@@ -38,16 +42,40 @@ export function SiteHeader({ settings, notifications: initialNotifications }: Si
   const { theme, setTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const router = useRouter();
   const { toast } = useToast();
   const [notifications, setNotifications] = useState(initialNotifications || []);
+
+  // Set up a real-time listener for notifications
+  useEffect(() => {
+    const notificationsCollection = collection(db, 'notifications');
+    const q = query(notificationsCollection, orderBy('createdAt', 'desc'));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+        const freshNotifications: Notification[] = snapshot.docs.map(doc => {
+            const data = doc.data();
+            const createdAt = (data.createdAt as Timestamp)?.toDate() || new Date();
+            return {
+                id: doc.id,
+                title: data.title || '',
+                description: data.description || '',
+                link: data.link || '#',
+                read: data.read || false,
+                createdAt: `${formatDistanceToNow(createdAt)} ago`,
+            };
+        });
+        setNotifications(freshNotifications);
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, []); // Empty dependency array means this effect runs once on mount
 
   const hasUnread = (notifications || []).some(n => !n.read);
 
   const handleMarkAsRead = async (id: string) => {
     try {
         await markNotificationAsRead(id);
-        setNotifications(notifications.map(n => n.id === id ? { ...n, read: true } : n));
+        // The UI will update automatically via the onSnapshot listener
     } catch (error) {
         toast({ variant: 'destructive', title: 'Error', description: 'Could not mark notification as read.' });
     }
@@ -56,7 +84,7 @@ export function SiteHeader({ settings, notifications: initialNotifications }: Si
   const handleMarkAllAsRead = async () => {
     try {
         await markAllNotificationsAsRead();
-        setNotifications(notifications.map(n => ({...n, read: true})));
+        // The UI will update automatically via the onSnapshot listener
     } catch (error) {
         toast({ variant: 'destructive', title: 'Error', description: 'Could not mark all as read.' });
     }
@@ -201,7 +229,7 @@ export function SiteHeader({ settings, notifications: initialNotifications }: Si
           >
              {mounted ? (theme === 'dark' ? <Moon size={20} /> : <Sun size={20} />) : <Sun size={20} />}
           </button>
-
+        
           <button
             onClick={() => setIsMobileMenuOpen(true)}
             className="md:hidden p-2 hover:bg-[#DDD9CE] dark:hover:bg-[#AC9C8D] rounded-full transition"
