@@ -124,7 +124,7 @@ export function CareersClientPage({ initialPageData, initialJobOpenings }: Caree
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {filteredJobs.length > 0 ? filteredJobs.map((job) => (
-                            <Card key={job.id} className="bg-card/80 hover:shadow-2xl transition-shadow duration-300 flex flex-col overflow-hidden">
+                            <Card key={job.id} className="bg-card/75 backdrop-blur-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col overflow-hidden">
                                 {job.imageUrl && (
                                     <div className="relative w-full h-48">
                                         <Image

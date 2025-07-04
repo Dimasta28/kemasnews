@@ -268,7 +268,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true, amount: 0.2 }}
                                     transition={{ duration: 0.5 }}
-                                    className="bg-card/80 dark:bg-card rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden h-full flex flex-col"
+                                    className="bg-card/75 dark:bg-card/75 backdrop-blur-lg rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden h-full flex flex-col"
                                 >
                                     <div className="relative w-full aspect-video">
                                         <Image
