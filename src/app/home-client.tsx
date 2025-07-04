@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
@@ -5,10 +6,16 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Autoplay from 'embla-carousel-autoplay';
+import { useSearchParams } from 'next/navigation';
 
+// Firebase imports
+import { db } from '@/lib/firebase';
+import { collection, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
+
+// Component imports
 import type { Post } from '@/services/postService';
 import type { Category } from '@/services/categoryService';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import {
   Pagination,
   PaginationContent,
@@ -21,7 +28,6 @@ import { Search } from 'lucide-react';
 import { SiteFooter } from '@/components/site-footer';
 import { Input } from '@/components/ui/input';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { useSearchParams } from 'next/navigation';
 
 
 // Helper for category styling
@@ -46,16 +52,57 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
   const articlesSectionRef = useRef<HTMLElement>(null);
   const autoplayPlugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
   
-  const latestPosts = initialPosts.slice(0, 3);
-  
   const searchParams = useSearchParams();
   const q = searchParams.get('q');
 
-  const [articles, setArticles] = useState<Post[]>(initialPosts);
+  // State for all posts, updated in realtime
+  const [allPosts, setAllPosts] = useState<Post[]>(initialPosts);
+
+  const [articles, setArticles] = useState<Post[]>(allPosts);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeFilter, setActiveFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState(q || '');
   const articlesPerPage = 12;
+
+  const latestPosts = allPosts.slice(0, 3);
+
+  // Set up a real-time listener for posts
+  useEffect(() => {
+    const postsCollection = collection(db, 'posts');
+    const q = query(postsCollection, orderBy('createdAt', 'desc'));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+        const freshPosts: Post[] = snapshot.docs.map(doc => {
+            const data = doc.data();
+            const date = (data.createdAt as Timestamp)?.toDate() || new Date();
+            
+            let categories: string[] = [];
+            if (data.categories && Array.isArray(data.categories)) {
+              categories = data.categories;
+            } else if (data.category && typeof data.category === 'string') {
+              categories = [data.category];
+            }
+
+            return {
+                id: doc.id,
+                title: data.title || '',
+                description: data.description || '',
+                status: data.status || 'Draft',
+                author: data.author || 'Admin',
+                date: date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                content: data.content || '',
+                categories: categories,
+                tags: data.tags || [],
+                featuredImage: data.featuredImage || 'https://placehold.co/600x400.png'
+            };
+        }).filter(post => post.status === 'Published'); // Only show published posts
+
+        setAllPosts(freshPosts);
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, []); // Empty dependency array means this effect runs once on mount
 
   useEffect(() => {
     // This effect ensures the search term from the URL is applied.
@@ -63,7 +110,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
   }, [q]);
 
   useEffect(() => {
-    let filtered = initialPosts;
+    let filtered = allPosts;
 
     // Filter by active category
     if (activeFilter !== 'All') {
@@ -80,7 +127,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
     
     setArticles(filtered);
     setCurrentPage(1); // Reset page on new filter
-  }, [activeFilter, searchTerm, initialPosts]);
+  }, [activeFilter, searchTerm, allPosts]);
 
   const handleFilterChange = (filter: string) => {
     if (!filter) return; // Prevent unselecting the toggle
