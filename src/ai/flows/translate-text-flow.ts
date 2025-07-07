@@ -24,21 +24,21 @@ export async function translateText(input: TranslateTextInput): Promise<Translat
   return translateTextFlow(input);
 }
 
-// Define a more flexible schema for the prompt's output to avoid API validation errors.
-const PromptOutputSchema = z.object({
-    translations: z.any().describe('A JSON object with the same keys as the input, but with the translated text as values.'),
-});
-
 const translatePrompt = ai.definePrompt({
   name: 'translateBatchPrompt',
   input: { schema: TranslateTextInputSchema },
-  output: { schema: PromptOutputSchema }, // Use the flexible schema here
-  prompt: `You are an expert multilingual translator. Translate each text value in the following JSON object into {{{targetLanguage}}}.
-Do not translate proper nouns, brand names, or HTML tags. Preserve the HTML structure if present.
-The 'postContent' value is a large block of HTML; translate the text within the tags but keep the tags themselves.
-Return a JSON object with the identical keys as the input, but with the translated text as values.
+  // Use the strict output schema. This encourages the model to return the correct format.
+  output: { schema: TranslateTextOutputSchema },
+  prompt: `You are an expert multilingual translator. Your task is to translate the text values in the provided data into **{{{targetLanguage}}}**.
 
-Texts to translate:
+**CRITICAL Instructions:**
+- Your response MUST be a valid JSON object that conforms to the specified output schema.
+- The JSON object must have a single root key called "translations".
+- The value of "translations" must be another JSON object containing all the original keys from the input, but with their string values translated.
+- Preserve all HTML tags within the 'postContent' value; only translate the text content inside them.
+- Do not translate proper nouns or brand names unless appropriate for the target language.
+
+**Data to Translate (Key-Value pairs):**
 {{#each texts}}
 - "{{@key}}": "{{this}}"
 {{/each}}
@@ -52,14 +52,14 @@ const translateTextFlow = ai.defineFlow(
     outputSchema: TranslateTextOutputSchema,
   },
   async (input) => {
+    // The prompt now directly returns the structure we need.
     const {output} = await translatePrompt(input);
     
     if (!output?.translations) {
-        throw new Error('Failed to translate texts.');
+        throw new Error('Failed to translate texts or the response was empty.');
     }
 
-    return {
-      translations: output.translations,
-    };
+    // The output from the prompt already matches the flow's output schema.
+    return output;
   }
 );
