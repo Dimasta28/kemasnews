@@ -45,7 +45,7 @@ export async function getPosts(): Promise<Post[]> {
         title: data.title || '',
         description: data.description || '',
         status: data.status || 'Draft',
-        author: data.author || 'Admin', // Default author
+        author: data.author || 'KEMAS', // Default author
         date: date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
         content: data.content || '',
         categories: categories, // Use categories array
@@ -82,7 +82,7 @@ export async function getPost(id: string): Promise<Post | null> {
           categories: categories, // Use categories array
           tags: data.tags || [],
           featuredImage: data.featuredImage || 'https://placehold.co/300x300.png',
-          author: data.author || 'Admin',
+          author: data.author || 'KEMAS',
           date: date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
       } as Post;
     } else {
@@ -96,7 +96,7 @@ export async function createPost(post: Omit<Post, 'id' | 'date' | 'author'>): Pr
     try {
         const docRef = await addDoc(collection(db, "posts"), {
             ...post,
-            author: 'Admin', // Or get current user
+            author: 'KEMAS', // Or get current user
             createdAt: serverTimestamp()
         });
         return docRef.id;

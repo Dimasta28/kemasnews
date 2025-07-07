@@ -26,7 +26,7 @@ export function useAuth() {
         setUser({
           id: firebaseUser.uid,
           email: firebaseUser.email || '',
-          name: firebaseUser.displayName || 'Admin',
+          name: firebaseUser.displayName || 'KEMAS',
           avatar: firebaseUser.photoURL || `https://placehold.co/100x100.png`,
         });
       } else {
