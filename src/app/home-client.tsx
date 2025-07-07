@@ -321,10 +321,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                         {article.description}
                                     </p>
                                     )}
-                                    <div className="relative z-10 flex items-center justify-between text-xs text-muted-foreground mt-auto pt-4 border-t border-border/30">
-                                    <span className="truncate pr-2">
-                                        {article.author} | {article.date}
-                                    </span>
+                                    <div className="relative z-10 flex items-center justify-end text-xs text-muted-foreground mt-auto pt-4 border-t border-border/30">
                                     <SocialShare title={article.title} url={postUrl} />
                                     </div>
                                 </div>
