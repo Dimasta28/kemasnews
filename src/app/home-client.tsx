@@ -57,13 +57,13 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
       'bg-primary text-primary-foreground',
       'bg-secondary text-secondary-foreground',
       'bg-muted text-card-foreground',
-      'bg-[#008080] text-white', // Teal
-      'bg-[#4B0082] text-white', // Indigo
-      'bg-[#FF8C00] text-white', // DarkOrange
-      'bg-[#00008B] text-white', // DarkBlue
-      'bg-[#556B2F] text-white', // DarkOliveGreen
-      'bg-[#8B0000] text-white', // DarkRed
-      'bg-[#FF1493] text-white', // DeepPink
+      'bg-red-500 text-white',
+      'bg-blue-500 text-white',
+      'bg-green-500 text-white',
+      'bg-yellow-500 text-white',
+      'bg-indigo-500 text-white',
+      'bg-purple-500 text-white',
+      'bg-pink-500 text-white',
     ];
 
     const newColorMap: Record<string, string> = {};
@@ -307,20 +307,18 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                 initial={{ opacity: 0, y: 50 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, amount: 0.2 }}
-                                className="relative group bg-card/75 dark:bg-card/75 backdrop-blur-lg rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden h-full flex flex-col"
+                                className="relative group rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col"
                             >
-                                <Link href={`/post/${article.id}`} className="block absolute inset-0 z-0" aria-label={`Read more about ${article.title}`}>
-                                    <div className="relative w-full aspect-video">
-                                        <Image
-                                            src={article.featuredImage}
-                                            alt={article.title}
-                                            fill
-                                            className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-                                            data-ai-hint="cosmetics packaging"
-                                        />
-                                    </div>
-                                </Link>
-                                <div className="p-5 flex-grow flex flex-col relative z-10 bg-card/75 dark:bg-card/75">
+                                <div className="relative w-full aspect-video">
+                                    <Image
+                                        src={article.featuredImage}
+                                        alt={article.title}
+                                        fill
+                                        className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                                        data-ai-hint="cosmetics packaging"
+                                    />
+                                </div>
+                                <div className="bg-card p-5 flex-grow flex flex-col">
                                     {firstCategory && (
                                         <span
                                             className={cn(
@@ -331,8 +329,10 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                             {firstCategory}
                                         </span>
                                     )}
-                                    <h3 className="text-sm font-semibold mb-2 line-clamp-2 text-card-foreground">
-                                       <Link href={`/post/${article.id}`} className="hover:underline focus:underline">{article.title}</Link>
+                                    <h3 className="text-sm font-semibold mb-2 line-clamp-2 text-card-foreground flex-grow">
+                                       <Link href={`/post/${article.id}`} className="hover:underline focus:underline before:absolute before:inset-0 before:z-0">
+                                        {article.title}
+                                       </Link>
                                     </h3>
                                     {article.description && (
                                     <p className="text-xs text-muted-foreground/90 line-clamp-3 mb-4 flex-grow">
@@ -345,7 +345,9 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                             <span>&bull;</span>
                                             <span>{article.date}</span>
                                         </div>
-                                        <SocialShare title={article.title} url={postUrl} />
+                                        <div className="relative z-10">
+                                          <SocialShare title={article.title} url={postUrl} />
+                                        </div>
                                     </div>
                                 </div>
                             </motion.div>
@@ -418,3 +420,4 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
     </div>
   );
 }
+
