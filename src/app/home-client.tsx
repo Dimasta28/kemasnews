@@ -27,7 +27,8 @@ import {
 import { Search } from 'lucide-react';
 import { SiteFooter } from '@/components/site-footer';
 import { Input } from '@/components/ui/input';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 
 // Helper for category styling
@@ -192,7 +193,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                   <h1 className="text-3xl md:text-6xl font-extrabold leading-tight mb-4 group-hover:underline">
                                       {post.title}
                                   </h1>
-                                  <p className="text-base md:text-lg text-gray-300 line-clamp-2">
+                                  <p className="text-sm md:text-lg text-gray-300 line-clamp-2">
                                      {post.description}
                                   </p>
                               </Link>
@@ -205,7 +206,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
             </Carousel>
           </section>
         ) : (
-            <section className="relative aspect-square md:h-[90vh] flex items-center justify-center text-center overflow-hidden bg-cover bg-center">
+            <section className="relative aspect-square md:aspect-[16/7] md:h-[90vh] flex items-center justify-center text-center overflow-hidden bg-cover bg-center">
                  <Image
                     src="https://placehold.co/1920x1080.png"
                     alt="Hero background"
@@ -218,27 +219,49 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
         
         <section className="py-8 bg-card/50">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <ToggleGroup
-              type="single"
-              defaultValue="All"
-              value={activeFilter}
-              onValueChange={handleFilterChange}
-              className="flex-wrap justify-center gap-2"
+            <Carousel
+              opts={{
+                align: 'start',
+                dragFree: true,
+              }}
+              className="w-full"
             >
-              <ToggleGroupItem value="All" aria-label="Filter by All">All Topics</ToggleGroupItem>
-              {sortedUniqueCategories.map((category) => (
-                <ToggleGroupItem key={category.id} value={category.name} aria-label={`Filter by ${category.name}`}>
-                  {category.name}
-                </ToggleGroupItem>
-              ))}
-            </ToggleGroup>
+              <CarouselContent className="-ml-2">
+                <CarouselItem className="pl-2 basis-auto">
+                  <Button
+                    variant="ghost"
+                    className={cn(
+                      'rounded-full',
+                      activeFilter === 'All' && 'bg-accent text-accent-foreground hover:bg-accent/90'
+                    )}
+                    onClick={() => handleFilterChange('All')}
+                  >
+                    All Topics
+                  </Button>
+                </CarouselItem>
+                {sortedUniqueCategories.map((category) => (
+                  <CarouselItem key={category.id} className="pl-2 basis-auto">
+                    <Button
+                      variant="ghost"
+                      className={cn(
+                        'rounded-full',
+                        activeFilter === category.name && 'bg-accent text-accent-foreground hover:bg-accent/90'
+                      )}
+                      onClick={() => handleFilterChange(category.name)}
+                    >
+                      {category.name}
+                    </Button>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           </div>
         </section>
 
         <section ref={articlesSectionRef} className="pt-12 pb-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
                 <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
-                    <h2 className="text-2xl sm:text-3xl font-bold self-start sm:self-center">
+                    <h2 className="text-xl sm:text-3xl font-bold self-start sm:self-center">
                         {activeFilter === 'All' ? 'Latest Articles' : activeFilter}
                     </h2>
                     <div className="relative w-full sm:max-w-xs">
@@ -284,11 +307,11 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                             {firstCategory}
                                             </span>
                                         )}
-                                        <h3 className="text-base md:text-lg font-semibold mb-2 line-clamp-2 text-card-foreground">
+                                        <h3 className="text-base font-semibold mb-2 line-clamp-2 text-card-foreground">
                                         {article.title}
                                         </h3>
                                         {article.description && (
-                                        <p className="text-sm text-muted-foreground/90 line-clamp-3 mb-4">
+                                        <p className="text-xs text-muted-foreground/90 line-clamp-3 mb-4">
                                             {article.description}
                                         </p>
                                         )}
