@@ -189,10 +189,10 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                           {firstCategory}
                                       </span>
                                   )}
-                                  <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-4 group-hover:underline">
+                                  <h1 className="text-3xl md:text-6xl font-extrabold leading-tight mb-4 group-hover:underline">
                                       {post.title}
                                   </h1>
-                                  <p className="text-lg text-gray-300 line-clamp-2">
+                                  <p className="text-base md:text-lg text-gray-300 line-clamp-2">
                                      {post.description}
                                   </p>
                               </Link>
@@ -238,7 +238,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
         <section ref={articlesSectionRef} className="pt-12 pb-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
                 <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
-                    <h2 className="text-3xl font-bold self-start sm:self-center">
+                    <h2 className="text-2xl sm:text-3xl font-bold self-start sm:self-center">
                         {activeFilter === 'All' ? 'Latest Articles' : activeFilter}
                     </h2>
                     <div className="relative w-full sm:max-w-xs">
@@ -284,7 +284,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                             {firstCategory}
                                             </span>
                                         )}
-                                        <h3 className="text-lg md:text-xl font-semibold mb-2 line-clamp-2 text-card-foreground">
+                                        <h3 className="text-base md:text-lg font-semibold mb-2 line-clamp-2 text-card-foreground">
                                         {article.title}
                                         </h3>
                                         {article.description && (

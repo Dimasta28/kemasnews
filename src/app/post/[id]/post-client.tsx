@@ -67,7 +67,7 @@ export function PostClient({ post, recentPosts, comments, settings, notification
                     {/* Main Content */}
                     <article className="lg:col-span-2">
                         <motion.h1
-                            className="text-3xl md:text-5xl font-extrabold leading-tight mb-4 text-foreground"
+                            className="text-2xl md:text-5xl font-extrabold leading-tight mb-4 text-foreground"
                             custom={0}
                             initial="hidden"
                             animate="visible"
@@ -106,7 +106,7 @@ export function PostClient({ post, recentPosts, comments, settings, notification
 
                         {post.description && (
                             <motion.p
-                                className="text-lg text-muted-foreground font-light mb-8 border-l-4 border-primary pl-4"
+                                className="text-base md:text-lg text-muted-foreground font-light mb-8 border-l-4 border-primary pl-4"
                                 custom={2}
                                 initial="hidden"
                                 animate="visible"
@@ -137,7 +137,7 @@ export function PostClient({ post, recentPosts, comments, settings, notification
                         )}
 
                         <motion.div
-                            className="prose prose-lg dark:prose-invert max-w-none"
+                            className="prose dark:prose-invert max-w-none md:prose-lg"
                             custom={4}
                             initial="hidden"
                             animate="visible"

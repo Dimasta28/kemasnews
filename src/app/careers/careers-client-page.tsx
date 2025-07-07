@@ -82,10 +82,10 @@ export function CareersClientPage({ initialPageData, initialJobOpenings }: Caree
                     priority
                 />
                 <div className="relative z-10 max-w-3xl p-8">
-                    <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-4">
+                    <h1 className="text-3xl md:text-6xl font-extrabold leading-tight mb-4">
                         {initialPageData.heroTitle}
                     </h1>
-                    <p className="text-lg md:text-xl text-gray-200">
+                    <p className="text-base md:text-xl text-gray-200">
                         {initialPageData.heroDescription}
                     </p>
                 </div>
@@ -95,7 +95,7 @@ export function CareersClientPage({ initialPageData, initialJobOpenings }: Caree
             <section id="open-positions" className="py-16 md:py-24">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-bold text-foreground">{initialPageData.positionsTitle || 'Open Positions'}</h2>
+                        <h2 className="text-2xl md:text-4xl font-bold text-foreground">{initialPageData.positionsTitle || 'Open Positions'}</h2>
                         <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
                             {initialPageData.positionsDescription || 'Find the role that\'s right for you.'}
                         </p>
@@ -137,7 +137,7 @@ export function CareersClientPage({ initialPageData, initialJobOpenings }: Caree
                                     </div>
                                 )}
                                 <CardHeader>
-                                    <CardTitle>{job.title}</CardTitle>
+                                    <CardTitle className="text-lg">{job.title}</CardTitle>
                                     <CardDescription>{job.type}</CardDescription>
                                 </CardHeader>
                                 <CardContent className="space-y-4 flex-grow flex flex-col">
@@ -187,7 +187,7 @@ export function CareersClientPage({ initialPageData, initialJobOpenings }: Caree
             <section className="py-16 md:py-24 bg-card/60">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-bold text-foreground">{initialPageData.whyJoinTitle}</h2>
+                        <h2 className="text-2xl md:text-4xl font-bold text-foreground">{initialPageData.whyJoinTitle}</h2>
                         <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
                             {initialPageData.whyJoinDescription}
                         </p>
@@ -199,7 +199,7 @@ export function CareersClientPage({ initialPageData, initialJobOpenings }: Caree
                                     <div className="flex items-center justify-center h-16 w-16 rounded-full bg-primary/10 text-primary mx-auto mb-4">
                                         <DynamicIcon name={benefit.icon} className="h-8 w-8" />
                                     </div>
-                                    <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
+                                    <h3 className="text-lg md:text-xl font-semibold mb-2">{benefit.title}</h3>
                                     <p className="text-muted-foreground">{benefit.description}</p>
                                 </div>
                             );
