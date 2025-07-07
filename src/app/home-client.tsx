@@ -31,6 +31,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { SocialShare } from '@/components/social-share';
+import { Card } from '@/components/ui/card';
 
 // Main Application Component
 export default function HomeClient({ heroPosts, allCategories, settings }: { heroPosts: Post[], allCategories: Category[], settings: FrontendSettings }) {
@@ -159,7 +160,7 @@ export default function HomeClient({ heroPosts, allCategories, settings }: { her
   // Pagination logic
   const totalPages = Math.ceil(articles.length / articlesPerPage);
   const indexOfLastArticle = currentPage * articlesPerPage;
-  const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
+  const indexOfFirstArticle = indexOfLastArticle - indexOfLastArticle;
   const currentArticles = articles.slice(
     indexOfFirstArticle,
     indexOfLastArticle
@@ -413,27 +414,28 @@ export default function HomeClient({ heroPosts, allCategories, settings }: { her
 
         <section className="py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
-                <Link href={settings.homepageBanner?.buttonLink || '#'} className="block group relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
-                    <div className="relative w-full aspect-[21/9]">
-                        <Image
-                            src={settings.homepageBanner?.imageUrl || 'https://placehold.co/1200x450.png'}
-                            alt={settings.homepageBanner?.title || 'Promotional Banner'}
-                            fill
-                            className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
-                            data-ai-hint="advertisement banner"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
-                    </div>
-                    <div className="absolute inset-0 flex items-center p-8 md:p-12">
-                        <div className="max-w-md text-white">
-                            <h3 className="text-2xl md:text-4xl font-bold leading-tight">{settings.homepageBanner?.title}</h3>
-                            <p className="mt-2 text-base md:text-lg">{settings.homepageBanner?.description}</p>
-                            <Button size="lg" className="mt-6">
-                                {settings.homepageBanner?.buttonText}
+                <Card className="overflow-hidden shadow-lg">
+                    <div className="grid md:grid-cols-2">
+                        <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
+                            <h3 className="text-2xl md:text-4xl font-bold leading-tight text-foreground">{settings.homepageBanner?.title}</h3>
+                            <p className="mt-4 text-base md:text-lg text-muted-foreground">{settings.homepageBanner?.description}</p>
+                            <Button size="lg" className="mt-6 w-fit" asChild>
+                                <Link href={settings.homepageBanner?.buttonLink || '#'}>
+                                    {settings.homepageBanner?.buttonText}
+                                </Link>
                             </Button>
                         </div>
+                        <div className="relative w-full h-64 md:h-full min-h-[300px] order-1 md:order-2">
+                            <Image
+                                src={settings.homepageBanner?.imageUrl || 'https://placehold.co/600x600.png'}
+                                alt={settings.homepageBanner?.title || 'Promotional Banner'}
+                                fill
+                                className="object-cover"
+                                data-ai-hint="advertisement banner"
+                            />
+                        </div>
                     </div>
-                </Link>
+                </Card>
             </div>
         </section>
 
