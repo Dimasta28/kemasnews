@@ -109,7 +109,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
 
 
   useEffect(() => {
-    if (!isLoading && user) {
+    if (!isLoading && !user) {
       router.replace('/login');
     }
   }, [isLoading, user, router]);
