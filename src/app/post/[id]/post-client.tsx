@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ChevronLeft, MessageCircle, User, Calendar, Folder, Globe } from 'lucide-react';
+import { ChevronLeft, MessageCircle, User, Calendar, Folder } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
 
@@ -19,13 +19,6 @@ import { BackToTopButton } from '@/components/back-to-top-button';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 import { SocialShare } from '@/components/social-share';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { translateText } from '@/ai/flows/translate-text-flow';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/use-auth';
@@ -124,33 +117,20 @@ export function PostClient({ post, recentPosts, comments, settings, notification
 
     return (
         <div className="bg-[#EFECE9] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9]">
-            <SiteHeader settings={settings} notifications={notifications} />
+            <SiteHeader 
+                settings={settings} 
+                notifications={notifications}
+                showTranslate={true}
+                onTranslate={handleTranslate}
+                selectedLanguage={selectedLanguage}
+                isTranslating={isTranslating}
+            />
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                     <Link href="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
                         <ChevronLeft className="h-4 w-4" />
                         <span>{translations?.backLink || 'Back to all articles'}</span>
                     </Link>
-                     <div className="flex items-center gap-2">
-                        {isTranslating && (
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                                <span>Translating...</span>
-                            </div>
-                        )}
-                        <Select onValueChange={handleTranslate} value={selectedLanguage} disabled={isTranslating}>
-                            <SelectTrigger className="w-full sm:w-[180px]">
-                                <Globe className="h-4 w-4 mr-2" />
-                                <SelectValue placeholder="Translate post" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="English">English (Original)</SelectItem>
-                                <SelectItem value="Indonesian">Indonesian</SelectItem>
-                                <SelectItem value="Chinese">Chinese</SelectItem>
-                                <SelectItem value="Japanese">Japanese</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-12">
