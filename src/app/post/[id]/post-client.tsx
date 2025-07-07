@@ -120,7 +120,6 @@ export function PostClient({ post, recentPosts, comments, settings, notification
             <SiteHeader 
                 settings={settings} 
                 notifications={notifications}
-                showTranslate={true}
                 onTranslate={handleTranslate}
                 selectedLanguage={selectedLanguage}
                 isTranslating={isTranslating}
