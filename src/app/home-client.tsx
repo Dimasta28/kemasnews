@@ -284,7 +284,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                             {firstCategory}
                                             </span>
                                         )}
-                                        <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-card-foreground">
+                                        <h3 className="text-lg md:text-xl font-semibold mb-2 line-clamp-2 text-card-foreground">
                                         {article.title}
                                         </h3>
                                         {article.description && (
