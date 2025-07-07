@@ -1,4 +1,3 @@
-
 'use client';
 
 import Image from 'next/image';
@@ -10,7 +9,7 @@ export function SiteFooter({ settings }: { settings: FrontendSettings }) {
     const footerSettings = settings.footer;
 
     return (
-        <footer className="bg-primary text-primary-foreground py-10">
+        <footer className="bg-black text-gray-200 py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between text-sm">
           <div className="mb-4 md:mb-0 flex items-center">
             {footerSettings?.footerLogoUrl && (
@@ -27,13 +26,13 @@ export function SiteFooter({ settings }: { settings: FrontendSettings }) {
             </span>
           </div>
           <nav className="flex space-x-4 mb-4 md:mb-0">
-             <Link href="/privacy-policy" className="hover:opacity-80 transition-opacity">
+             <Link href="/privacy-policy" className="hover:text-white transition-colors">
               Privacy Policy
             </Link>
-            <Link href="/login" className="hover:opacity-80 transition-opacity">
+            <Link href="/login" className="hover:text-white transition-colors">
               Login
             </Link>
-            <Link href="/sitemap.xml" className="hover:opacity-80 transition-opacity">
+            <Link href="/sitemap.xml" className="hover:text-white transition-colors">
               Sitemap
             </Link>
           </nav>
@@ -41,7 +40,7 @@ export function SiteFooter({ settings }: { settings: FrontendSettings }) {
             <motion.a
               whileHover={{ y: -2 }}
               href={footerSettings?.facebookUrl || '#'}
-              className="hover:opacity-80 transition-opacity"
+              className="hover:text-white transition-colors"
               aria-label="Facebook"
             >
               <svg
@@ -60,7 +59,7 @@ export function SiteFooter({ settings }: { settings: FrontendSettings }) {
             <motion.a
               whileHover={{ y: -2 }}
               href={footerSettings?.instagramUrl || '#'}
-              className="hover:opacity-80 transition-opacity"
+              className="hover:text-white transition-colors"
                aria-label="Instagram"
             >
               <svg
@@ -75,7 +74,7 @@ export function SiteFooter({ settings }: { settings: FrontendSettings }) {
             <motion.a
               whileHover={{ y: -2 }}
               href={footerSettings?.linkedinUrl || '#'}
-              className="hover:opacity-80 transition-opacity"
+              className="hover:text-white transition-colors"
                aria-label="LinkedIn"
             >
               <svg
