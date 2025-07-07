@@ -115,7 +115,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
   }, [isLoading, user, router]);
   
    useEffect(() => {
-    if (pathname.startsWith('/admin/careers') || pathname.startsWith('/admin/departments') || pathname.startsWith('/admin/applicants')) {
+    if (pathname.startsWith('/admin/careers') || pathname.startsWith('/admin/departments') || pathname.startsWith('/admin/applicants') || pathname.startsWith('/admin/job-openings')) {
         setIsCareersOpen(true);
     }
   }, [pathname]);
@@ -239,7 +239,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 <Collapsible open={isCareersOpen} onOpenChange={setIsCareersOpen}>
                     <CollapsibleTrigger asChild>
                         <SidebarMenuButton
-                            isActive={pathname.startsWith('/admin/careers') || pathname.startsWith('/admin/departments') || pathname.startsWith('/admin/applicants')}
+                            isActive={pathname.startsWith('/admin/careers') || pathname.startsWith('/admin/departments') || pathname.startsWith('/admin/applicants') || pathname.startsWith('/admin/job-openings')}
                             className="w-full justify-between"
                         >
                             <div className="flex items-center gap-2">
@@ -254,6 +254,11 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                         <SidebarMenuSubItem>
                         <SidebarMenuSubButton asChild isActive={pathname === '/admin/careers'}>
                             <Link href="/admin/careers">Manage Page</Link>
+                        </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                        <SidebarMenuSubItem>
+                        <SidebarMenuSubButton asChild isActive={pathname.startsWith('/admin/job-openings')}>
+                            <Link href="/admin/job-openings">Job Openings</Link>
                         </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
                         <SidebarMenuSubItem>
