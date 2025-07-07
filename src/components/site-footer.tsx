@@ -13,20 +13,15 @@ export function SiteFooter({ settings }: { settings: FrontendSettings }) {
         <footer className="bg-primary text-primary-foreground py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between text-sm">
           <div className="mb-4 md:mb-0 flex items-center">
-            <Image
-              src="https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png"
-              alt="Kemas Logo"
-              width={100}
-              height={25}
-              className="hidden dark:block"
-            />
-            <Image
-              src="https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png"
-              alt="Kemas Logo"
-              width={100}
-              height={25}
-              className="block dark:hidden"
-            />
+            {footerSettings?.footerLogoUrl && (
+              <Image
+                src={footerSettings.footerLogoUrl}
+                alt="Kemas Logo"
+                width={100}
+                height={25}
+                className="object-contain"
+              />
+            )}
             <span className="ml-4">
               {footerSettings?.copyrightText || '© 2025 PT. Kemas. All Rights Reserved.'}
             </span>

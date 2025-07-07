@@ -91,7 +91,7 @@ export default function SettingsPage() {
     setSettings((prev) => ({
       ...prev,
       footer: {
-        ...(prev.footer || { copyrightText: '', facebookUrl: '', instagramUrl: '', linkedinUrl: '' }),
+        ...(prev.footer || { copyrightText: '', facebookUrl: '', instagramUrl: '', linkedinUrl: '', footerLogoUrl: '' }),
         [field]: value,
       },
     }));
@@ -364,6 +364,35 @@ export default function SettingsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-8">
+            <div className="grid md:grid-cols-2 gap-6 items-start">
+                <div className="grid gap-2">
+                    <Label htmlFor="footer-logo-url">Footer Logo URL</Label>
+                    <Input
+                    id="footer-logo-url"
+                    value={settings.footer?.footerLogoUrl || ''}
+                    onChange={(e) => handleFooterChange('footerLogoUrl', e.target.value)}
+                    placeholder="https://example.com/logo-white.png"
+                    />
+                    <p className="text-sm text-muted-foreground">A logo that works well on a dark background is recommended.</p>
+                </div>
+                <div className="space-y-2">
+                    <Label>Logo Preview</Label>
+                    <div className="relative h-24 w-full overflow-hidden rounded-lg border bg-primary p-4">
+                    {settings.footer?.footerLogoUrl ? (
+                        <Image
+                        src={settings.footer.footerLogoUrl}
+                        alt="Footer logo preview"
+                        fill
+                        className="object-contain"
+                        data-ai-hint="company logo"
+                        />
+                    ) : (
+                        <p className="text-sm text-primary-foreground">Enter a URL to see a preview.</p>
+                    )}
+                    </div>
+                </div>
+            </div>
+          <Separator />
           <div className="grid gap-2">
             <Label htmlFor="footer-copyright">Copyright Text</Label>
             <Input

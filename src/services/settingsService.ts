@@ -23,6 +23,7 @@ export interface FooterSettings {
   facebookUrl: string;
   instagramUrl: string;
   linkedinUrl: string;
+  footerLogoUrl: string;
 }
 
 export interface FrontendSettings {
@@ -77,6 +78,7 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
       facebookUrl: '#',
       instagramUrl: '#',
       linkedinUrl: '#',
+      footerLogoUrl: 'https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png',
     }
   };
 
