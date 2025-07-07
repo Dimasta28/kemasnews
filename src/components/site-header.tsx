@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -18,7 +19,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import type { FrontendSettings } from '@/services/settingsService';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import {
   markAllNotificationsAsRead,
@@ -33,6 +34,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { cn } from '@/lib/utils';
 
 interface SiteHeaderProps {
   settings: FrontendSettings;
@@ -191,10 +193,16 @@ export function SiteHeader({
                 )}
                  <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" disabled={isTranslating} className="h-9 w-9">
+                        <button
+                            disabled={isTranslating}
+                            className={cn(
+                            buttonVariants({ variant: 'ghost', size: 'icon' }),
+                            'h-9 w-9'
+                            )}
+                        >
                             <Globe className="h-5 w-5" />
                             <span className="sr-only">Translate page</span>
-                        </Button>
+                        </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Translate to</DropdownMenuLabel>
