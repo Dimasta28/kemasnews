@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -221,7 +220,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
               >
                 <Link href="/admin/promo-banner">
                   <Megaphone />
-                  Promo Banner
+                  Banner
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
