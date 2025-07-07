@@ -339,7 +339,12 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                         {article.description}
                                     </p>
                                     )}
-                                    <div className="flex items-center justify-end text-xs text-muted-foreground mt-auto pt-4 border-t border-border/30">
+                                    <div className="flex items-center justify-between text-xs text-muted-foreground mt-auto pt-4 border-t border-border/30">
+                                        <div className="flex items-center gap-2">
+                                            <span className="font-medium">{article.author}</span>
+                                            <span>&bull;</span>
+                                            <span>{article.date}</span>
+                                        </div>
                                         <SocialShare title={article.title} url={postUrl} />
                                     </div>
                                 </div>
