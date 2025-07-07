@@ -115,7 +115,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
   }, [isLoading, user, router]);
   
    useEffect(() => {
-    if (pathname.startsWith('/admin/careers') || pathname.startsWith('/admin/departments')) {
+    if (pathname.startsWith('/admin/careers') || pathname.startsWith('/admin/departments') || pathname.startsWith('/admin/applicants')) {
         setIsCareersOpen(true);
     }
   }, [pathname]);
@@ -239,7 +239,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 <Collapsible open={isCareersOpen} onOpenChange={setIsCareersOpen}>
                     <CollapsibleTrigger asChild>
                         <SidebarMenuButton
-                            isActive={pathname.startsWith('/admin/careers') || pathname.startsWith('/admin/departments')}
+                            isActive={pathname.startsWith('/admin/careers') || pathname.startsWith('/admin/departments') || pathname.startsWith('/admin/applicants')}
                             className="w-full justify-between"
                         >
                             <div className="flex items-center gap-2">
@@ -254,6 +254,11 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                         <SidebarMenuSubItem>
                         <SidebarMenuSubButton asChild isActive={pathname === '/admin/careers'}>
                             <Link href="/admin/careers">Manage Page</Link>
+                        </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                        <SidebarMenuSubItem>
+                        <SidebarMenuSubButton asChild isActive={pathname.startsWith('/admin/applicants')}>
+                            <Link href="/admin/applicants">Applicants</Link>
                         </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
                         <SidebarMenuSubItem>

@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -25,9 +24,6 @@ import {
   markNotificationAsRead,
   type Notification,
 } from '@/services/notificationService';
-import { db } from '@/lib/firebase';
-import { doc, collection, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
-import { formatDistanceToNow } from 'date-fns';
 
 interface SiteHeaderProps {
   settings: FrontendSettings;
@@ -47,51 +43,22 @@ export function SiteHeader({ settings: initialSettings, notifications: initialNo
   const [notifications, setNotifications] = useState(initialNotifications || []);
   const [settings, setSettings] = useState(initialSettings);
 
+  // This effect will sync state if the initial props change (e.g., on navigation)
+  useEffect(() => {
+    setNotifications(initialNotifications || []);
+  }, [initialNotifications]);
 
   useEffect(() => {
-    // Listener for notifications
-    const notificationsCollection = collection(db, 'notifications');
-    const q = query(notificationsCollection, orderBy('createdAt', 'desc'));
-    const unsubNotifications = onSnapshot(q, (snapshot) => {
-        const freshNotifications: Notification[] = snapshot.docs.map(doc => {
-            const data = doc.data();
-            const createdAt = (data.createdAt as Timestamp)?.toDate() || new Date();
-            return {
-                id: doc.id,
-                title: data.title || '',
-                description: data.description || '',
-                link: data.link || '#',
-                read: data.read || false,
-                createdAt: `${formatDistanceToNow(createdAt)} ago`,
-            };
-        });
-        setNotifications(freshNotifications);
-    });
+    setSettings(initialSettings);
+  }, [initialSettings]);
 
-    // Listener for settings
-    const settingsDocRef = doc(db, 'settings', 'frontend');
-    const unsubSettings = onSnapshot(settingsDocRef, (docSnap) => {
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            // This ensures we update the settings state with the latest from the database
-            setSettings(prevSettings => ({
-                ...prevSettings,
-                ...(data as Partial<FrontendSettings>)
-            }));
-        }
-    });
-
-    return () => {
-        unsubNotifications();
-        unsubSettings();
-    };
-  }, []);
-
-  const hasUnread = (notifications || []).some(n => !n.read);
+  const hasUnread = notifications.some(n => !n.read);
 
   const handleMarkAsRead = async (id: string) => {
     try {
-        await markNotificationAsRead(id);
+      await markNotificationAsRead(id);
+      // Manually update state
+      setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
     } catch (error) {
         toast({ variant: 'destructive', title: 'Error', description: 'Could not mark notification as read.' });
     }
@@ -99,7 +66,9 @@ export function SiteHeader({ settings: initialSettings, notifications: initialNo
   
   const handleMarkAllAsRead = async () => {
     try {
-        await markAllNotificationsAsRead();
+      await markAllNotificationsAsRead();
+      // Manually update state
+      setNotifications(prev => prev.map(n => ({ ...n, read: true })));
     } catch (error) {
         toast({ variant: 'destructive', title: 'Error', description: 'Could not mark all as read.' });
     }

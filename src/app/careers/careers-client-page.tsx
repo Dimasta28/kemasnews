@@ -1,9 +1,9 @@
-
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import Link from 'next/link';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Building, MapPin, Calendar } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -16,6 +16,7 @@ import { type CareerPageData, type JobOpening } from '@/services/careerService';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { db } from '@/lib/firebase';
 import { collection, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
+import { Button } from '@/components/ui/button';
 
 interface CareersClientPageProps {
   initialPageData: CareerPageData;
@@ -81,7 +82,7 @@ export function CareersClientPage({ initialPageData, initialJobOpenings }: Caree
                     priority
                 />
                 <div className="relative z-10 max-w-3xl p-8">
-                    <h1 className="text-3xl md:text-6xl font-extrabold leading-tight mb-4">
+                    <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-4">
                         {initialPageData.heroTitle}
                     </h1>
                     <p className="text-base md:text-xl text-gray-200">
@@ -94,8 +95,8 @@ export function CareersClientPage({ initialPageData, initialJobOpenings }: Caree
             <section id="open-positions" className="py-16 md:py-24">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-12">
-                        <h2 className="text-2xl md:text-4xl font-bold text-foreground">{initialPageData.positionsTitle || 'Open Positions'}</h2>
-                        <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
+                        <h2 className="text-3xl md:text-4xl font-bold text-foreground">{initialPageData.positionsTitle || 'Open Positions'}</h2>
+                        <p className="text-base md:text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
                             {initialPageData.positionsDescription || 'Find the role that\'s right for you.'}
                         </p>
                     </div>
@@ -172,6 +173,11 @@ export function CareersClientPage({ initialPageData, initialJobOpenings }: Caree
                                         </div>
                                     )}
                                 </CardContent>
+                                <CardFooter>
+                                    <Button asChild className="w-full">
+                                        <Link href={`/apply/${job.id}`}>Apply Now</Link>
+                                    </Button>
+                                </CardFooter>
                             </Card>
                         )) : (
                             <div className="col-span-full text-center text-muted-foreground py-10">
@@ -186,8 +192,8 @@ export function CareersClientPage({ initialPageData, initialJobOpenings }: Caree
             <section className="py-16 md:py-24 bg-card/60">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-12">
-                        <h2 className="text-2xl md:text-4xl font-bold text-foreground">{initialPageData.whyJoinTitle}</h2>
-                        <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
+                        <h2 className="text-3xl md:text-4xl font-bold text-foreground">{initialPageData.whyJoinTitle}</h2>
+                        <p className="text-base md:text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
                             {initialPageData.whyJoinDescription}
                         </p>
                     </div>
@@ -195,7 +201,7 @@ export function CareersClientPage({ initialPageData, initialJobOpenings }: Caree
                         {initialPageData.benefits.map((benefit, index) => {
                             return (
                                 <div key={index} className="text-center p-6 bg-background/50 rounded-lg">
-                                    <h3 className="text-lg md:text-xl font-semibold mb-2">{benefit.title}</h3>
+                                    <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
                                     <p className="text-muted-foreground">{benefit.description}</p>
                                 </div>
                             );

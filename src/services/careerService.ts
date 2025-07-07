@@ -120,6 +120,34 @@ export async function getJobOpenings(): Promise<JobOpening[]> {
   return jobs;
 }
 
+// Get a single job opening
+export async function getJobOpening(id: string): Promise<JobOpening | null> {
+    const docRef = doc(db, 'jobOpenings', id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        const data = docSnap.data();
+        const createdAt = (data.createdAt as Timestamp)?.toDate() || new Date();
+        return {
+            id: docSnap.id,
+            title: data.title || '',
+            department: data.department || '',
+            location: data.location || '',
+            type: data.type || '',
+            imageUrl: data.imageUrl || '',
+            qualifications: data.qualifications || '',
+            createdAt: createdAt.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            }),
+        };
+    } else {
+        return null;
+    }
+}
+
+
 // Create a new job opening
 export async function createJobOpening(jobData: Omit<JobOpening, 'id' | 'createdAt'>): Promise<string> {
   const docRef = await addDoc(collection(db, 'jobOpenings'), {
