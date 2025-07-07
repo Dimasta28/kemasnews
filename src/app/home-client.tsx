@@ -31,24 +31,6 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { SocialShare } from '@/components/social-share';
 
-
-// Helper for category styling
-const categoryStyles: { [key: string]: string } = {
-  technology: 'bg-[#610C27] text-[#EFECE9]',
-  lifestyle: 'bg-[#E3C1B4] text-[#050505]',
-  business: 'bg-[#AC9C8D] text-[#050505]',
-  desain: 'bg-[#610C27] text-[#EFECE9]',
-  inovasi: 'bg-[#E3C1B4] text-[#050505]',
-  tren: 'bg-[#AC9C8D] text-[#050505]',
-  pendidikan: 'bg-[#DDD9CE] text-[#050505]',
-  event: 'bg-[#E3C1B4] text-[#050505]',
-  'press release': 'bg-[#610C27] text-[#EFECE9]',
-  products: 'bg-[#AC9C8D] text-[#050505]',
-  sustainability: 'bg-[#DDD9CE] text-[#050505]',
-  // A default style
-  default: 'bg-muted text-muted-foreground',
-};
-
 // Main Application Component
 export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Post[], allCategories: Category[] }) {
   const articlesSectionRef = useRef<HTMLElement>(null);
@@ -66,6 +48,34 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
   const [searchTerm, setSearchTerm] = useState(q || '');
   const [baseUrl, setBaseUrl] = useState('');
   const articlesPerPage = 12;
+
+  const [categoryColorMap, setCategoryColorMap] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    // Define a palette of Tailwind CSS classes for category labels
+    const colorPalette = [
+      'bg-primary text-primary-foreground',
+      'bg-secondary text-secondary-foreground',
+      'bg-muted text-card-foreground',
+      'bg-[#008080] text-white', // Teal
+      'bg-[#4B0082] text-white', // Indigo
+      'bg-[#FF8C00] text-white', // DarkOrange
+      'bg-[#00008B] text-white', // DarkBlue
+      'bg-[#556B2F] text-white', // DarkOliveGreen
+      'bg-[#8B0000] text-white', // DarkRed
+      'bg-[#FF1493] text-white', // DeepPink
+    ];
+
+    const newColorMap: Record<string, string> = {};
+    // Sort categories alphabetically to ensure stable color assignment
+    const sortedCategories = [...allCategories].sort((a, b) => a.name.localeCompare(b.name));
+    
+    sortedCategories.forEach((category, index) => {
+        newColorMap[category.name.toLowerCase().trim()] = colorPalette[index % colorPalette.length];
+    });
+    setCategoryColorMap(newColorMap);
+  }, [allCategories]);
+
 
   // Set up a real-time listener for posts
   useEffect(() => {
@@ -174,7 +184,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
               <CarouselContent>
                 {heroPosts.map((post, index) => {
                    const firstCategory = post.categories?.[0] || '';
-                   const categoryClass = categoryStyles[firstCategory.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
+                   const categoryClass = categoryColorMap[firstCategory.toLowerCase().trim()] || 'bg-muted text-muted-foreground';
                   return (
                     <CarouselItem key={post.id}>
                       <div className="relative aspect-square md:aspect-auto md:h-[90vh] flex items-end p-8 md:p-12 text-white bg-black">
@@ -190,7 +200,10 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                               <Link href={`/post/${post.id}`} className="block group">
                                   {firstCategory && (
                                       <span
-                                          className={`inline-block ${categoryClass} text-xs font-semibold px-3 py-1 rounded-full mb-4`}
+                                          className={cn(
+                                            "inline-block text-xs font-semibold px-3 py-1 rounded-full mb-4",
+                                            categoryClass
+                                          )}
                                       >
                                           {firstCategory}
                                       </span>
@@ -286,7 +299,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-center">
                     {currentArticles.map((article) => {
                         const firstCategory = article.categories?.[0] || '';
-                        const categoryClass = categoryStyles[firstCategory.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
+                        const categoryClass = categoryColorMap[firstCategory.toLowerCase().trim()] || 'bg-muted text-muted-foreground';
                         const postUrl = baseUrl ? `${baseUrl}/post/${article.id}` : '';
                         return (
                             <motion.div
@@ -296,38 +309,40 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                 viewport={{ once: true, amount: 0.2 }}
                                 className="relative group bg-card/75 dark:bg-card/75 backdrop-blur-lg rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden h-full flex flex-col"
                             >
-                                <div className="relative w-full aspect-video">
-                                    <Image
-                                        src={article.featuredImage}
-                                        alt={article.title}
-                                        fill
-                                        className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-                                        data-ai-hint="cosmetics packaging"
-                                    />
-                                </div>
-                                <div className="p-5 flex-grow flex flex-col">
+                                <Link href={`/post/${article.id}`} className="block absolute inset-0 z-0" aria-label={`Read more about ${article.title}`}>
+                                    <div className="relative w-full aspect-video">
+                                        <Image
+                                            src={article.featuredImage}
+                                            alt={article.title}
+                                            fill
+                                            className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                                            data-ai-hint="cosmetics packaging"
+                                        />
+                                    </div>
+                                </Link>
+                                <div className="p-5 flex-grow flex flex-col relative z-10 bg-card/75 dark:bg-card/75">
                                     {firstCategory && (
                                         <span
-                                        className={`inline-block ${categoryClass} text-xs font-semibold px-3 py-1 rounded-full mb-3 self-start`}
+                                            className={cn(
+                                                'inline-block text-xs font-semibold px-3 py-1 rounded-full mb-3 self-start',
+                                                categoryClass
+                                            )}
                                         >
-                                        {firstCategory}
+                                            {firstCategory}
                                         </span>
                                     )}
-                                    <h3 className="text-sm font-semibold mb-2 line-clamp-2 text-card-foreground group-hover:underline">
-                                    {article.title}
+                                    <h3 className="text-sm font-semibold mb-2 line-clamp-2 text-card-foreground">
+                                       <Link href={`/post/${article.id}`} className="hover:underline focus:underline">{article.title}</Link>
                                     </h3>
                                     {article.description && (
-                                    <p className="text-xs text-muted-foreground/90 line-clamp-3 mb-4">
+                                    <p className="text-xs text-muted-foreground/90 line-clamp-3 mb-4 flex-grow">
                                         {article.description}
                                     </p>
                                     )}
-                                    <div className="relative z-10 flex items-center justify-end text-xs text-muted-foreground mt-auto pt-4 border-t border-border/30">
-                                    <SocialShare title={article.title} url={postUrl} />
+                                    <div className="flex items-center justify-end text-xs text-muted-foreground mt-auto pt-4 border-t border-border/30">
+                                        <SocialShare title={article.title} url={postUrl} />
                                     </div>
                                 </div>
-                                <Link href={`/post/${article.id}`} className="absolute inset-0 z-0">
-                                    <span className="sr-only">View post: {article.title}</span>
-                                </Link>
                             </motion.div>
                         );
                     })}
