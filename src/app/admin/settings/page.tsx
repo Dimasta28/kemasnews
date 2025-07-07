@@ -24,21 +24,28 @@ import {
   type FrontendSettings,
   type NavigationLink,
 } from '@/services/settingsService';
+import { getPosts, type Post } from '@/services/postService';
 import { Separator } from '@/components/ui/separator';
+import { MultiSelectCombobox } from '@/components/ui/multi-select-combobox';
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState<Partial<FrontendSettings>>({});
+  const [allPosts, setAllPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
-    async function fetchSettings() {
+    async function fetchData() {
       try {
-        const currentSettings = await getFrontendSettings();
+        const [currentSettings, posts] = await Promise.all([
+            getFrontendSettings(),
+            getPosts()
+        ]);
         setSettings(currentSettings);
+        setAllPosts(posts.filter(p => p.status === 'Published')); // Only allow published posts
       } catch (error) {
-        console.error('Failed to fetch settings:', error);
+        console.error('Failed to fetch data:', error);
         toast({
           variant: 'destructive',
           title: 'Failed to load settings',
@@ -48,14 +55,18 @@ export default function SettingsPage() {
         setIsLoading(false);
       }
     }
-    fetchSettings();
+    fetchData();
   }, [toast]);
 
   const handleInputChange = (
-    field: keyof Omit<FrontendSettings, 'banner' | 'dropdownLinks' | 'privacyPolicy'>,
+    field: keyof Omit<FrontendSettings, 'banner' | 'dropdownLinks' | 'privacyPolicy' | 'heroPostIds'>,
     value: string
   ) => {
     setSettings((prev) => ({ ...prev, [field]: value }));
+  };
+  
+  const handleHeroPostsChange = (selectedPostIds: string[]) => {
+    setSettings(prev => ({ ...prev, heroPostIds: selectedPostIds }));
   };
 
   const handleDropdownLinkChange = (index: number, field: keyof NavigationLink, value: string) => {
@@ -217,6 +228,29 @@ export default function SettingsPage() {
           </div>
         </CardContent>
       </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Homepage Hero Section</CardTitle>
+          <CardDescription>
+            Select which posts to feature in the main carousel on the homepage. If none are selected, the latest 3 posts will be shown.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+            <div className="grid gap-2">
+                <Label htmlFor="hero-posts">Featured Posts</Label>
+                 <MultiSelectCombobox
+                    options={allPosts.map(post => ({ value: post.id, label: post.title }))}
+                    value={settings.heroPostIds || []}
+                    onChange={handleHeroPostsChange}
+                    placeholder="Select posts to feature..."
+                    searchPlaceholder="Search posts..."
+                    emptyPlaceholder="No posts found."
+                />
+            </div>
+        </CardContent>
+      </Card>
+
 
       <Card>
         <CardHeader>

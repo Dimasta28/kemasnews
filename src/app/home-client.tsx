@@ -48,7 +48,7 @@ const categoryStyles: { [key: string]: string } = {
 };
 
 // Main Application Component
-export default function HomeClient({ initialPosts, allCategories }: { initialPosts: Post[], allCategories: Category[] }) {
+export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Post[], allCategories: Category[] }) {
   const articlesSectionRef = useRef<HTMLElement>(null);
   const autoplayPlugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
   
@@ -56,15 +56,13 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
   const q = searchParams.get('q');
 
   // State for all posts, updated in realtime
-  const [allPosts, setAllPosts] = useState<Post[]>(initialPosts);
+  const [allPosts, setAllPosts] = useState<Post[]>([]);
 
   const [articles, setArticles] = useState<Post[]>(allPosts);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeFilter, setActiveFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState(q || '');
   const articlesPerPage = 12;
-
-  const latestPosts = allPosts.slice(0, 3);
 
   // Set up a real-time listener for posts
   useEffect(() => {
@@ -159,7 +157,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
   return (
     <div className="font-inter antialiased bg-[#EFECE9] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9] min-h-screen">
       <main>
-        {latestPosts.length > 0 ? (
+        {heroPosts.length > 0 ? (
           <section>
             <Carousel
               plugins={[autoplayPlugin.current]}
@@ -168,7 +166,7 @@ export default function HomeClient({ initialPosts, allCategories }: { initialPos
               onMouseLeave={autoplayPlugin.current.reset}
             >
               <CarouselContent>
-                {latestPosts.map((post, index) => {
+                {heroPosts.map((post, index) => {
                    const firstCategory = post.categories?.[0] || '';
                    const categoryClass = categoryStyles[firstCategory.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
                   return (

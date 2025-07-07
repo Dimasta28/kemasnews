@@ -27,6 +27,7 @@ export interface FrontendSettings {
   ogTitle: string;
   ogDescription: string;
   ogImageUrl: string;
+  heroPostIds: string[];
 }
 
 const SETTINGS_DOC_ID = 'frontend';
@@ -62,6 +63,7 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
     ogTitle: 'Wellcome | Pt Kemas Indah Maju',
     ogDescription: 'Since 1980, KEMAS delivers premium plastic & metal cosmetic packaging with European & Japanese tech.',
     ogImageUrl: 'https://ddujuwmrnfufdqnvgaqb.supabase.co/storage/v1/object/public/catalogimage2025tes//logo%20kemas%20%20(3).png',
+    heroPostIds: [],
   };
 
   if (docSnap.exists()) {
@@ -80,6 +82,7 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
         ogTitle: data.ogTitle || defaults.ogTitle,
         ogDescription: data.ogDescription || defaults.ogDescription,
         ogImageUrl: data.ogImageUrl || defaults.ogImageUrl,
+        heroPostIds: data.heroPostIds || defaults.heroPostIds,
     };
     return settings;
   } else {

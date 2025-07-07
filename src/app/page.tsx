@@ -1,7 +1,8 @@
 
 import { Suspense } from 'react';
-import { getPosts } from '@/services/postService';
+import { getPost, getPosts } from '@/services/postService';
 import { getCategories } from '@/services/categoryService';
+import { getFrontendSettings } from '@/services/settingsService';
 import HomeClient from './home-client';
 import { SiteHeaderWrapper } from '@/components/site-header-wrapper';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -28,15 +29,32 @@ function HomePageLoading() {
 
 export default async function Home() {
   const allPosts = await getPosts();
+  const allCategories = await getCategories();
+  const settings = await getFrontendSettings();
+  
   // Only show published posts on the main page
   const publishedPosts = allPosts.filter((post) => post.status === 'Published');
-  const allCategories = await getCategories();
+  
+  let heroPosts = [];
+  if (settings.heroPostIds && settings.heroPostIds.length > 0) {
+    const fetchedHeroPosts = await Promise.all(
+      settings.heroPostIds.map(id => getPost(id))
+    );
+    // Filter out any nulls in case a post was deleted
+    heroPosts = fetchedHeroPosts.filter(p => p !== null) as any[];
+  }
+  
+  // Fallback to latest 3 posts if no hero posts are selected or found
+  if(heroPosts.length === 0) {
+    heroPosts = publishedPosts.slice(0, 3);
+  }
+
 
   return (
     <>
       <SiteHeaderWrapper />
       <Suspense fallback={<HomePageLoading />}>
-        <HomeClient initialPosts={publishedPosts} allCategories={allCategories} />
+        <HomeClient heroPosts={heroPosts} allCategories={allCategories} />
       </Suspense>
     </>
     );
