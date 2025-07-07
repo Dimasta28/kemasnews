@@ -1,4 +1,3 @@
-
 'use client';
 
 import Image from 'next/image';
@@ -29,9 +28,6 @@ export function SiteFooter() {
             </span>
           </div>
           <nav className="flex space-x-4 mb-4 md:mb-0">
-            <Link href="#" className="hover:text-[#EFECE9] transition-colors">
-              Terms & Conditions
-            </Link>
              <Link href="/privacy-policy" className="hover:text-[#EFECE9] transition-colors">
               Privacy Policy
             </Link>
