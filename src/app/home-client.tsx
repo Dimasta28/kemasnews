@@ -425,12 +425,13 @@ export default function HomeClient({ heroPosts, allCategories, settings }: { her
                                 </Link>
                             </Button>
                         </div>
-                        <div className="relative w-full h-64 md:h-full min-h-[300px] order-1 md:order-2">
+                        <div className="w-full order-1 md:order-2">
                             <Image
-                                src={settings.homepageBanner?.imageUrl || 'https://placehold.co/600x600.png'}
+                                src={settings.homepageBanner?.imageUrl || 'https://placehold.co/800x450.png'}
                                 alt={settings.homepageBanner?.title || 'Promotional Banner'}
-                                fill
-                                className="object-cover"
+                                width={800}
+                                height={450}
+                                className="w-full h-auto object-cover"
                                 data-ai-hint="advertisement banner"
                             />
                         </div>
