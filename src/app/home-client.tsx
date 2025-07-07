@@ -86,7 +86,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                 title: data.title || '',
                 description: data.description || '',
                 status: data.status || 'Draft',
-                author: data.author || 'Admin',
+                author: data.author || 'KEMAS',
                 date: date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
                 content: data.content || '',
                 categories: categories,
