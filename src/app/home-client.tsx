@@ -171,7 +171,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                    const categoryClass = categoryStyles[firstCategory.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
                   return (
                     <CarouselItem key={post.id}>
-                      <div className="relative h-[80vh] md:h-[90vh] flex items-end p-8 md:p-12 text-white bg-black">
+                      <div className="relative aspect-square md:aspect-auto md:h-[90vh] flex items-end p-8 md:p-12 text-white bg-black">
                           <Image
                               src={post.featuredImage}
                               alt={post.title}
@@ -205,7 +205,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
             </Carousel>
           </section>
         ) : (
-            <section className="relative h-[80vh] md:h-[90vh] flex items-center justify-center text-center overflow-hidden bg-cover bg-center">
+            <section className="relative aspect-square md:h-[90vh] flex items-center justify-center text-center overflow-hidden bg-cover bg-center">
                  <Image
                     src="https://placehold.co/1920x1080.png"
                     alt="Hero background"
@@ -265,7 +265,6 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                     initial={{ opacity: 0, y: 50 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true, amount: 0.2 }}
-                                    transition={{ duration: 0.5 }}
                                     className="bg-card/75 dark:bg-card/75 backdrop-blur-lg rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden h-full flex flex-col"
                                 >
                                     <div className="relative w-full aspect-video">
