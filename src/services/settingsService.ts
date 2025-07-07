@@ -29,7 +29,8 @@ export interface FooterSettings {
 export interface FrontendSettings {
   lightModeLogoUrl: string;
   darkModeLogoUrl: string;
-  banner: BannerSettings;
+  homepageBanner: BannerSettings;
+  sidebarBanner: BannerSettings;
   dropdownLinks: NavigationLink[];
   privacyPolicy: string;
   ogTitle: string;
@@ -46,10 +47,17 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
   const settingsDocRef = doc(db, 'settings', SETTINGS_DOC_ID);
   const docSnap = await getDoc(settingsDocRef);
 
-  const defaults: FrontendSettings = {
+  const defaults: Omit<FrontendSettings, 'privacyPolicy' | 'ogTitle' | 'ogDescription' | 'ogImageUrl' | 'heroPostIds' | 'footer' | 'dropdownLinks' | 'lightModeLogoUrl' | 'darkModeLogoUrl'> & { footer: FooterSettings, dropdownLinks: NavigationLink[], lightModeLogoUrl: string, darkModeLogoUrl: string, privacyPolicy: string, ogTitle: string, ogDescription: string, ogImageUrl: string, heroPostIds: string[] } = {
     lightModeLogoUrl: 'https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png',
     darkModeLogoUrl: 'https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png',
-    banner: {
+    homepageBanner: {
+      imageUrl: 'https://placehold.co/1200x450.png',
+      title: 'Homepage Banner Title',
+      description: 'Engaging description for the homepage banner.',
+      buttonText: 'Explore Now',
+      buttonLink: '#',
+    },
+    sidebarBanner: {
       imageUrl: 'https://placehold.co/600x400.png',
       title: 'Our New Collection',
       description: 'Discover the latest in sustainable packaging.',
@@ -86,12 +94,17 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
     const data = docSnap.data();
     // By explicitly picking properties, we avoid passing non-serializable
     // data like Firestore Timestamps to client components.
+    // data.banner is kept for backward compatibility.
     const settings: FrontendSettings = {
         lightModeLogoUrl: data.lightModeLogoUrl || defaults.lightModeLogoUrl,
         darkModeLogoUrl: data.darkModeLogoUrl || defaults.darkModeLogoUrl,
-        banner: {
-            ...defaults.banner,
-            ...(data.banner || {}),
+        homepageBanner: {
+            ...defaults.homepageBanner,
+            ...(data.homepageBanner || data.banner || {}),
+        },
+        sidebarBanner: {
+            ...defaults.sidebarBanner,
+            ...(data.sidebarBanner || data.banner || {}),
         },
         dropdownLinks: data.dropdownLinks && data.dropdownLinks.length > 0 ? data.dropdownLinks : defaults.dropdownLinks,
         privacyPolicy: data.privacyPolicy || defaults.privacyPolicy,

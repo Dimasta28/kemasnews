@@ -247,7 +247,7 @@ export function PostClient({ post, recentPosts, comments, settings, notification
                     <aside className="lg:col-span-1 mt-12 lg:mt-0">
                         <Sidebar 
                             recentPosts={recentPosts} 
-                            banner={settings.banner} 
+                            banner={settings.sidebarBanner} 
                             recentPostsTitle={translations?.recentPostsTitle}
                         />
                     </aside>

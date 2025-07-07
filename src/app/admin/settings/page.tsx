@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { PlusCircle, Trash2 } from 'lucide-react';
+import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -24,6 +25,7 @@ import {
   type FrontendSettings,
   type NavigationLink,
   type FooterSettings,
+  type BannerSettings,
 } from '@/services/settingsService';
 import { getPosts, type Post } from '@/services/postService';
 import { Separator } from '@/components/ui/separator';
@@ -60,7 +62,7 @@ export default function SettingsPage() {
   }, [toast]);
 
   const handleInputChange = (
-    field: keyof Omit<FrontendSettings, 'banner' | 'dropdownLinks' | 'privacyPolicy' | 'heroPostIds' | 'footer'>,
+    field: keyof Omit<FrontendSettings, 'homepageBanner' | 'sidebarBanner' | 'dropdownLinks' | 'privacyPolicy' | 'heroPostIds' | 'footer'>,
     value: string
   ) => {
     setSettings((prev) => ({ ...prev, [field]: value }));
@@ -86,6 +88,16 @@ export default function SettingsPage() {
     const updatedLinks = (settings.dropdownLinks || []).filter((_, i) => i !== index);
     setSettings(prev => ({...prev, dropdownLinks: updatedLinks}));
   }
+  
+  const handleHomepageBannerChange = (field: keyof BannerSettings, value: string) => {
+    setSettings((prev) => ({
+      ...prev,
+      homepageBanner: {
+        ...(prev.homepageBanner || { imageUrl: '', title: '', description: '', buttonText: '', buttonLink: '' }),
+        [field]: value,
+      },
+    }));
+  };
 
   const handleFooterChange = (field: keyof FooterSettings, value: string) => {
     setSettings((prev) => ({
@@ -259,6 +271,85 @@ export default function SettingsPage() {
                     emptyPlaceholder="No posts found."
                 />
             </div>
+        </CardContent>
+      </Card>
+      
+      <Card>
+        <CardHeader>
+          <CardTitle>Homepage Banner</CardTitle>
+          <CardDescription>
+            Manage the large promotional banner on the homepage.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="space-y-4">
+              <div className="grid gap-2">
+                <Label htmlFor="h-banner-image-url">Image URL</Label>
+                <Input
+                  id="h-banner-image-url"
+                  value={settings.homepageBanner?.imageUrl || ''}
+                  onChange={(e) => handleHomepageBannerChange('imageUrl', e.target.value)}
+                  placeholder="https://placehold.co/1200x450.png"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="h-banner-title">Title</Label>
+                <Input
+                  id="h-banner-title"
+                  value={settings.homepageBanner?.title || ''}
+                  onChange={(e) => handleHomepageBannerChange('title', e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="h-banner-description">Description</Label>
+                <Input
+                  id="h-banner-description"
+                  value={settings.homepageBanner?.description || ''}
+                  onChange={(e) => handleHomepageBannerChange('description', e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="h-banner-button-text">Button Text</Label>
+                <Input
+                  id="h-banner-button-text"
+                  value={settings.homepageBanner?.buttonText || ''}
+                  onChange={(e) => handleHomepageBannerChange('buttonText', e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="h-banner-button-link">Button Link</Label>
+                <Input
+                  id="h-banner-button-link"
+                  value={settings.homepageBanner?.buttonLink || ''}
+                  onChange={(e) => handleHomepageBannerChange('buttonLink', e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Banner Preview</Label>
+              <div className="relative w-full aspect-[21/9] rounded-lg overflow-hidden shadow-lg border">
+                <Image
+                    src={settings.homepageBanner?.imageUrl || 'https://placehold.co/1200x450.png'}
+                    alt="Homepage banner preview"
+                    fill
+                    className="object-cover"
+                    data-ai-hint="advertisement banner"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent" />
+                <div className="absolute inset-0 flex items-center p-8">
+                    <div className="max-w-md text-white">
+                        <h3 className="text-2xl font-bold leading-tight">{settings.homepageBanner?.title || 'Banner Title'}</h3>
+                        <p className="mt-2 text-base">{settings.homepageBanner?.description || 'Banner description goes here.'}</p>
+                        <Button size="lg" className="mt-6" variant="secondary">
+                            {settings.homepageBanner?.buttonText || 'Button Text'}
+                        </Button>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
 

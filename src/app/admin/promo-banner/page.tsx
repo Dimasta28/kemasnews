@@ -52,8 +52,8 @@ export default function PromoBannerPage() {
   const handleBannerChange = (field: keyof BannerSettings, value: string) => {
     setSettings((prev) => ({
       ...prev,
-      banner: {
-        ...(prev.banner || {}),
+      sidebarBanner: {
+        ...(prev.sidebarBanner || {}),
         [field]: value,
       },
     }));
@@ -62,7 +62,7 @@ export default function PromoBannerPage() {
   const handleSaveChanges = async () => {
     setIsSaving(true);
     try {
-      await updateFrontendSettings({ banner: settings.banner });
+      await updateFrontendSettings({ sidebarBanner: settings.sidebarBanner });
       toast({
         title: 'Settings Saved!',
         description: 'Your banner changes have been successfully saved.',
@@ -115,7 +115,7 @@ export default function PromoBannerPage() {
                 <Label htmlFor="banner-image-url">Image URL</Label>
                 <Input
                   id="banner-image-url"
-                  value={settings.banner?.imageUrl || ''}
+                  value={settings.sidebarBanner?.imageUrl || ''}
                   onChange={(e) => handleBannerChange('imageUrl', e.target.value)}
                   placeholder="https://placehold.co/600x400.png"
                 />
@@ -124,7 +124,7 @@ export default function PromoBannerPage() {
                 <Label htmlFor="banner-title">Title</Label>
                 <Input
                   id="banner-title"
-                  value={settings.banner?.title || ''}
+                  value={settings.sidebarBanner?.title || ''}
                   onChange={(e) => handleBannerChange('title', e.target.value)}
                   placeholder="Our New Collection"
                 />
@@ -133,7 +133,7 @@ export default function PromoBannerPage() {
                 <Label htmlFor="banner-description">Description</Label>
                 <Input
                   id="banner-description"
-                  value={settings.banner?.description || ''}
+                  value={settings.sidebarBanner?.description || ''}
                   onChange={(e) => handleBannerChange('description', e.target.value)}
                   placeholder="Discover the latest..."
                 />
@@ -142,7 +142,7 @@ export default function PromoBannerPage() {
                 <Label htmlFor="banner-button-text">Button Text</Label>
                 <Input
                   id="banner-button-text"
-                  value={settings.banner?.buttonText || ''}
+                  value={settings.sidebarBanner?.buttonText || ''}
                   onChange={(e) => handleBannerChange('buttonText', e.target.value)}
                   placeholder="Learn More"
                 />
@@ -151,7 +151,7 @@ export default function PromoBannerPage() {
                 <Label htmlFor="banner-button-link">Button Link</Label>
                 <Input
                   id="banner-button-link"
-                  value={settings.banner?.buttonLink || ''}
+                  value={settings.sidebarBanner?.buttonLink || ''}
                   onChange={(e) => handleBannerChange('buttonLink', e.target.value)}
                   placeholder="/products/new-collection"
                 />
@@ -164,7 +164,7 @@ export default function PromoBannerPage() {
                 <CardContent className="p-0">
                   <Image
                     src={
-                      settings.banner?.imageUrl ||
+                      settings.sidebarBanner?.imageUrl ||
                       'https://placehold.co/600x400.png'
                     }
                     alt="Promo banner preview"
@@ -175,15 +175,15 @@ export default function PromoBannerPage() {
                   />
                   <div className="p-4">
                     <h3 className="font-semibold">
-                      {settings.banner?.title || 'Our New Collection'}
+                      {settings.sidebarBanner?.title || 'Our New Collection'}
                     </h3>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      {settings.banner?.description ||
+                      {settings.sidebarBanner?.description ||
                         'Discover the latest in sustainable packaging.'}
                     </p>
                     <Button size="sm" className="mt-3 w-full" asChild>
-                      <Link href={settings.banner?.buttonLink || '#'}>
-                        {settings.banner?.buttonText || 'Learn More'}
+                      <Link href={settings.sidebarBanner?.buttonLink || '#'}>
+                        {settings.sidebarBanner?.buttonText || 'Learn More'}
                       </Link>
                     </Button>
                   </div>

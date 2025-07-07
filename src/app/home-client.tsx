@@ -413,11 +413,11 @@ export default function HomeClient({ heroPosts, allCategories, settings }: { her
 
         <section className="py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
-                <Link href={settings.banner?.buttonLink || '#'} className="block group relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                <Link href={settings.homepageBanner?.buttonLink || '#'} className="block group relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
                     <div className="relative w-full aspect-[21/9]">
                         <Image
-                            src={settings.banner?.imageUrl || 'https://placehold.co/1200x450.png'}
-                            alt={settings.banner?.title || 'Promotional Banner'}
+                            src={settings.homepageBanner?.imageUrl || 'https://placehold.co/1200x450.png'}
+                            alt={settings.homepageBanner?.title || 'Promotional Banner'}
                             fill
                             className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
                             data-ai-hint="advertisement banner"
@@ -426,10 +426,10 @@ export default function HomeClient({ heroPosts, allCategories, settings }: { her
                     </div>
                     <div className="absolute inset-0 flex items-center p-8 md:p-12">
                         <div className="max-w-md text-white">
-                            <h3 className="text-2xl md:text-4xl font-bold leading-tight">{settings.banner?.title}</h3>
-                            <p className="mt-2 text-base md:text-lg">{settings.banner?.description}</p>
+                            <h3 className="text-2xl md:text-4xl font-bold leading-tight">{settings.homepageBanner?.title}</h3>
+                            <p className="mt-2 text-base md:text-lg">{settings.homepageBanner?.description}</p>
                             <Button size="lg" className="mt-6">
-                                {settings.banner?.buttonText}
+                                {settings.homepageBanner?.buttonText}
                             </Button>
                         </div>
                     </div>
