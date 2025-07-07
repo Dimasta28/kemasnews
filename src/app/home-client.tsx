@@ -411,30 +411,32 @@ export default function HomeClient({ heroPosts, allCategories, settings }: { her
             )}
         </section>
 
-        <section className="py-12">
-            <Card className="overflow-hidden shadow-lg rounded-none border-x-0">
-                <div className="grid md:grid-cols-10 md:gap-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="w-full order-1 md:order-1 md:col-span-3 flex items-center">
-                        <Image
-                            src={settings.homepageBanner?.imageUrl || 'https://placehold.co/800x450.png'}
-                            alt={settings.homepageBanner?.title || 'Promotional Banner'}
-                            width={800}
-                            height={450}
-                            className="w-full h-auto object-contain"
-                            data-ai-hint="advertisement banner"
-                        />
+        <section className="py-12 bg-card/50">
+            <div className="max-w-7xl mx-auto">
+                 <Card className="overflow-hidden rounded-none shadow-none border-none">
+                    <div className="grid md:grid-cols-10 md:gap-6 mx-auto">
+                        <div className="w-full order-1 md:order-2 md:col-span-3 flex items-center">
+                            <Image
+                                src={settings.homepageBanner?.imageUrl || 'https://placehold.co/800x450.png'}
+                                alt={settings.homepageBanner?.title || 'Promotional Banner'}
+                                width={800}
+                                height={450}
+                                className="w-full h-auto object-contain"
+                                data-ai-hint="advertisement banner"
+                            />
+                        </div>
+                        <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1 md:col-span-7">
+                            <h3 className="text-2xl md:text-4xl font-bold leading-tight text-foreground">{settings.homepageBanner?.title}</h3>
+                            <p className="mt-4 text-base md:text-lg text-muted-foreground">{settings.homepageBanner?.description}</p>
+                            <Button size="lg" className="mt-6 w-fit" asChild>
+                                <Link href={settings.homepageBanner?.buttonLink || '#'}>
+                                    {settings.homepageBanner?.buttonText}
+                                </Link>
+                            </Button>
+                        </div>
                     </div>
-                    <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-2 md:col-span-7">
-                        <h3 className="text-2xl md:text-4xl font-bold leading-tight text-foreground">{settings.homepageBanner?.title}</h3>
-                        <p className="mt-4 text-base md:text-lg text-muted-foreground">{settings.homepageBanner?.description}</p>
-                        <Button size="lg" className="mt-6 w-fit" asChild>
-                            <Link href={settings.homepageBanner?.buttonLink || '#'}>
-                                {settings.homepageBanner?.buttonText}
-                            </Link>
-                        </Button>
-                    </div>
-                </div>
-            </Card>
+                </Card>
+            </div>
         </section>
 
       </main>
