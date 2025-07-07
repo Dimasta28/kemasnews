@@ -24,10 +24,15 @@ export async function translateText(input: TranslateTextInput): Promise<Translat
   return translateTextFlow(input);
 }
 
+// Define a more flexible schema for the prompt's output to avoid API validation errors.
+const PromptOutputSchema = z.object({
+    translations: z.any().describe('A JSON object with the same keys as the input, but with the translated text as values.'),
+});
+
 const translatePrompt = ai.definePrompt({
   name: 'translateBatchPrompt',
   input: { schema: TranslateTextInputSchema },
-  output: { schema: TranslateTextOutputSchema },
+  output: { schema: PromptOutputSchema }, // Use the flexible schema here
   prompt: `You are an expert multilingual translator. Translate each text value in the following JSON object into {{{targetLanguage}}}.
 Do not translate proper nouns, brand names, or HTML tags. Preserve the HTML structure if present.
 The 'postContent' value is a large block of HTML; translate the text within the tags but keep the tags themselves.

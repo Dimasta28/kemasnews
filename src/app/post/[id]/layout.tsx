@@ -13,7 +13,6 @@ export async function generateMetadata(
   const id = params.id
   const post = await getPost(id)
 
-  // If the post doesn't exist, return a simple metadata object.
   if (!post) {
     return {
       title: 'Post Not Found'
@@ -23,15 +22,15 @@ export async function generateMetadata(
   const previousImages = (await parent).openGraph?.images || []
 
   // Sanitize the content by stripping HTML tags for the meta description
-  const description = post.content
+  const description = post.description || (post.content
     ? post.content.replace(/<[^>]*>?/gm, '').substring(0, 160)
-    : 'An article from the blog.';
+    : 'An article from the blog.');
 
   return {
     title: post.title,
     description: description,
     openGraph: {
-      images: [post.featuredImage, ...previousImages],
+      images: [{ url: post.featuredImage }, ...previousImages],
     },
   }
 }
