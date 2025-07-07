@@ -28,7 +28,6 @@ export interface JobOpening {
 }
 
 export interface CompanyBenefit {
-  icon: string;
   title: string;
   description: string;
 }
@@ -60,10 +59,10 @@ export async function getCareerPageData(): Promise<CareerPageData> {
     whyJoinTitle: 'Why Join PT. Kemas?',
     whyJoinDescription: 'We\'re more than just a company. We\'re a community of innovators, thinkers, and creators.',
     benefits: [
-      { icon: 'Users', title: 'Collaborative Culture', description: 'Work with a diverse and talented team that values open communication.' },
-      { icon: 'Heart', title: 'Health & Wellness', description: 'Comprehensive health insurance and wellness programs for you and your family.' },
-      { icon: 'Coffee', title: 'Flexible Work', description: 'We offer flexible work hours and remote options to support work-life balance.' },
-      { icon: 'Shield', title: 'Career Growth', description: 'Opportunities for professional development, training, and career advancement.' },
+      { title: 'Collaborative Culture', description: 'Work with a diverse and talented team that values open communication.' },
+      { title: 'Health & Wellness', description: 'Comprehensive health insurance and wellness programs for you and your family.' },
+      { title: 'Flexible Work', description: 'We offer flexible work hours and remote options to support work-life balance.' },
+      { title: 'Career Growth', description: 'Opportunities for professional development, training, and career advancement.' },
     ],
   };
 

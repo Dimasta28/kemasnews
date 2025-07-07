@@ -5,7 +5,6 @@ import { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Building, MapPin, Calendar } from 'lucide-react';
-import { DynamicIcon } from '@/components/ui/dynamic-icon';
 import { Separator } from '@/components/ui/separator';
 import {
   Accordion,
@@ -196,9 +195,6 @@ export function CareersClientPage({ initialPageData, initialJobOpenings }: Caree
                         {initialPageData.benefits.map((benefit, index) => {
                             return (
                                 <div key={index} className="text-center p-6 bg-background/50 rounded-lg">
-                                    <div className="flex items-center justify-center h-16 w-16 rounded-full bg-primary/10 text-primary mx-auto mb-4">
-                                        <DynamicIcon name={benefit.icon} className="h-8 w-8" />
-                                    </div>
                                     <h3 className="text-lg md:text-xl font-semibold mb-2">{benefit.title}</h3>
                                     <p className="text-muted-foreground">{benefit.description}</p>
                                 </div>

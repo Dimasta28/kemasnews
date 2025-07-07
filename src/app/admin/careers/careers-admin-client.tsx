@@ -69,7 +69,7 @@ export function CareersAdminClient({ initialPageData, initialJobOpenings }: Care
   };
 
   const handleAddBenefit = () => {
-    const newBenefit: CompanyBenefit = { icon: 'Star', title: '', description: '' };
+    const newBenefit: CompanyBenefit = { title: '', description: '' };
     setData(prev => ({ ...prev, benefits: [...(prev.benefits || []), newBenefit] }));
   };
   
@@ -184,11 +184,7 @@ export function CareersAdminClient({ initialPageData, initialJobOpenings }: Care
             <div className="space-y-4">
               {data.benefits?.map((benefit, index) => (
                 <Card key={index} className="p-4 bg-muted/50">
-                  <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-4 items-end">
-                    <div className="grid gap-1.5">
-                      <Label htmlFor={`benefit-icon-${index}`}>Icon Name</Label>
-                      <Input id={`benefit-icon-${index}`} value={benefit.icon} onChange={(e) => handleBenefitChange(index, 'icon', e.target.value)} placeholder="e.g., Users" />
-                    </div>
+                  <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_auto] gap-4 items-end">
                      <div className="grid gap-1.5">
                       <Label htmlFor={`benefit-title-${index}`}>Title</Label>
                       <Input id={`benefit-title-${index}`} value={benefit.title} onChange={(e) => handleBenefitChange(index, 'title', e.target.value)} />
