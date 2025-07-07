@@ -1,4 +1,3 @@
-
 'use client';
 
 import Image from 'next/image';
@@ -31,11 +30,13 @@ interface PostClientProps {
 
 export function PostClient({ post, recentPosts, comments, settings, notifications }: PostClientProps) {
     const [sanitizedContent, setSanitizedContent] = useState('');
+    const [currentUrl, setCurrentUrl] = useState('');
 
     useEffect(() => {
-        // DOMPurify needs a browser environment, so we run it on the client side.
+        // DOMPurify and window.location need a browser environment, so we run it on the client side.
         if (typeof window !== 'undefined') {
             setSanitizedContent(DOMPurify.sanitize(post.content));
+            setCurrentUrl(window.location.href);
         }
     }, [post.content]);
 
@@ -161,7 +162,10 @@ export function PostClient({ post, recentPosts, comments, settings, notification
                                         ))}
                                     </div>
                                 </div>
-                                <SocialShare title={post.title} />
+                                <div className="flex items-center gap-2">
+                                  <h4 className="text-sm font-semibold text-muted-foreground mr-2 hidden sm:block">Share:</h4>
+                                  <SocialShare title={post.title} url={currentUrl} />
+                                </div>
                             </div>
                         </motion.div>
 

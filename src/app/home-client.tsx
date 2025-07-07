@@ -29,6 +29,7 @@ import { SiteFooter } from '@/components/site-footer';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { SocialShare } from '@/components/social-share';
 
 
 // Helper for category styling
@@ -63,10 +64,14 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
   const [currentPage, setCurrentPage] = useState(1);
   const [activeFilter, setActiveFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState(q || '');
+  const [baseUrl, setBaseUrl] = useState('');
   const articlesPerPage = 12;
 
   // Set up a real-time listener for posts
   useEffect(() => {
+    // This effect runs once on mount on the client side
+    setBaseUrl(window.location.origin);
+    
     const postsCollection = collection(db, 'posts');
     const q = query(postsCollection, orderBy('createdAt', 'desc'));
 
@@ -282,6 +287,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                     {currentArticles.map((article) => {
                         const firstCategory = article.categories?.[0] || '';
                         const categoryClass = categoryStyles[firstCategory.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
+                        const postUrl = baseUrl ? `${baseUrl}/post/${article.id}` : '';
                         return (
                             <Link href={`/post/${article.id}`} key={article.id} className="block h-full group">
                                 <motion.div
@@ -316,9 +322,10 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                         </p>
                                         )}
                                         <div className="flex items-center justify-between text-xs text-muted-foreground mt-auto pt-4 border-t border-border/30">
-                                        <span>
+                                        <span className="truncate pr-2">
                                             {article.author} | {article.date}
                                         </span>
+                                        <SocialShare title={article.title} url={postUrl} />
                                         </div>
                                     </div>
                                 </motion.div>
