@@ -190,7 +190,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                           {firstCategory}
                                       </span>
                                   )}
-                                  <h1 className="text-3xl md:text-6xl font-extrabold leading-tight mb-4 group-hover:underline">
+                                  <h1 className="text-xl md:text-6xl font-extrabold leading-tight mb-4 group-hover:underline">
                                       {post.title}
                                   </h1>
                                   <p className="text-sm md:text-lg text-gray-300 line-clamp-2">
@@ -229,7 +229,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
               <CarouselContent className="-ml-2">
                 <CarouselItem className="pl-2 basis-auto">
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     className={cn(
                       'rounded-full',
                       activeFilter === 'All' && 'bg-accent text-accent-foreground hover:bg-accent/90'
@@ -242,7 +242,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                 {sortedUniqueCategories.map((category) => (
                   <CarouselItem key={category.id} className="pl-2 basis-auto">
                     <Button
-                      variant="ghost"
+                      variant="outline"
                       className={cn(
                         'rounded-full',
                         activeFilter === category.name && 'bg-accent text-accent-foreground hover:bg-accent/90'
@@ -307,7 +307,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                             {firstCategory}
                                             </span>
                                         )}
-                                        <h3 className="text-base font-semibold mb-2 line-clamp-2 text-card-foreground">
+                                        <h3 className="text-sm font-semibold mb-2 line-clamp-2 text-card-foreground">
                                         {article.title}
                                         </h3>
                                         {article.description && (
