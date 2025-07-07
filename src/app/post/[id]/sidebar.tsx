@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -12,7 +13,7 @@ import { Separator } from '@/components/ui/separator';
 import type { Post } from '@/services/postService';
 import type { BannerSettings } from '@/services/settingsService';
 
-export function Sidebar({ recentPosts, banner, recentPostsTitle }: { recentPosts: Post[], banner: BannerSettings, recentPostsTitle?: string }) {
+export function Sidebar({ recentPosts, banner }: { recentPosts: Post[], banner: BannerSettings }) {
   const router = useRouter();
 
   return (
@@ -43,7 +44,7 @@ export function Sidebar({ recentPosts, banner, recentPostsTitle }: { recentPosts
       {/* Recent Posts Widget */}
       <Card>
         <CardHeader>
-          <CardTitle>{recentPostsTitle || 'Recent Posts'}</CardTitle>
+          <CardTitle>Recent Posts</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">

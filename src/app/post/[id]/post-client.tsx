@@ -20,8 +20,6 @@ import { BackToTopButton } from '@/components/back-to-top-button';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 import { SocialShare } from '@/components/social-share';
-import { translateText } from '@/ai/flows/translate-text-flow';
-import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/use-auth';
 
 interface PostClientProps {
@@ -35,12 +33,7 @@ interface PostClientProps {
 export function PostClient({ post, recentPosts, comments, settings, notifications }: PostClientProps) {
     const [sanitizedContent, setSanitizedContent] = useState('');
     const [currentUrl, setCurrentUrl] = useState('');
-    const { toast } = useToast();
     const { user } = useAuth();
-
-    const [translations, setTranslations] = useState<Record<string, string> | null>(null);
-    const [isTranslating, setIsTranslating] = useState(false);
-    const [selectedLanguage, setSelectedLanguage] = useState('English');
 
     useEffect(() => {
         // DOMPurify and window.location need a browser environment, so we run it on the client side.
@@ -49,56 +42,6 @@ export function PostClient({ post, recentPosts, comments, settings, notification
             setCurrentUrl(window.location.href);
         }
     }, [post.content]);
-
-    const handleTranslate = async (language: string) => {
-        if (language.toLowerCase() === 'english') {
-            setTranslations(null);
-            setSelectedLanguage(language);
-            return;
-        }
-
-        setIsTranslating(true);
-        setSelectedLanguage(language);
-        try {
-            const textsToTranslate = {
-                postTitle: post.title,
-                postContent: post.content,
-                backLink: "Back to all articles",
-                commentsLabel: "Comments",
-                tagsLabel: "Tags",
-                shareLabel: "Share:",
-                recentPostsTitle: "Recent Posts",
-                leaveReplyTitle: "Leave a Reply",
-                commentingAsText: "You are commenting as",
-                postCommentButton: "Post Comment",
-                postingButton: "Posting...",
-                joinConversationTitle: "Join the Conversation",
-                mustBeLoggedInText: "You must be logged in to leave a comment.",
-                logInButton: "Log In",
-                firstToCommentText: "Be the first to leave a comment.",
-                replyButton: "Reply",
-            };
-
-            const { translations: result } = await translateText({ texts: textsToTranslate, targetLanguage: language });
-            
-            if (result.postContent) {
-                result.postContent = DOMPurify.sanitize(result.postContent);
-            }
-
-            setTranslations(result);
-
-        } catch (error) {
-            console.error("Translation failed", error);
-            toast({
-                variant: 'destructive',
-                title: 'Translation Failed',
-                description: 'Could not translate the content at this time.',
-            });
-            setSelectedLanguage('English');
-        } finally {
-            setIsTranslating(false);
-        }
-    };
 
     const variants = {
         hidden: { opacity: 0, y: 20 },
@@ -113,23 +56,20 @@ export function PostClient({ post, recentPosts, comments, settings, notification
         }),
     };
 
-    const finalTitle = translations?.postTitle ?? post.title;
-    const finalContent = translations?.postContent ?? sanitizedContent;
+    const finalTitle = post.title;
+    const finalContent = sanitizedContent;
 
     return (
         <div className="bg-[#EFECE9] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9]">
             <SiteHeader 
                 settings={settings} 
                 notifications={notifications}
-                onTranslate={handleTranslate}
-                selectedLanguage={selectedLanguage}
-                isTranslating={isTranslating}
             />
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                     <Link href="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
                         <ChevronLeft className="h-4 w-4" />
-                        <span>{translations?.backLink || 'Back to all articles'}</span>
+                        <span>Back to all articles</span>
                     </Link>
                 </div>
 
@@ -170,7 +110,7 @@ export function PostClient({ post, recentPosts, comments, settings, notification
                             <span className="hidden sm:inline">&bull;</span>
                             <div className="flex items-center gap-1.5">
                                 <MessageCircle className="h-4 w-4" />
-                                <span>{comments.length} {translations?.commentsLabel || 'Comments'}</span>
+                                <span>{comments.length} Comments</span>
                             </div>
                         </motion.div>
 
@@ -211,7 +151,7 @@ export function PostClient({ post, recentPosts, comments, settings, notification
                         >
                              <div className="flex justify-between items-center">
                                 <div>
-                                    <h3 className="text-lg font-semibold mb-3">{translations?.tagsLabel || 'Tags'}</h3>
+                                    <h3 className="text-lg font-semibold mb-3">Tags</h3>
                                     <div className="flex flex-wrap gap-2">
                                         {post.tags.map((tag) => (
                                             <Badge key={tag} variant="secondary" className="capitalize">{tag}</Badge>
@@ -219,7 +159,7 @@ export function PostClient({ post, recentPosts, comments, settings, notification
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                  <h4 className="text-sm font-semibold text-muted-foreground mr-2 hidden sm:block">{translations?.shareLabel || 'Share:'}</h4>
+                                  <h4 className="text-sm font-semibold text-muted-foreground mr-2 hidden sm:block">Share:</h4>
                                   <SocialShare title={post.title} url={currentUrl} />
                                 </div>
                             </div>
@@ -228,18 +168,6 @@ export function PostClient({ post, recentPosts, comments, settings, notification
                         <CommentsSection 
                             postId={post.id} 
                             initialComments={comments}
-                            uiText={{
-                                commentsLabel: translations?.commentsLabel,
-                                leaveReplyTitle: translations?.leaveReplyTitle,
-                                commentingAsText: translations?.commentingAsText,
-                                postCommentButton: translations?.postCommentButton,
-                                postingButton: translations?.postingButton,
-                                joinConversationTitle: translations?.joinConversationTitle,
-                                mustBeLoggedInText: translations?.mustBeLoggedInText,
-                                logInButton: translations?.logInButton,
-                                firstToCommentText: translations?.firstToCommentText,
-                                replyButton: translations?.replyButton,
-                            }}
                         />
                     </article>
 
@@ -248,7 +176,6 @@ export function PostClient({ post, recentPosts, comments, settings, notification
                         <Sidebar 
                             recentPosts={recentPosts} 
                             banner={settings.sidebarBanner} 
-                            recentPostsTitle={translations?.recentPostsTitle}
                         />
                     </aside>
                 </div>
