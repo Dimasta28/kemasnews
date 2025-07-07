@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ChevronLeft, MessageCircle, User, Calendar, Folder } from 'lucide-react';
+import { ChevronLeft, MessageCircle, User, Calendar, Folder, Globe } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
 
@@ -19,6 +19,15 @@ import { BackToTopButton } from '@/components/back-to-top-button';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 import { SocialShare } from '@/components/social-share';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { translateText } from '@/ai/flows/translate-text-flow';
+import { useToast } from '@/hooks/use-toast';
 
 interface PostClientProps {
     post: Post;
@@ -31,6 +40,12 @@ interface PostClientProps {
 export function PostClient({ post, recentPosts, comments, settings, notifications }: PostClientProps) {
     const [sanitizedContent, setSanitizedContent] = useState('');
     const [currentUrl, setCurrentUrl] = useState('');
+    const { toast } = useToast();
+
+    const [translatedTitle, setTranslatedTitle] = useState<string | null>(null);
+    const [translatedContent, setTranslatedContent] = useState<string | null>(null);
+    const [isTranslating, setIsTranslating] = useState(false);
+    const [selectedLanguage, setSelectedLanguage] = useState('English');
 
     useEffect(() => {
         // DOMPurify and window.location need a browser environment, so we run it on the client side.
@@ -39,6 +54,43 @@ export function PostClient({ post, recentPosts, comments, settings, notification
             setCurrentUrl(window.location.href);
         }
     }, [post.content]);
+
+    const handleTranslate = async (language: string) => {
+        if (language.toLowerCase() === 'english') {
+            setTranslatedTitle(null);
+            setTranslatedContent(null);
+            setSelectedLanguage(language);
+            return;
+        }
+
+        setIsTranslating(true);
+        setSelectedLanguage(language);
+        try {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = post.content;
+            const textContent = tempDiv.textContent || tempDiv.innerText || '';
+
+            const [titleResult, contentResult] = await Promise.all([
+                translateText({ text: post.title, targetLanguage: language }),
+                translateText({ text: textContent, targetLanguage: language }),
+            ]);
+            
+            setTranslatedTitle(titleResult.translatedText);
+            const formattedContent = contentResult.translatedText.split('\n').filter(p => p.trim() !== '').map(p => `<p>${p}</p>`).join('');
+            setTranslatedContent(DOMPurify.sanitize(formattedContent));
+
+        } catch (error) {
+            console.error("Translation failed", error);
+            toast({
+                variant: 'destructive',
+                title: 'Translation Failed',
+                description: 'Could not translate the content at this time.',
+            });
+            setSelectedLanguage('English');
+        } finally {
+            setIsTranslating(false);
+        }
+    };
 
     const variants = {
         hidden: { opacity: 0, y: 20 },
@@ -53,15 +105,38 @@ export function PostClient({ post, recentPosts, comments, settings, notification
         }),
     };
 
+    const finalTitle = translatedTitle ?? post.title;
+    const finalContent = translatedContent ?? sanitizedContent;
+
     return (
         <div className="bg-[#EFECE9] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9]">
             <SiteHeader settings={settings} notifications={notifications} />
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
-                <div className="mb-8">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                     <Link href="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
                         <ChevronLeft className="h-4 w-4" />
                         <span>Back to all articles</span>
                     </Link>
+                     <div className="flex items-center gap-2">
+                        {isTranslating && (
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                <span>Translating...</span>
+                            </div>
+                        )}
+                        <Select onValueChange={handleTranslate} value={selectedLanguage} disabled={isTranslating}>
+                            <SelectTrigger className="w-full sm:w-[180px]">
+                                <Globe className="h-4 w-4 mr-2" />
+                                <SelectValue placeholder="Translate post" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="English">English (Original)</SelectItem>
+                                <SelectItem value="Indonesian">Indonesian</SelectItem>
+                                <SelectItem value="Chinese">Chinese</SelectItem>
+                                <SelectItem value="Japanese">Japanese</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-12">
@@ -74,7 +149,7 @@ export function PostClient({ post, recentPosts, comments, settings, notification
                             animate="visible"
                             variants={variants}
                         >
-                            {post.title}
+                            {finalTitle}
                         </motion.h1>
 
                         <motion.div
@@ -105,19 +180,6 @@ export function PostClient({ post, recentPosts, comments, settings, notification
                             </div>
                         </motion.div>
 
-                        {post.description && (
-                            <motion.p
-                                className="text-base md:text-lg text-muted-foreground font-light mb-8 border-l-4 border-primary pl-4"
-                                custom={2}
-                                initial="hidden"
-                                animate="visible"
-                                variants={variants}
-                            >
-                                {post.description}
-                            </motion.p>
-                        )}
-
-
                         {post.featuredImage && (
                             <motion.div
                                 className="relative w-full aspect-video mb-8 rounded-lg overflow-hidden shadow-lg"
@@ -143,7 +205,7 @@ export function PostClient({ post, recentPosts, comments, settings, notification
                             initial="hidden"
                             animate="visible"
                             variants={variants}
-                            dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+                            dangerouslySetInnerHTML={{ __html: finalContent }}
                         />
 
                         <motion.div
