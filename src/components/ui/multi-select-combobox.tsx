@@ -91,6 +91,10 @@ export function MultiSelectCombobox({
                 <CommandItem
                   key={option.value}
                   onSelect={() => handleSelect(option.value)}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
                 >
                   <Check
                     className={cn(
