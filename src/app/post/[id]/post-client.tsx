@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -252,7 +253,7 @@ export function PostClient({ post, recentPosts, comments, settings, notification
                     </aside>
                 </div>
             </main>
-            <SiteFooter />
+            <SiteFooter settings={settings} />
             <BackToTopButton />
         </div>
     );

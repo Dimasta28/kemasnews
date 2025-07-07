@@ -4,8 +4,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { SiteHeaderWrapper } from '@/components/site-header-wrapper';
 import { SiteFooter } from '@/components/site-footer';
 import { Button } from '@/components/ui/button';
+import { getFrontendSettings } from '@/services/settingsService';
 
-export default function RegisterPage() {
+export default async function RegisterPage() {
+  const settings = await getFrontendSettings();
+
   return (
     <div className="flex flex-col min-h-screen bg-[#EFECE9] dark:bg-[#050505]">
       <SiteHeaderWrapper />
@@ -27,7 +30,7 @@ export default function RegisterPage() {
           </CardContent>
         </Card>
       </main>
-      <SiteFooter />
+      <SiteFooter settings={settings} />
     </div>
   );
 }

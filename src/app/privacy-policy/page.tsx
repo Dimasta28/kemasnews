@@ -16,7 +16,7 @@ export default async function PrivacyPolicyPage() {
             </h1>
             <PrivacyPolicyClientContent content={settings.privacyPolicy} />
         </main>
-        <SiteFooter />
+        <SiteFooter settings={settings} />
     </div>
   );
 }

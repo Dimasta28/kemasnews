@@ -54,7 +54,7 @@ export default async function Home() {
     <>
       <SiteHeaderWrapper />
       <Suspense fallback={<HomePageLoading />}>
-        <HomeClient heroPosts={heroPosts} allCategories={allCategories} />
+        <HomeClient heroPosts={heroPosts} allCategories={allCategories} settings={settings} />
       </Suspense>
     </>
     );

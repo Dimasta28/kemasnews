@@ -23,6 +23,7 @@ import {
   updateFrontendSettings,
   type FrontendSettings,
   type NavigationLink,
+  type FooterSettings,
 } from '@/services/settingsService';
 import { getPosts, type Post } from '@/services/postService';
 import { Separator } from '@/components/ui/separator';
@@ -59,7 +60,7 @@ export default function SettingsPage() {
   }, [toast]);
 
   const handleInputChange = (
-    field: keyof Omit<FrontendSettings, 'banner' | 'dropdownLinks' | 'privacyPolicy' | 'heroPostIds'>,
+    field: keyof Omit<FrontendSettings, 'banner' | 'dropdownLinks' | 'privacyPolicy' | 'heroPostIds' | 'footer'>,
     value: string
   ) => {
     setSettings((prev) => ({ ...prev, [field]: value }));
@@ -85,6 +86,16 @@ export default function SettingsPage() {
     const updatedLinks = (settings.dropdownLinks || []).filter((_, i) => i !== index);
     setSettings(prev => ({...prev, dropdownLinks: updatedLinks}));
   }
+
+  const handleFooterChange = (field: keyof FooterSettings, value: string) => {
+    setSettings((prev) => ({
+      ...prev,
+      footer: {
+        ...(prev.footer || { copyrightText: '', facebookUrl: '', instagramUrl: '', linkedinUrl: '' }),
+        [field]: value,
+      },
+    }));
+  };
 
   const handleSaveChanges = async () => {
     setIsSaving(true);
@@ -251,7 +262,6 @@ export default function SettingsPage() {
         </CardContent>
       </Card>
 
-
       <Card>
         <CardHeader>
           <CardTitle>Header Dropdown Navigation</CardTitle>
@@ -346,6 +356,54 @@ export default function SettingsPage() {
         </CardContent>
       </Card>
 
+       <Card>
+        <CardHeader>
+          <CardTitle>Footer Settings</CardTitle>
+          <CardDescription>
+            Manage the content of the site footer.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-8">
+          <div className="grid gap-2">
+            <Label htmlFor="footer-copyright">Copyright Text</Label>
+            <Input
+              id="footer-copyright"
+              value={settings.footer?.copyrightText || ''}
+              onChange={(e) => handleFooterChange('copyrightText', e.target.value)}
+              placeholder="© 2025 Your Company"
+            />
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid gap-2">
+              <Label htmlFor="footer-facebook">Facebook URL</Label>
+              <Input
+                id="footer-facebook"
+                value={settings.footer?.facebookUrl || ''}
+                onChange={(e) => handleFooterChange('facebookUrl', e.target.value)}
+                placeholder="https://facebook.com/your-page"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="footer-instagram">Instagram URL</Label>
+              <Input
+                id="footer-instagram"
+                value={settings.footer?.instagramUrl || ''}
+                onChange={(e) => handleFooterChange('instagramUrl', e.target.value)}
+                placeholder="https://instagram.com/your-profile"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="footer-linkedin">LinkedIn URL</Label>
+              <Input
+                id="footer-linkedin"
+                value={settings.footer?.linkedinUrl || ''}
+                onChange={(e) => handleFooterChange('linkedinUrl', e.target.value)}
+                placeholder="https://linkedin.com/company/your-company"
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <div className="flex justify-end">
         <Button onClick={handleSaveChanges} disabled={isSaving}>

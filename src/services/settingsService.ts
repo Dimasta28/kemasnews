@@ -18,6 +18,13 @@ export interface NavigationLink {
     href: string;
 }
 
+export interface FooterSettings {
+  copyrightText: string;
+  facebookUrl: string;
+  instagramUrl: string;
+  linkedinUrl: string;
+}
+
 export interface FrontendSettings {
   lightModeLogoUrl: string;
   darkModeLogoUrl: string;
@@ -28,6 +35,7 @@ export interface FrontendSettings {
   ogDescription: string;
   ogImageUrl: string;
   heroPostIds: string[];
+  footer: FooterSettings;
 }
 
 const SETTINGS_DOC_ID = 'frontend';
@@ -64,6 +72,12 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
     ogDescription: 'Since 1980, KEMAS delivers premium plastic & metal cosmetic packaging with European & Japanese tech.',
     ogImageUrl: 'https://ddujuwmrnfufdqnvgaqb.supabase.co/storage/v1/object/public/catalogimage2025tes//logo%20kemas%20%20(3).png',
     heroPostIds: [],
+    footer: {
+      copyrightText: '© 2025 PT. Kemas. All Rights Reserved.',
+      facebookUrl: '#',
+      instagramUrl: '#',
+      linkedinUrl: '#',
+    }
   };
 
   if (docSnap.exists()) {
@@ -83,6 +97,10 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
         ogDescription: data.ogDescription || defaults.ogDescription,
         ogImageUrl: data.ogImageUrl || defaults.ogImageUrl,
         heroPostIds: data.heroPostIds || defaults.heroPostIds,
+        footer: {
+            ...defaults.footer,
+            ...(data.footer || {}),
+        },
     };
     return settings;
   } else {

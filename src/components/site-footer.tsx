@@ -1,10 +1,14 @@
+
 'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import type { FrontendSettings } from '@/services/settingsService';
 
-export function SiteFooter() {
+export function SiteFooter({ settings }: { settings: FrontendSettings }) {
+    const footerSettings = settings.footer;
+
     return (
         <footer className="bg-primary text-primary-foreground py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between text-sm">
@@ -24,7 +28,7 @@ export function SiteFooter() {
               className="block dark:hidden"
             />
             <span className="ml-4">
-              © 2025 PT. Kemas. All Rights Reserved.
+              {footerSettings?.copyrightText || '© 2025 PT. Kemas. All Rights Reserved.'}
             </span>
           </div>
           <nav className="flex space-x-4 mb-4 md:mb-0">
@@ -41,7 +45,7 @@ export function SiteFooter() {
           <div className="flex space-x-4">
             <motion.a
               whileHover={{ y: -2 }}
-              href="#"
+              href={footerSettings?.facebookUrl || '#'}
               className="hover:opacity-80 transition-opacity"
               aria-label="Facebook"
             >
@@ -60,7 +64,7 @@ export function SiteFooter() {
             </motion.a>
             <motion.a
               whileHover={{ y: -2 }}
-              href="#"
+              href={footerSettings?.instagramUrl || '#'}
               className="hover:opacity-80 transition-opacity"
                aria-label="Instagram"
             >
@@ -75,7 +79,7 @@ export function SiteFooter() {
             </motion.a>
             <motion.a
               whileHover={{ y: -2 }}
-              href="#"
+              href={footerSettings?.linkedinUrl || '#'}
               className="hover:opacity-80 transition-opacity"
                aria-label="LinkedIn"
             >

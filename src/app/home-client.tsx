@@ -15,6 +15,7 @@ import { collection, query, orderBy, onSnapshot, Timestamp } from 'firebase/fire
 // Component imports
 import type { Post } from '@/services/postService';
 import type { Category } from '@/services/categoryService';
+import type { FrontendSettings } from '@/services/settingsService';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import {
   Pagination,
@@ -32,7 +33,7 @@ import { cn } from '@/lib/utils';
 import { SocialShare } from '@/components/social-share';
 
 // Main Application Component
-export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Post[], allCategories: Category[] }) {
+export default function HomeClient({ heroPosts, allCategories, settings }: { heroPosts: Post[], allCategories: Category[], settings: FrontendSettings }) {
   const articlesSectionRef = useRef<HTMLElement>(null);
   const autoplayPlugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
   
@@ -412,7 +413,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
 
       </main>
 
-      <SiteFooter />
+      <SiteFooter settings={settings} />
     </div>
   );
 }
