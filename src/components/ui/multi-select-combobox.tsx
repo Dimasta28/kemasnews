@@ -1,4 +1,3 @@
-
 'use client';
 
 import * as React from 'react';
@@ -84,9 +83,8 @@ export function MultiSelectCombobox({
                 <CommandItem
                   key={option.value}
                   value={option.value}
-                  onMouseDown={(e) => {
+                  onPointerDown={(e) => {
                     e.preventDefault();
-                    e.stopPropagation();
                   }}
                   onSelect={(currentValue) => {
                     const newSelected = value.includes(currentValue)
