@@ -54,16 +54,16 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
   useEffect(() => {
     // Define a palette of Tailwind CSS classes for category labels
     const colorPalette = [
-      'bg-primary text-primary-foreground',
-      'bg-secondary text-secondary-foreground',
-      'bg-muted text-card-foreground',
-      'bg-red-500 text-white',
-      'bg-blue-500 text-white',
-      'bg-green-500 text-white',
-      'bg-yellow-500 text-white',
-      'bg-indigo-500 text-white',
-      'bg-purple-500 text-white',
-      'bg-pink-500 text-white',
+        'bg-pink-200 text-pink-800', 'dark:bg-pink-900 dark:text-pink-200',
+        'bg-blue-200 text-blue-800', 'dark:bg-blue-900 dark:text-blue-200',
+        'bg-green-200 text-green-800', 'dark:bg-green-900 dark:text-green-200',
+        'bg-yellow-200 text-yellow-800', 'dark:bg-yellow-900 dark:text-yellow-200',
+        'bg-indigo-200 text-indigo-800', 'dark:bg-indigo-900 dark:text-indigo-200',
+        'bg-purple-200 text-purple-800', 'dark:bg-purple-900 dark:text-purple-200',
+        'bg-red-200 text-red-800', 'dark:bg-red-900 dark:text-red-200',
+        'bg-teal-200 text-teal-800', 'dark:bg-teal-900 dark:text-teal-200',
+        'bg-orange-200 text-orange-800', 'dark:bg-orange-900 dark:text-orange-200',
+        'bg-cyan-200 text-cyan-800', 'dark:bg-cyan-900 dark:text-cyan-200'
     ];
 
     const newColorMap: Record<string, string> = {};
@@ -307,7 +307,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                 initial={{ opacity: 0, y: 50 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, amount: 0.2 }}
-                                className="relative group rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col"
+                                className="group rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col bg-card"
                             >
                                 <div className="relative w-full aspect-video">
                                     <Image
@@ -317,8 +317,9 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                         className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
                                         data-ai-hint="cosmetics packaging"
                                     />
+                                    <Link href={`/post/${article.id}`} className="absolute inset-0 z-0" aria-label={article.title} />
                                 </div>
-                                <div className="bg-card p-5 flex-grow flex flex-col">
+                                <div className="p-5 flex-grow flex flex-col">
                                     {firstCategory && (
                                         <span
                                             className={cn(
@@ -339,12 +340,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
                                         {article.description}
                                     </p>
                                     )}
-                                    <div className="flex items-center justify-between text-xs text-muted-foreground mt-auto pt-4 border-t border-border/30">
-                                        <div className="flex items-center gap-2">
-                                            <span className="font-medium">{article.author}</span>
-                                            <span>&bull;</span>
-                                            <span>{article.date}</span>
-                                        </div>
+                                    <div className="flex items-center justify-end text-xs text-muted-foreground mt-auto pt-4 border-t border-border/30">
                                         <div className="relative z-10">
                                           <SocialShare title={article.title} url={postUrl} />
                                         </div>
@@ -420,4 +416,3 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
     </div>
   );
 }
-
