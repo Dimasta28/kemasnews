@@ -12,7 +12,7 @@ import { Separator } from '@/components/ui/separator';
 import type { Post } from '@/services/postService';
 import type { BannerSettings } from '@/services/settingsService';
 
-export function Sidebar({ recentPosts, banner }: { recentPosts: Post[], banner: BannerSettings }) {
+export function Sidebar({ recentPosts, banner, recentPostsTitle }: { recentPosts: Post[], banner: BannerSettings, recentPostsTitle?: string }) {
   const router = useRouter();
 
   return (
@@ -43,7 +43,7 @@ export function Sidebar({ recentPosts, banner }: { recentPosts: Post[], banner: 
       {/* Recent Posts Widget */}
       <Card>
         <CardHeader>
-          <CardTitle>Recent Posts</CardTitle>
+          <CardTitle>{recentPostsTitle || 'Recent Posts'}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">

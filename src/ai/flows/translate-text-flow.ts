@@ -1,6 +1,6 @@
 'use server';
 /**
- * @fileOverview A flow to translate text into a specified language.
+ * @fileOverview A flow to translate a batch of texts into a specified language.
  * - translateText - A function that handles the text translation.
  * - TranslateTextInput - The input type for the translateText function.
  * - TranslateTextOutput - The return type for the translateText function.
@@ -10,13 +10,13 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const TranslateTextInputSchema = z.object({
-  text: z.string().describe('The text to be translated.'),
+  texts: z.record(z.string()).describe('A JSON object where keys are identifiers and values are the texts to be translated.'),
   targetLanguage: z.string().describe('The target language for translation (e.g., "Indonesian", "English", "Chinese", "Japanese").'),
 });
 export type TranslateTextInput = z.infer<typeof TranslateTextInputSchema>;
 
 const TranslateTextOutputSchema = z.object({
-  translatedText: z.string().describe('The translated text.'),
+  translations: z.record(z.string()).describe('A JSON object with the same keys as the input, but with the translated text as values.'),
 });
 export type TranslateTextOutput = z.infer<typeof TranslateTextOutputSchema>;
 
@@ -25,17 +25,18 @@ export async function translateText(input: TranslateTextInput): Promise<Translat
 }
 
 const translatePrompt = ai.definePrompt({
-  name: 'translatePrompt',
+  name: 'translateBatchPrompt',
   input: { schema: TranslateTextInputSchema },
   output: { schema: TranslateTextOutputSchema },
-  prompt: `Translate the following text into {{{targetLanguage}}}.
-  
-  Only return the translated text, without any additional explanations or context.
-  
-  Text to translate:
-  ---
-  {{{text}}}
-  ---
+  prompt: `You are an expert multilingual translator. Translate each text value in the following JSON object into {{{targetLanguage}}}.
+Do not translate proper nouns, brand names, or HTML tags. Preserve the HTML structure if present.
+The 'postContent' value is a large block of HTML; translate the text within the tags but keep the tags themselves.
+Return a JSON object with the identical keys as the input, but with the translated text as values.
+
+Texts to translate:
+{{#each texts}}
+- "{{@key}}": "{{this}}"
+{{/each}}
 `,
 });
 
@@ -48,12 +49,12 @@ const translateTextFlow = ai.defineFlow(
   async (input) => {
     const {output} = await translatePrompt(input);
     
-    if (!output?.translatedText) {
-        throw new Error('Failed to translate text.');
+    if (!output?.translations) {
+        throw new Error('Failed to translate texts.');
     }
 
     return {
-      translatedText: output.translatedText,
+      translations: output.translations,
     };
   }
 );

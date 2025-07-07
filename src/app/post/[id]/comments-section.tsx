@@ -16,8 +16,21 @@ import { db } from '@/lib/firebase';
 import { collection, query, where, onSnapshot, orderBy, Timestamp } from 'firebase/firestore';
 import { formatDistanceToNow } from 'date-fns';
 
+interface CommentsSectionUIText {
+    commentsLabel: string;
+    leaveReplyTitle: string;
+    commentingAsText: string;
+    postCommentButton: string;
+    postingButton: string;
+    joinConversationTitle: string;
+    mustBeLoggedInText: string;
+    logInButton: string;
+    firstToCommentText: string;
+    replyButton: string;
+}
 
-export function CommentsSection({ postId, initialComments = [] }: { postId: string, initialComments: Comment[] }) {
+
+export function CommentsSection({ postId, initialComments = [], uiText }: { postId: string, initialComments: Comment[], uiText?: Partial<CommentsSectionUIText> }) {
     const { toast } = useToast();
     const { user, isLoading } = useAuth();
     const [newComment, setNewComment] = useState('');
@@ -98,17 +111,19 @@ export function CommentsSection({ postId, initialComments = [] }: { postId: stri
             return (
                 <Card>
                     <CardHeader>
-                        <CardTitle>Leave a Reply</CardTitle>
-                        <CardDescription>You are commenting as <span className="font-semibold">{user.name}</span>.</CardDescription>
+                        <CardTitle>{uiText?.leaveReplyTitle || 'Leave a Reply'}</CardTitle>
+                        <CardDescription>
+                            {uiText?.commentingAsText || 'You are commenting as'} <span className="font-semibold">{user.name}</span>.
+                        </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <form className="space-y-4" onSubmit={handleSubmit}>
                              <div className="grid gap-2">
-                                <Label htmlFor="comment">Your Comment</Label>
+                                <Label htmlFor="comment">{uiText?.commentsLabel || 'Your Comment'}</Label>
                                 <Textarea id="comment" placeholder="Write your comment here..." rows={4} value={newComment} onChange={(e) => setNewComment(e.target.value)} required />
                             </div>
                             <Button type="submit" disabled={isSubmitting}>
-                                {isSubmitting ? 'Posting...' : 'Post Comment'}
+                                {isSubmitting ? (uiText?.postingButton || 'Posting...') : (uiText?.postCommentButton || 'Post Comment')}
                             </Button>
                         </form>
                     </CardContent>
@@ -119,12 +134,12 @@ export function CommentsSection({ postId, initialComments = [] }: { postId: stri
         return (
             <Card className="text-center">
                 <CardHeader>
-                    <CardTitle>Join the Conversation</CardTitle>
+                    <CardTitle>{uiText?.joinConversationTitle || 'Join the Conversation'}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <p className="text-muted-foreground mb-4">You must be logged in to leave a comment.</p>
+                    <p className="text-muted-foreground mb-4">{uiText?.mustBeLoggedInText || 'You must be logged in to leave a comment.'}</p>
                     <Button asChild>
-                        <Link href="/login">Log In</Link>
+                        <Link href="/login">{uiText?.logInButton || 'Log In'}</Link>
                     </Button>
                 </CardContent>
             </Card>
@@ -133,7 +148,7 @@ export function CommentsSection({ postId, initialComments = [] }: { postId: stri
 
     return (
         <div id="comments" className="mt-12 pt-10 border-t border-border">
-            <h2 className="text-2xl font-bold mb-6">{comments.length} Comments</h2>
+            <h2 className="text-2xl font-bold mb-6">{comments.length} {uiText?.commentsLabel || 'Comments'}</h2>
 
             {/* Comments List */}
             <div className="space-y-8 mb-10">
@@ -149,11 +164,11 @@ export function CommentsSection({ postId, initialComments = [] }: { postId: stri
                                 <span className="text-xs text-muted-foreground">{comment.date}</span>
                             </div>
                             <p className="text-sm text-muted-foreground mt-2">{comment.comment}</p>
-                            <Button variant="link" size="sm" className="p-0 h-auto mt-1">Reply</Button>
+                            <Button variant="link" size="sm" className="p-0 h-auto mt-1">{uiText?.replyButton || 'Reply'}</Button>
                         </div>
                     </div>
                 )) : (
-                     <p className="text-sm text-muted-foreground">Be the first to leave a comment.</p>
+                     <p className="text-sm text-muted-foreground">{uiText?.firstToCommentText || 'Be the first to leave a comment.'}</p>
                 )}
             </div>
 
