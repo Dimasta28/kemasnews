@@ -255,7 +255,7 @@ export default function HomeClient({ heroPosts, allCategories }: { heroPosts: Po
             </div>
 
             {currentArticles.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-center">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-center">
                     {currentArticles.map((article) => {
                         const firstCategory = article.categories?.[0] || '';
                         const categoryClass = categoryStyles[firstCategory.toLowerCase().trim() as keyof typeof categoryStyles] || categoryStyles.default;
