@@ -278,6 +278,30 @@ export default function HomeClient({ heroPosts, allCategories, settings }: { her
         </section>
 
         <section ref={articlesSectionRef} className="pt-12 pb-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto mb-12">
+                <Link href={settings.banner?.buttonLink || '#'} className="block group relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    <div className="relative w-full aspect-[21/9]">
+                        <Image
+                            src={settings.banner?.imageUrl || 'https://placehold.co/1200x450.png'}
+                            alt={settings.banner?.title || 'Promotional Banner'}
+                            fill
+                            className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                            data-ai-hint="advertisement banner"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+                    </div>
+                    <div className="absolute inset-0 flex items-center p-8 md:p-12">
+                        <div className="max-w-md text-white">
+                            <h3 className="text-2xl md:text-4xl font-bold leading-tight">{settings.banner?.title}</h3>
+                            <p className="mt-2 text-base md:text-lg">{settings.banner?.description}</p>
+                            <Button size="lg" className="mt-6">
+                                {settings.banner?.buttonText}
+                            </Button>
+                        </div>
+                    </div>
+                </Link>
+            </div>
+
             <div className="max-w-7xl mx-auto">
                 <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
                     <h2 className="text-xl sm:text-3xl font-bold self-start sm:self-center">
