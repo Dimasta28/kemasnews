@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 export function SiteFooter() {
     return (
-        <footer className="bg-[#050505] text-[#E3C1B4] py-10">
+        <footer className="bg-primary text-primary-foreground py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between text-sm">
           <div className="mb-4 md:mb-0 flex items-center">
             <Image
@@ -28,13 +28,13 @@ export function SiteFooter() {
             </span>
           </div>
           <nav className="flex space-x-4 mb-4 md:mb-0">
-             <Link href="/privacy-policy" className="hover:text-[#EFECE9] transition-colors">
+             <Link href="/privacy-policy" className="hover:opacity-80 transition-opacity">
               Privacy Policy
             </Link>
-            <Link href="/login" className="hover:text-[#EFECE9] transition-colors">
+            <Link href="/login" className="hover:opacity-80 transition-opacity">
               Login
             </Link>
-            <Link href="/sitemap.xml" className="hover:text-[#EFECE9] transition-colors">
+            <Link href="/sitemap.xml" className="hover:opacity-80 transition-opacity">
               Sitemap
             </Link>
           </nav>
@@ -42,7 +42,7 @@ export function SiteFooter() {
             <motion.a
               whileHover={{ y: -2 }}
               href="#"
-              className="hover:text-[#EFECE9] transition-colors"
+              className="hover:opacity-80 transition-opacity"
               aria-label="Facebook"
             >
               <svg
@@ -61,7 +61,7 @@ export function SiteFooter() {
             <motion.a
               whileHover={{ y: -2 }}
               href="#"
-              className="hover:text-[#EFECE9] transition-colors"
+              className="hover:opacity-80 transition-opacity"
                aria-label="Instagram"
             >
               <svg
@@ -76,7 +76,7 @@ export function SiteFooter() {
             <motion.a
               whileHover={{ y: -2 }}
               href="#"
-              className="hover:text-[#EFECE9] transition-colors"
+              className="hover:opacity-80 transition-opacity"
                aria-label="LinkedIn"
             >
               <svg
