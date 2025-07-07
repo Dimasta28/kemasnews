@@ -2,8 +2,8 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Promo Banner',
-  description: 'Manage the sidebar promotional banner.',
+  title: 'Manage Banners',
+  description: 'Manage the homepage and sidebar promotional banners.',
 };
 
 export default function PromoBannerLayout({
