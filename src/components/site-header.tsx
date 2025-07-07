@@ -208,16 +208,40 @@ export function SiteHeader({
                         <DropdownMenuLabel>Translate to</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem onSelect={() => onTranslate?.('English')} disabled={!onTranslate}>
-                            <span className="mr-2 text-lg">🇬🇧</span> English
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onSelect={() => onTranslate?.('Indonesian')} disabled={!onTranslate}>
-                            <span className="mr-2 text-lg">🇮🇩</span> Indonesian
+                            <span className="mr-2 text-lg">🇺🇸</span> English
                         </DropdownMenuItem>
                         <DropdownMenuItem onSelect={() => onTranslate?.('Chinese')} disabled={!onTranslate}>
                             <span className="mr-2 text-lg">🇨🇳</span> Chinese
                         </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => onTranslate?.('Indonesian')} disabled={!onTranslate}>
+                            <span className="mr-2 text-lg">🇮🇩</span> Indonesian
+                        </DropdownMenuItem>
                         <DropdownMenuItem onSelect={() => onTranslate?.('Japanese')} disabled={!onTranslate}>
                             <span className="mr-2 text-lg">🇯🇵</span> Japanese
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => onTranslate?.('Spanish')} disabled={!onTranslate}>
+                            <span className="mr-2 text-lg">🇪🇸</span> Spanish
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => onTranslate?.('French')} disabled={!onTranslate}>
+                            <span className="mr-2 text-lg">🇫🇷</span> French
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => onTranslate?.('German')} disabled={!onTranslate}>
+                            <span className="mr-2 text-lg">🇩🇪</span> German
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => onTranslate?.('Italian')} disabled={!onTranslate}>
+                            <span className="mr-2 text-lg">🇮🇹</span> Italian
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => onTranslate?.('Portuguese')} disabled={!onTranslate}>
+                            <span className="mr-2 text-lg">🇵🇹</span> Portuguese
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => onTranslate?.('Russian')} disabled={!onTranslate}>
+                            <span className="mr-2 text-lg">🇷🇺</span> Russian
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => onTranslate?.('Korean')} disabled={!onTranslate}>
+                            <span className="mr-2 text-lg">🇰🇷</span> Korean
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => onTranslate?.('Dutch')} disabled={!onTranslate}>
+                            <span className="mr-2 text-lg">🇳🇱</span> Dutch
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
