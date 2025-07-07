@@ -2,41 +2,32 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { PlusCircle } from 'lucide-react';
-import Link from 'next/link';
-
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import type { Post } from '@/services/postService';
-import { PostActions } from './post-actions';
+import { useSearchParams } from 'next/navigation';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { type Post } from '@/services/postService';
+import { type Category } from '@/services/categoryService';
+import { PostsTable } from './posts-table';
+import { CategoriesTable } from './categories-table';
 import { db } from '@/lib/firebase';
-import { collection, onSnapshot, query, orderBy, Timestamp } from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, Timestamp, getDocs } from 'firebase/firestore';
 
-interface PostsClientProps {
+interface PostsPageClientProps {
   initialPosts: Post[];
+  initialCategories: Category[];
 }
 
-export function PostsClient({ initialPosts }: PostsClientProps) {
+export function PostsPageClient({ initialPosts, initialCategories }: PostsPageClientProps) {
+  const searchParams = useSearchParams();
+  const defaultTab = searchParams.get('tab') === 'categories' ? 'categories' : 'posts';
+
   const [posts, setPosts] = useState<Post[]>(initialPosts);
+  const [categories, setCategories] = useState<Category[]>(initialCategories);
 
   useEffect(() => {
-    const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
+    // Listener for Posts
+    const postsQuery = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
+    const unsubscribePosts = onSnapshot(postsQuery, (snapshot) => {
       const freshPosts = snapshot.docs.map(doc => {
         const data = doc.data();
         const date = (data.createdAt as Timestamp)?.toDate() || new Date();
@@ -64,67 +55,87 @@ export function PostsClient({ initialPosts }: PostsClientProps) {
       setPosts(freshPosts);
     });
 
-    return () => unsubscribe();
+    // Listener for Categories
+    let categoryData: Omit<Category, 'postCount'>[] = [];
+    let postDataForCount: { categories: string[] }[] = [];
+
+    const updateCategoryCounts = () => {
+      if (categoryData.length === 0) return;
+
+      const categoryCounts = postDataForCount.reduce((acc, post) => {
+        if (post.categories && Array.isArray(post.categories)) {
+          post.categories.forEach(catName => {
+            acc[catName] = (acc[catName] || 0) + 1;
+          });
+        }
+        return acc;
+      }, {} as Record<string, number>);
+
+      const categoriesWithCounts = categoryData.map(category => ({
+        ...category,
+        postCount: categoryCounts[category.name] || 0
+      }));
+      setCategories(categoriesWithCounts);
+    };
+
+    const qCategories = query(collection(db, 'categories'), orderBy('name', 'asc'));
+    const unsubCategories = onSnapshot(qCategories, (snapshot) => {
+      categoryData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        name: doc.data().name || '',
+        slug: doc.data().slug || '',
+      }));
+      updateCategoryCounts();
+    });
+
+    const qPostsForCount = query(collection(db, 'posts'));
+    const unsubPosts = onSnapshot(qPostsForCount, (snapshot) => {
+      postDataForCount = snapshot.docs.map(doc => doc.data() as { categories: string[] });
+      updateCategoryCounts();
+    });
+
+
+    return () => {
+      unsubscribePosts();
+      unsubCategories();
+      unsubPosts();
+    };
   }, []);
 
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
+    <Tabs defaultValue={defaultTab} className="w-full">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
         <div>
-          <CardTitle>Posts</CardTitle>
-          <CardDescription>
-            Manage your blog posts. Create, edit, and delete posts here.
-          </CardDescription>
+          <h1 className="text-2xl font-bold tracking-tight">Content Management</h1>
+          <p className="text-muted-foreground">Manage your blog posts and their categories.</p>
         </div>
-        <Button asChild size="sm" className="gap-1">
-          <Link href="/admin/posts/create">
-            <PlusCircle className="h-4 w-4" />
-            Create Post
-          </Link>
-        </Button>
-      </CardHeader>
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Title</TableHead>
-              <TableHead className="hidden sm:table-cell">Author</TableHead>
-              <TableHead className="hidden sm:table-cell">Status</TableHead>
-              <TableHead className="hidden md:table-cell">Date</TableHead>
-              <TableHead>
-                <span className="sr-only">Actions</span>
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {posts.map((post) => (
-              <TableRow key={post.id}>
-                <TableCell className="font-medium">{post.title}</TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  {post.author}
-                </TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  <Badge
-                    variant={
-                      post.status === 'Published'
-                        ? 'secondary'
-                        : 'outline'
-                    }
-                  >
-                    {post.status}
-                  </Badge>
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {post.date}
-                </TableCell>
-                <TableCell>
-                  <PostActions postId={post.id} />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </CardContent>
-    </Card>
+        <TabsList className="w-full sm:w-auto">
+          <TabsTrigger value="posts" className="w-full sm:w-auto">Posts</TabsTrigger>
+          <TabsTrigger value="categories" className="w-full sm:w-auto">Categories</TabsTrigger>
+        </TabsList>
+      </div>
+      <TabsContent value="posts">
+        <Card>
+          <CardHeader>
+            <CardTitle>Posts</CardTitle>
+            <CardDescription>Create, edit, and manage the articles on your blog.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <PostsTable posts={posts} />
+          </CardContent>
+        </Card>
+      </TabsContent>
+      <TabsContent value="categories">
+        <Card>
+          <CardHeader>
+            <CardTitle>Categories</CardTitle>
+            <CardDescription>Manage the categories used to organize your posts.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <CategoriesTable categories={categories} />
+          </CardContent>
+        </Card>
+      </TabsContent>
+    </Tabs>
   );
 }

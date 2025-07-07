@@ -1,9 +1,16 @@
 
-import { getCategories } from '@/services/categoryService';
-import { CategoriesClient } from './categories-client';
+'use client';
 
-export default async function CategoriesPage() {
-  const initialCategories = await getCategories();
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-  return <CategoriesClient initialCategories={initialCategories} />;
+export default function CategoriesRedirectPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    // Redirect to the new, consolidated page with the categories tab active
+    router.replace('/admin/posts?tab=categories');
+  }, [router]);
+
+  return null; // Render nothing while redirecting
 }

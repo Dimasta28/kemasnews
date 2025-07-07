@@ -154,17 +154,6 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname.startsWith('/admin/categories')}
-              >
-                <Link href="/admin/categories">
-                  <Folder />
-                  Categories
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
                 isActive={pathname.startsWith('/admin/tags')}
               >
                 <Link href="/admin/tags">

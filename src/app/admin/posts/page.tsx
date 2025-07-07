@@ -1,9 +1,16 @@
 
 import { getPosts } from '@/services/postService';
-import { PostsClient } from './posts-client';
+import { getCategories } from '@/services/categoryService';
+import { PostsPageClient } from './posts-page-client';
 
 export default async function PostsPage() {
-  const initialPosts = await getPosts();
+  const [initialPosts, initialCategories] = await Promise.all([
+    getPosts(),
+    getCategories()
+  ]);
 
-  return <PostsClient initialPosts={initialPosts} />;
+  return <PostsPageClient 
+            initialPosts={initialPosts} 
+            initialCategories={initialCategories} 
+        />;
 }
