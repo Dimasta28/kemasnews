@@ -45,13 +45,6 @@ export function MultiSelectCombobox({
 }: MultiSelectComboboxProps) {
   const [open, setOpen] = React.useState(false);
 
-  const handleSelect = (selectedValue: string) => {
-    const newSelected = value.includes(selectedValue)
-      ? value.filter((item) => item !== selectedValue)
-      : [...value, selectedValue];
-    onChange(newSelected);
-  };
-
   const selectedOptions = options.filter(option => value.includes(option.value));
 
   return (
@@ -90,10 +83,16 @@ export function MultiSelectCombobox({
               {options.map((option) => (
                 <CommandItem
                   key={option.value}
-                  onSelect={() => handleSelect(option.value)}
+                  value={option.value}
                   onMouseDown={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
+                  }}
+                  onSelect={(currentValue) => {
+                    const newSelected = value.includes(currentValue)
+                      ? value.filter((item) => item !== currentValue)
+                      : [...value, currentValue];
+                    onChange(newSelected);
                   }}
                 >
                   <Check
