@@ -23,6 +23,7 @@ import type { Post } from '@/services/postService';
 import { FileText } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import { Card, CardContent } from './ui/card';
+import { Button } from './ui/button';
 
 interface SearchDialogProps {
   open: boolean;
@@ -77,6 +78,7 @@ export function SearchDialog({ open, onOpenChange, posts }: SearchDialogProps) {
             placeholder="Search all articles..." 
             value={query}
             onValueChange={setQuery}
+            className="text-lg"
           />
           <CommandList>
             {filteredPosts.length === 0 && !query ? (
@@ -121,28 +123,39 @@ export function SearchDialog({ open, onOpenChange, posts }: SearchDialogProps) {
                         <CarouselNext className="right-[-16px]" />
                     </Carousel>
                 </div>
-                <CommandEmpty className="py-6">No results found.</CommandEmpty>
+                <CommandEmpty className="py-6 text-center text-muted-foreground">No results found.</CommandEmpty>
               </>
             ) : (
               <>
-                 <CommandEmpty>No results found.</CommandEmpty>
+                 <CommandEmpty className="py-6 text-center text-muted-foreground">No results found.</CommandEmpty>
                  <CommandGroup heading="Results">
-                  {filteredPosts.map((post) => (
-                    <CommandItem
-                      key={post.id}
-                      value={post.title}
-                      onSelect={() => handleSelect(post.id)}
-                      className="cursor-pointer"
-                    >
-                      <FileText className="mr-2 h-4 w-4" />
-                      <div className="flex flex-col">
-                        <span>{post.title}</span>
-                        <span className="text-xs text-muted-foreground">
-                          {format(parseISO(post.date), 'dd LLL yyyy')}
-                        </span>
-                      </div>
-                    </CommandItem>
-                  ))}
+                  <div className="space-y-2 p-2">
+                    {filteredPosts.map((post) => (
+                        <button
+                            key={post.id}
+                            onClick={() => handleSelect(post.id)}
+                            className="w-full text-left p-2 rounded-lg hover:bg-accent"
+                        >
+                            <div className="flex items-center gap-4">
+                                <Image
+                                    src={post.featuredImage}
+                                    alt={post.title}
+                                    width={128}
+                                    height={72}
+                                    className="rounded-md object-cover w-32 h-18"
+                                    data-ai-hint="article thumbnail"
+                                />
+                                <div className="flex flex-col">
+                                    <span className="font-semibold">{post.title}</span>
+                                    <span className="text-xs text-muted-foreground mt-1">
+                                    {format(parseISO(post.date), 'dd LLL yyyy')}
+                                    </span>
+                                     <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{post.description}</p>
+                                </div>
+                            </div>
+                        </button>
+                    ))}
+                  </div>
                 </CommandGroup>
               </>
             )}
