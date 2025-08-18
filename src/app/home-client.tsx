@@ -155,8 +155,27 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                 </p>
             </div>
         </section>
+        
+        {settings.homepageBanner?.imageUrl && (
+            <section className="relative h-[60vh] bg-black text-white">
+                <Image
+                    src={settings.homepageBanner.imageUrl}
+                    alt={settings.homepageBanner.title}
+                    fill
+                    className="object-cover opacity-40"
+                    priority
+                />
+                <div className="relative z-10 flex flex-col items-center justify-center h-full text-center p-8">
+                    <h2 className="text-4xl md:text-5xl font-bold">{settings.homepageBanner.title}</h2>
+                    <p className="mt-4 text-lg max-w-2xl">{settings.homepageBanner.description}</p>
+                    <Button asChild size="lg" className="mt-8">
+                        <Link href={settings.homepageBanner.buttonLink || '#'}>{settings.homepageBanner.buttonText}</Link>
+                    </Button>
+                </div>
+            </section>
+        )}
 
-        <section ref={articlesSectionRef} className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-secondary/50">
+        <section ref={articlesSectionRef} className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
             <div className="max-w-6xl mx-auto">
 
                 {/* Filters and Search */}
