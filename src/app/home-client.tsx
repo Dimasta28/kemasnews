@@ -109,49 +109,32 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
     <div className="font-sans antialiased bg-background text-foreground min-h-screen">
       <main>
         <section className="py-12 lg:py-16">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              plugins={[
-                Autoplay({
-                  delay: 5000,
-                }),
-              ]}
-              className="w-full"
-            >
-              <CarouselContent>
-                {heroPosts.map((post) => (
-                  <CarouselItem key={post.id}>
-                    <div className="relative aspect-video md:aspect-[2.4/1] w-full rounded-2xl overflow-hidden">
-                       <Link href={`/post/${post.id}`}>
-                        <Image
-                            src={post.featuredImage}
-                            alt={post.title}
-                            fill
-                            className="object-cover"
-                            data-ai-hint="hero image"
-                            priority
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
-                        <div className="absolute bottom-0 left-0 p-8 text-white">
-                            <h2 className="text-2xl md:text-4xl font-bold">{post.title}</h2>
-                            <p className="mt-2 text-sm md:text-base max-w-2xl line-clamp-2">{post.description}</p>
-                        </div>
-                       </Link>
+          <div className="w-full overflow-x-auto scrollbar-hide">
+            <div className="grid grid-flow-col auto-cols-[calc(100%/1.1)] sm:auto-cols-[calc(100%/2.1)] md:auto-cols-[calc(100%/2.5)] lg:auto-cols-[calc(100%/3.1)] gap-4 px-4 sm:px-6 lg:px-8">
+              {heroPosts.map((post) => (
+                <div key={post.id} className="relative aspect-video md:aspect-[16/10] w-full rounded-2xl overflow-hidden">
+                  <Link href={`/post/${post.id}`}>
+                    <Image
+                      src={post.featuredImage}
+                      alt={post.title}
+                      fill
+                      className="object-cover"
+                      data-ai-hint="hero image"
+                      priority
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
+                    <div className="absolute bottom-0 left-0 p-8 text-white">
+                      <h2 className="text-2xl md:text-4xl font-bold">{post.title}</h2>
+                      <p className="mt-2 text-sm md:text-base max-w-2xl line-clamp-2">{post.description}</p>
                     </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="left-4" />
-              <CarouselNext className="right-4" />
-            </Carousel>
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
-        <div className="space-y-12 lg:space-y-16">
+        <div className="space-y-12 lg:space-y-16 mt-8">
             {allCategories.map((category, index) => {
               const posts = postsByCategory[category.name];
               if (!posts || posts.length === 0) return null;
@@ -178,7 +161,7 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                             <CarouselContent className="-ml-4">
                                 {posts.map((post) => (
                                     <CarouselItem key={post.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                                        <Card className="overflow-hidden group border-none shadow-none">
+                                        <Card className="overflow-hidden group border-none shadow-none bg-transparent">
                                             <CardContent className="p-0">
                                                 <Link href={`/post/${post.id}`}>
                                                     <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
