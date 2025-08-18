@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -21,7 +22,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import type { JobOpening } from '@/services/careerService';
 import { createApplicant } from '@/services/applicantService';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, Terminal } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const formSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters.'),
@@ -34,10 +36,11 @@ const formSchema = z.object({
 type ApplicationFormData = z.infer<typeof formSchema>;
 
 interface ApplyFormProps {
-  job: JobOpening;
+  job: JobOpening | null;
+  error?: string | null;
 }
 
-export function ApplyForm({ job }: ApplyFormProps) {
+export function ApplyForm({ job, error }: ApplyFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -54,6 +57,7 @@ export function ApplyForm({ job }: ApplyFormProps) {
   });
 
   const onSubmit: SubmitHandler<ApplicationFormData> = async (data) => {
+    if (!job) return;
     setIsSubmitting(true);
     try {
       const result = await createApplicant({
@@ -78,6 +82,30 @@ export function ApplyForm({ job }: ApplyFormProps) {
       setIsSubmitting(false);
     }
   };
+  
+  if (error || !job) {
+     return (
+        <Card className="w-full max-w-2xl">
+           <CardHeader>
+             <CardTitle>Error</CardTitle>
+             <CardDescription>Could not load application form.</CardDescription>
+           </CardHeader>
+           <CardContent>
+             <Alert variant="destructive">
+               <Terminal className="h-4 w-4" />
+               <AlertTitle>Could Not Load Job Details</AlertTitle>
+               <AlertDescription>
+                 <p>There was an error loading the data for this job opening.</p>
+                 <p className="mt-2 font-mono text-xs bg-muted p-2 rounded">{error || 'Job data is unavailable.'}</p>
+                 <Button asChild variant="link" className="p-0 h-auto mt-4">
+                    <Link href="/careers">Back to Careers</Link>
+                 </Button>
+               </AlertDescription>
+             </Alert>
+           </CardContent>
+        </Card>
+     )
+  }
   
   if (isSubmitted) {
       return (

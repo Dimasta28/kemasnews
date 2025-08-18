@@ -61,6 +61,14 @@ export default async function Home() {
     // Catch potential permission errors from Firestore
     console.error("Failed to fetch initial page data:", e.message);
     error = e.message;
+    // Attempt to fetch settings again if it failed, so the header/footer can still render
+    if (!settings) {
+        try {
+            settings = await getFrontendSettings();
+        } catch (e2: any) {
+            console.error("Failed to fetch settings for home page:", e2.message);
+        }
+    }
   }
 
   return (

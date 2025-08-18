@@ -35,7 +35,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
 
 // Main Application Component
-export default function HomeClient({ heroPosts, allCategories, settings, error }: { heroPosts: Post[], allCategories: Category[], settings: FrontendSettings | null, error?: string }) {
+export default function HomeClient({ heroPosts, allCategories, settings, error }: { heroPosts: Post[], allCategories: Category[], settings: FrontendSettings | null, error?: string | null }) {
   const articlesSectionRef = useRef<HTMLElement>(null);
   const autoplayPlugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
   
@@ -146,7 +146,7 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
     setCurrentPage(1); // Reset page on new filter
   }, [activeFilter, searchTerm, allPosts]);
 
-  if (error) {
+  if (error || !settings) {
     return (
         <div className="flex h-screen items-center justify-center p-4">
             <Alert variant="destructive" className="max-w-2xl">
@@ -154,16 +154,12 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
               <AlertTitle>Connection Error</AlertTitle>
               <AlertDescription>
                 <p>The application could not connect to the database. This is likely due to a misconfiguration in the Firestore Security Rules.</p>
-                <p className="mt-2 font-mono text-xs bg-muted p-2 rounded">{error}</p>
+                <p className="mt-2 font-mono text-xs bg-muted p-2 rounded">{error || 'Could not retrieve page settings.'}</p>
                 <p className="mt-4">Please check your Firebase project's security rules to ensure that public collections like 'posts', 'categories', and 'settings' are readable by everyone.</p>
               </AlertDescription>
             </Alert>
         </div>
     )
-  }
-
-  if (!settings) {
-    return null; // Or a loading spinner
   }
 
   const handleFilterChange = (filter: string) => {
@@ -433,29 +429,27 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
             )}
         </section>
 
-        <section className="bg-background py-12">
-            <div className="max-w-7xl mx-auto">
-                 <div className="overflow-hidden">
-                    <div className="grid md:grid-cols-10 md:gap-6 mx-auto group">
-                        <div className="relative w-full overflow-hidden order-2 md:order-1 md:col-span-3 flex items-center">
-                            <Image
-                                src={settings.homepageBanner?.imageUrl || 'https://placehold.co/800x450.png'}
-                                alt={settings.homepageBanner?.title || 'Promotional Banner'}
-                                width={800}
-                                height={450}
-                                className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-105"
-                                data-ai-hint="advertisement banner"
-                            />
-                        </div>
-                        <div className="p-8 md:p-12 flex flex-col justify-center order-1 md:order-2 md:col-span-7">
-                            <h3 className="text-2xl md:text-4xl font-bold leading-tight text-foreground">{settings.homepageBanner?.title}</h3>
-                            <p className="mt-4 text-base md:text-lg text-muted-foreground">{settings.homepageBanner?.description}</p>
-                            <Button size="lg" className="mt-6 w-fit" asChild>
-                                <Link href={settings.homepageBanner?.buttonLink || '#'}>
-                                    {settings.homepageBanner?.buttonText}
-                                </Link>
-                            </Button>
-                        </div>
+        <section className="bg-transparent py-12">
+             <div className="max-w-7xl mx-auto overflow-hidden">
+                <div className="grid md:grid-cols-10 md:gap-6 mx-auto group">
+                    <div className="relative w-full overflow-hidden order-2 md:order-1 md:col-span-3 flex items-center transition-transform duration-300 group-hover:scale-105">
+                        <Image
+                            src={settings.homepageBanner?.imageUrl || 'https://placehold.co/800x450.png'}
+                            alt={settings.homepageBanner?.title || 'Promotional Banner'}
+                            width={800}
+                            height={450}
+                            className="w-full h-auto object-contain"
+                            data-ai-hint="advertisement banner"
+                        />
+                    </div>
+                    <div className="p-8 md:p-12 flex flex-col justify-center order-1 md:order-2 md:col-span-7">
+                        <h3 className="text-2xl md:text-4xl font-bold leading-tight text-foreground">{settings.homepageBanner?.title}</h3>
+                        <p className="mt-4 text-base md:text-lg text-muted-foreground">{settings.homepageBanner?.description}</p>
+                        <Button size="lg" className="mt-6 w-fit" asChild>
+                            <Link href={settings.homepageBanner?.buttonLink || '#'}>
+                                {settings.homepageBanner?.buttonText}
+                            </Link>
+                        </Button>
                     </div>
                 </div>
             </div>

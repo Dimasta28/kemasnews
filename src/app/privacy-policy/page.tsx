@@ -5,7 +5,15 @@ import { SiteFooter } from '@/components/site-footer';
 import { PrivacyPolicyClientContent } from './privacy-policy-client-content';
 
 export default async function PrivacyPolicyPage() {
-  const settings = await getFrontendSettings();
+  let settings = null;
+  let error = null;
+
+  try {
+    settings = await getFrontendSettings();
+  } catch (e: any) {
+    console.error("Failed to fetch settings for privacy policy:", e.message);
+    error = e.message;
+  }
   
   return (
     <div className="bg-[#EFECE9] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9]">
@@ -14,9 +22,12 @@ export default async function PrivacyPolicyPage() {
             <h1 className="text-2xl md:text-5xl font-extrabold leading-tight mb-8 text-foreground">
                 Privacy Policy
             </h1>
-            <PrivacyPolicyClientContent content={settings.privacyPolicy} />
+            <PrivacyPolicyClientContent 
+                content={settings?.privacyPolicy || ''} 
+                error={error}
+            />
         </main>
-        <SiteFooter settings={settings} />
+        {settings && <SiteFooter settings={settings} />}
     </div>
   );
 }

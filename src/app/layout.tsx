@@ -52,6 +52,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Fix for "No link element found for chunk" error in Next.js */}
+        <div /> 
+      </head>
       <body className={`${inter.variable} ${space_grotesk.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
