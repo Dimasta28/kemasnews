@@ -36,13 +36,16 @@ import { Input } from '@/components/ui/input';
 
 // Main Application Component
 export default function HomeClient({ heroPosts, allCategories, settings, error }: { heroPosts: Post[], allCategories: Category[], settings: FrontendSettings | null, error?: string | null }) {
+  const searchParams = useSearchParams();
+  const searchFromUrl = searchParams.get('search') || '';
+  
   // State for all posts, updated in realtime
   const [allPosts, setAllPosts] = useState<Post[]>([]);
   const [postsByCategory, setPostsByCategory] = useState<Record<string, Post[]>>({});
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(searchFromUrl);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
-
+  
   // Set up a real-time listener for posts
   useEffect(() => {
     // This effect runs once on mount on the client side
@@ -94,6 +97,10 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
   }, [allPosts, allCategories]);
 
   useEffect(() => {
+    setSearchTerm(searchFromUrl);
+  }, [searchFromUrl]);
+  
+  useEffect(() => {
     if (searchTerm) {
       const lowercasedTerm = searchTerm.toLowerCase();
       const results = allPosts.filter(post => 
@@ -140,7 +147,7 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                 <Card key={post.id} className="overflow-hidden group border-none shadow-none bg-transparent">
                   <CardContent className="p-0">
                     <Link href={`/post/${post.id}`}>
-                      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
+                      <div className="relative aspect-[4/3] w-full overflow-hidden">
                         <Image
                           src={post.featuredImage}
                           alt={post.title}
@@ -199,7 +206,7 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                                         <Card className="overflow-hidden group border-none shadow-none bg-transparent">
                                             <CardContent className="p-0">
                                                 <Link href={`/post/${post.id}`}>
-                                                    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
+                                                    <div className="relative aspect-[4/3] w-full overflow-hidden">
                                                         <Image
                                                             src={post.featuredImage}
                                                             alt={post.title}

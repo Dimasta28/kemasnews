@@ -4,6 +4,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import {
@@ -34,6 +35,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
+import { Input } from './ui/input';
 
 interface SiteHeaderProps {
   settings: FrontendSettings;
@@ -48,6 +50,8 @@ export function SiteHeader({
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
   
   const [notifications, setNotifications] = useState(initialNotifications || []);
   const [settings, setSettings] = useState(initialSettings);
@@ -95,6 +99,13 @@ export function SiteHeader({
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/?search=${encodeURIComponent(searchQuery)}`);
+    }
+  };
 
   return (
     <>
@@ -157,12 +168,16 @@ export function SiteHeader({
                 </nav>
 
                 <div className="flex items-center gap-2">
-                   <button
-                        className="p-2 rounded-full hover:bg-secondary transition-colors"
-                        aria-label="Search"
-                    >
-                        <Search size={20} />
-                   </button>
+                  <form onSubmit={handleSearchSubmit} className="relative hidden sm:block">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input 
+                      type="search"
+                      placeholder="Search..."
+                      className="pl-9 h-9 w-40 lg:w-56"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                  </form>
                   <Link href="/login" className={cn(buttonVariants({variant: 'outline'}), "rounded-full")}>
                     Login
                   </Link>
@@ -205,6 +220,18 @@ export function SiteHeader({
 
             <nav className="text-left w-full">
               <ul className="space-y-2 text-xl font-medium">
+                <li>
+                  <form onSubmit={handleSearchSubmit} className="relative">
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                      <Input
+                          type="search"
+                          placeholder="Search articles..."
+                          className="w-full pl-10"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                      />
+                  </form>
+                </li>
                 <li>
                   <Link href="/" className="block py-2 hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                     Home
