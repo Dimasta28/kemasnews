@@ -142,11 +142,6 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                     <Input type="search" placeholder="Search articles..." className="pl-10 w-full" />
                 </div>
-                <Button variant="outline" className="shrink-0">
-                    <Filter className="mr-2 h-4 w-4" />
-                    Filter
-                </Button>
-                 <Separator orientation="vertical" className="h-6" />
                 {allCategories.map(category => (
                     <Button key={category.id} variant="ghost" size="sm" className="shrink-0">
                         {category.name}
