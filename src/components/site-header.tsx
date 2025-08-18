@@ -131,9 +131,9 @@ export function SiteHeader({
                     <PopoverContent
                       align="start"
                       sideOffset={20}
-                      className="max-w-xs w-full"
+                      className="max-w-6xl w-full"
                     >
-                        <div className="grid grid-cols-1 gap-1">
+                        <div className="grid grid-cols-6 gap-4">
                           {settings.dropdownLinks.map((link) => (
                             <Link
                               key={link.title}
