@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -184,9 +183,6 @@ export function SiteHeader({
                     >
                         <Search className="h-4 w-4" />
                         <span className="sr-only sm:not-sr-only sm:ml-2 text-muted-foreground">Search...</span>
-                         <kbd className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 sm:flex">
-                            <span className="text-xs">⌘</span>K
-                        </kbd>
                     </Button>
                   <Link href="/login" className={cn(buttonVariants({variant: 'outline'}), "rounded-full")}>
                     Login
