@@ -236,6 +236,12 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
                       {currentArticles.map((article) => {
                           const firstCategory = article.categories?.[0] || 'Uncategorized';
+                          let formattedDate = '';
+                          try {
+                            formattedDate = format(parseISO(article.date), 'dd LLL yyyy');
+                          } catch (e) {
+                            formattedDate = article.date; // Fallback to original string if parsing fails
+                          }
                           return (
                               <motion.div
                                   key={article.id}
@@ -247,7 +253,7 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                               >
                                   <div className="absolute left-0 top-0 flex items-center h-full -translate-x-full pr-4">
                                       <span className="text-xs text-muted-foreground/80 transform -rotate-90 whitespace-nowrap tracking-widest uppercase">
-                                        {format(parseISO(article.date), 'dd LLL yyyy')}
+                                        {formattedDate}
                                       </span>
                                   </div>
                                   <div className="overflow-hidden mb-6">
@@ -269,7 +275,7 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                                         <span>By {article.author}</span>
                                     </div>
                                       <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-foreground flex-grow">
-                                        <Link href={`/post/${article.id}`} className="hover:text-primary transition-colors focus:underline">
+                                        <Link href={`/post/${article.id}`} className="hover:text-primary transition-colors focus:outline-none focus:ring-1 focus:ring-ring rounded-sm">
                                           {article.title}
                                         </Link>
                                       </h3>
