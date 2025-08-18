@@ -133,6 +133,10 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
             </div>
           </div>
         </section>
+        
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <Separator />
+        </div>
 
         <div className="space-y-12 lg:space-y-16 mt-8">
             {allCategories.map((category, index) => {
