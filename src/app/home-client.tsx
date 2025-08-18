@@ -145,32 +145,52 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
   return (
     <div className="font-sans antialiased bg-background text-foreground min-h-screen">
       <main>
-        <section className="relative bg-black text-white text-center flex items-center justify-center h-[60vh]">
-          <Image
-              src={settings.homepageBanner.imageUrl}
-              alt={settings.homepageBanner.title || 'Homepage banner'}
-              fill
-              className="z-0 opacity-40 object-cover"
-              data-ai-hint="advertisement banner"
-              priority
-          />
-          <div className="relative z-10 max-w-3xl p-8">
-              <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-4">
-                  {settings.homepageBanner.title}
-              </h1>
-              <p className="text-base md:text-xl text-gray-200">
-                  {settings.homepageBanner.description}
-              </p>
-              <Button size="lg" className="mt-6" asChild variant="secondary">
-                  <Link href={settings.homepageBanner.buttonLink || '#'}>
-                      {settings.homepageBanner.buttonText}
-                  </Link>
-              </Button>
-          </div>
+        <section className="py-16 lg:py-24 text-center">
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-foreground">
+                    Blog
+                </h1>
+                <p className="mt-4 text-base md:text-xl text-muted-foreground">
+                    News, updates, and stories from PT. Kemas Indah Maju.
+                </p>
+            </div>
         </section>
 
-        <section ref={articlesSectionRef} className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
+        <section ref={articlesSectionRef} className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-secondary/50">
             <div className="max-w-6xl mx-auto">
+
+                {/* Filters and Search */}
+                <div className="mb-12 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div className="flex-grow w-full md:w-auto relative">
+                        <Input 
+                            placeholder="Search articles..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="pl-10 h-11 text-base"
+                        />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                    </div>
+                    <div className="flex-shrink-0 flex items-center gap-2 overflow-x-auto scrollbar-hide pb-2 -mb-2">
+                        <Button
+                            variant={activeFilter === 'All' ? 'default' : 'outline'}
+                            onClick={() => setActiveFilter('All')}
+                            className="rounded-full"
+                        >
+                            All
+                        </Button>
+                        {allCategories.map(cat => (
+                             <Button
+                                key={cat.id}
+                                variant={activeFilter === cat.name ? 'default' : 'outline'}
+                                onClick={() => setActiveFilter(cat.name)}
+                                className="rounded-full"
+                            >
+                                {cat.name}
+                            </Button>
+                        ))}
+                    </div>
+                </div>
+
               {currentArticles.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
                       {currentArticles.map((article) => {
@@ -218,9 +238,9 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                       })}
                   </div>
               ) : (
-                  <div className="text-center py-10">
+                  <div className="text-center py-10 col-span-full">
                       <p className="text-muted-foreground">
-                          No posts found.
+                          No posts found for the current selection.
                       </p>
                   </div>
               )}
@@ -277,9 +297,7 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
               )}
             </div>
         </section>
-
       </main>
-
       <SiteFooter settings={settings} />
     </div>
   );
