@@ -206,7 +206,7 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                    const categoryClass = categoryColorMap[firstCategory.toLowerCase().trim()] || 'bg-muted text-muted-foreground';
                   return (
                     <CarouselItem key={post.id}>
-                      <div className="relative aspect-square md:aspect-auto md:h-[90vh] flex items-end p-8 md:p-12 text-white bg-black">
+                      <div className="relative h-[80vh] md:h-[90vh] flex items-end p-8 md:p-12 text-white bg-black">
                           <Image
                               src={post.featuredImage}
                               alt={post.title}
@@ -429,7 +429,7 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
             )}
         </section>
 
-       <section className="bg-transparent py-12">
+       <section className="py-12">
              <div className="max-w-7xl mx-auto overflow-hidden">
                 <div className="grid md:grid-cols-10 md:gap-6 mx-auto group">
                     <div className="relative w-full overflow-hidden order-2 md:order-1 md:col-span-3 flex items-center transition-transform duration-300 group-hover:scale-105">
