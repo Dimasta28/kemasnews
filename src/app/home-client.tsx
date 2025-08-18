@@ -24,7 +24,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Search } from 'lucide-react';
+import { Search, Filter } from 'lucide-react';
 import { SiteFooter } from '@/components/site-footer';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
@@ -32,6 +32,7 @@ import { format, parseISO } from 'date-fns';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { Input } from '@/components/ui/input';
 
 // Main Application Component
 export default function HomeClient({ heroPosts, allCategories, settings, error }: { heroPosts: Post[], allCategories: Category[], settings: FrontendSettings | null, error?: string | null }) {
@@ -135,6 +136,17 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
         </section>
         
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <Separator />
+            <div className="flex gap-4 my-8">
+                <div className="relative flex-grow">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                    <Input type="search" placeholder="Search articles..." className="pl-10 w-full" />
+                </div>
+                <Button variant="outline">
+                    <Filter className="mr-2 h-4 w-4" />
+                    Filter
+                </Button>
+            </div>
             <Separator />
         </div>
 
