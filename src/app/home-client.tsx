@@ -145,11 +145,28 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
   return (
     <div className="font-sans antialiased bg-background text-foreground min-h-screen">
       <main>
-        <section className="bg-secondary/50 py-16 text-center border-b">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h1 className="text-4xl md:text-5xl font-bold">Blog</h1>
-                <p className="text-muted-foreground mt-2">Home &gt; Blog</p>
-            </div>
+        <section className="relative bg-black text-white text-center flex items-center justify-center h-[60vh]">
+          <Image
+              src={settings.homepageBanner.imageUrl}
+              alt={settings.homepageBanner.title || 'Homepage banner'}
+              fill
+              className="z-0 opacity-40 object-cover"
+              data-ai-hint="advertisement banner"
+              priority
+          />
+          <div className="relative z-10 max-w-3xl p-8">
+              <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-4">
+                  {settings.homepageBanner.title}
+              </h1>
+              <p className="text-base md:text-xl text-gray-200">
+                  {settings.homepageBanner.description}
+              </p>
+              <Button size="lg" className="mt-6" asChild variant="secondary">
+                  <Link href={settings.homepageBanner.buttonLink || '#'}>
+                      {settings.homepageBanner.buttonText}
+                  </Link>
+              </Button>
+          </div>
         </section>
 
         <section ref={articlesSectionRef} className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
