@@ -31,6 +31,7 @@ import { Terminal } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 
 // Main Application Component
 export default function HomeClient({ heroPosts, allCategories, settings, error }: { heroPosts: Post[], allCategories: Category[], settings: FrontendSettings | null, error?: string | null }) {
@@ -150,13 +151,14 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
           </div>
         </section>
 
-        <div className="space-y-16 lg:space-y-24">
-            {allCategories.map(category => {
+        <div className="space-y-12 lg:space-y-16">
+            {allCategories.map((category, index) => {
               const posts = postsByCategory[category.name];
               if (!posts || posts.length === 0) return null;
 
               return (
-                <section key={category.id} className="py-8">
+                <React.Fragment key={category.id}>
+                <section>
                     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex justify-between items-center mb-8">
                             <h2 className="text-2xl md:text-3xl font-bold">{category.name}</h2>
@@ -210,6 +212,12 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                         </Carousel>
                     </div>
                 </section>
+                {index < allCategories.length - 1 && (
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <Separator />
+                    </div>
+                )}
+                </React.Fragment>
               );
             })}
         </div>
