@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Autoplay from "embla-carousel-autoplay";
 
 
@@ -36,6 +36,7 @@ import { Input } from '@/components/ui/input';
 
 // Main Application Component
 export default function HomeClient({ heroPosts, allCategories, settings, error }: { heroPosts: Post[], allCategories: Category[], settings: FrontendSettings | null, error?: string | null }) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const searchFromUrl = searchParams.get('search') || '';
   
@@ -113,6 +114,14 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
       setFilteredPosts([]);
     }
   }, [searchTerm, allPosts]);
+
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const newSearchTerm = formData.get('search') as string;
+    setSearchTerm(newSearchTerm);
+    router.push(`/?search=${encodeURIComponent(newSearchTerm)}`);
+  };
 
 
   if (error || !settings) {
@@ -220,7 +229,7 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                                                         <p className="text-sm text-muted-foreground mb-1">{post.categories.join(', ')}</p>
                                                         <h3 className="font-semibold line-clamp-2">{post.title}</h3>
                                                         <p className="text-sm text-muted-foreground mt-1">
-                                                            {format(parseISO(post.date), "dd LLL yyyy")}
+                                                          {format(parseISO(post.date), "dd LLL yyyy")}
                                                         </p>
                                                     </div>
                                                 </Link>
