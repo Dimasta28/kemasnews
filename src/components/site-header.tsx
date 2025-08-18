@@ -129,7 +129,7 @@ export function SiteHeader({
                       </button>
                     </PopoverTrigger>
                     <PopoverContent
-                      align="start"
+                      align="center"
                       sideOffset={20}
                       className="max-w-6xl w-full"
                     >
