@@ -130,9 +130,10 @@ export function SiteHeader({
                     </PopoverTrigger>
                     <PopoverContent
                       align="center"
-                      sideOffset={20}
-                      className="max-w-6xl w-full"
+                      sideOffset={16}
+                      className="w-screen rounded-none border-x-0"
                     >
+                      <div className="max-w-6xl mx-auto">
                         <div className="grid grid-cols-6 gap-4">
                           {settings.dropdownLinks.map((link) => (
                             <Link
@@ -147,6 +148,7 @@ export function SiteHeader({
                             </Link>
                           ))}
                         </div>
+                      </div>
                     </PopoverContent>
                   </Popover>
                   <Link href="/careers" className="text-foreground/80 hover:text-primary transition-colors">
