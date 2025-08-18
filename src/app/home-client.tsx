@@ -24,7 +24,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Search } from 'lucide-react';
+import { Search, Filter } from 'lucide-react';
 import { SiteFooter } from '@/components/site-footer';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
@@ -116,9 +116,9 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
       <main>
         <section className="pt-12 lg:py-16">
           <div className="w-full overflow-x-auto scrollbar-hide">
-            <div className="grid grid-flow-col auto-cols-[calc(100%/1.1)] sm:auto-cols-[calc(100%/2.1)] md:auto-cols-[calc(100%/2.5)] lg:auto-cols-[calc(100%/3.1)] gap-4 px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-flow-col auto-cols-[calc(100%/1.1)] sm:auto-cols-[calc(100%/2.1)] md:auto-cols-[calc(100%/2.5)] lg:auto-cols-[calc(100%/3.1)] gap-4">
               {heroPosts.map((post) => (
-                <div key={post.id} className="relative aspect-video md:aspect-[16/10] w-full rounded-2xl overflow-hidden">
+                <div key={post.id} className="relative aspect-video md:aspect-[16/10] w-full overflow-hidden">
                   <Link href={`/post/${post.id}`}>
                     <Image
                       src={post.featuredImage}
