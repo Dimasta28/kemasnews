@@ -30,6 +30,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 // Main Application Component
 export default function HomeClient({ heroPosts, allCategories, settings, error }: { heroPosts: Post[], allCategories: Category[], settings: FrontendSettings | null, error?: string | null }) {
@@ -150,24 +151,35 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
         </section>
 
         <div className="space-y-16 lg:space-y-24">
-            {Object.entries(postsByCategory).map(([category, posts]) => (
-                <section key={category} className="py-8">
+            {allCategories.map(category => {
+              const posts = postsByCategory[category.name];
+              if (!posts || posts.length === 0) return null;
+
+              return (
+                <section key={category.id} className="py-8">
                     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <h2 className="text-2xl md:text-3xl font-bold mb-8">{category}</h2>
+                        <div className="flex justify-between items-center mb-8">
+                            <h2 className="text-2xl md:text-3xl font-bold">{category.name}</h2>
+                             <Button asChild variant="link" className="pr-0">
+                               <Link href={`/category/${category.slug}`}>
+                                   View all
+                               </Link>
+                            </Button>
+                        </div>
                         <Carousel
                             opts={{
                                 align: "start",
-                                loop: posts.length > 4, // Loop only if there are more posts than can be shown
+                                loop: posts.length > 3,
                             }}
                             className="w-full"
                         >
                             <CarouselContent className="-ml-4">
                                 {posts.map((post) => (
                                     <CarouselItem key={post.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                                        <Card className="overflow-hidden group">
+                                        <Card className="overflow-hidden group border-none shadow-none">
                                             <CardContent className="p-0">
                                                 <Link href={`/post/${post.id}`}>
-                                                    <div className="relative aspect-[4/3] w-full overflow-hidden">
+                                                    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
                                                         <Image
                                                             src={post.featuredImage}
                                                             alt={post.title}
@@ -176,9 +188,12 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                                                             data-ai-hint="cosmetics packaging"
                                                         />
                                                     </div>
-                                                    <div className="p-4">
+                                                    <div className="p-4 pl-1">
                                                         <p className="text-sm text-muted-foreground mb-1">{post.categories.join(', ')}</p>
                                                         <h3 className="font-semibold line-clamp-2">{post.title}</h3>
+                                                        <p className="text-sm text-muted-foreground mt-1">
+                                                            {format(parseISO(post.date), "dd LLL yyyy")}
+                                                        </p>
                                                     </div>
                                                 </Link>
                                             </CardContent>
@@ -186,14 +201,18 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                                     </CarouselItem>
                                 ))}
                             </CarouselContent>
-                            <CarouselPrevious className="left-4" />
-                            <CarouselNext className="right-4" />
+                             {posts.length > 3 && (
+                                <>
+                                <CarouselPrevious className="left-[-50px] top-1/2 -translate-y-1/2 hidden lg:flex" />
+                                <CarouselNext className="right-[-50px] top-1/2 -translate-y-1/2 hidden lg:flex" />
+                                </>
+                            )}
                         </Carousel>
                     </div>
                 </section>
-            ))}
+              );
+            })}
         </div>
-
       </main>
       <SiteFooter settings={settings} />
     </div>
