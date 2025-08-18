@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -17,14 +16,10 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel"
 import type { Post } from '@/services/postService';
-import { FileText } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import { Card, CardContent } from './ui/card';
-import { Button } from './ui/button';
 
 interface SearchDialogProps {
   open: boolean;
@@ -82,56 +77,15 @@ export function SearchDialog({ open, onOpenChange, posts }: SearchDialogProps) {
             className="text-lg"
           />
           <CommandList>
-            {filteredPosts.length === 0 && !query ? (
-              <>
-                <div className="p-4 border-b">
-                    <h2 className="text-sm font-medium text-muted-foreground mb-4">Suggestions</h2>
-                    <Carousel
-                        opts={{
-                            align: "start",
-                            loop: posts.length > 4,
-                        }}
-                        className="w-full"
-                    >
-                        <CarouselContent className="-ml-2">
-                            {posts.slice(0, 5).map((post) => (
-                                <CarouselItem key={post.id} className="pl-2 basis-1/2 md:basis-1/3 lg:basis-1/4">
-                                     <button type="button" onClick={() => handleSelect(post.id)} className="w-full text-left">
-                                        <Card className="overflow-hidden group border-border hover:border-primary transition-all duration-300">
-                                            <CardContent className="p-0">
-                                                <div className="relative aspect-[4/3] w-full overflow-hidden">
-                                                    <Image
-                                                        src={post.featuredImage}
-                                                        alt={post.title}
-                                                        fill
-                                                        className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
-                                                        data-ai-hint="cosmetics packaging"
-                                                    />
-                                                </div>
-                                                <div className="p-2">
-                                                    <h3 className="font-semibold line-clamp-2 text-sm">{post.title}</h3>
-                                                    <p className="text-xs text-muted-foreground mt-1">
-                                                        {format(parseISO(post.date), "dd LLL yyyy")}
-                                                    </p>
-                                                </div>
-                                            </CardContent>
-                                        </Card>
-                                     </button>
-                                </CarouselItem>
-                            ))}
-                        </CarouselContent>
-                    </Carousel>
-                </div>
-                <CommandEmpty className="py-6 text-center text-muted-foreground">No results found.</CommandEmpty>
-              </>
-            ) : (
-              <>
-                 <CommandEmpty className="py-6 text-center text-muted-foreground">No results found.</CommandEmpty>
-                 <CommandGroup heading="Results">
+            <CommandEmpty className="py-6 text-center text-muted-foreground">No results found.</CommandEmpty>
+
+            {query && filteredPosts.length > 0 && (
+                <CommandGroup heading="Results">
                   <div className="space-y-2 p-2">
                     {filteredPosts.map((post) => (
                         <button
                             key={post.id}
+                            type="button"
                             onClick={() => handleSelect(post.id)}
                             className="w-full text-left p-2 rounded-lg hover:bg-accent"
                         >
@@ -147,7 +101,7 @@ export function SearchDialog({ open, onOpenChange, posts }: SearchDialogProps) {
                                 <div className="flex flex-col">
                                     <span className="font-semibold">{post.title}</span>
                                     <span className="text-xs text-muted-foreground mt-1">
-                                    {format(parseISO(post.date), 'dd LLL yyyy')}
+                                        {format(parseISO(post.date), 'dd LLL yyyy')}
                                     </span>
                                      <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{post.description}</p>
                                 </div>
@@ -156,7 +110,47 @@ export function SearchDialog({ open, onOpenChange, posts }: SearchDialogProps) {
                     ))}
                   </div>
                 </CommandGroup>
-              </>
+            )}
+            
+            {!query && (
+              <div className="p-4 border-t">
+                  <h2 className="text-sm font-medium text-muted-foreground mb-4">Suggestions</h2>
+                  <Carousel
+                      opts={{
+                          align: "start",
+                          loop: posts.length > 4,
+                      }}
+                      className="w-full"
+                  >
+                      <CarouselContent className="-ml-2">
+                          {posts.slice(0, 5).map((post) => (
+                              <CarouselItem key={post.id} className="pl-2 basis-1/2 md:basis-1/3 lg:basis-1/4">
+                                   <button type="button" onClick={() => handleSelect(post.id)} className="w-full text-left">
+                                      <Card className="overflow-hidden group border-border hover:border-primary transition-all duration-300">
+                                          <CardContent className="p-0">
+                                              <div className="relative aspect-[4/3] w-full overflow-hidden">
+                                                  <Image
+                                                      src={post.featuredImage}
+                                                      alt={post.title}
+                                                      fill
+                                                      className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                                                      data-ai-hint="cosmetics packaging"
+                                                  />
+                                              </div>
+                                              <div className="p-2">
+                                                  <h3 className="font-semibold line-clamp-2 text-sm">{post.title}</h3>
+                                                  <p className="text-xs text-muted-foreground mt-1">
+                                                      {format(parseISO(post.date), "dd LLL yyyy")}
+                                                  </p>
+                                              </div>
+                                          </CardContent>
+                                      </Card>
+                                   </button>
+                              </CarouselItem>
+                          ))}
+                      </CarouselContent>
+                  </Carousel>
+              </div>
             )}
           </CommandList>
         </Command>
