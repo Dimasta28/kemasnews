@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -123,9 +123,9 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                       priority
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
-                    <div className="absolute bottom-0 left-0 p-8 text-white">
-                      <h2 className="text-2xl md:text-4xl font-bold">{post.title}</h2>
-                      <p className="mt-2 text-sm md:text-base max-w-2xl line-clamp-2">{post.description}</p>
+                    <div className="absolute bottom-0 left-0 p-6 text-white">
+                      <h2 className="text-xl md:text-2xl font-bold">{post.title}</h2>
+                      <p className="mt-2 text-xs md:text-sm max-w-2xl line-clamp-2">{post.description}</p>
                     </div>
                   </Link>
                 </div>
