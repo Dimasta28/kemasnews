@@ -1,8 +1,9 @@
+
 'use client';
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import {
   Command,
   CommandEmpty,
@@ -32,6 +33,7 @@ export function SearchDialog({ open, onOpenChange, posts }: SearchDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="overflow-hidden p-0 shadow-lg top-[25%]">
+        <DialogTitle className="sr-only">Search Posts</DialogTitle>
         <Command>
           <CommandInput placeholder="Search posts..." />
           <CommandList>
@@ -47,7 +49,7 @@ export function SearchDialog({ open, onOpenChange, posts }: SearchDialogProps) {
                   <FileText className="mr-2 h-4 w-4" />
                   <div className="flex flex-col">
                     <span>{post.title}</span>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-sm text-muted-foreground">
                         {post.categories.join(', ')} &bull; {format(parseISO(post.date), "dd LLL yyyy")}
                     </span>
                   </div>
