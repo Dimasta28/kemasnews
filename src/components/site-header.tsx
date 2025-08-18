@@ -36,22 +36,26 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { Input } from './ui/input';
+import { Post } from '@/services/postService';
+import { SearchDialog } from './search-dialog';
 
 interface SiteHeaderProps {
   settings: FrontendSettings;
   notifications: Notification[];
+  posts: Post[];
 }
 
 
 export function SiteHeader({ 
     settings: initialSettings, 
     notifications: initialNotifications,
+    posts: allPosts,
 }: SiteHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState('');
   
   const [notifications, setNotifications] = useState(initialNotifications || []);
   const [settings, setSettings] = useState(initialSettings);
@@ -99,13 +103,18 @@ export function SiteHeader({
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/?search=${encodeURIComponent(searchQuery)}`);
+  
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        setIsSearchOpen((open) => !open)
+      }
     }
-  };
+    document.addEventListener("keydown", down)
+    return () => document.removeEventListener("keydown", down)
+  }, []);
+
 
   return (
     <>
@@ -150,7 +159,7 @@ export function SiteHeader({
                             <Link
                               key={link.title}
                               href={link.href}
-                              className="block p-3 rounded-lg hover:bg-secondary"
+                              className="block p-3 rounded-lg hover:bg-secondary border"
                             >
                               <p className="font-semibold text-foreground">{link.title}</p>
                               <p className="text-sm text-muted-foreground">
@@ -168,16 +177,17 @@ export function SiteHeader({
                 </nav>
 
                 <div className="flex items-center gap-2">
-                  <form onSubmit={handleSearchSubmit} className="relative hidden sm:block">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input 
-                      type="search"
-                      placeholder="Search..."
-                      className="pl-9 h-9 w-40 lg:w-56"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                  </form>
+                    <Button
+                        variant="outline"
+                        className="h-9 w-9 p-0 sm:w-auto sm:px-3 sm:justify-start"
+                        onClick={() => setIsSearchOpen(true)}
+                    >
+                        <Search className="h-4 w-4" />
+                        <span className="sr-only sm:not-sr-only sm:ml-2 text-muted-foreground">Search...</span>
+                         <kbd className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 sm:flex">
+                            <span className="text-xs">⌘</span>K
+                        </kbd>
+                    </Button>
                   <Link href="/login" className={cn(buttonVariants({variant: 'outline'}), "rounded-full")}>
                     Login
                   </Link>
@@ -191,6 +201,8 @@ export function SiteHeader({
             </div>
         </div>
       </header>
+      
+      <SearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} posts={allPosts} />
 
       <AnimatePresence>
         {isMobileMenuOpen && (
@@ -221,16 +233,10 @@ export function SiteHeader({
             <nav className="text-left w-full">
               <ul className="space-y-2 text-xl font-medium">
                 <li>
-                  <form onSubmit={handleSearchSubmit} className="relative">
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                      <Input
-                          type="search"
-                          placeholder="Search articles..."
-                          className="w-full pl-10"
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                      />
-                  </form>
+                    <Button variant="outline" className="w-full justify-start" onClick={() => { setIsMobileMenuOpen(false); setIsSearchOpen(true); }}>
+                        <Search className="mr-2 h-5 w-5 text-muted-foreground" />
+                        Search articles...
+                    </Button>
                 </li>
                 <li>
                   <Link href="/" className="block py-2 hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>

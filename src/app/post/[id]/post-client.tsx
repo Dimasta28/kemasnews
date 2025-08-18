@@ -22,6 +22,7 @@ import { SiteFooter } from '@/components/site-footer';
 import { SocialShare } from '@/components/social-share';
 import { useAuth } from '@/hooks/use-auth';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { format, parseISO } from 'date-fns';
 
 interface PostClientProps {
     post: Post | null;
@@ -50,7 +51,7 @@ export function PostClient({ post, recentPosts, comments, settings, notification
     if (error || !post || !settings) {
         return (
              <div className="flex flex-col min-h-screen bg-[#EFECE9] dark:bg-[#050505]">
-                {settings && <SiteHeader settings={settings} notifications={notifications || []} />}
+                {settings && <SiteHeader settings={settings} notifications={notifications || []} posts={[]} />}
                 <main className="flex-grow flex items-center justify-center p-4">
                     <Alert variant="destructive" className="max-w-2xl">
                     <Terminal className="h-4 w-4" />
@@ -89,6 +90,7 @@ export function PostClient({ post, recentPosts, comments, settings, notification
             <SiteHeader 
                 settings={settings} 
                 notifications={notifications}
+                posts={recentPosts}
             />
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
@@ -125,7 +127,7 @@ export function PostClient({ post, recentPosts, comments, settings, notification
                             <span className="hidden sm:inline">&bull;</span>
                             <div className="flex items-center gap-1.5">
                                 <Calendar className="h-4 w-4" />
-                                <span>{post.date}</span>
+                                <span>{format(parseISO(post.date), "dd LLL yyyy")}</span>
                             </div>
                             <span className="hidden sm:inline">&bull;</span>
                             <div className="flex items-center gap-1.5">

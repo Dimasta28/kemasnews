@@ -24,7 +24,7 @@ export interface JobOpening {
   type: string;
   imageUrl?: string;
   qualifications?: string;
-  createdAt: string;
+  createdAt: string; // ISO string
 }
 
 export interface CompanyBenefit {
@@ -110,11 +110,7 @@ export async function getJobOpenings(): Promise<JobOpening[]> {
       type: data.type || '',
       imageUrl: data.imageUrl || '',
       qualifications: data.qualifications || '',
-      createdAt: createdAt.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }),
+      createdAt: createdAt.toISOString(),
     };
   });
   return jobs;
@@ -136,11 +132,7 @@ export async function getJobOpening(id: string): Promise<JobOpening | null> {
             type: data.type || '',
             imageUrl: data.imageUrl || '',
             qualifications: data.qualifications || '',
-            createdAt: createdAt.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-            }),
+            createdAt: createdAt.toISOString(),
         };
     } else {
         return null;

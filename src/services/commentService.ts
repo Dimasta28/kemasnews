@@ -14,7 +14,7 @@ export interface Comment {
     comment: string;
     status: 'Pending' | 'Approved' | 'Spam';
     avatar: string;
-    date: string;
+    date: string; // ISO String
     postTitle?: string;
 }
 
@@ -79,7 +79,7 @@ export async function getComments(postId: string): Promise<Comment[]> {
                 status: data.status,
                 avatar: data.avatar,
                 dateObj: date, // Temporary field for sorting
-                date: `${formatDistanceToNow(date)} ago`,
+                date: date.toISOString(),
             };
         })
         .filter(comment => comment.status === 'Approved')
@@ -114,7 +114,7 @@ export async function getAllComments(): Promise<Comment[]> {
                 status: data.status,
                 avatar: data.avatar,
                 dateObj: date, // Temporary field for sorting
-                date: date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+                date: date.toISOString(),
             };
         });
 

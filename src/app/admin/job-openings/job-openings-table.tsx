@@ -10,6 +10,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { useToast } from '@/hooks/use-toast';
 import { deleteJobOpening, type JobOpening } from '@/services/careerService';
 import { JobOpeningDialog } from './job-opening-dialog';
+import { format, parseISO } from 'date-fns';
 
 interface JobOpeningsTableProps {
   jobs: JobOpening[];
@@ -87,7 +88,7 @@ export function JobOpeningsTable({ jobs }: JobOpeningsTableProps) {
                 <TableCell>{job.department}</TableCell>
                 <TableCell>{job.location}</TableCell>
                 <TableCell>{job.type}</TableCell>
-                <TableCell>{job.createdAt}</TableCell>
+                <TableCell>{format(parseISO(job.createdAt), "dd LLL yyyy")}</TableCell>
                 <TableCell className="text-right">
                    <DropdownMenu>
                     <DropdownMenuTrigger asChild>

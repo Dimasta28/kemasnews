@@ -23,7 +23,7 @@ export interface Applicant {
   coverLetter: string;
   jobId: string;
   jobTitle: string;
-  appliedAt: string;
+  appliedAt: string; // Should be ISO string for client
 }
 
 export interface ApplicantData {
@@ -74,11 +74,7 @@ export async function getApplicants(): Promise<Applicant[]> {
       coverLetter: data.coverLetter || '',
       jobId: data.jobId || '',
       jobTitle: jobTitle,
-      appliedAt: appliedAt.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }),
+      appliedAt: appliedAt.toISOString(),
     };
   });
   return applicants;

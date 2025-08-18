@@ -35,11 +35,7 @@ export function ApplicantsClient({ initialApplicants }: ApplicantsClientProps) {
           coverLetter: data.coverLetter || '',
           jobId: data.jobId || '',
           jobTitle: data.jobTitle || 'N/A',
-          appliedAt: appliedAt.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          }),
+          appliedAt: appliedAt.toISOString(),
         };
       });
       setApplicants(freshApplicants);

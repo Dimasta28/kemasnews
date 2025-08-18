@@ -105,7 +105,8 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
       const lowercasedTerm = searchTerm.toLowerCase();
       const results = allPosts.filter(post => 
         post.title.toLowerCase().includes(lowercasedTerm) ||
-        post.description.toLowerCase().includes(lowercasedTerm)
+        post.description.toLowerCase().includes(lowercasedTerm) ||
+        post.tags.some(tag => tag.toLowerCase().includes(lowercasedTerm))
       );
       setFilteredPosts(results);
     } else {
@@ -282,23 +283,16 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col gap-4 my-8">
-                <div className="relative w-full">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                    <Input 
-                      type="search" 
-                      placeholder="Search articles..." 
-                      className="pl-10 w-full" 
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
                 <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 sm:px-0 py-2">
                     <div className="flex w-max items-center gap-3 flex-nowrap">
                         <Button 
                             variant={selectedCategory === 'All' ? 'secondary' : 'ghost'} 
                             size="sm" 
                             className="shrink-0"
-                            onClick={() => setSelectedCategory('All')}
+                            onClick={() => {
+                                setSelectedCategory('All');
+                                setSearchTerm('');
+                            }}
                         >
                             All
                         </Button>
@@ -308,7 +302,10 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                                 variant={selectedCategory === category.name ? 'secondary' : 'ghost'} 
                                 size="sm" 
                                 className="shrink-0"
-                                onClick={() => setSelectedCategory(category.name)}
+                                onClick={() => {
+                                    setSelectedCategory(category.name);
+                                    setSearchTerm('');
+                                }}
                             >
                                 {category.name}
                             </Button>

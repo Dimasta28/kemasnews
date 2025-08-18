@@ -40,11 +40,7 @@ export function JobOpeningsClient({ initialJobOpenings, initialDepartments }: Jo
           type: data.type || '',
           imageUrl: data.imageUrl || '',
           qualifications: data.qualifications || '',
-          createdAt: createdAt.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          }),
+          createdAt: createdAt.toISOString(),
         };
       });
       setJobOpenings(freshJobs);

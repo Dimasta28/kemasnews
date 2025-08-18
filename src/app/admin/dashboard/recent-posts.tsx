@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import type { Post } from '@/services/postService';
 import { Button } from '@/components/ui/button';
+import { format, parseISO } from 'date-fns';
 
 interface RecentPostsProps {
     recentPosts: Post[];
@@ -42,7 +43,7 @@ export function RecentPosts({ recentPosts }: RecentPostsProps) {
                                         <Link href={`/admin/posts/edit/${post.id}`} className="font-medium hover:underline block truncate" style={{maxWidth: '20ch'}}>
                                             {post.title}
                                         </Link>
-                                        <span className="text-xs text-muted-foreground">{post.date}</span>
+                                        <span className="text-xs text-muted-foreground">{format(parseISO(post.date), "dd LLL yyyy")}</span>
                                     </TableCell>
                                     <TableCell className="text-right">
                                         <Badge className="text-xs" variant={post.status === 'Published' ? 'secondary' : 'outline'}>

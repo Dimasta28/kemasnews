@@ -21,6 +21,7 @@ import { Button } from '@/components/ui/button';
 import { SiteFooter } from '@/components/site-footer';
 import type { FrontendSettings } from '@/services/settingsService';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { format, parseISO } from 'date-fns';
 
 interface CareersClientPageProps {
   pageData: CareerPageData | null;
@@ -47,13 +48,9 @@ export function CareersClientPage({ pageData, jobOpenings: initialJobOpenings, s
                     department: data.department || '',
                     location: data.location || '',
                     type: data.type || '',
-imageUrl: data.imageUrl || '',
+                    imageUrl: data.imageUrl || '',
                     qualifications: data.qualifications || '',
-                    createdAt: createdAt.toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                    }),
+                    createdAt: createdAt.toISOString(),
                 };
             });
             setJobOpenings(freshJobs);
@@ -180,7 +177,7 @@ imageUrl: data.imageUrl || '',
                                             </div>
                                             <div className="flex items-center text-sm text-muted-foreground gap-2">
                                                 <Calendar className="h-4 w-4 flex-shrink-0" />
-                                                <span>{job.createdAt}</span>
+                                                <span>{format(parseISO(job.createdAt), "dd LLL yyyy")}</span>
                                             </div>
                                         </div>
                                         {job.qualifications && (

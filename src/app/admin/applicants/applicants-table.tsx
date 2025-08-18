@@ -12,6 +12,7 @@ import type { Applicant } from '@/services/applicantService';
 import { ApplicantActions } from './applicant-actions';
 import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
+import { format, parseISO } from 'date-fns';
 
 interface ApplicantsTableProps {
   applicants: Applicant[];
@@ -40,7 +41,7 @@ export function ApplicantsTable({ applicants }: ApplicantsTableProps) {
                 <div>{applicant.phone}</div>
               </TableCell>
               <TableCell className="hidden md:table-cell">{applicant.jobTitle}</TableCell>
-              <TableCell className="hidden lg:table-cell">{applicant.appliedAt}</TableCell>
+              <TableCell className="hidden lg:table-cell">{format(parseISO(applicant.appliedAt), 'dd LLL yyyy')}</TableCell>
               <TableCell className="text-center">
                 <Button variant="outline" size="sm" asChild>
                   <a href={applicant.resumeUrl} target="_blank" rel="noopener noreferrer">

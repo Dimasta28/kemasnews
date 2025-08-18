@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/table';
 import type { Post } from '@/services/postService';
 import { PostActions } from './post-actions';
+import { format, parseISO } from 'date-fns';
 
 interface PostsTableProps {
   posts: Post[];
@@ -63,7 +64,7 @@ export function PostsTable({ posts }: PostsTableProps) {
                     </Badge>
                     </TableCell>
                     <TableCell className="hidden lg:table-cell">
-                    {post.date}
+                    {format(parseISO(post.date), "dd LLL yyyy")}
                     </TableCell>
                     <TableCell>
                     <PostActions postId={post.id} />

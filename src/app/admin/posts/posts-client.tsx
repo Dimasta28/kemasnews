@@ -11,6 +11,7 @@ import { PostsTable } from './posts-table';
 import { CategoriesTable } from './categories-table';
 import { db } from '@/lib/firebase';
 import { collection, query, orderBy, onSnapshot, Timestamp, getDocs } from 'firebase/firestore';
+import { format, parseISO } from 'date-fns';
 
 interface PostsPageClientProps {
   initialPosts: Post[];
@@ -45,7 +46,7 @@ export function PostsPageClient({ initialPosts, initialCategories }: PostsPageCl
             description: data.description || '',
             status: data.status || 'Draft',
             author: data.author || 'KEMAS',
-            date: date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+            date: date.toISOString(),
             content: data.content || '',
             categories: categories,
             tags: data.tags || [],

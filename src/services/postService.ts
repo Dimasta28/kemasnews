@@ -16,7 +16,7 @@ export interface Post {
   categories: string[];
   tags: string[];
   featuredImage: string;
-  date: string;
+  date: string; // ISO String
   author: string;
 }
 
@@ -46,7 +46,7 @@ export async function getPosts(): Promise<Post[]> {
         description: data.description || '',
         status: data.status || 'Draft',
         author: data.author || 'KEMAS', // Default author
-        date: date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        date: date.toISOString(),
         content: data.content || '',
         categories: categories, // Use categories array
         tags: data.tags || [],
@@ -83,7 +83,7 @@ export async function getPost(id: string): Promise<Post | null> {
           tags: data.tags || [],
           featuredImage: data.featuredImage || 'https://placehold.co/300x300.png',
           author: data.author || 'KEMAS',
-          date: date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+          date: date.toISOString(),
       } as Post;
     } else {
       console.log("No such document!");

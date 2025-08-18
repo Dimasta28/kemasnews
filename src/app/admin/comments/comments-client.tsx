@@ -28,6 +28,7 @@ import type { Comment } from '@/services/commentService';
 import { CommentActions } from './comment-actions';
 import { db } from '@/lib/firebase';
 import { collection, onSnapshot, query, orderBy, getDoc, doc, Timestamp } from 'firebase/firestore';
+import { format, parseISO } from 'date-fns';
 
 interface CommentsClientProps {
   initialComments: Comment[];
@@ -53,7 +54,7 @@ export function CommentsClient({ initialComments }: CommentsClientProps) {
                 comment: data.comment,
                 status: data.status,
                 avatar: data.avatar,
-                date: date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+                date: date.toISOString(),
             };
         });
 
@@ -127,7 +128,7 @@ export function CommentsClient({ initialComments }: CommentsClientProps) {
                     {comment.comment.substring(0, 60)}
                     {comment.comment.length > 60 && '...'}
                   </div>
-                  <div className="text-xs text-muted-foreground">{comment.date}</div>
+                  <div className="text-xs text-muted-foreground">{format(parseISO(comment.date), "dd LLL yyyy, HH:mm")}</div>
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
                   <Link href={`/post/${comment.postId}`} className="hover:underline">

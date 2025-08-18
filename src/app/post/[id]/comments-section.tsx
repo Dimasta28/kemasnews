@@ -14,7 +14,7 @@ import { useAuth } from '@/hooks/use-auth';
 import { Skeleton } from '@/components/ui/skeleton';
 import { db } from '@/lib/firebase';
 import { collection, query, where, onSnapshot, orderBy, Timestamp } from 'firebase/firestore';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow, parseISO } from 'date-fns';
 
 export function CommentsSection({ postId, initialComments = [] }: { postId: string, initialComments: Comment[] }) {
     const { toast } = useToast();
@@ -46,7 +46,7 @@ export function CommentsSection({ postId, initialComments = [] }: { postId: stri
                     status: data.status,
                     avatar: data.avatar,
                     dateObj: date, // Temporary field for sorting
-                    date: `${formatDistanceToNow(date)} ago`,
+                    date: date.toISOString(),
                 };
             })
             .filter(comment => comment.status === 'Approved')
@@ -147,7 +147,7 @@ export function CommentsSection({ postId, initialComments = [] }: { postId: stri
                         <div className="flex-1">
                             <div className="flex items-center justify-between">
                                 <span className="font-semibold">{comment.author}</span>
-                                <span className="text-xs text-muted-foreground">{comment.date}</span>
+                                <span className="text-xs text-muted-foreground">{formatDistanceToNow(parseISO(comment.date))} ago</span>
                             </div>
                             <p className="text-sm text-muted-foreground mt-2">{comment.comment}</p>
                             <Button variant="link" size="sm" className="p-0 h-auto mt-1">Reply</Button>

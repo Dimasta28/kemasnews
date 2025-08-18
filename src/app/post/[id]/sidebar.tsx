@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import type { Post } from '@/services/postService';
 import type { BannerSettings } from '@/services/settingsService';
+import { format, parseISO } from 'date-fns';
 
 export function Sidebar({ recentPosts, banner }: { recentPosts: Post[], banner: BannerSettings }) {
   const router = useRouter();
@@ -64,7 +65,7 @@ export function Sidebar({ recentPosts, banner }: { recentPosts: Post[], banner: 
                     <h4 className="font-semibold text-sm leading-tight group-hover:text-primary transition-colors line-clamp-2">
                       {post.title}
                     </h4>
-                    <p className="text-xs text-muted-foreground mt-1">{post.date}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{format(parseISO(post.date), "dd LLL yyyy")}</p>
                   </div>
                 </Link>
                 {index < recentPosts.length - 1 && <Separator className="mt-4" />}
