@@ -140,8 +140,9 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
           </div>
         </section>
         
+        <Separator className="mt-8"/>
+
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Separator className="mt-8"/>
             <div className="flex flex-col gap-4 my-8">
                 <div className="relative w-full">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
