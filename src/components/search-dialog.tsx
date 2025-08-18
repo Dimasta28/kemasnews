@@ -69,7 +69,7 @@ export function SearchDialog({ open, onOpenChange, posts }: SearchDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="overflow-hidden p-0 shadow-lg top-[25%] sm:max-w-6xl">
+      <DialogContent className="overflow-hidden p-0 shadow-lg sm:max-w-6xl">
         <DialogTitle className="sr-only">Search Posts</DialogTitle>
         <form onSubmit={handleSearchSubmit}>
         <Command shouldFilter={false} className="[&_[cmdk-list]]:max-h-[initial] [&_[cmdk-list]]:overflow-visible">
