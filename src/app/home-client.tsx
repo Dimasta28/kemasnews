@@ -142,30 +142,32 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
         
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <Separator className="mt-8"/>
-            <div className="flex items-center gap-2 my-8 overflow-x-auto scrollbar-hide">
-                <div className="relative flex-grow min-w-[200px]">
+            <div className="flex flex-col gap-4 my-8">
+                <div className="relative w-full">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                     <Input type="search" placeholder="Search articles..." className="pl-10 w-full" />
                 </div>
-                <Button 
-                    variant={selectedCategory === 'All' ? 'secondary' : 'ghost'} 
-                    size="sm" 
-                    className="shrink-0"
-                    onClick={() => setSelectedCategory('All')}
-                >
-                    All
-                </Button>
-                {allCategories.map(category => (
+                <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
                     <Button 
-                        key={category.id} 
-                        variant={selectedCategory === category.name ? 'secondary' : 'ghost'} 
+                        variant={selectedCategory === 'All' ? 'secondary' : 'ghost'} 
                         size="sm" 
                         className="shrink-0"
-                        onClick={() => setSelectedCategory(category.name)}
+                        onClick={() => setSelectedCategory('All')}
                     >
-                        {category.name}
+                        All
                     </Button>
-                ))}
+                    {allCategories.map(category => (
+                        <Button 
+                            key={category.id} 
+                            variant={selectedCategory === category.name ? 'secondary' : 'ghost'} 
+                            size="sm" 
+                            className="shrink-0"
+                            onClick={() => setSelectedCategory(category.name)}
+                        >
+                            {category.name}
+                        </Button>
+                    ))}
+                </div>
             </div>
             <Separator />
         </div>
