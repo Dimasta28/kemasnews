@@ -147,8 +147,8 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                     <Input type="search" placeholder="Search articles..." className="pl-10 w-full" />
                 </div>
-                <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 py-2">
-                    <div className="flex w-max items-center gap-3">
+                <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 sm:px-0 py-2">
+                    <div className="flex w-max items-center gap-3 flex-nowrap">
                         <Button 
                             variant={selectedCategory === 'All' ? 'secondary' : 'ghost'} 
                             size="sm" 
