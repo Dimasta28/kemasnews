@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -119,8 +120,6 @@ export function SearchDialog({ open, onOpenChange, posts }: SearchDialogProps) {
                                 </CarouselItem>
                             ))}
                         </CarouselContent>
-                        <CarouselPrevious className="left-[-16px]" />
-                        <CarouselNext className="right-[-16px]" />
                     </Carousel>
                 </div>
                 <CommandEmpty className="py-6 text-center text-muted-foreground">No results found.</CommandEmpty>
