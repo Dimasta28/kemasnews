@@ -1,7 +1,7 @@
 
 import { Suspense } from 'react';
-import { getPost, getPosts } from '@/services/postService';
-import { getCategories } from '@/services/categoryService';
+import { getPost, getPosts, type Post } from '@/services/postService';
+import { getCategories, type Category } from '@/services/categoryService';
 import { getFrontendSettings } from '@/services/settingsService';
 import HomeClient from './home-client';
 import { SiteHeaderWrapper } from '@/components/site-header-wrapper';
@@ -28,47 +28,76 @@ function HomePageLoading() {
 }
 
 export default async function Home() {
-  let allPosts = [];
-  let allCategories = [];
   let settings = null;
-  let heroPosts = [];
   let error = null;
 
-  try {
-    // Fetch all data in parallel
-    [allPosts, allCategories, settings] = await Promise.all([
-      getPosts(),
-      getCategories(),
-      getFrontendSettings(),
-    ]);
+  // Mock data for immediate preview
+  const mockPosts: Post[] = [
+    {
+      id: '1',
+      title: 'Revolutionizing Packaging with AI',
+      description: 'Discover how artificial intelligence is reshaping the future of the packaging industry, from design to delivery.',
+      content: '',
+      status: 'Published',
+      categories: ['Technology'],
+      tags: ['AI', 'Packaging', 'Innovation'],
+      featuredImage: 'https://placehold.co/600x400.png',
+      date: '2024-08-15T10:00:00.000Z',
+      author: 'Admin',
+    },
+    {
+      id: '2',
+      title: 'Sustainable Materials: A Deep Dive',
+      description: 'An in-depth look at the eco-friendly materials that are making packaging more sustainable than ever before.',
+      content: '',
+      status: 'Published',
+      categories: ['Sustainability'],
+      tags: ['Eco-friendly', 'Materials', 'Green'],
+      featuredImage: 'https://placehold.co/600x400.png',
+      date: '2024-08-10T11:00:00.000Z',
+      author: 'Admin',
+    },
+    {
+        id: '3',
+        title: 'The Art of Minimalist Packaging Design',
+        description: 'Less is more. Explore the principles of minimalist design and how it can elevate your brand.',
+        content: '',
+        status: 'Published',
+        categories: ['Design'],
+        tags: ['Minimalism', 'Branding', 'Design'],
+        featuredImage: 'https://placehold.co/600x400.png',
+        date: '2024-08-05T12:00:00.000Z',
+        author: 'Admin',
+    },
+     {
+      id: '4',
+      title: 'Global Logistics: Challenges and Solutions',
+      description: 'Navigating the complex world of global shipping and logistics in the packaging industry.',
+      content: '',
+      status: 'Published',
+      categories: ['Industry'],
+      tags: ['Logistics', 'Shipping', 'Global'],
+      featuredImage: 'https://placehold.co/600x400.png',
+      date: '2024-08-01T09:00:00.000Z',
+      author: 'Admin',
+    }
+  ];
 
-    // Only show published posts on the main page
-    const publishedPosts = allPosts.filter((post) => post.status === 'Published');
-    
-    if (settings.heroPostIds && settings.heroPostIds.length > 0) {
-      const fetchedHeroPosts = await Promise.all(
-        settings.heroPostIds.map(id => getPost(id))
-      );
-      // Filter out any nulls in case a post was deleted
-      heroPosts = fetchedHeroPosts.filter(p => p !== null) as any[];
-    }
-    
-    // Fallback to latest 3 posts if no hero posts are selected or found
-    if(heroPosts.length === 0) {
-      heroPosts = publishedPosts.slice(0, 3);
-    }
+  const mockCategories: Category[] = [
+    { id: '1', name: 'Technology', slug: 'technology', postCount: 1 },
+    { id: '2', name: 'Sustainability', slug: 'sustainability', postCount: 1 },
+    { id: '3', name: 'Design', slug: 'design', postCount: 1 },
+    { id: '4', name: 'Industry', slug: 'industry', postCount: 1 },
+  ];
+  
+  const heroPosts = mockPosts.slice(0,3);
+  const allCategories = mockCategories;
+
+  try {
+    settings = await getFrontendSettings();
   } catch (e: any) {
-    // Catch potential permission errors from Firestore
-    console.error("Failed to fetch initial page data:", e.message);
+    console.error("Failed to fetch settings for home page:", e.message);
     error = e.message;
-    // Attempt to fetch settings again if it failed, so the header/footer can still render
-    if (!settings) {
-        try {
-            settings = await getFrontendSettings();
-        } catch (e2: any) {
-            console.error("Failed to fetch settings for home page:", e2.message);
-        }
-    }
   }
 
   return (
@@ -85,3 +114,4 @@ export default async function Home() {
     </>
     );
 }
+
