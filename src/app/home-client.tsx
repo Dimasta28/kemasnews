@@ -137,15 +137,21 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
         
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <Separator />
-            <div className="flex gap-4 my-8">
-                <div className="relative flex-grow">
+            <div className="flex items-center gap-2 my-8 overflow-x-auto scrollbar-hide">
+                <div className="relative flex-grow min-w-[200px]">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                     <Input type="search" placeholder="Search articles..." className="pl-10 w-full" />
                 </div>
-                <Button variant="outline">
+                <Button variant="outline" className="shrink-0">
                     <Filter className="mr-2 h-4 w-4" />
                     Filter
                 </Button>
+                 <Separator orientation="vertical" className="h-6" />
+                {allCategories.map(category => (
+                    <Button key={category.id} variant="ghost" size="sm" className="shrink-0">
+                        {category.name}
+                    </Button>
+                ))}
             </div>
             <Separator />
         </div>
