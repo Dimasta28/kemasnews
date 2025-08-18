@@ -128,8 +128,12 @@ export function SiteHeader({
                         PT. Kemas <ChevronDownIcon size={16} />
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent sideOffset={0} align="center" className="w-screen p-4 shadow-xl bg-background border-t">
-                        <div className="grid grid-cols-5 gap-x-6 gap-y-1 max-w-6xl mx-auto">
+                    <PopoverContent
+                      align="start"
+                      sideOffset={20}
+                      className="max-w-xs w-full"
+                    >
+                        <div className="grid grid-cols-1 gap-1">
                           {settings.dropdownLinks.map((link) => (
                             <Link
                               key={link.title}
