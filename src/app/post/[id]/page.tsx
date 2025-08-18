@@ -5,22 +5,43 @@ import { getFrontendSettings } from '@/services/settingsService';
 import { getComments } from '@/services/commentService';
 import { getNotifications } from '@/services/notificationService';
 import { PostClient } from './post-client';
+import type { Post } from '@/services/postService';
+import type { Comment } from '@/services/commentService';
+import type { FrontendSettings } from '@/services/settingsService';
+import type { Notification } from '@/services/notificationService';
+
 
 export default async function PostPage({ params }: { params: { id: string } }) {
-  const [post, allPosts, settings, comments, notifications] = await Promise.all([
-    getPost(params.id),
-    getPosts(),
-    getFrontendSettings(),
-    getComments(params.id),
-    getNotifications(),
-  ]);
+  let post: Post | null = null;
+  let recentPosts: Post[] = [];
+  let settings: FrontendSettings | null = null;
+  let comments: Comment[] = [];
+  let notifications: Notification[] = [];
+  let error: string | null = null;
   
-  if (!post) {
-    notFound();
+  try {
+    [post, settings, notifications] = await Promise.all([
+      getPost(params.id),
+      getFrontendSettings(),
+      getNotifications(),
+    ]);
+    
+    if (post) {
+      const [allPosts, postComments] = await Promise.all([
+        getPosts(),
+        getComments(params.id)
+      ]);
+      recentPosts = allPosts.filter(p => p.id !== params.id).slice(0, 5);
+      comments = postComments;
+    } else {
+        // If post is null even without an error, it's a genuine 404
+        notFound();
+    }
+  } catch (e: any) {
+    console.error("Failed to fetch post page data:", e.message);
+    error = e.message; // Pass the error to the client component
   }
   
-  const recentPosts = allPosts.filter(p => p.id !== params.id).slice(0, 5);
-
   return (
     <PostClient 
       post={post}
@@ -28,6 +49,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
       comments={comments}
       settings={settings}
       notifications={notifications}
+      error={error}
     />
   );
 }

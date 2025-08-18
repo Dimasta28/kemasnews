@@ -31,10 +31,11 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { SocialShare } from '@/components/social-share';
-import { Card } from '@/components/ui/card';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Terminal } from 'lucide-react';
 
 // Main Application Component
-export default function HomeClient({ heroPosts, allCategories, settings }: { heroPosts: Post[], allCategories: Category[], settings: FrontendSettings }) {
+export default function HomeClient({ heroPosts, allCategories, settings, error }: { heroPosts: Post[], allCategories: Category[], settings: FrontendSettings | null, error?: string }) {
   const articlesSectionRef = useRef<HTMLElement>(null);
   const autoplayPlugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
   
@@ -145,6 +146,26 @@ export default function HomeClient({ heroPosts, allCategories, settings }: { her
     setCurrentPage(1); // Reset page on new filter
   }, [activeFilter, searchTerm, allPosts]);
 
+  if (error) {
+    return (
+        <div className="flex h-screen items-center justify-center p-4">
+            <Alert variant="destructive" className="max-w-2xl">
+              <Terminal className="h-4 w-4" />
+              <AlertTitle>Connection Error</AlertTitle>
+              <AlertDescription>
+                <p>The application could not connect to the database. This is likely due to a misconfiguration in the Firestore Security Rules.</p>
+                <p className="mt-2 font-mono text-xs bg-muted p-2 rounded">{error}</p>
+                <p className="mt-4">Please check your Firebase project's security rules to ensure that public collections like 'posts', 'categories', and 'settings' are readable by everyone.</p>
+              </AlertDescription>
+            </Alert>
+        </div>
+    )
+  }
+
+  if (!settings) {
+    return null; // Or a loading spinner
+  }
+
   const handleFilterChange = (filter: string) => {
     if (!filter) return; // Prevent unselecting the toggle
     setActiveFilter(filter);
@@ -160,7 +181,7 @@ export default function HomeClient({ heroPosts, allCategories, settings }: { her
   // Pagination logic
   const totalPages = Math.ceil(articles.length / articlesPerPage);
   const indexOfLastArticle = currentPage * articlesPerPage;
-  const indexOfFirstArticle = indexOfLastArticle - indexOfLastArticle;
+  const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
   const currentArticles = articles.slice(
     indexOfFirstArticle,
     indexOfLastArticle
@@ -311,7 +332,7 @@ export default function HomeClient({ heroPosts, allCategories, settings }: { her
                                 viewport={{ once: true, amount: 0.2 }}
                                 className="group rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col bg-card"
                             >
-                                <div className="relative w-full aspect-video">
+                                <div className="relative w-full aspect-video overflow-hidden">
                                     <Image
                                         src={article.featuredImage}
                                         alt={article.title}
@@ -412,11 +433,11 @@ export default function HomeClient({ heroPosts, allCategories, settings }: { her
             )}
         </section>
 
-        <section className="py-12">
+        <section className="bg-background py-12">
             <div className="max-w-7xl mx-auto">
                  <div className="overflow-hidden">
                     <div className="grid md:grid-cols-10 md:gap-6 mx-auto group">
-                        <div className="relative w-full overflow-hidden order-1 md:order-2 md:col-span-3 flex items-center">
+                        <div className="relative w-full overflow-hidden order-2 md:order-1 md:col-span-3 flex items-center">
                             <Image
                                 src={settings.homepageBanner?.imageUrl || 'https://placehold.co/800x450.png'}
                                 alt={settings.homepageBanner?.title || 'Promotional Banner'}
@@ -426,7 +447,7 @@ export default function HomeClient({ heroPosts, allCategories, settings }: { her
                                 data-ai-hint="advertisement banner"
                             />
                         </div>
-                        <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1 md:col-span-7">
+                        <div className="p-8 md:p-12 flex flex-col justify-center order-1 md:order-2 md:col-span-7">
                             <h3 className="text-2xl md:text-4xl font-bold leading-tight text-foreground">{settings.homepageBanner?.title}</h3>
                             <p className="mt-4 text-base md:text-lg text-muted-foreground">{settings.homepageBanner?.description}</p>
                             <Button size="lg" className="mt-6 w-fit" asChild>
@@ -446,5 +467,3 @@ export default function HomeClient({ heroPosts, allCategories, settings }: { her
     </div>
   );
 }
-
-    

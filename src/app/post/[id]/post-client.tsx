@@ -4,7 +4,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ChevronLeft, MessageCircle, User, Calendar, Folder } from 'lucide-react';
+import { ChevronLeft, MessageCircle, User, Calendar, Folder, Terminal } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
 
@@ -21,16 +21,18 @@ import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 import { SocialShare } from '@/components/social-share';
 import { useAuth } from '@/hooks/use-auth';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface PostClientProps {
-    post: Post;
+    post: Post | null;
     recentPosts: Post[];
     comments: Comment[];
-    settings: FrontendSettings;
+    settings: FrontendSettings | null;
     notifications: Notification[];
+    error?: string | null;
 }
 
-export function PostClient({ post, recentPosts, comments, settings, notifications }: PostClientProps) {
+export function PostClient({ post, recentPosts, comments, settings, notifications, error }: PostClientProps) {
     const [sanitizedContent, setSanitizedContent] = useState('');
     const [currentUrl, setCurrentUrl] = useState('');
     const { user } = useAuth();
@@ -38,10 +40,33 @@ export function PostClient({ post, recentPosts, comments, settings, notification
     useEffect(() => {
         // DOMPurify and window.location need a browser environment, so we run it on the client side.
         if (typeof window !== 'undefined') {
-            setSanitizedContent(DOMPurify.sanitize(post.content));
+            if (post?.content) {
+                setSanitizedContent(DOMPurify.sanitize(post.content));
+            }
             setCurrentUrl(window.location.href);
         }
-    }, [post.content]);
+    }, [post?.content]);
+
+    if (error || !post || !settings) {
+        return (
+             <div className="flex flex-col min-h-screen bg-[#EFECE9] dark:bg-[#050505]">
+                {settings && <SiteHeader settings={settings} notifications={notifications || []} />}
+                <main className="flex-grow flex items-center justify-center p-4">
+                    <Alert variant="destructive" className="max-w-2xl">
+                    <Terminal className="h-4 w-4" />
+                    <AlertTitle>Could Not Load Post</AlertTitle>
+                    <AlertDescription>
+                        <p>There was an error loading the content for this post. This is likely a temporary issue or a problem with database permissions.</p>
+                        <p className="mt-2 font-mono text-xs bg-muted p-2 rounded">{error || 'The post data could not be retrieved.'}</p>
+                        <Link href="/" className="text-sm mt-4 inline-block underline">Return to homepage</Link>
+                    </AlertDescription>
+                    </Alert>
+                </main>
+                {settings && <SiteFooter settings={settings} />}
+            </div>
+        )
+    }
+
 
     const variants = {
         hidden: { opacity: 0, y: 20 },

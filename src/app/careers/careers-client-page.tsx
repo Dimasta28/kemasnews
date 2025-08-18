@@ -5,7 +5,7 @@ import { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
-import { Building, MapPin, Calendar } from 'lucide-react';
+import { Building, MapPin, Calendar, Terminal } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import {
   Accordion,
@@ -20,14 +20,16 @@ import { collection, query, orderBy, onSnapshot, Timestamp } from 'firebase/fire
 import { Button } from '@/components/ui/button';
 import { SiteFooter } from '@/components/site-footer';
 import type { FrontendSettings } from '@/services/settingsService';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface CareersClientPageProps {
-  initialPageData: CareerPageData;
-  initialJobOpenings: JobOpening[];
-  settings: FrontendSettings;
+  pageData: CareerPageData | null;
+  jobOpenings: JobOpening[];
+  settings: FrontendSettings | null;
+  error?: string | null;
 }
 
-export function CareersClientPage({ initialPageData, initialJobOpenings, settings }: CareersClientPageProps) {
+export function CareersClientPage({ pageData, jobOpenings: initialJobOpenings, settings, error }: CareersClientPageProps) {
     const [selectedDepartment, setSelectedDepartment] = useState('All');
     const [jobOpenings, setJobOpenings] = useState<JobOpening[]>(initialJobOpenings);
 
@@ -45,7 +47,7 @@ export function CareersClientPage({ initialPageData, initialJobOpenings, setting
                     department: data.department || '',
                     location: data.location || '',
                     type: data.type || '',
-                    imageUrl: data.imageUrl || '',
+imageUrl: data.imageUrl || '',
                     qualifications: data.qualifications || '',
                     createdAt: createdAt.toLocaleDateString('en-US', {
                         year: 'numeric',
@@ -55,6 +57,9 @@ export function CareersClientPage({ initialPageData, initialJobOpenings, setting
                 };
             });
             setJobOpenings(freshJobs);
+        }, (err) => {
+            // This will catch real-time listener errors, e.g. permissions denied after initial load
+            console.error("Error listening to job openings:", err);
         });
 
         return () => unsubscribe();
@@ -72,6 +77,24 @@ export function CareersClientPage({ initialPageData, initialJobOpenings, setting
         return jobOpenings.filter(job => job.department === selectedDepartment);
     }, [jobOpenings, selectedDepartment]);
 
+    if (error || !pageData || !settings) {
+        return (
+            <>
+                <main className="flex-grow flex items-center justify-center p-4 min-h-[70vh]">
+                    <Alert variant="destructive" className="max-w-2xl">
+                    <Terminal className="h-4 w-4" />
+                    <AlertTitle>Could Not Load Page Content</AlertTitle>
+                    <AlertDescription>
+                        <p>There was an error loading the content for the careers page. This is likely a temporary issue or a problem with database permissions.</p>
+                        <p className="mt-2 font-mono text-xs bg-muted p-2 rounded">{error || 'The page data could not be retrieved.'}</p>
+                        <Link href="/" className="text-sm mt-4 inline-block underline">Return to homepage</Link>
+                    </AlertDescription>
+                    </Alert>
+                </main>
+                {settings && <SiteFooter settings={settings} />}
+            </>
+        )
+    }
 
     return (
         <>
@@ -79,7 +102,7 @@ export function CareersClientPage({ initialPageData, initialJobOpenings, setting
                 {/* Hero Section */}
                 <section className="relative h-[60vh] flex items-center justify-center text-center text-white bg-black">
                     <Image
-                        src={initialPageData.heroImageUrl}
+                        src={pageData.heroImageUrl}
                         alt="Our team at work"
                         fill
                         className="z-0 opacity-40 object-cover"
@@ -88,10 +111,10 @@ export function CareersClientPage({ initialPageData, initialJobOpenings, setting
                     />
                     <div className="relative z-10 max-w-3xl p-8">
                         <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-4">
-                            {initialPageData.heroTitle}
+                            {pageData.heroTitle}
                         </h1>
                         <p className="text-base md:text-xl text-gray-200">
-                            {initialPageData.heroDescription}
+                            {pageData.heroDescription}
                         </p>
                     </div>
                 </section>
@@ -100,9 +123,9 @@ export function CareersClientPage({ initialPageData, initialJobOpenings, setting
                 <section id="open-positions" className="py-16 md:py-24">
                     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center mb-12">
-                            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{initialPageData.positionsTitle || 'Open Positions'}</h2>
+                            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{pageData.positionsTitle || 'Open Positions'}</h2>
                             <p className="text-base md:text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
-                                {initialPageData.positionsDescription || 'Find the role that\'s right for you.'}
+                                {pageData.positionsDescription || 'Find the role that\'s right for you.'}
                             </p>
                         </div>
 
@@ -197,13 +220,13 @@ export function CareersClientPage({ initialPageData, initialJobOpenings, setting
                 <section className="py-16 md:py-24 bg-card/60">
                     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center mb-12">
-                            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{initialPageData.whyJoinTitle}</h2>
+                            <h2 className="text-3xl md:text-4xl font-bold text-foreground">{pageData.whyJoinTitle}</h2>
                             <p className="text-base md:text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
-                                {initialPageData.whyJoinDescription}
+                                {pageData.whyJoinDescription}
                             </p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                            {initialPageData.benefits.map((benefit, index) => {
+                            {pageData.benefits.map((benefit, index) => {
                                 return (
                                     <div key={index} className="text-center p-6 bg-background/50 rounded-lg">
                                         <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>

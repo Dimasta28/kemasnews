@@ -28,33 +28,51 @@ function HomePageLoading() {
 }
 
 export default async function Home() {
-  const allPosts = await getPosts();
-  const allCategories = await getCategories();
-  const settings = await getFrontendSettings();
-  
-  // Only show published posts on the main page
-  const publishedPosts = allPosts.filter((post) => post.status === 'Published');
-  
+  let allPosts = [];
+  let allCategories = [];
+  let settings = null;
   let heroPosts = [];
-  if (settings.heroPostIds && settings.heroPostIds.length > 0) {
-    const fetchedHeroPosts = await Promise.all(
-      settings.heroPostIds.map(id => getPost(id))
-    );
-    // Filter out any nulls in case a post was deleted
-    heroPosts = fetchedHeroPosts.filter(p => p !== null) as any[];
-  }
-  
-  // Fallback to latest 3 posts if no hero posts are selected or found
-  if(heroPosts.length === 0) {
-    heroPosts = publishedPosts.slice(0, 3);
-  }
+  let error = null;
 
+  try {
+    // Fetch all data in parallel
+    [allPosts, allCategories, settings] = await Promise.all([
+      getPosts(),
+      getCategories(),
+      getFrontendSettings(),
+    ]);
+
+    // Only show published posts on the main page
+    const publishedPosts = allPosts.filter((post) => post.status === 'Published');
+    
+    if (settings.heroPostIds && settings.heroPostIds.length > 0) {
+      const fetchedHeroPosts = await Promise.all(
+        settings.heroPostIds.map(id => getPost(id))
+      );
+      // Filter out any nulls in case a post was deleted
+      heroPosts = fetchedHeroPosts.filter(p => p !== null) as any[];
+    }
+    
+    // Fallback to latest 3 posts if no hero posts are selected or found
+    if(heroPosts.length === 0) {
+      heroPosts = publishedPosts.slice(0, 3);
+    }
+  } catch (e: any) {
+    // Catch potential permission errors from Firestore
+    console.error("Failed to fetch initial page data:", e.message);
+    error = e.message;
+  }
 
   return (
     <>
       <SiteHeaderWrapper />
       <Suspense fallback={<HomePageLoading />}>
-        <HomeClient heroPosts={heroPosts} allCategories={allCategories} settings={settings} />
+        <HomeClient 
+          heroPosts={heroPosts} 
+          allCategories={allCategories} 
+          settings={settings} 
+          error={error}
+        />
       </Suspense>
     </>
     );
