@@ -115,7 +115,7 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
     <div className="font-sans antialiased bg-background text-foreground min-h-screen">
       <main>
         <section className="pt-12 lg:py-16">
-          <div className="w-full overflow-x-auto scrollbar-hide">
+          <div className="w-full overflow-x-auto scrollbar-hide px-4">
             <div className="grid grid-flow-col auto-cols-[calc(100%/1.1)] sm:auto-cols-[calc(100%/2.1)] md:auto-cols-[calc(100%/2.5)] lg:auto-cols-[calc(100%/3.1)] gap-4">
               {heroPosts.map((post) => (
                 <div key={post.id} className="relative aspect-video md:aspect-[16/10] w-full overflow-hidden">
