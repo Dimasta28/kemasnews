@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import Autoplay from "embla-carousel-autoplay";
+
 
 // Firebase imports
 import { db } from '@/lib/firebase';
@@ -16,12 +18,19 @@ import type { Post } from '@/services/postService';
 import type { Category } from '@/services/categoryService';
 import type { FrontendSettings } from '@/services/settingsService';
 import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import {
   Pagination,
   PaginationContent,
   PaginationItem,
   PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
+  PaginationNext as PaginationNextBtn,
+  PaginationPrevious as PaginationPreviousBtn,
 } from '@/components/ui/pagination';
 import { Search } from 'lucide-react';
 import { SiteFooter } from '@/components/site-footer';
@@ -145,35 +154,48 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
   return (
     <div className="font-sans antialiased bg-background text-foreground min-h-screen">
       <main>
-        <section className="py-16 lg:py-24 text-center">
-            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-foreground">
-                    Blog
-                </h1>
-                <p className="mt-4 text-base md:text-xl text-muted-foreground">
-                    News, updates, and stories from PT. Kemas Indah Maju.
-                </p>
-            </div>
+        <section className="py-12 lg:py-16">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              plugins={[
+                Autoplay({
+                  delay: 5000,
+                }),
+              ]}
+              className="w-full"
+            >
+              <CarouselContent>
+                {heroPosts.map((post) => (
+                  <CarouselItem key={post.id}>
+                    <div className="relative aspect-video md:aspect-[2.4/1] w-full rounded-2xl overflow-hidden">
+                       <Link href={`/post/${post.id}`}>
+                        <Image
+                            src={post.featuredImage}
+                            alt={post.title}
+                            fill
+                            className="object-cover"
+                            data-ai-hint="hero image"
+                            priority
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
+                        <div className="absolute bottom-0 left-0 p-8 text-white">
+                            <h2 className="text-2xl md:text-4xl font-bold">{post.title}</h2>
+                            <p className="mt-2 text-sm md:text-base max-w-2xl line-clamp-2">{post.description}</p>
+                        </div>
+                       </Link>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-4" />
+              <CarouselNext className="right-4" />
+            </Carousel>
+          </div>
         </section>
-        
-        {settings.homepageBanner?.imageUrl && (
-            <section className="relative h-[60vh] bg-black text-white">
-                <Image
-                    src={settings.homepageBanner.imageUrl}
-                    alt={settings.homepageBanner.title}
-                    fill
-                    className="object-cover opacity-40"
-                    priority
-                />
-                <div className="relative z-10 flex flex-col items-center justify-center h-full text-center p-8">
-                    <h2 className="text-4xl md:text-5xl font-bold">{settings.homepageBanner.title}</h2>
-                    <p className="mt-4 text-lg max-w-2xl">{settings.homepageBanner.description}</p>
-                    <Button asChild size="lg" className="mt-8">
-                        <Link href={settings.homepageBanner.buttonLink || '#'}>{settings.homepageBanner.buttonText}</Link>
-                    </Button>
-                </div>
-            </section>
-        )}
 
         <section ref={articlesSectionRef} className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
             <div className="max-w-6xl mx-auto">
@@ -269,7 +291,7 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                   <Pagination>
                   <PaginationContent>
                       <PaginationItem>
-                      <PaginationPrevious
+                      <PaginationPreviousBtn
                           href="#"
                           onClick={(e) => {
                           e.preventDefault();
@@ -297,7 +319,7 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                       </PaginationItem>
                       ))}
                       <PaginationItem>
-                      <PaginationNext
+                      <PaginationNextBtn
                           href="#"
                           onClick={(e) => {
                           e.preventDefault();
