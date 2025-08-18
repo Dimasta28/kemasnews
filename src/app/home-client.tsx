@@ -315,7 +315,7 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
             </div>
 
             {currentArticles.length > 0 ? (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-center">
                     {currentArticles.map((article) => {
                         const firstCategory = article.categories?.[0] || '';
                         const categoryClass = categoryColorMap[firstCategory.toLowerCase().trim()] || 'bg-muted text-muted-foreground';
@@ -429,18 +429,19 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
             )}
         </section>
 
-        <section className="bg-transparent py-12">
+       <section className="bg-transparent py-12">
              <div className="max-w-7xl mx-auto overflow-hidden">
                 <div className="grid md:grid-cols-10 md:gap-6 mx-auto group">
                     <div className="relative w-full overflow-hidden order-2 md:order-1 md:col-span-3 flex items-center transition-transform duration-300 group-hover:scale-105">
-                        <Image
-                            src={settings.homepageBanner?.imageUrl || 'https://placehold.co/800x450.png'}
-                            alt={settings.homepageBanner?.title || 'Promotional Banner'}
-                            width={800}
-                            height={450}
-                            className="w-full h-auto object-contain"
-                            data-ai-hint="advertisement banner"
-                        />
+                        <div className="aspect-w-16 aspect-h-9 w-full">
+                            <Image
+                                src={settings.homepageBanner?.imageUrl || 'https://placehold.co/800x450.png'}
+                                alt={settings.homepageBanner?.title || 'Promotional Banner'}
+                                fill
+                                className="object-contain"
+                                data-ai-hint="advertisement banner"
+                            />
+                        </div>
                     </div>
                     <div className="p-8 md:p-12 flex flex-col justify-center order-1 md:order-2 md:col-span-7">
                         <h3 className="text-2xl md:text-4xl font-bold leading-tight text-foreground">{settings.homepageBanner?.title}</h3>
@@ -461,3 +462,5 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
     </div>
   );
 }
+
+    

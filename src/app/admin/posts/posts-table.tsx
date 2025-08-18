@@ -37,8 +37,8 @@ export function PostsTable({ posts }: PostsTableProps) {
                 <TableRow>
                 <TableHead>Title</TableHead>
                 <TableHead className="hidden sm:table-cell">Author</TableHead>
-                <TableHead className="hidden sm:table-cell">Status</TableHead>
-                <TableHead className="hidden md:table-cell">Date</TableHead>
+                <TableHead className="hidden md:table-cell">Status</TableHead>
+                <TableHead className="hidden lg:table-cell">Date</TableHead>
                 <TableHead>
                     <span className="sr-only">Actions</span>
                 </TableHead>
@@ -51,7 +51,7 @@ export function PostsTable({ posts }: PostsTableProps) {
                     <TableCell className="hidden sm:table-cell">
                     {post.author}
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden md:table-cell">
                     <Badge
                         variant={
                         post.status === 'Published'
@@ -62,7 +62,7 @@ export function PostsTable({ posts }: PostsTableProps) {
                         {post.status}
                     </Badge>
                     </TableCell>
-                    <TableCell className="hidden md:table-cell">
+                    <TableCell className="hidden lg:table-cell">
                     {post.date}
                     </TableCell>
                     <TableCell>
@@ -76,3 +76,5 @@ export function PostsTable({ posts }: PostsTableProps) {
     </>
   );
 }
+
+    
