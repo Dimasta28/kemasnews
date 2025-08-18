@@ -39,6 +39,7 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
   // State for all posts, updated in realtime
   const [allPosts, setAllPosts] = useState<Post[]>([]);
   const [postsByCategory, setPostsByCategory] = useState<Record<string, Post[]>>({});
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   // Set up a real-time listener for posts
   useEffect(() => {
@@ -105,11 +106,15 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
         </div>
     )
   }
+
+  const displayedCategories = selectedCategory === 'All' 
+    ? allCategories 
+    : allCategories.filter(category => category.name === selectedCategory);
   
   return (
     <div className="font-sans antialiased bg-background text-foreground min-h-screen">
       <main>
-        <section className="py-12 lg:py-16">
+        <section className="pt-12 lg:py-16">
           <div className="w-full overflow-x-auto scrollbar-hide">
             <div className="grid grid-flow-col auto-cols-[calc(100%/1.1)] sm:auto-cols-[calc(100%/2.1)] md:auto-cols-[calc(100%/2.5)] lg:auto-cols-[calc(100%/3.1)] gap-4 px-4 sm:px-6 lg:px-8">
               {heroPosts.map((post) => (
@@ -136,14 +141,28 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
         </section>
         
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Separator />
+            <Separator className="mt-8"/>
             <div className="flex items-center gap-2 my-8 overflow-x-auto scrollbar-hide">
                 <div className="relative flex-grow min-w-[200px]">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                     <Input type="search" placeholder="Search articles..." className="pl-10 w-full" />
                 </div>
+                <Button 
+                    variant={selectedCategory === 'All' ? 'secondary' : 'ghost'} 
+                    size="sm" 
+                    className="shrink-0"
+                    onClick={() => setSelectedCategory('All')}
+                >
+                    All
+                </Button>
                 {allCategories.map(category => (
-                    <Button key={category.id} variant="ghost" size="sm" className="shrink-0">
+                    <Button 
+                        key={category.id} 
+                        variant={selectedCategory === category.name ? 'secondary' : 'ghost'} 
+                        size="sm" 
+                        className="shrink-0"
+                        onClick={() => setSelectedCategory(category.name)}
+                    >
                         {category.name}
                     </Button>
                 ))}
@@ -152,7 +171,7 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
         </div>
 
         <div className="space-y-12 lg:space-y-16 mt-8">
-            {allCategories.map((category, index) => {
+            {displayedCategories.map((category, index) => {
               const posts = postsByCategory[category.name];
               if (!posts || posts.length === 0) return null;
 
@@ -212,7 +231,7 @@ export default function HomeClient({ heroPosts, allCategories, settings, error }
                         </Carousel>
                     </div>
                 </section>
-                {index < allCategories.length - 1 && (
+                {index < displayedCategories.length - 1 && (
                     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                         <Separator />
                     </div>
