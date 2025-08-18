@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -48,7 +47,7 @@ export function SearchDialog({ open, onOpenChange, posts }: SearchDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="overflow-hidden p-0 shadow-lg top-[25%] sm:max-w-4xl">
+      <DialogContent className="overflow-hidden p-0 shadow-lg top-[25%] sm:max-w-6xl">
         <DialogTitle className="sr-only">Search Posts</DialogTitle>
         <form onSubmit={handleSearchSubmit}>
         <Command shouldFilter={false}>
