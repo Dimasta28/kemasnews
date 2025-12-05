@@ -5,6 +5,7 @@ import { getFrontendSettings } from '@/services/settingsService';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 const timelineData = [
   {
@@ -42,22 +43,31 @@ export default async function Home() {
       <SiteHeaderWrapper />
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-green-400 to-green-600 text-white">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-            <div className="text-left">
-              <p className="text-lg font-semibold tracking-wider">PT. KEMAS INDAH MAJU</p>
-              <h1 className="text-5xl md:text-7xl font-bold tracking-tight mt-2">
-                Green Journey
-              </h1>
-              <p className="mt-6 max-w-2xl text-lg">
-                We think that mother earth is under threat as well as the future generation.
-              </p>
-              <p className="mt-2 text-lg font-bold">THE TIME TO ACT IS NOW</p>
-              <p className="mt-1 text-lg">
-                Please follow us on our green footprint journey.
-              </p>
+        <section className="relative text-white h-[70vh] flex items-center">
+            <Image
+                src="https://picsum.photos/seed/green-journey/1920/1080"
+                alt="Green Journey background"
+                fill
+                className="object-cover"
+                data-ai-hint="forest nature"
+                priority
+            />
+            <div className="absolute inset-0 bg-black/50" />
+            <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                <div className="text-left">
+                    <p className="text-lg font-semibold tracking-wider">PT. KEMAS INDAH MAJU</p>
+                    <h1 className="text-5xl md:text-7xl font-bold tracking-tight mt-2">
+                        Green Journey
+                    </h1>
+                    <p className="mt-6 max-w-2xl text-lg">
+                        We think that mother earth is under threat as well as the future generation.
+                    </p>
+                    <p className="mt-2 text-lg font-bold">THE TIME TO ACT IS NOW</p>
+                    <p className="mt-1 text-lg">
+                        Please follow us on our green footprint journey.
+                    </p>
+                </div>
             </div>
-          </div>
         </section>
 
         {/* Timeline Section */}
