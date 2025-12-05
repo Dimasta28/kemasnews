@@ -1,161 +1,222 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from 'next-themes';
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '@/components/ui/command';
+  Menu as MenuIcon,
+  Bell as BellIcon,
+  Sun,
+  Moon,
+  ChevronDown as ChevronDownIcon,
+  X as XIcon,
+} from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import type { FrontendSettings } from '@/services/settingsService';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel"
-import type { Post } from '@/services/postService';
-import { format, parseISO } from 'date-fns';
-import { Card, CardContent } from './ui/card';
+  markAllNotificationsAsRead,
+  markNotificationAsRead,
+  type Notification,
+} from '@/services/notificationService';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { cn } from '@/lib/utils';
+import { Input } from './ui/input';
+import { Post } from '@/services/postService';
 
-interface SearchDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+interface SiteHeaderProps {
+  settings: FrontendSettings;
+  notifications: Notification[];
   posts: Post[];
 }
 
-export function SearchDialog({ open, onOpenChange, posts }: SearchDialogProps) {
-  const router = useRouter();
-  const [query, setQuery] = useState('');
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
 
-  const handleSelect = (postId: string) => {
-    onOpenChange(false);
-    router.push(`/post/${postId}`);
+export function SiteHeader({ 
+    settings: initialSettings, 
+    notifications: initialNotifications,
+    posts: allPosts,
+}: SiteHeaderProps) {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { toast } = useToast();
+  const router = useRouter();
+  
+  const [notifications, setNotifications] = useState(initialNotifications || []);
+  const [settings, setSettings] = useState(initialSettings);
+
+  // This effect will sync state if the initial props change (e.g., on navigation)
+  useEffect(() => {
+    setNotifications(initialNotifications || []);
+  }, [initialNotifications]);
+
+  useEffect(() => {
+    setSettings(initialSettings);
+  }, [initialSettings]);
+
+  const hasUnread = notifications.some(n => !n.read);
+
+  const handleMarkAsRead = async (id: string) => {
+    try {
+      await markNotificationAsRead(id);
+      // Manually update state
+      setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
+    } catch (error) {
+        toast({ variant: 'destructive', title: 'Error', description: 'Could not mark notification as read.' });
+    }
+  };
+  
+  const handleMarkAllAsRead = async () => {
+    try {
+      await markAllNotificationsAsRead();
+      // Manually update state
+      setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+    } catch (error) {
+        toast({ variant: 'destructive', title: 'Error', description: 'Could not mark all as read.' });
+    }
   };
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (query.trim()) {
-        onOpenChange(false);
-        router.push(`/search?q=${encodeURIComponent(query)}`);
-    }
-  }
-
   useEffect(() => {
-    if (query.trim() === '') {
-        setFilteredPosts([]);
-    } else {
-        const searchResults = posts.filter(post => 
-            post.title.toLowerCase().includes(query.toLowerCase()) || 
-            post.description.toLowerCase().includes(query.toLowerCase())
-        );
-        setFilteredPosts(searchResults);
-    }
-  }, [query, posts]);
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
 
-  // Clear query when dialog opens/closes
-  useEffect(() => {
-    if(!open) {
-        setQuery('');
-    }
-  }, [open]);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="overflow-hidden p-0 shadow-lg sm:max-w-6xl">
-        <DialogTitle className="sr-only">Search Posts</DialogTitle>
-        <form onSubmit={handleSearchSubmit}>
-        <Command shouldFilter={false} className="[&_[cmdk-list]]:max-h-[initial] [&_[cmdk-list]]:overflow-visible">
-          <CommandInput 
-            placeholder="Search all articles..." 
-            value={query}
-            onValueChange={setQuery}
-            className="text-lg"
-          />
-          <CommandList>
-            <CommandEmpty className="py-6 text-center text-muted-foreground">No results found.</CommandEmpty>
-
-            {query && filteredPosts.length > 0 && (
-                <CommandGroup heading="Results">
-                  <div className="space-y-2 p-2">
-                    {filteredPosts.map((post) => (
-                        <button
-                            key={post.id}
-                            type="button"
-                            onClick={() => handleSelect(post.id)}
-                            className="w-full text-left p-2 rounded-lg hover:bg-accent"
-                        >
-                            <div className="flex items-center gap-4">
-                                <Image
-                                    src={post.featuredImage}
-                                    alt={post.title}
-                                    width={128}
-                                    height={72}
-                                    className="rounded-md object-cover w-32 h-18"
-                                    data-ai-hint="article thumbnail"
-                                />
-                                <div className="flex flex-col">
-                                    <span className="font-semibold">{post.title}</span>
-                                    <span className="text-xs text-muted-foreground mt-1">
-                                        {format(parseISO(post.date), 'dd LLL yyyy')}
-                                    </span>
-                                     <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{post.description}</p>
-                                </div>
+    <>
+      <header
+        className={cn(
+            "sticky top-0 z-50 w-full border-b transition-all",
+            isScrolled ? "bg-background/95 backdrop-blur-sm" : "bg-background"
+        )}
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16">
+                <div className="flex items-center">
+                    <Link href="/" className="flex-shrink-0">
+                        <Image
+                            src={settings.lightModeLogoUrl}
+                            alt="Kemas Logo"
+                            width={100}
+                            height={25}
+                            priority
+                        />
+                    </Link>
+                </div>
+                
+                <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger className="flex items-center gap-1 hover:text-primary transition-colors outline-none">
+                            PT. Kemas <ChevronDownIcon size={16} />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <div className="grid grid-cols-2 gap-4 p-4 w-[500px]">
+                                {settings.dropdownLinks?.map((link) => (
+                                    <Link key={link.title} href={link.href} className="p-2 hover:bg-accent rounded-md transition-colors">
+                                        <div className="font-semibold">{link.title}</div>
+                                        <p className="text-xs text-muted-foreground">{link.description}</p>
+                                    </Link>
+                                ))}
                             </div>
-                        </button>
-                    ))}
-                  </div>
-                </CommandGroup>
-            )}
-            
-            {!query && (
-              <div className="p-4 border-t">
-                  <h2 className="text-sm font-medium text-muted-foreground mb-4">Suggestions</h2>
-                  <Carousel
-                      opts={{
-                          align: "start",
-                          loop: posts.length > 4,
-                      }}
-                      className="w-full"
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <Link href="/green-journey" className="hover:text-primary transition-colors">Green Journey</Link>
+                    <Link href="/careers" className="hover:text-primary transition-colors">Careers</Link>
+                </nav>
+
+                <div className="flex items-center gap-2">
+                  <Link href="/login" className={cn(buttonVariants({variant: 'outline'}), "rounded-full")}>
+                    Login
+                  </Link>
+                  <button
+                    onClick={() => setIsMobileMenuOpen(true)}
+                    className="md:hidden p-2 hover:bg-secondary rounded-full transition"
                   >
-                      <CarouselContent className="-ml-2">
-                          {posts.slice(0, 5).map((post) => (
-                              <CarouselItem key={post.id} className="pl-2 basis-1/2 md:basis-1/3 lg:basis-1/4">
-                                   <button type="button" onClick={() => handleSelect(post.id)} className="w-full text-left">
-                                      <Card className="overflow-hidden group border-border hover:border-primary transition-all duration-300">
-                                          <CardContent className="p-0">
-                                              <div className="relative aspect-[4/3] w-full overflow-hidden">
-                                                  <Image
-                                                      src={post.featuredImage}
-                                                      alt={post.title}
-                                                      fill
-                                                      className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
-                                                      data-ai-hint="cosmetics packaging"
-                                                  />
-                                              </div>
-                                              <div className="p-2">
-                                                  <h3 className="font-semibold line-clamp-2 text-sm">{post.title}</h3>
-                                                  <p className="text-xs text-muted-foreground mt-1">
-                                                      {format(parseISO(post.date), "dd LLL yyyy")}
-                                                  </p>
-                                              </div>
-                                          </CardContent>
-                                      </Card>
-                                   </button>
-                              </CarouselItem>
-                          ))}
-                      </CarouselContent>
-                  </Carousel>
-              </div>
-            )}
-          </CommandList>
-        </Command>
-        </form>
-      </DialogContent>
-    </Dialog>
+                    <MenuIcon size={20} />
+                  </button>
+                </div>
+            </div>
+        </div>
+      </header>
+      
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            className="fixed inset-0 bg-background z-[100] flex flex-col p-8 md:hidden"
+          >
+             <div className="flex items-center justify-between mb-8">
+                <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Image
+                    src={settings.lightModeLogoUrl}
+                    alt="Kemas Logo"
+                    width={100}
+                    height={25}
+                  />
+                </Link>
+                <button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2 rounded-full hover:bg-secondary transition-colors"
+                    >
+                    <XIcon size={24} />
+                </button>
+             </div>
+
+            <nav className="text-left w-full">
+                <ul className="space-y-2 text-xl font-medium">
+                    <li>
+                        <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Home</Link>
+                    </li>
+                    <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="item-1" className="border-b-0">
+                            <AccordionTrigger className="py-2 text-xl font-medium hover:no-underline">PT. Kemas</AccordionTrigger>
+                            <AccordionContent className="pl-4">
+                                <ul className="space-y-1">
+                                    {settings.dropdownLinks?.map((link) => (
+                                         <li key={link.title}>
+                                            <Link href={link.href} onClick={() => setIsMobileMenuOpen(false)} className="block py-2 text-base text-muted-foreground hover:text-foreground">
+                                                {link.title}
+                                            </Link>
+                                         </li>
+                                    ))}
+                                </ul>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                     <li>
+                        <Link href="/green-journey" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Journey</Link>
+                    </li>
+                    <li>
+                        <Link href="/careers" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Careers</Link>
+                    </li>
+                </ul>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

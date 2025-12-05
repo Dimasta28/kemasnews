@@ -12,7 +12,6 @@ import {
   Bell as BellIcon,
   Sun,
   Moon,
-  Search,
   ChevronDown as ChevronDownIcon,
   X as XIcon,
 } from 'lucide-react';
@@ -37,7 +36,6 @@ import {
 import { cn } from '@/lib/utils';
 import { Input } from './ui/input';
 import { Post } from '@/services/postService';
-import { SearchDialog } from './search-dialog';
 
 interface SiteHeaderProps {
   settings: FrontendSettings;
@@ -53,7 +51,6 @@ export function SiteHeader({
 }: SiteHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
   
@@ -104,17 +101,6 @@ export function SiteHeader({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault()
-        setIsSearchOpen((open) => !open)
-      }
-    }
-    document.addEventListener("keydown", down)
-    return () => document.removeEventListener("keydown", down)
-  }, []);
-
 
   return (
     <>
@@ -160,14 +146,6 @@ export function SiteHeader({
                 </nav>
 
                 <div className="flex items-center gap-2">
-                    <Button
-                        variant="outline"
-                        className="h-9 w-9 p-0 sm:w-auto sm:px-3 sm:justify-start"
-                        onClick={() => setIsSearchOpen(true)}
-                    >
-                        <Search className="h-4 w-4" />
-                        <span className="sr-only sm:not-sr-only sm:ml-2 text-muted-foreground">Search...</span>
-                    </Button>
                   <Link href="/login" className={cn(buttonVariants({variant: 'outline'}), "rounded-full")}>
                     Login
                   </Link>
@@ -182,8 +160,6 @@ export function SiteHeader({
         </div>
       </header>
       
-      <SearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} posts={allPosts} />
-
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -236,12 +212,6 @@ export function SiteHeader({
                     </li>
                     <li>
                         <Link href="/careers" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Careers</Link>
-                    </li>
-                    <li>
-                        <Button variant="outline" className="w-full justify-start mt-4" onClick={() => { setIsMobileMenuOpen(false); setIsSearchOpen(true); }}>
-                            <Search className="mr-2 h-5 w-5 text-muted-foreground" />
-                            Search articles...
-                        </Button>
                     </li>
                 </ul>
             </nav>
