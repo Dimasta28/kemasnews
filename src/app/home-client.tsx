@@ -1,248 +1,164 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { useSearchParams, useRouter } from 'next/navigation';
-import Autoplay from "embla-carousel-autoplay";
-
-
-// Firebase imports
-import { db } from '@/lib/firebase';
-import { collection, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
-
-// Component imports
-import type { Post } from '@/services/postService';
-import type { Category } from '@/services/categoryService';
-import type { FrontendSettings } from '@/services/settingsService';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import { Search, Filter } from 'lucide-react';
-import { SiteFooter } from '@/components/site-footer';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Terminal } from 'lucide-react';
-import { format, parseISO } from 'date-fns';
-import { Card, CardContent } from '@/components/ui/card';
+import { motion } from 'framer-motion';
+import { ArrowRight, CheckCircle, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { Input } from '@/components/ui/input';
+import { SiteFooter } from '@/components/site-footer';
+import type { FrontendSettings } from '@/services/settingsService';
+import { Card, CardContent } from '@/components/ui/card';
 
-// Main Application Component
-export default function HomeClient({ heroPosts, allCategories, settings, error }: { heroPosts: Post[], allCategories: Category[], settings: FrontendSettings | null, error?: string | null }) {
-  const router = useRouter();
-  
-  // State for all posts, updated in realtime
-  const [allPosts, setAllPosts] = useState<Post[]>([]);
-  const [postsByCategory, setPostsByCategory] = useState<Record<string, Post[]>>({});
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  
-  // Set up a real-time listener for posts
-  useEffect(() => {
-    // This effect runs once on mount on the client side
-    const postsCollection = collection(db, 'posts');
-    const q = query(postsCollection, orderBy('createdAt', 'desc'));
+// Dummy data for social proof and testimonials
+const companyLogos = [
+  { name: 'Company A', logo: 'https://via.placeholder.com/150x50/ffffff/000000?text=Logo+A' },
+  { name: 'Company B', logo: 'https://via.placeholder.com/150x50/ffffff/000000?text=Logo+B' },
+  { name: 'Company C', logo: 'https://via.placeholder.com/150x50/ffffff/000000?text=Logo+C' },
+  { name: 'Company D', logo: 'https://via.placeholder.com/150x50/ffffff/000000?text=Logo+D' },
+  { name: 'Company E', logo: 'https://via.placeholder.com/150x50/ffffff/000000?text=Logo+E' },
+];
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-        const freshPosts: Post[] = snapshot.docs.map(doc => {
-            const data = doc.data();
-            const date = (data.createdAt as Timestamp)?.toDate() || new Date();
-            
-            let categories: string[] = [];
-            if (data.categories && Array.isArray(data.categories)) {
-              categories = data.categories;
-            } else if (data.category && typeof data.category === 'string') {
-              categories = [data.category];
-            }
+const benefits = [
+  { title: 'Increased Efficiency', description: 'Streamline your workflows and get more done in less time.', icon: CheckCircle },
+  { title: 'Actionable Insights', description: 'Gain a deeper understanding of your data to make smarter decisions.', icon: CheckCircle },
+  { title: 'Seamless Collaboration', description: 'Work together with your team in real-time, no matter where you are.', icon: CheckCircle },
+];
 
-            return {
-                id: doc.id,
-                title: data.title || '',
-                description: data.description || '',
-                status: data.status || 'Draft',
-                author: data.author || 'KEMAS',
-                date: date.toISOString(), // Keep it as ISO string
-                content: data.content || '',
-                categories: categories,
-                tags: data.tags || [],
-                featuredImage: data.featuredImage || 'https://placehold.co/600x400.png'
-            };
-        }).filter(post => post.status === 'Published'); // Only show published posts
+const testimonials = [
+  { name: 'Jane Doe', role: 'CEO, Company A', quote: 'This product has revolutionized how we operate. Our productivity has skyrocketed!', avatar: 'https://i.pravatar.cc/150?img=1' },
+  { name: 'John Smith', role: 'Lead Developer, Company B', quote: 'Incredibly easy to integrate and has saved us countless hours of development time.', avatar: 'https://i.pravatar.cc/150?img=2' },
+];
 
-        setAllPosts(freshPosts);
-    });
 
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
-  }, []); // Empty dependency array means this effect runs once on mount
-
-  useEffect(() => {
-    const groupedPosts: Record<string, Post[]> = {};
-    allCategories.forEach(category => {
-        const postsInCategory = allPosts.filter(post => post.categories.includes(category.name));
-        if (postsInCategory.length > 0) {
-            groupedPosts[category.name] = postsInCategory;
-        }
-    });
-    setPostsByCategory(groupedPosts);
-  }, [allPosts, allCategories]);
-
-  if (error || !settings) {
-    return (
-        <div className="flex h-screen items-center justify-center p-4">
-            <Alert variant="destructive" className="max-w-2xl">
-              <Terminal className="h-4 w-4" />
-              <AlertTitle>Connection Error</AlertTitle>
-              <AlertDescription>
-                <p>The application could not connect to the database. This is likely due to a misconfiguration in the Firestore Security Rules.</p>
-                <p className="mt-2 font-mono text-xs bg-muted p-2 rounded">{error || 'Could not retrieve page settings.'}</p>
-                <p className="mt-4">Please check your Firebase project's security rules to ensure that public collections like 'posts', 'categories', and 'settings' are readable by everyone.</p>
-              </AlertDescription>
-            </Alert>
-        </div>
-    )
-  }
-
-  const displayedCategories = selectedCategory === 'All' 
-    ? allCategories 
-    : allCategories.filter(category => category.name === selectedCategory);
-  
+export default function HomeClient({ settings }: { settings: FrontendSettings | null }) {
+    if (!settings) {
+        // Render a loading state or a fallback if settings are not available
+        return (
+            <div className="flex h-screen items-center justify-center">
+                <p>Loading...</p>
+            </div>
+        );
+    }
   return (
-    <div className="font-sans antialiased bg-background text-foreground min-h-screen">
-      <main>
-        <section className="pt-12 lg:py-16">
-          <div className="w-full overflow-x-auto scrollbar-hide px-4">
-            <div className="grid grid-flow-col auto-cols-[calc(100%/1.1)] sm:auto-cols-[calc(100%/2.1)] md:auto-cols-[calc(100%/2.5)] lg:auto-cols-[calc(100%/3.1)] gap-4">
-              {heroPosts.map((post) => (
-                <div key={post.id} className="relative aspect-video md:aspect-[16/10] w-full overflow-hidden">
-                  <Link href={`/post/${post.id}`}>
-                    <Image
-                      src={post.featuredImage}
-                      alt={post.title}
-                      fill
-                      className="object-cover"
-                      data-ai-hint="hero image"
-                      priority
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
-                    <div className="absolute bottom-0 left-0 p-6 text-white">
-                      <h2 className="text-xl md:text-2xl font-bold">{post.title}</h2>
-                      <p className="mt-2 text-xs md:text-sm max-w-2xl line-clamp-2">{post.description}</p>
-                    </div>
+    <div className="flex flex-col min-h-screen bg-background">
+      <main className="flex-grow">
+        {/* Hero Section */}
+        <section className="py-20 md:py-32 text-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-foreground">
+                The Future of Your Business Starts Here
+              </h1>
+              <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground">
+                Unlock unparalleled growth with our innovative solutions. We empower teams to achieve more by simplifying complexity.
+              </p>
+              <div className="mt-8">
+                <Button size="lg" asChild>
+                  <Link href="/register">
+                    Get Started Free <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Social Proof Section */}
+        <section className="py-12 bg-secondary/50">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 className="text-center text-sm font-semibold text-muted-foreground tracking-wider uppercase">
+              Trusted by the world's best companies
+            </h3>
+            <div className="mt-6 grid grid-cols-2 gap-8 md:grid-cols-5 items-center">
+              {companyLogos.map((company) => (
+                <div key={company.name} className="col-span-1 flex justify-center">
+                  <Image
+                    className="h-10 w-auto object-contain"
+                    src={company.logo}
+                    alt={company.name}
+                    width={150}
+                    height={40}
+                  />
                 </div>
               ))}
             </div>
           </div>
         </section>
-        
-        <div className="w-full mt-8"><Separator /></div>
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col gap-4 my-8">
-                <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 sm:px-0 py-2">
-                    <div className="flex w-max items-center gap-3 flex-nowrap">
-                        <Button 
-                            variant={selectedCategory === 'All' ? 'secondary' : 'ghost'} 
-                            size="sm" 
-                            className="shrink-0"
-                            onClick={() => setSelectedCategory('All')}
-                        >
-                            All
-                        </Button>
-                        {allCategories.map(category => (
-                            <Button 
-                                key={category.id} 
-                                variant={selectedCategory === category.name ? 'secondary' : 'ghost'} 
-                                size="sm" 
-                                className="shrink-0"
-                                onClick={() => setSelectedCategory(category.name)}
-                            >
-                                {category.name}
-                            </Button>
-                        ))}
-                    </div>
+        {/* Benefits Section */}
+        <section className="py-20 md:py-28">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Focus on What Matters</h2>
+                    <p className="mt-3 max-w-2xl mx-auto text-lg text-muted-foreground">Stop wasting time on manual tasks. Here’s how we help.</p>
+                </div>
+                <div className="grid md:grid-cols-3 gap-12">
+                    {benefits.map((benefit, index) => (
+                        <div key={index} className="text-center">
+                            <div className="flex items-center justify-center h-12 w-12 rounded-md bg-primary text-primary-foreground mx-auto">
+                                <benefit.icon className="h-6 w-6" />
+                            </div>
+                            <h3 className="mt-5 text-xl font-semibold">{benefit.title}</h3>
+                            <p className="mt-2 text-base text-muted-foreground">{benefit.description}</p>
+                        </div>
+                    ))}
                 </div>
             </div>
-            <Separator />
-        </div>
+        </section>
 
-       <div className="space-y-12 lg:space-y-16 mt-8">
-            {displayedCategories.map((category, index) => {
-              const posts = postsByCategory[category.name];
-              if (!posts || posts.length === 0) return null;
+        {/* Testimonials Section */}
+        <section className="py-20 md:py-28 bg-secondary/50">
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="space-y-12">
+                    {testimonials.map((testimonial, index) => (
+                        <Card key={index} className="overflow-hidden">
+                            <CardContent className="p-8 text-center">
+                                <Image
+                                    className="h-16 w-16 rounded-full mx-auto"
+                                    src={testimonial.avatar}
+                                    alt=""
+                                    width={64}
+                                    height={64}
+                                />
+                                <blockquote className="mt-6">
+                                    <p className="text-xl font-medium text-foreground">&ldquo;{testimonial.quote}&rdquo;</p>
+                                </blockquote>
+                                <footer className="mt-6">
+                                    <div className="font-semibold text-foreground">{testimonial.name}</div>
+                                    <div className="text-muted-foreground">{testimonial.role}</div>
+                                </footer>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+            </div>
+        </section>
 
-              return (
-                <React.Fragment key={category.id}>
-                <section>
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex justify-between items-center mb-8">
-                            <h2 className="text-2xl md:text-3xl font-bold">{category.name}</h2>
-                             <Button asChild variant="link" className="pr-0">
-                               <Link href={`/category/${category.slug}`}>
-                                   View all
-                               </Link>
-                            </Button>
-                        </div>
-                        <Carousel
-                            opts={{
-                                align: "start",
-                                loop: posts.length > 3,
-                            }}
-                            className="w-full"
-                        >
-                            <CarouselContent className="-ml-4">
-                                {posts.map((post) => (
-                                    <CarouselItem key={post.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                                        <Card className="overflow-hidden group border-none shadow-none bg-transparent">
-                                            <CardContent className="p-0">
-                                                <Link href={`/post/${post.id}`}>
-                                                    <div className="relative aspect-[4/3] w-full overflow-hidden">
-                                                        <Image
-                                                            src={post.featuredImage}
-                                                            alt={post.title}
-                                                            fill
-                                                            className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
-                                                            data-ai-hint="cosmetics packaging"
-                                                        />
-                                                    </div>
-                                                    <div className="p-4 pl-1">
-                                                        <p className="text-sm text-muted-foreground mb-1">{post.categories.join(', ')}</p>
-                                                        <h3 className="font-semibold line-clamp-2">{post.title}</h3>
-                                                        <p className="text-sm text-muted-foreground mt-1">
-                                                          {format(parseISO(post.date), "dd LLL yyyy")}
-                                                        </p>
-                                                    </div>
-                                                </Link>
-                                            </CardContent>
-                                        </Card>
-                                    </CarouselItem>
-                                ))}
-                            </CarouselContent>
-                             {posts.length > 3 && (
-                                <>
-                                <CarouselPrevious className="left-[-50px] top-1/2 -translate-y-1/2 hidden lg:flex" />
-                                <CarouselNext className="right-[-50px] top-1/2 -translate-y-1/2 hidden lg:flex" />
-                                </>
-                            )}
-                        </Carousel>
-                    </div>
-                </section>
-                {index < displayedCategories.length - 1 && (
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <Separator />
-                    </div>
-                )}
-                </React.Fragment>
-              );
-            })}
-        </div>
+        {/* Final CTA Section */}
+        <section className="py-20 md:py-28 text-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground">
+              Ready to Dive In?
+            </h2>
+            <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
+              Start your free trial today. No credit card required.
+            </p>
+            <div className="mt-8">
+              <Button size="lg" asChild>
+                <Link href="/register">
+                  Claim Your Free Trial <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
       </main>
       <SiteFooter settings={settings} />
     </div>
