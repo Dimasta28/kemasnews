@@ -11,7 +11,7 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 345 74% 20%; /* Deep Red */
+    --primary: 138 56% 27%; /* Dark Green */
     --primary-foreground: 0 0% 98%;
     --secondary: 0 0% 93%; /* Light Gray */
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -23,7 +23,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 89%;
     --input: 0 0% 89%;
-    --ring: 345 74% 20%;
+    --ring: 138 56% 27%;
   }
 
   .dark {
@@ -33,7 +33,7 @@
     --card-foreground: 0 0% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 345 74% 60%; /* Lighter Red for dark mode */
+    --primary: 138 40% 50%; /* Lighter Green for dark mode */
     --primary-foreground: 0 0% 98%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 0 0% 98%;
@@ -45,7 +45,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 345 74% 60%;
+    --ring: 138 40% 50%;
   }
 }
 
