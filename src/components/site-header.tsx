@@ -146,9 +146,6 @@ export function SiteHeader({
                 </nav>
 
                 <div className="flex items-center gap-2">
-                  <Link href="/login" className={cn(buttonVariants({variant: 'outline'}), "rounded-full")}>
-                    Login
-                  </Link>
                   <button
                     onClick={() => setIsMobileMenuOpen(true)}
                     className="md:hidden p-2 hover:bg-secondary rounded-full transition"
