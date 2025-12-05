@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -137,8 +138,9 @@ export function SiteHeader({
                     </Link>
                 </div>
                 
-                <div className="hidden md:flex items-center space-x-8 text-sm font-medium">
-                </div>
+                <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <Link href="/green-journey" className="hover:text-primary transition-colors">Green Journey</Link>
+                </nav>
 
                 <div className="flex items-center gap-2">
                     <Button
@@ -193,6 +195,9 @@ export function SiteHeader({
 
             <nav className="text-left w-full">
               <ul className="space-y-2 text-xl font-medium">
+                 <li>
+                    <Link href="/green-journey" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Journey</Link>
+                </li>
                 <li>
                     <Button variant="outline" className="w-full justify-start" onClick={() => { setIsMobileMenuOpen(false); setIsSearchOpen(true); }}>
                         <Search className="mr-2 h-5 w-5 text-muted-foreground" />
