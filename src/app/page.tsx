@@ -57,7 +57,7 @@ export default async function Home() {
                 <div className="text-left">
                     <p className="text-lg font-semibold tracking-wider">PT. KEMAS INDAH MAJU</p>
                     <h1 className="text-5xl md:text-7xl font-bold tracking-tight mt-2">
-                        Innovative Packaging Solutions Since 1980
+                        Green Journey
                     </h1>
                     <p className="mt-6 max-w-2xl text-lg">
                         Delivering premium plastic & metal cosmetic packaging with European & Japanese technology.
