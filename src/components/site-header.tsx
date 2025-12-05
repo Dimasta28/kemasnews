@@ -137,43 +137,8 @@ export function SiteHeader({
                     </Link>
                 </div>
                 
-                <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
-                  <Link href="/" className="text-foreground/80 hover:text-primary transition-colors">
-                    Home
-                  </Link>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <button className="flex items-center gap-1 text-foreground/80 hover:text-primary transition-colors focus:outline-none">
-                        PT. Kemas <ChevronDownIcon size={16} />
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent
-                      align="center"
-                      sideOffset={16}
-                      className="w-screen rounded-none border-x-0"
-                    >
-                      <div className="max-w-6xl mx-auto">
-                        <div className="grid grid-cols-6 gap-4">
-                          {settings.dropdownLinks.map((link) => (
-                            <Link
-                              key={link.title}
-                              href={link.href}
-                              className="block p-3 rounded-lg hover:bg-secondary border"
-                            >
-                              <p className="font-semibold text-foreground">{link.title}</p>
-                              <p className="text-sm text-muted-foreground">
-                                {link.description}
-                              </p>
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-                  <Link href="/careers" className="text-foreground/80 hover:text-primary transition-colors">
-                    Careers
-                  </Link>
-                </nav>
+                <div className="hidden md:flex items-center space-x-8 text-sm font-medium">
+                </div>
 
                 <div className="flex items-center gap-2">
                     <Button
@@ -233,36 +198,6 @@ export function SiteHeader({
                         <Search className="mr-2 h-5 w-5 text-muted-foreground" />
                         Search articles...
                     </Button>
-                </li>
-                <li>
-                  <Link href="/" className="block py-2 hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Accordion type="single" collapsible className="w-full">
-                    <AccordionItem value="item-1" className="border-b-0">
-                      <AccordionTrigger className="hover:no-underline text-xl py-2 justify-start [&>svg]:ml-auto">
-                        PT. Kemas
-                      </AccordionTrigger>
-                      <AccordionContent className="pt-2 pl-4">
-                        <ul className="space-y-2 text-lg font-normal text-muted-foreground">
-                           {settings.dropdownLinks.map((link) => (
-                             <li key={link.title}>
-                               <Link href={link.href} className="block py-1 hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
-                                 {link.title}
-                               </Link>
-                             </li>
-                           ))}
-                        </ul>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-                </li>
-                 <li>
-                  <Link href="/careers" className="block py-2 hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
-                    Careers
-                  </Link>
                 </li>
               </ul>
             </nav>
