@@ -1,49 +1,84 @@
 
-import { Suspense } from 'react';
-import { getFrontendSettings } from '@/services/settingsService';
-import HomeClient from './home-client';
 import { SiteHeaderWrapper } from '@/components/site-header-wrapper';
-import { Skeleton } from '@/components/ui/skeleton';
+import { SiteFooter } from '@/components/site-footer';
+import { getFrontendSettings } from '@/services/settingsService';
+import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
-function HomePageLoading() {
-  return (
-    <div className="pt-24 space-y-8">
-       <div className="h-[60vh] bg-muted animate-pulse" />
-       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 py-8">
-            <div className="h-10 bg-muted animate-pulse rounded-md w-full max-w-lg mx-auto" />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {Array.from({ length: 3 }).map((_, i) => (
-                    <div key={i} className="space-y-4">
-                        <Skeleton className="h-40 w-full" />
-                        <Skeleton className="h-6 w-3/4" />
-                        <Skeleton className="h-4 w-1/2" />
-                    </div>
-                ))}
-            </div>
-       </div>
-    </div>
-  )
-}
+const timelineData = [
+  {
+    step: '1st',
+    title: 'GREEN PROBLEM',
+    description: '',
+  },
+  {
+    step: '2nd',
+    title: 'BRAINSTORMING',
+    description: 'TOWARDS GREEN SOLUTION',
+  },
+  {
+    step: '3rd',
+    title: 'KEMAS GREEN PLAN',
+    description: 'What can KEMAS do?',
+  },
+  {
+    step: '4th',
+    title: 'KEMAS PLANT GREEN FOOTPRINT',
+    description: '',
+  },
+  {
+    step: '5th',
+    title: 'KEMAS PACKAGING GREEN FOOTPRINT',
+    description: '',
+  },
+];
 
 export default async function Home() {
-  let settings = null;
-  let error = null;
-
-  try {
-    settings = await getFrontendSettings();
-  } catch (e: any) {
-    console.error("Failed to fetch initial page data:", e.message);
-    error = e.message;
-  }
+  const settings = await getFrontendSettings();
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <SiteHeaderWrapper />
-      <Suspense fallback={<HomePageLoading />}>
-        <HomeClient 
-          settings={settings} 
-        />
-      </Suspense>
-    </>
-    );
+      <main className="flex-grow">
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-green-400 to-green-600 text-white">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+            <div className="text-left">
+              <p className="text-lg font-semibold tracking-wider">PT. KEMAS INDAH MAJU</p>
+              <h1 className="text-5xl md:text-7xl font-bold tracking-tight mt-2">
+                Green Journey
+              </h1>
+              <p className="mt-6 max-w-2xl text-lg">
+                We think that mother earth is under threat as well as the future generation.
+              </p>
+              <p className="mt-2 text-lg font-bold">THE TIME TO ACT IS NOW</p>
+              <p className="mt-1 text-lg">
+                Please follow us on our green footprint journey.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Timeline Section */}
+        <section className="bg-gradient-to-br from-green-600 to-green-800 text-white">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 text-left">
+              {timelineData.map((item, index) => (
+                <div key={index} className="flex flex-col">
+                  <span className="text-sm font-semibold text-green-200">{item.step}</span>
+                  <h3 className="mt-2 text-lg font-bold">{item.title}</h3>
+                  {item.description && (
+                    <p className="mt-1 text-sm text-green-100">{item.description}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+      </main>
+      <SiteFooter settings={settings} />
+    </div>
+  );
 }
