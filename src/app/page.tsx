@@ -45,11 +45,11 @@ export default async function Home() {
         {/* Hero Section */}
         <section className="relative text-white h-[70vh] flex items-center">
             <Image
-                src="https://picsum.photos/seed/green-journey/1920/1080"
-                alt="Green Journey background"
+                src="https://picsum.photos/seed/cosmetics-packaging/1920/1080"
+                alt="Cosmetic packaging background"
                 fill
                 className="object-cover"
-                data-ai-hint="forest nature"
+                data-ai-hint="cosmetics packaging"
                 priority
             />
             <div className="absolute inset-0 bg-black/50" />
@@ -57,18 +57,14 @@ export default async function Home() {
                 <div className="text-left">
                     <p className="text-lg font-semibold tracking-wider">PT. KEMAS INDAH MAJU</p>
                     <h1 className="text-5xl md:text-7xl font-bold tracking-tight mt-2">
-                        Green Journey
+                        Innovative Packaging Solutions Since 1980
                     </h1>
                     <p className="mt-6 max-w-2xl text-lg">
-                        We think that mother earth is under threat as well as the future generation.
-                    </p>
-                    <p className="mt-2 text-lg font-bold">THE TIME TO ACT IS NOW</p>
-                    <p className="mt-1 text-lg">
-                        Please follow us on our green footprint journey.
+                        Delivering premium plastic & metal cosmetic packaging with European & Japanese technology.
                     </p>
                     <Button asChild size="lg" className="mt-8">
-                        <Link href="/careers">
-                        Learn More <ArrowRight className="ml-2 h-5 w-5" />
+                        <Link href="/">
+                        Explore Our Products <ArrowRight className="ml-2 h-5 w-5" />
                         </Link>
                     </Button>
                 </div>
