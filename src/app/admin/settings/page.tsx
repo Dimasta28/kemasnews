@@ -244,28 +244,6 @@ export default function SettingsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Homepage Hero Section</CardTitle>
-          <CardDescription>
-            Select which posts to feature in the main carousel on the homepage. If none are selected, the latest 3 posts will be shown.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-            <div className="grid gap-2">
-                <Label htmlFor="hero-posts">Featured Posts</Label>
-                 <MultiSelectCombobox
-                    options={allPosts.map(post => ({ value: post.id, label: post.title }))}
-                    value={settings.heroPostIds || []}
-                    onChange={handleHeroPostsChange}
-                    placeholder="Select posts to feature..."
-                    searchPlaceholder="Search posts..."
-                    emptyPlaceholder="No posts found."
-                />
-            </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
           <CardTitle>Header Dropdown Navigation</CardTitle>
           <CardDescription>
             Manage the links that appear in the "PT. Kemas" dropdown menu in the main header.
