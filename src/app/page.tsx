@@ -66,6 +66,11 @@ export default async function Home() {
                     <p className="mt-1 text-lg">
                         Please follow us on our green footprint journey.
                     </p>
+                    <Button asChild size="lg" className="mt-8">
+                        <Link href="/careers">
+                        Learn More <ArrowRight className="ml-2 h-5 w-5" />
+                        </Link>
+                    </Button>
                 </div>
             </div>
         </section>
