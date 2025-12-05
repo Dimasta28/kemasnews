@@ -10,7 +10,7 @@ export function SiteFooter({ settings }: { settings: FrontendSettings }) {
     const footerSettings = settings.footer;
 
     return (
-        <footer className="bg-[hsl(345_74%_20%)] text-[hsl(36_33%_92%)] py-10">
+        <footer className="bg-green-900 text-white py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between text-sm">
           <div className="mb-4 md:mb-0 flex items-center">
             {footerSettings?.footerLogoUrl && (
