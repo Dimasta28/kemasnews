@@ -139,7 +139,24 @@ export function SiteHeader({
                 </div>
                 
                 <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger className="flex items-center gap-1 hover:text-primary transition-colors outline-none">
+                            PT. Kemas <ChevronDownIcon size={16} />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <div className="grid grid-cols-2 gap-4 p-4 w-[500px]">
+                                {settings.dropdownLinks?.map((link) => (
+                                    <Link key={link.title} href={link.href} className="p-2 hover:bg-accent rounded-md transition-colors">
+                                        <div className="font-semibold">{link.title}</div>
+                                        <p className="text-xs text-muted-foreground">{link.description}</p>
+                                    </Link>
+                                ))}
+                            </div>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                     <Link href="/green-journey" className="hover:text-primary transition-colors">Green Journey</Link>
+                    <Link href="/careers" className="hover:text-primary transition-colors">Careers</Link>
                 </nav>
 
                 <div className="flex items-center gap-2">
@@ -194,17 +211,39 @@ export function SiteHeader({
              </div>
 
             <nav className="text-left w-full">
-              <ul className="space-y-2 text-xl font-medium">
-                 <li>
-                    <Link href="/green-journey" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Journey</Link>
-                </li>
-                <li>
-                    <Button variant="outline" className="w-full justify-start" onClick={() => { setIsMobileMenuOpen(false); setIsSearchOpen(true); }}>
-                        <Search className="mr-2 h-5 w-5 text-muted-foreground" />
-                        Search articles...
-                    </Button>
-                </li>
-              </ul>
+                <ul className="space-y-2 text-xl font-medium">
+                    <li>
+                        <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Home</Link>
+                    </li>
+                    <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="item-1" className="border-b-0">
+                            <AccordionTrigger className="py-2 text-xl font-medium hover:no-underline">PT. Kemas</AccordionTrigger>
+                            <AccordionContent className="pl-4">
+                                <ul className="space-y-1">
+                                    {settings.dropdownLinks?.map((link) => (
+                                         <li key={link.title}>
+                                            <Link href={link.href} onClick={() => setIsMobileMenuOpen(false)} className="block py-2 text-base text-muted-foreground hover:text-foreground">
+                                                {link.title}
+                                            </Link>
+                                         </li>
+                                    ))}
+                                </ul>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                     <li>
+                        <Link href="/green-journey" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Journey</Link>
+                    </li>
+                    <li>
+                        <Link href="/careers" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Careers</Link>
+                    </li>
+                    <li>
+                        <Button variant="outline" className="w-full justify-start mt-4" onClick={() => { setIsMobileMenuOpen(false); setIsSearchOpen(true); }}>
+                            <Search className="mr-2 h-5 w-5 text-muted-foreground" />
+                            Search articles...
+                        </Button>
+                    </li>
+                </ul>
             </nav>
           </motion.div>
         )}
