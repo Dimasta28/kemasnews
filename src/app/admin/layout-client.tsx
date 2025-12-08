@@ -6,22 +6,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {
   FileText,
-  Folder,
   Home,
   MessageSquare,
   Settings,
-  Tags,
-  Briefcase,
-  ChevronRight,
   Shield,
   ExternalLink,
 } from 'lucide-react';
 
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
 import {
   Sidebar,
   SidebarContent,
@@ -34,9 +25,6 @@ import {
   SidebarProvider,
   SidebarSeparator,
   SidebarTrigger,
-  SidebarMenuSub,
-  SidebarMenuSubItem,
-  SidebarMenuSubButton,
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -85,7 +73,6 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { user, isLoading, logout } = useAuth();
   const router = useRouter();
-  const [isCareersOpen, setIsCareersOpen] = useState(false);
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -93,12 +80,6 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
     }
   }, [isLoading, user, router]);
   
-   useEffect(() => {
-    if (pathname.startsWith('/admin/careers') || pathname.startsWith('/admin/applicants') || pathname.startsWith('/admin/job-openings')) {
-        setIsCareersOpen(true);
-    }
-  }, [pathname]);
-
   if (isLoading || !user) {
     return <AdminLoadingScreen />;
   }
