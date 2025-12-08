@@ -9,7 +9,7 @@ export default function CategoriesRedirectPage() {
 
   useEffect(() => {
     // Redirect to the new, consolidated page with the categories tab active
-    router.replace('/admin/posts?tab=categories');
+    router.replace('/admin/media?tab=categories');
   }, [router]);
 
   return null; // Render nothing while redirecting

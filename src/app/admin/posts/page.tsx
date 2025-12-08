@@ -1,16 +1,16 @@
 
-import { getPosts } from '@/services/postService';
-import { getCategories } from '@/services/categoryService';
-import { PostsPageClient } from './posts-client';
+'use client';
 
-export default async function PostsPage() {
-  const [initialPosts, initialCategories] = await Promise.all([
-    getPosts(),
-    getCategories()
-  ]);
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-  return <PostsPageClient 
-            initialPosts={initialPosts} 
-            initialCategories={initialCategories} 
-        />;
+export default function PostsRedirectPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    // Redirect to the new, consolidated page with the media tab active
+    router.replace('/admin/media');
+  }, [router]);
+
+  return null; // Render nothing while redirecting
 }
