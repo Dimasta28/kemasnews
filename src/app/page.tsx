@@ -7,89 +7,56 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
-const timelineData = [
-  {
-    step: '1st',
-    title: 'GREEN PROBLEM',
-    description: '',
-  },
-  {
-    step: '2nd',
-    title: 'BRAINSTORMING',
-    description: 'TOWARDS GREEN SOLUTION',
-  },
-  {
-    step: '3rd',
-    title: 'KEMAS GREEN PLAN',
-    description: 'What can KEMAS do?',
-  },
-  {
-    step: '4th',
-    title: 'KEMAS PLANT GREEN FOOTPRINT',
-    description: '',
-  },
-  {
-    step: '5th',
-    title: 'KEMAS PACKAGING GREEN FOOTPRINT',
-    description: '',
-  },
-];
-
 export default async function Home() {
   const settings = await getFrontendSettings();
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-background">
       <SiteHeaderWrapper />
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative text-white h-[70vh] flex items-center">
+        <section className="relative text-white h-[80vh] flex items-center justify-center text-center">
             <Image
-                src="https://picsum.photos/seed/green-journey/1920/1080"
-                alt="Green Journey background"
+                src="https://picsum.photos/seed/nature-leaves/1920/1080"
+                alt="Lush green leaves background"
                 fill
                 className="object-cover"
-                data-ai-hint="forest nature"
+                data-ai-hint="nature leaves"
                 priority
             />
-            <div className="absolute inset-0 bg-black/50" />
-            <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                <div className="text-left">
-                    <p className="text-lg font-semibold tracking-wider">PT. KEMAS INDAH MAJU</p>
-                    <h1 className="text-5xl md:text-7xl font-bold tracking-tight mt-2">
-                        Green Journey
-                    </h1>
-                    <p className="mt-6 max-w-2xl text-lg">
-                        We think that mother earth is under threat as well as the future generation.
-                    </p>
-                    <p className="mt-2 text-lg font-bold">THE TIME TO ACT IS NOW</p>
-                    <p className="mt-1 text-lg">Please follow us on our green footprint journey.</p>
-                    <Button asChild size="lg" className="mt-8">
+            <div className="absolute inset-0 bg-black/60" />
+            <div className="relative z-10 max-w-4xl p-8">
+                <div className="flex justify-center items-center mb-4">
+                    {/* Placeholder for the abstract white circles */}
+                    <div className="relative w-16 h-16 mr-4">
+                        <div className="absolute top-0 left-0 w-12 h-12 bg-white rounded-full opacity-90"></div>
+                        <div className="absolute top-0 right-0 w-6 h-6 bg-white rounded-full opacity-90"></div>
+                    </div>
+                </div>
+                <h1 className="text-5xl md:text-8xl font-extrabold tracking-tighter">
+                    KEMAS<br />GREEN JOURNEY
+                </h1>
+                <p className="mt-6 max-w-2xl mx-auto text-lg leading-relaxed">
+                    We think that mother earth is under threat as well as the future generation.
+                    <br />
+                    <span className="font-bold">THE TIME TO ACT IS NOW</span>
+                    <br />
+                    Please follow us on our green footprint journey.
+                </p>
+                <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
                         <Link href="/green-pan">
-                        Learn More <ArrowRight className="ml-2 h-5 w-5" />
+                            Get Started
+                        </Link>
+                    </Button>
+                     <Button asChild size="lg" variant="outline" className="w-full sm:w-auto bg-transparent border-white text-white hover:bg-white hover:text-black">
+                        <Link href="/green-pan">
+                            Learn More
                         </Link>
                     </Button>
                 </div>
             </div>
         </section>
-
-        {/* Timeline Section */}
-        <section className="bg-gradient-to-br from-green-600 to-green-800 text-white">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 text-left">
-              {timelineData.map((item, index) => (
-                <div key={index} className="flex flex-col">
-                  <span className="text-sm font-semibold text-green-200">{item.step}</span>
-                  <h3 className="mt-2 text-lg font-bold">{item.title}</h3>
-                  {item.description && (
-                    <p className="mt-1 text-sm text-green-100">{item.description}</p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
       </main>
       <SiteFooter settings={settings} />
     </div>

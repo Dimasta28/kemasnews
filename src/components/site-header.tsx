@@ -72,15 +72,22 @@ export function SiteHeader({
       <header
         className={cn(
             "sticky top-0 z-50 w-full border-b transition-all",
-            isScrolled ? "bg-background/95 backdrop-blur-sm" : "bg-background"
+            isScrolled ? "bg-background/95 backdrop-blur-sm" : "bg-transparent border-transparent"
         )}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
+                <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-white">
+                    <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+                    <Link href="/green-pan" className="hover:text-primary transition-colors">Green Problem</Link>
+                    <Link href="#" className="hover:text-primary transition-colors">Trip Package</Link>
+                    <Link href="#" className="hover:text-primary transition-colors">Contact Us</Link>
+                </nav>
+
                 <div className="flex items-center">
                     <Link href="/" className="flex-shrink-0">
                         <Image
-                            src={settings.lightModeLogoUrl}
+                            src={settings.darkModeLogoUrl}
                             alt="Kemas Logo"
                             width={100}
                             height={25}
@@ -89,31 +96,7 @@ export function SiteHeader({
                     </Link>
                 </div>
                 
-                <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
-                    <Link href="/" className="hover:text-primary transition-colors">Home</Link>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger className="flex items-center gap-1 hover:text-primary transition-colors outline-none">
-                            PT. Kemas <ChevronDownIcon size={16} />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <div className="grid grid-cols-2 gap-4 p-4 w-[500px]">
-                                {settings.dropdownLinks?.map((link) => (
-                                    <Link key={link.title} href={link.href} className="p-2 hover:bg-accent rounded-md transition-colors">
-                                        <div className="font-semibold">{link.title}</div>
-                                        <p className="text-xs text-muted-foreground">{link.description}</p>
-                                    </Link>
-                                ))}
-                            </div>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                    <Link href="/green-pan" className="hover:text-primary transition-colors">Green Plan</Link>
-                    
-                </nav>
-
-                <div className="flex items-center gap-2">
-                  <Link href="/login" className={cn(buttonVariants({variant: 'outline'}), "rounded-full")}>
-                    Login
-                  </Link>
+                 <div className="flex items-center gap-2 md:hidden">
                   <button
                     onClick={() => setIsMobileMenuOpen(true)}
                     className="md:hidden p-2 hover:bg-secondary rounded-full transition"
@@ -156,26 +139,15 @@ export function SiteHeader({
                     <li>
                         <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Home</Link>
                     </li>
-                    <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="item-1" className="border-b-0">
-                            <AccordionTrigger className="py-2 text-xl font-medium hover:no-underline">PT. Kemas</AccordionTrigger>
-                            <AccordionContent className="pl-4">
-                                <ul className="space-y-1">
-                                    {settings.dropdownLinks?.map((link) => (
-                                         <li key={link.title}>
-                                            <Link href={link.href} onClick={() => setIsMobileMenuOpen(false)} className="block py-2 text-base text-muted-foreground hover:text-foreground">
-                                                {link.title}
-                                            </Link>
-                                         </li>
-                                    ))}
-                                </ul>
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
                      <li>
-                        <Link href="/green-pan" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Plan</Link>
+                        <Link href="/green-pan" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Problem</Link>
                     </li>
-                    
+                     <li>
+                        <Link href="#" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Trip Package</Link>
+                    </li>
+                     <li>
+                        <Link href="#" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Contact Us</Link>
+                    </li>
                 </ul>
             </nav>
           </motion.div>
