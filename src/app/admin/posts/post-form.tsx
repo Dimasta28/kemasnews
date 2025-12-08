@@ -13,7 +13,10 @@ import { ChevronLeft, Loader2, Sparkles, Wand2 } from 'lucide-react';
 import type { Post } from '@/services/postService';
 import { createPost, updatePost } from '@/services/postService';
 import { getCategories } from '@/services/categoryService';
-import { generatePost, generateDescription, generateTags } from '@/ai/flows';
+import { generatePost } from '@/ai/flows/generate-post-flow';
+import { generateDescription } from '@/ai/flows/generate-description-flow';
+import { generateTags } from '@/ai/flows/generate-tags-flow';
+
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
