@@ -51,11 +51,8 @@ const generatePostFlow = ai.defineFlow(
     const [contentResponse, imageResponse] = await Promise.all([
       contentPrompt(input),
       ai.generate({
-        model: 'googleai/gemini-2.0-flash-preview-image-generation',
+        model: 'googleai/imagen-4.0-fast-generate-001',
         prompt: `A professional, high-quality featured image for a blog post titled: "${input.title}". The image should be visually appealing and relevant to the topic.`,
-        config: {
-          responseModalities: ['TEXT', 'IMAGE'],
-        },
       }),
     ]);
 
