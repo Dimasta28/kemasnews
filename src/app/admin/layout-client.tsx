@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -137,6 +136,17 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 <Link href="/admin/dashboard">
                   <Home />
                   Dashboard
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+             <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname.startsWith('/admin/posts')}
+              >
+                <Link href="/admin/posts">
+                  <FileText />
+                  Posts
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
