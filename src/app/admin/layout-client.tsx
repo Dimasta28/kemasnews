@@ -143,17 +143,6 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname.startsWith('/admin/media')}
-              >
-                <Link href="/admin/media">
-                  <FileText />
-                  Media
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
                 isActive={pathname.startsWith('/admin/comments')}
               >
                 <Link href="/admin/comments">
