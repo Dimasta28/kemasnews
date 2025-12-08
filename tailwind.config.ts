@@ -11,7 +11,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-jost)'],
+        sans: ['proxima-nova', 'sans-serif'],
       },
       colors: {
         background: 'hsl(var(--background))',

@@ -1,13 +1,9 @@
 
 import type {Metadata} from 'next';
-import { Jost } from 'next/font/google';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider';
 import { getFrontendSettings } from '@/services/settingsService';
-
-const jost = Jost({ subsets: ['latin'], variable: '--font-jost' });
-
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getFrontendSettings();
@@ -51,8 +47,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
-      <body className={`${jost.variable} antialiased`}>
+      <head>
+        <link rel="stylesheet" href="https://use.typekit.net/led6pcw.css" />
+      </head>
+      <body className="antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
