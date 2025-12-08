@@ -1,7 +1,6 @@
 
 import { MetadataRoute } from 'next';
 import { getPosts } from '@/services/postService';
-import { getJobOpenings } from '@/services/careerService';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.kemaspkg.com'; // Replace with your actual domain
@@ -17,15 +16,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     }));
     
-  // Get all job openings
-  const jobs = await getJobOpenings();
-  const jobUrls = jobs.map(job => ({
-    url: `${baseUrl}/apply/${job.id}`,
-    lastModified: new Date(job.createdAt),
-    changeFrequency: 'monthly' as const,
-    priority: 0.6,
-  }));
-
   // Define static pages
   const staticUrls = [
     {
@@ -41,12 +31,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.3,
     },
     {
-      url: `${baseUrl}/careers`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    },
-    {
       url: `${baseUrl}/green-journey`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
@@ -60,5 +44,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  return [...staticUrls, ...postUrls, ...jobUrls];
+  return [...staticUrls, ...postUrls];
 }
