@@ -15,7 +15,7 @@ export default async function Home() {
       <SiteHeaderWrapper />
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative text-white h-[80vh] flex items-center justify-start text-left">
+        <section className="relative text-white h-screen flex items-center justify-start text-left">
             <Image
                 src="https://picsum.photos/seed/nature-leaves/1920/1080"
                 alt="Lush green leaves background"
