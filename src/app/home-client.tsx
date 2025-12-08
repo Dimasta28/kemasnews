@@ -37,12 +37,12 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
             </p>
             <div className="mt-8 flex gap-4">
             <Button asChild size="lg">
-                <Link href="#">
+                <Link href="/green-journey">
                 Get Started
                 </Link>
             </Button>
             <Button asChild size="lg" variant="outline">
-                <Link href="#">
+                <Link href="/green-plan">
                 Learn More <ArrowRight className="ml-2" />
                 </Link>
             </Button>

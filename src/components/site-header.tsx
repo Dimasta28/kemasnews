@@ -72,16 +72,16 @@ export function SiteHeader({
       <header
         className={cn(
             "fixed top-0 z-50 w-full transition-all",
-            isScrolled ? "bg-primary border-b" : "bg-transparent border-transparent"
+            isScrolled ? "bg-primary" : "bg-transparent"
         )}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
                 <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-white">
-                    <Link href="/" className="hover:text-primary transition-colors">Home</Link>
-                    <Link href="/green-pan" className="hover:text-primary transition-colors">Green Problem</Link>
-                    <Link href="/green-plan" className="hover:text-primary transition-colors">Green Plan</Link>
-                    <Link href="#" className="hover:text-primary transition-colors">Contact Us</Link>
+                    <Link href="/" className="hover:text-primary-foreground/80 transition-colors">Home</Link>
+                    <Link href="/green-journey" className="hover:text-primary-foreground/80 transition-colors">Green Journey</Link>
+                    <Link href="/green-plan" className="hover:text-primary-foreground/80 transition-colors">Green Plan</Link>
+                    <Link href="/careers" className="hover:text-primary-foreground/80 transition-colors">Careers</Link>
                 </nav>
 
                 <div className="flex items-center">
@@ -99,7 +99,7 @@ export function SiteHeader({
                  <div className="flex items-center gap-2 md:hidden">
                   <button
                     onClick={() => setIsMobileMenuOpen(true)}
-                    className="md:hidden p-2 hover:bg-secondary rounded-full transition"
+                    className="md:hidden p-2 hover:bg-secondary rounded-full transition text-white"
                   >
                     <MenuIcon size={20} />
                   </button>
@@ -140,13 +140,13 @@ export function SiteHeader({
                         <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Home</Link>
                     </li>
                      <li>
-                        <Link href="/green-pan" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Problem</Link>
+                        <Link href="/green-journey" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Journey</Link>
                     </li>
                      <li>
                         <Link href="/green-plan" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Plan</Link>
                     </li>
                      <li>
-                        <Link href="#" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Contact Us</Link>
+                        <Link href="/careers" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Careers</Link>
                     </li>
                 </ul>
             </nav>
