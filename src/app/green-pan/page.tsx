@@ -24,7 +24,7 @@ export default async function GreenPanPage() {
 
         <div className="space-y-16 md:space-y-24">
             {/* Section 1: Circular Economy */}
-            <section className="container mx-auto">
+            <section>
                 <div className="grid md:grid-cols-2 gap-0 items-center">
                     <div className="text-left px-4">
                         <h2 className="text-3xl font-bold mb-4">What Can KEMAS Do?</h2>
@@ -50,7 +50,7 @@ export default async function GreenPanPage() {
 
             {/* Section 2: Green Footprint */}
             <section>
-                <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                <div className="grid md:grid-cols-2 gap-0 items-center">
                      <div className="relative aspect-square md:order-2">
                         <Image 
                             src="https://picsum.photos/seed/green-footprint/600/400"
