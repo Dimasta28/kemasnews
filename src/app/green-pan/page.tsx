@@ -36,7 +36,7 @@ export default async function GreenPanPage() {
                             Source: The Circular Economy: What it means for Fracking and Plastic – FracTracker Alliance
                         </div>
                     </div>
-                    <div className="relative h-full min-h-[300px] md:min-h-0">
+                    <div className="relative h-full min-h-[300px] md:min-h-0 aspect-square">
                         <Image 
                             src="https://picsum.photos/seed/circular-economy/600/400"
                             alt="Circular Economy Diagram"
@@ -51,7 +51,7 @@ export default async function GreenPanPage() {
             {/* Section 2: Green Footprint */}
             <section className="container mx-auto px-4">
                 <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-                     <div className="relative aspect-video md:order-2">
+                     <div className="relative aspect-square md:order-2">
                         <Image 
                             src="https://picsum.photos/seed/green-footprint/600/400"
                             alt="KEMAS Green Footprint"
