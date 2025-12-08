@@ -71,7 +71,7 @@ export function SiteHeader({
     <>
       <header
         className={cn(
-            "fixed top-0 z-50 w-full transition-all bg-black/20",
+            "fixed top-0 z-50 w-full transition-all bg-primary/30",
             isScrolled ? "bg-background/95 backdrop-blur-sm border-b" : "border-transparent"
         )}
       >
