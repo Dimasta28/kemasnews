@@ -80,7 +80,7 @@ export function SiteHeader({
                 <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-white">
                     <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                     <Link href="/green-pan" className="hover:text-primary transition-colors">Green Problem</Link>
-                    <Link href="#" className="hover:text-primary transition-colors">Trip Package</Link>
+                    <Link href="/green-plan" className="hover:text-primary transition-colors">Green Plan</Link>
                     <Link href="#" className="hover:text-primary transition-colors">Contact Us</Link>
                 </nav>
 
@@ -143,7 +143,7 @@ export function SiteHeader({
                         <Link href="/green-pan" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Problem</Link>
                     </li>
                      <li>
-                        <Link href="#" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Trip Package</Link>
+                        <Link href="/green-plan" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Plan</Link>
                     </li>
                      <li>
                         <Link href="#" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Contact Us</Link>
