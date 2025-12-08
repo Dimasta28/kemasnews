@@ -6,7 +6,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTheme } from 'next-themes';
 import {
   Menu as MenuIcon,
   Bell as BellIcon,
@@ -72,8 +71,8 @@ export function SiteHeader({
     <>
       <header
         className={cn(
-            "sticky top-0 z-50 w-full border-b transition-all",
-            isScrolled ? "border-border" : "bg-transparent border-transparent"
+            "sticky top-0 z-50 w-full transition-all",
+            isScrolled ? "" : "bg-transparent border-transparent"
         )}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
