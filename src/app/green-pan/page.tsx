@@ -12,15 +12,6 @@ export default async function GreenPanPage() {
 
   const sections = [
     {
-      title: 'What Can KEMAS Do?',
-      subtitle: 'Circular Economy Concept',
-      description: 'We are a plastic injection molding manufacturer who cares about our stakeholders. We use the Circular Economy concept as our ground in running the business.',
-      source: 'The Circular Economy: What it means for Fracking and Plastic – FracTracker Alliance',
-      imageUrl: 'https://picsum.photos/seed/circular-economy/600/600',
-      imageAlt: 'Circular Economy Diagram',
-      imageHint: 'circular economy diagram',
-    },
-    {
       title: 'KEMAS Green Footprint',
       subtitle: '',
       description: 'Our commitment extends to minimizing our environmental impact at every stage, from material sourcing to production and end-of-life.',
@@ -49,18 +40,44 @@ export default async function GreenPanPage() {
     },
   ];
 
+  const heroSection = {
+    title: 'What Can KEMAS Do?',
+    subtitle: 'Circular Economy Concept',
+    description: 'We are a plastic injection molding manufacturer who cares about our stakeholders. We use the Circular Economy concept as our ground in running the business.',
+    source: 'The Circular Economy: What it means for Fracking and Plastic – FracTracker Alliance',
+    imageUrl: 'https://picsum.photos/seed/circular-economy/1200/800',
+    imageAlt: 'Circular Economy Diagram',
+    imageHint: 'circular economy diagram',
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       <SiteHeaderWrapper />
       <main className="flex-grow">
-        <div className="container mx-auto px-4 py-12 sm:py-20">
-            <div className="max-w-4xl mx-auto text-center mb-16">
-                <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">Our Green Plan</h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    A transparent look at our actionable steps towards a more sustainable future in packaging.
-                </p>
+        
+        {/* Hero Section */}
+        <section className="relative flex items-center justify-center text-white bg-black min-h-[60vh] md:min-h-[70vh] py-20">
+            <Image
+                src={heroSection.imageUrl}
+                alt={heroSection.imageAlt}
+                fill
+                className="z-0 opacity-30 object-cover"
+                data-ai-hint={heroSection.imageHint}
+                priority
+            />
+            <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div className="max-w-3xl mx-auto">
+                    <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-4 tracking-tight">
+                        {heroSection.title}
+                    </h1>
+                    <h2 className="font-semibold text-2xl md:text-3xl text-primary-foreground/80 mb-4">{heroSection.subtitle}</h2>
+                    <p className="text-lg md:text-xl text-primary-foreground/90">
+                       {heroSection.description}
+                    </p>
+                    {heroSection.source && <div className="mt-4 text-xs text-primary-foreground/60">Source: {heroSection.source}</div>}
+                </div>
             </div>
-        </div>
+        </section>
 
         <div className="space-y-0">
           {sections.map((section, index) => (
@@ -68,7 +85,7 @@ export default async function GreenPanPage() {
               <div className="grid md:grid-cols-2 gap-0 items-center">
                 <div className={cn(
                     "text-left p-8 md:p-12 lg:p-16",
-                    index % 2 === 0 ? 'md:order-1' : 'md:order-2'
+                    index % 2 === 0 ? 'md:order-2' : 'md:order-1'
                   )}>
                   <h2 className="text-3xl font-bold mb-4">{section.title}</h2>
                   {section.subtitle && <h3 className="font-semibold text-xl text-primary mb-2">{section.subtitle}</h3>}
@@ -79,7 +96,7 @@ export default async function GreenPanPage() {
                 </div>
                 <div className={cn(
                     "relative aspect-square",
-                    index % 2 === 0 ? 'md:order-2' : 'md:order-1'
+                    index % 2 === 0 ? 'md:order-1' : 'md:order-2'
                   )}>
                   <Image 
                     src={section.imageUrl}
@@ -105,8 +122,6 @@ export default async function GreenPanPage() {
                 </div>
             </div>
          </section>
-
-        <div className="py-12 sm:py-20" />
 
       </main>
       {settings && <SiteFooter settings={settings} />}
