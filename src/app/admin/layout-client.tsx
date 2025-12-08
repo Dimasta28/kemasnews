@@ -27,7 +27,6 @@ import {
   SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -179,7 +178,6 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 View Site
               </Link>
             </Button>
-            <ThemeToggle />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
