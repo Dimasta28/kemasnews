@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -24,7 +23,7 @@ export function RecentPosts({ recentPosts }: RecentPostsProps) {
                     </CardDescription>
                 </div>
                 <Button asChild variant="outline" size="sm">
-                    <Link href="/admin/media">View All</Link>
+                    <Link href="/admin/posts">View All</Link>
                 </Button>
             </CardHeader>
             <CardContent>
@@ -40,7 +39,7 @@ export function RecentPosts({ recentPosts }: RecentPostsProps) {
                             recentPosts.map((post) => (
                                 <TableRow key={post.id}>
                                     <TableCell>
-                                        <Link href={`/admin/media/edit/${post.id}`} className="font-medium hover:underline block truncate" style={{maxWidth: '20ch'}}>
+                                        <Link href={`/admin/posts/edit/${post.id}`} className="font-medium hover:underline block truncate" style={{maxWidth: '20ch'}}>
                                             {post.title}
                                         </Link>
                                         <span className="text-xs text-muted-foreground">{format(parseISO(post.date), "dd LLL yyyy")}</span>

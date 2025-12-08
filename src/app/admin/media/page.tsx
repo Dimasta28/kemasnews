@@ -1,9 +1,9 @@
 
 import { getPosts } from '@/services/postService';
 import { getCategories } from '@/services/categoryService';
-import { MediaClient } from './media-client';
+import { PostsClient } from './media-client';
 
-export default async function MediaPage({
+export default async function PostsPage({
   searchParams,
 }: {
   searchParams?: { tab?: string };
@@ -16,7 +16,7 @@ export default async function MediaPage({
   const activeTab = searchParams?.tab === 'categories' ? 'categories' : (searchParams?.tab === 'tags' ? 'tags' : 'posts');
 
   return (
-    <MediaClient
+    <PostsClient
       initialPosts={initialPosts}
       initialCategories={initialCategories}
       initialTags={[]} // Placeholder for tags

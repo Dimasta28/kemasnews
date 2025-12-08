@@ -13,7 +13,9 @@ import { ChevronLeft, Loader2, Sparkles, Wand2 } from 'lucide-react';
 import type { Post } from '@/services/postService';
 import { createPost, updatePost } from '@/services/postService';
 import { getCategories } from '@/services/categoryService';
-import { generatePost, generateDescription, generateTags } from '@/ai/flows';
+import { generatePost } from '@/ai/flows/generate-post-flow';
+import { generateDescription } from '@/ai/flows/generate-description-flow';
+import { generateTags } from '@/ai/flows/generate-tags-flow';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -151,11 +153,11 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
       if (post) {
         await updatePost(post.id, data);
         toast({ title: 'Success!', description: 'Post has been updated.' });
-        router.push('/admin/media');
+        router.push('/admin/posts');
       } else {
         await createPost(data);
         toast({ title: 'Success!', description: 'New post has been created.' });
-        router.push('/admin/media');
+        router.push('/admin/posts');
       }
     } catch (error) {
       console.error('Failed to save post:', error);
@@ -173,7 +175,7 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-4">
             <Button variant="outline" size="icon" className="h-7 w-7" asChild>
-              <Link href="/admin/media">
+              <Link href="/admin/posts">
                 <ChevronLeft className="h-4 w-4" />
                 <span className="sr-only">Back</span>
               </Link>
@@ -182,7 +184,7 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
               {post ? 'Edit Post' : 'Create New Post'}
             </h1>
             <div className="hidden items-center gap-2 md:ml-auto md:flex">
-              <Button variant="outline" size="sm" type="button" onClick={() => router.push('/admin/media')}>
+              <Button variant="outline" size="sm" type="button" onClick={() => router.push('/admin/posts')}>
                 Cancel
               </Button>
               <Button size="sm" type="submit" disabled={isSaving}>
@@ -344,7 +346,7 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
           </div>
 
           <div className="flex items-center justify-center gap-2 md:hidden mt-4">
-            <Button variant="outline" size="sm" type="button" onClick={() => router.push('/admin/media')}>
+            <Button variant="outline" size="sm" type="button" onClick={() => router.push('/admin/posts')}>
               Cancel
             </Button>
             <Button size="sm" type="submit" disabled={isSaving}>

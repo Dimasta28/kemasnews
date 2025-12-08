@@ -9,7 +9,7 @@ export default function TagsRedirectPage() {
 
   useEffect(() => {
     // Redirect to the new, consolidated page with the tags tab active
-    router.replace('/admin/media?tab=tags');
+    router.replace('/admin/posts?tab=tags');
   }, [router]);
 
   return null; // Render nothing while redirecting

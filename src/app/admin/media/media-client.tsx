@@ -26,7 +26,7 @@ interface MediaClientProps {
   activeTab: 'posts' | 'categories' | 'tags';
 }
 
-export function MediaClient({
+export function PostsClient({
   initialPosts,
   initialCategories,
   initialTags,
@@ -113,14 +113,14 @@ export function MediaClient({
   }, []);
 
   const onTabChange = (value: string) => {
-    router.push(`/admin/media?tab=${value}`, { scroll: false });
+    router.push(`/admin/posts?tab=${value}`, { scroll: false });
   };
 
   return (
     <Tabs defaultValue={activeTab} onValueChange={onTabChange}>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Media</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Posts</h1>
           <p className="text-muted-foreground">Manage your posts, categories, and tags.</p>
         </div>
         <TabsList className="w-full sm:w-auto">

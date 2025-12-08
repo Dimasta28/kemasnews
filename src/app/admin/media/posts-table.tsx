@@ -73,7 +73,7 @@ export function PostsTable({ posts }: PostsTableProps) {
     <>
       <div className="flex justify-end mb-4">
         <Button size="sm" asChild>
-          <Link href="/admin/media/create">
+          <Link href="/admin/posts/create">
             <PlusCircle className="mr-2 h-4 w-4" /> Create Post
           </Link>
         </Button>
@@ -124,7 +124,7 @@ export function PostsTable({ posts }: PostsTableProps) {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem asChild>
-                          <Link href={`/admin/media/edit/${post.id}`}>Edit</Link>
+                          <Link href={`/admin/posts/edit/${post.id}`}>Edit</Link>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem

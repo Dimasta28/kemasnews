@@ -107,10 +107,13 @@ export function SiteHeader({
                         </DropdownMenuContent>
                     </DropdownMenu>
                     <Link href="/green-pan" className="hover:text-primary transition-colors">Green Plan</Link>
-                    <Link href="/careers" className="hover:text-primary transition-colors">Careers</Link>
+                    
                 </nav>
 
                 <div className="flex items-center gap-2">
+                  <Link href="/login" className={cn(buttonVariants({variant: 'outline'}), "rounded-full")}>
+                    Login
+                  </Link>
                   <button
                     onClick={() => setIsMobileMenuOpen(true)}
                     className="md:hidden p-2 hover:bg-secondary rounded-full transition"
@@ -172,9 +175,7 @@ export function SiteHeader({
                      <li>
                         <Link href="/green-pan" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Plan</Link>
                     </li>
-                    <li>
-                        <Link href="/careers" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Careers</Link>
-                    </li>
+                    
                 </ul>
             </nav>
           </motion.div>
