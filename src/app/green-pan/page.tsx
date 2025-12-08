@@ -5,6 +5,7 @@ import { getFrontendSettings } from '@/services/settingsService';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Check } from 'lucide-react';
 import Image from 'next/image';
+import { cn } from "@/lib/utils";
 
 export default async function GreenPanPage() {
   const settings = await getFrontendSettings();
