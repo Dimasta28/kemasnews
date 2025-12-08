@@ -49,18 +49,18 @@ export default async function GreenPanPage() {
             </section>
 
             {/* Section 2: Green Footprint */}
-            <section className="container mx-auto px-4">
+            <section>
                 <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                      <div className="relative aspect-square md:order-2">
                         <Image 
                             src="https://picsum.photos/seed/green-footprint/600/400"
                             alt="KEMAS Green Footprint"
                              fill
-                            className="rounded-lg object-cover shadow-lg"
+                            className="object-cover"
                             data-ai-hint="green footprint infographic"
                         />
                     </div>
-                    <div className="text-left md:order-1">
+                    <div className="text-left md:order-1 px-4 sm:px-6 lg:px-8">
                         <h2 className="text-3xl font-bold mb-4">KEMAS Green Footprint</h2>
                         <p className="text-muted-foreground mb-4">
                             Our commitment extends to minimizing our environmental impact at every stage.
