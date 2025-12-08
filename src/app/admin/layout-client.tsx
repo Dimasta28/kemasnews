@@ -164,17 +164,6 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname.startsWith('/admin/notifications')}
-              >
-                <Link href="/admin/notifications">
-                  <Bell />
-                  Notifications
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
                 isActive={pathname.startsWith('/admin/promo-banner')}
               >
                 <Link href="/admin/promo-banner">

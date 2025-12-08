@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -21,11 +20,6 @@ import type { FrontendSettings } from '@/services/settingsService';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import {
-  markAllNotificationsAsRead,
-  markNotificationAsRead,
-  type Notification,
-} from '@/services/notificationService';
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -39,14 +33,12 @@ import { Post } from '@/services/postService';
 
 interface SiteHeaderProps {
   settings: FrontendSettings;
-  notifications: Notification[];
   posts: Post[];
 }
 
 
 export function SiteHeader({ 
     settings: initialSettings, 
-    notifications: initialNotifications,
     posts: allPosts,
 }: SiteHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -54,39 +46,12 @@ export function SiteHeader({
   const { toast } = useToast();
   const router = useRouter();
   
-  const [notifications, setNotifications] = useState(initialNotifications || []);
   const [settings, setSettings] = useState(initialSettings);
 
   // This effect will sync state if the initial props change (e.g., on navigation)
   useEffect(() => {
-    setNotifications(initialNotifications || []);
-  }, [initialNotifications]);
-
-  useEffect(() => {
     setSettings(initialSettings);
   }, [initialSettings]);
-
-  const hasUnread = notifications.some(n => !n.read);
-
-  const handleMarkAsRead = async (id: string) => {
-    try {
-      await markNotificationAsRead(id);
-      // Manually update state
-      setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
-    } catch (error) {
-        toast({ variant: 'destructive', title: 'Error', description: 'Could not mark notification as read.' });
-    }
-  };
-  
-  const handleMarkAllAsRead = async () => {
-    try {
-      await markAllNotificationsAsRead();
-      // Manually update state
-      setNotifications(prev => prev.map(n => ({ ...n, read: true })));
-    } catch (error) {
-        toast({ variant: 'destructive', title: 'Error', description: 'Could not mark all as read.' });
-    }
-  };
 
   useEffect(() => {
     const handleScroll = () => {

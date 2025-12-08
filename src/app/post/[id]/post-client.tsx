@@ -1,4 +1,3 @@
-
 'use client';
 
 import Image from 'next/image';
@@ -11,7 +10,6 @@ import DOMPurify from 'dompurify';
 import type { Post } from '@/services/postService';
 import type { Comment } from '@/services/commentService';
 import type { BannerSettings, FrontendSettings } from '@/services/settingsService';
-import type { Notification } from '@/services/notificationService';
 
 import { Badge } from '@/components/ui/badge';
 import { Sidebar } from './sidebar';
@@ -29,11 +27,10 @@ interface PostClientProps {
     recentPosts: Post[];
     comments: Comment[];
     settings: FrontendSettings | null;
-    notifications: Notification[];
     error?: string | null;
 }
 
-export function PostClient({ post, recentPosts, comments, settings, notifications, error }: PostClientProps) {
+export function PostClient({ post, recentPosts, comments, settings, error }: PostClientProps) {
     const [sanitizedContent, setSanitizedContent] = useState('');
     const [currentUrl, setCurrentUrl] = useState('');
     const { user } = useAuth();
@@ -51,7 +48,7 @@ export function PostClient({ post, recentPosts, comments, settings, notification
     if (error || !post || !settings) {
         return (
              <div className="flex flex-col min-h-screen bg-[#EFECE9] dark:bg-[#050505]">
-                {settings && <SiteHeader settings={settings} notifications={notifications || []} posts={[]} />}
+                {settings && <SiteHeader settings={settings} posts={[]} />}
                 <main className="flex-grow flex items-center justify-center p-4">
                     <Alert variant="destructive" className="max-w-2xl">
                     <Terminal className="h-4 w-4" />
@@ -89,7 +86,6 @@ export function PostClient({ post, recentPosts, comments, settings, notification
         <div className="bg-[#EFECE9] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9]">
             <SiteHeader 
                 settings={settings} 
-                notifications={notifications}
                 posts={recentPosts}
             />
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">

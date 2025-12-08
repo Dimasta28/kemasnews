@@ -3,12 +3,10 @@ import { getPost, getPosts } from '@/services/postService';
 import { notFound } from 'next/navigation';
 import { getFrontendSettings } from '@/services/settingsService';
 import { getComments } from '@/services/commentService';
-import { getNotifications } from '@/services/notificationService';
 import { PostClient } from './post-client';
 import type { Post } from '@/services/postService';
 import type { Comment } from '@/services/commentService';
 import type { FrontendSettings } from '@/services/settingsService';
-import type { Notification } from '@/services/notificationService';
 
 
 export default async function PostPage({ params }: { params: { id: string } }) {
@@ -16,14 +14,12 @@ export default async function PostPage({ params }: { params: { id: string } }) {
   let recentPosts: Post[] = [];
   let settings: FrontendSettings | null = null;
   let comments: Comment[] = [];
-  let notifications: Notification[] = [];
   let error: string | null = null;
   
   try {
-    [post, settings, notifications] = await Promise.all([
+    [post, settings] = await Promise.all([
       getPost(params.id),
       getFrontendSettings(),
-      getNotifications(),
     ]);
     
     if (post) {
@@ -48,7 +44,6 @@ export default async function PostPage({ params }: { params: { id: string } }) {
       recentPosts={recentPosts}
       comments={comments}
       settings={settings}
-      notifications={notifications}
       error={error}
     />
   );
