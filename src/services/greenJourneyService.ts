@@ -30,11 +30,14 @@ export interface ProblemSection {
 export interface Innovation {
     title: string;
     description: string;
+    iconName: string;
 }
 
 export interface SolutionSection {
     title: string;
     description: string;
+    ctaText: string;
+    ctaLink: string;
     innovations: Innovation[];
 }
 
@@ -50,6 +53,7 @@ export interface ImpactSection {
 }
 
 export interface JourneyStep {
+    year: string;
     title: string;
     description: string;
 }
@@ -63,12 +67,14 @@ export interface Certification {
 export interface CtaSection {
     title: string;
     description: string;
+    buttonText: string;
 }
 
 export interface Resource {
     title: string;
     description: string;
     link: string;
+    iconName: string;
 }
 
 export interface GreenJourneyPageData {
@@ -98,11 +104,11 @@ export async function getGreenJourneyPageData(): Promise<GreenJourneyPageData> {
         videoUrl: "https://videos.pexels.com/video-files/3214533/3214533-hd_1920_1080_25fps.mp4",
     },
     socialProofLogos: [
-        { name: "Brand A", logoUrl: "https://via.placeholder.com/150x50/ffffff/000000?text=Logo+A" },
-        { name: "Brand B", logoUrl: "https://via.placeholder.com/150x50/ffffff/000000?text=Logo+B" },
-        { name: "Brand C", logoUrl: "https://via.placeholder.com/150x50/ffffff/000000?text=Logo+C" },
-        { name: "Brand D", logoUrl: "https://via.placeholder.com/150x50/ffffff/000000?text=Logo+D" },
-        { name: "Brand E", logoUrl: "https://via.placeholder.com/150x50/ffffff/000000?text=Logo+E" },
+        { name: "L'Oréal", logoUrl: "https://picsum.photos/seed/loreal/158/48" },
+        { name: "Unilever", logoUrl: "https://picsum.photos/seed/unilever/158/48" },
+        { name: "P&G", logoUrl: "https://picsum.photos/seed/pg/158/48" },
+        { name: "Estée Lauder", logoUrl: "https://picsum.photos/seed/estee/158/48" },
+        { name: "Shiseido", logoUrl: "https://picsum.photos/seed/shiseido/158/48" },
     ],
     problem: {
         title: "The Plastic Problem is Real. The Time to Act is Now.",
@@ -116,10 +122,12 @@ export async function getGreenJourneyPageData(): Promise<GreenJourneyPageData> {
     solution: {
         title: "Innovation-Driven Sustainable Solutions",
         description: "We're pioneering the next generation of eco-friendly packaging without compromising on quality or aesthetics. Our solutions are designed for a circular economy.",
+        ctaText: "Try Our Eco-Configurator",
+        ctaLink: "#",
         innovations: [
-            { title: "Recyclable Mono-Materials", description: "Creating premium packaging from a single, fully recyclable polymer." },
-            { title: "Refillable Systems", description: "Designing elegant and user-friendly refill formats that reduce waste by up to 80%." },
-            { title: "Bio-Based Polymers", description: "Utilizing materials derived from renewable resources like sugarcane and corn." },
+            { title: "Recyclable Mono-Materials", description: "Creating premium packaging from a single, fully recyclable polymer.", iconName: "Recycle" },
+            { title: "Refillable Systems", description: "Designing elegant and user-friendly refill formats that reduce waste by up to 80%.", iconName: "Replace" },
+            { title: "Bio-Based Polymers", description: "Utilizing materials derived from renewable resources like sugarcane and corn.", iconName: "Leaf" },
         ]
     },
     impact: {
@@ -132,7 +140,12 @@ export async function getGreenJourneyPageData(): Promise<GreenJourneyPageData> {
             { value: "95%", label: "Recyclability Rate Achieved" },
         ]
     },
-    journeyTimeline: [],
+    journeyTimeline: [
+        { year: "2018", title: "First 100% PCR PET Bottle", description: "Launched our first packaging solution made entirely from Post-Consumer Recycled PET." },
+        { year: "2020", title: "Solar Power Transition", description: "Our main manufacturing facility transitioned to be powered 50% by solar energy." },
+        { year: "2022", title: "Refillable Systems Patent", description: "Patented a new lock-and-load refillable system, reducing plastic use by 70% per unit." },
+        { year: "2024", title: "Water Recycling Program", description: "Implemented a closed-loop water system, recycling 90% of water used in production." },
+    ],
     certifications: [
         { name: "ISO 9001", logoUrl: "https://picsum.photos/seed/iso9001/100/100", description: "Quality Management" },
         { name: "ISO 14001", logoUrl: "https://picsum.photos/seed/iso14001/100/100", description: "Environmental Management" },
@@ -140,9 +153,14 @@ export async function getGreenJourneyPageData(): Promise<GreenJourneyPageData> {
     ],
     cta: {
         title: "Ready to Start Your Green Journey?",
-        description: "Let's collaborate to create beautiful, sustainable packaging that resonates with today's conscious consumer. Tell us about your project, and our experts will get in touch."
+        description: "Let's collaborate to create beautiful, sustainable packaging that resonates with today's conscious consumer. Tell us about your project, and our experts will get in touch.",
+        buttonText: "Let's Build Your Green Packaging",
     },
-    resources: [],
+    resources: [
+        { title: "2024 Sustainability Report", description: "An in-depth look at our goals, progress, and future plans.", link: "#", iconName: "Book" },
+        { title: "Mono-Material Design Guide", description: "Technical specifications and best practices for recyclable packaging.", link: "#", iconName: "FileText" },
+        { title: "Lifecycle Analysis Whitepaper", description: "Comparative data on the environmental impact of different materials.", link: "#", iconName: "Download" },
+    ],
   };
 
   if (docSnap.exists()) {
