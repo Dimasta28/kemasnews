@@ -7,7 +7,11 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 
-export function HomeClient() {
+interface HomeClientProps {
+  heroImageUrl: string;
+}
+
+export function HomeClient({ heroImageUrl }: HomeClientProps) {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, -100]);
 
@@ -19,7 +23,7 @@ export function HomeClient() {
             style={{ y }}
         >
             <Image
-                src="https://images.pexels.com/photos/3214533/pexels-photo-3214533.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                src={heroImageUrl}
                 alt="Nature background"
                 fill
                 className="object-cover opacity-40"

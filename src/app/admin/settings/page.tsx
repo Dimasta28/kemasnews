@@ -158,6 +158,41 @@ export default function SettingsPage() {
       
       <Card>
         <CardHeader>
+          <CardTitle>Homepage Hero</CardTitle>
+          <CardDescription>
+            Manage the main background image on the homepage.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-2 gap-6 items-start">
+            <div className="grid gap-2">
+              <Label htmlFor="hero-image-url">Hero Image URL</Label>
+              <Input
+                id="hero-image-url"
+                value={settings.heroImageUrl || ''}
+                onChange={(e) => handleInputChange('heroImageUrl', e.target.value)}
+                placeholder="https://example.com/hero-image.png"
+              />
+              <p className="text-sm text-muted-foreground">The main background image for the homepage.</p>
+            </div>
+            <div className="space-y-2">
+              <Label>Hero Image Preview</Label>
+              <div className="relative aspect-video w-full overflow-hidden rounded-lg border bg-muted">
+                <Image
+                  src={settings.heroImageUrl || 'https://placehold.co/1200x630.png'}
+                  alt="Hero Image preview"
+                  fill
+                  className="object-cover"
+                  data-ai-hint="hero background"
+                />
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
           <CardTitle>General Settings</CardTitle>
           <CardDescription>
             Manage the general appearance of your blog.

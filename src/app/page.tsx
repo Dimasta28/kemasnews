@@ -23,7 +23,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-[#EFECE9] dark:bg-[#050505]">
       <SiteHeaderWrapper />
-      <HomeClient />
+      <HomeClient heroImageUrl={settings.heroImageUrl} />
       <SiteFooter settings={settings} />
     </div>
   );

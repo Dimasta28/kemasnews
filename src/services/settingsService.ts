@@ -36,6 +36,7 @@ export interface FrontendSettings {
   ogTitle: string;
   ogDescription: string;
   ogImageUrl: string;
+  heroImageUrl: string;
   heroPostIds: string[];
   footer: FooterSettings;
 }
@@ -47,9 +48,10 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
   const settingsDocRef = doc(db, 'settings', SETTINGS_DOC_ID);
   const docSnap = await getDoc(settingsDocRef);
 
-  const defaults: Omit<FrontendSettings, 'privacyPolicy' | 'ogTitle' | 'ogDescription' | 'ogImageUrl' | 'heroPostIds' | 'footer' | 'dropdownLinks' | 'lightModeLogoUrl' | 'darkModeLogoUrl'> & { footer: FooterSettings, dropdownLinks: NavigationLink[], lightModeLogoUrl: string, darkModeLogoUrl: string, privacyPolicy: string, ogTitle: string, ogDescription: string, ogImageUrl: string, heroPostIds: string[] } = {
+  const defaults: Omit<FrontendSettings, 'privacyPolicy' | 'ogTitle' | 'ogDescription' | 'ogImageUrl' | 'heroPostIds' | 'footer' | 'dropdownLinks' | 'lightModeLogoUrl' | 'darkModeLogoUrl' | 'heroImageUrl'> & { heroImageUrl: string, footer: FooterSettings, dropdownLinks: NavigationLink[], lightModeLogoUrl: string, darkModeLogoUrl: string, privacyPolicy: string, ogTitle: string, ogDescription: string, ogImageUrl: string, heroPostIds: string[] } = {
     lightModeLogoUrl: 'https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png',
     darkModeLogoUrl: 'https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png',
+    heroImageUrl: 'https://images.pexels.com/photos/3214533/pexels-photo-3214533.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     homepageBanner: {
       imageUrl: 'https://placehold.co/1200x450.png',
       title: 'Homepage Banner Title',
@@ -98,6 +100,7 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
     const settings: FrontendSettings = {
         lightModeLogoUrl: data.lightModeLogoUrl || defaults.lightModeLogoUrl,
         darkModeLogoUrl: data.darkModeLogoUrl || defaults.darkModeLogoUrl,
+        heroImageUrl: data.heroImageUrl || defaults.heroImageUrl,
         homepageBanner: {
             ...defaults.homepageBanner,
             ...(data.homepageBanner || data.banner || {}),
