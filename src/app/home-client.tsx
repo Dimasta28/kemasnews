@@ -30,7 +30,7 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
                 priority
             />
         </motion.div>
-        <div className="relative z-10 max-w-4xl mx-auto text-left px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 max-w-4xl mx-auto text-left">
             <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight">KEMAS GREEN JOURNEY</h1>
             <p className="mt-4 text-lg max-w-2xl">
             From Waste to Worth: Join us on a mission to reshape the future of packaging, one sustainable choice at a time.
