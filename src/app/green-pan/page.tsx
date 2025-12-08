@@ -24,9 +24,9 @@ export default async function GreenPanPage() {
 
         <div className="space-y-16 md:space-y-24">
             {/* Section 1: Circular Economy */}
-            <section className="container mx-auto px-4">
-                <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-                    <div className="text-left">
+            <section className="container mx-auto">
+                <div className="grid md:grid-cols-2 gap-0 items-center">
+                    <div className="text-left px-4">
                         <h2 className="text-3xl font-bold mb-4">What Can KEMAS Do?</h2>
                         <h3 className="font-semibold text-xl text-primary mb-2">Circular Economy Concept</h3>
                         <p className="text-muted-foreground mb-4">
@@ -36,12 +36,12 @@ export default async function GreenPanPage() {
                             Source: The Circular Economy: What it means for Fracking and Plastic – FracTracker Alliance
                         </div>
                     </div>
-                    <div className="relative aspect-video">
+                    <div className="relative h-full min-h-[300px] md:min-h-0">
                         <Image 
                             src="https://picsum.photos/seed/circular-economy/600/400"
                             alt="Circular Economy Diagram"
                             fill
-                            className="rounded-lg object-cover shadow-lg"
+                            className="object-cover"
                             data-ai-hint="circular economy diagram"
                         />
                     </div>
