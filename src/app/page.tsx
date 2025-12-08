@@ -33,7 +33,7 @@ export default async function Home() {
                         <div className="absolute top-0 right-0 w-6 h-6 bg-white rounded-full opacity-90"></div>
                     </div>
                 </div>
-                <h1 className="text-5xl md:text-8xl font-extrabold tracking-tighter">
+                <h1 className="text-4xl md:text-7xl font-extrabold tracking-tighter">
                     KEMAS<br />GREEN JOURNEY
                 </h1>
                 <p className="mt-6 max-w-2xl text-lg leading-relaxed">
