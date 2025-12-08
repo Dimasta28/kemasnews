@@ -33,7 +33,7 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
         <div className="relative z-10 max-w-4xl mx-auto text-left">
             <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight">KEMAS GREEN JOURNEY</h1>
             <p className="mt-4 text-lg max-w-2xl">
-            From Waste to Worth: Join us on a mission to reshape the future of packaging, one sustainable choice at a time.
+            We think that mother earth is under threat as well as the future generation. THE TIME TO ACT IS NOW Please follow us on our green footprint journey.
             </p>
             <div className="mt-8 flex gap-4">
             <Button asChild size="lg">
