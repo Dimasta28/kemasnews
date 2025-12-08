@@ -1,13 +1,12 @@
 
 import type {Metadata} from 'next';
-import { Inter, Space_Grotesk } from 'next/font/google';
+import { Jost } from 'next/font/google';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider';
 import { getFrontendSettings } from '@/services/settingsService';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const space_grotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk' });
+const jost = Jost({ subsets: ['latin'], variable: '--font-jost' });
 
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -53,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
-      <body className={`${inter.variable} ${space_grotesk.variable} antialiased`}>
+      <body className={`${jost.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
