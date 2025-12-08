@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -72,7 +73,7 @@ export function SiteHeader({
       <header
         className={cn(
             "sticky top-0 z-50 w-full border-b transition-all",
-            isScrolled ? "bg-background/95 backdrop-blur-sm" : "bg-transparent border-transparent"
+            isScrolled ? "border-border" : "bg-transparent border-transparent"
         )}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
