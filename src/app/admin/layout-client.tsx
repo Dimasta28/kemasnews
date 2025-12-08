@@ -11,11 +11,9 @@ import {
   MessageSquare,
   Settings,
   Tags,
-  Megaphone,
   Briefcase,
   ChevronRight,
   Shield,
-  Bell,
   ExternalLink,
 } from 'lucide-react';
 
@@ -158,17 +156,6 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 <Link href="/admin/comments">
                   <MessageSquare />
                   Comments
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname.startsWith('/admin/promo-banner')}
-              >
-                <Link href="/admin/promo-banner">
-                  <Megaphone />
-                  Banner
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
