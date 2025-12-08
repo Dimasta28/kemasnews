@@ -87,9 +87,6 @@ export function CommentActions({ comment }: { comment: Comment }) {
                 {comment.status !== 'Approved' && <DropdownMenuItem onSelect={() => handleStatusChange('Approved')}>Approve</DropdownMenuItem>}
                 {comment.status !== 'Pending' && <DropdownMenuItem onSelect={() => handleStatusChange('Pending')}>Mark as Pending</DropdownMenuItem>}
                 {comment.status !== 'Spam' && <DropdownMenuItem onSelect={() => handleStatusChange('Spam')}>Mark as Spam</DropdownMenuItem>}
-                <DropdownMenuItem asChild>
-                    <Link href={`/post/${comment.postId}#comments`}>View Post</Link>
-                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem 
                     className="text-red-500 hover:!text-red-500 focus:!text-red-500" 

@@ -131,9 +131,7 @@ export function CommentsClient({ initialComments }: CommentsClientProps) {
                   <div className="text-xs text-muted-foreground">{format(parseISO(comment.date), "dd LLL yyyy, HH:mm")}</div>
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
-                  <Link href={`/post/${comment.postId}`} className="hover:underline">
-                    {comment.postTitle}
-                  </Link>
+                  {comment.postTitle}
                 </TableCell>
                 <TableCell className="hidden sm:table-cell">
                   <Badge
