@@ -68,12 +68,12 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                 <motion.div variants={heroTextItem} className="mt-8 flex gap-4">
                 <Button asChild size="lg">
                     <Link href="/green-plan">
-                    Get Started
+                    Our Green Plan
                     </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline">
-                    <Link href="/green-plan">
-                    Learn More <ArrowRight className="ml-2" />
+                    <Link href="#join-journey">
+                    Join The Journey <ArrowRight className="ml-2" />
                     </Link>
                 </Button>
                 </motion.div>
@@ -226,7 +226,11 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
             </div>
         </AnimatedSection>
 
-        <GreenJourneyForm />
+        <div id="join-journey">
+            <GreenJourneyForm />
+        </div>
     </main>
   );
 }
+
+    
