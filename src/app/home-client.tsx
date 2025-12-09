@@ -89,7 +89,7 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                         <h2 className="text-3xl lg:text-4xl font-bold">Powering The Future With The Renew</h2>
                     </div>
                     <div className="md:col-span-3">
-                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
+                         <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 text-center">
                             {impactData.metrics.map((metric, index) => (
                                 <div key={index} className="relative">
                                     {index > 0 && <div className="absolute left-0 top-0 bottom-0 w-px bg-primary-foreground/20 hidden sm:block"></div>}
