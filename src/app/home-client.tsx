@@ -59,9 +59,9 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
 
         <section className="bg-black text-white py-12 md:py-16">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
                 {impactData.metrics.map((metric, index) => (
-                    <div key={index} className="text-center">
+                    <div key={index}>
                         <div className="text-4xl md:text-5xl font-extrabold">
                             <AnimatedCounter 
                             from={0} 
@@ -91,12 +91,12 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                   </Link>
                 </Button>
               </div>
-              <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg">
+              <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg group">
                  <Image
                     src="https://picsum.photos/seed/efficiency/600/600"
                     alt="Precision & Energy Efficiency"
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
                     data-ai-hint="factory machinery"
                   />
               </div>
@@ -107,12 +107,12 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
         <AnimatedSection className="py-16 md:py-24 bg-secondary/30">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12 items-center">
-               <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg md:order-1">
+               <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg group md:order-1">
                  <Image
                     src="https://picsum.photos/seed/waste-management/600/600"
                     alt="Smart Waste Management"
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
                     data-ai-hint="recycling water"
                   />
               </div>
@@ -145,12 +145,12 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                   </Link>
                 </Button>
               </div>
-              <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg">
+              <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg group">
                  <Image
                     src="https://picsum.photos/seed/automation/600/600"
                     alt="Automation & Carbon Reduction"
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
                     data-ai-hint="robotic arm factory"
                   />
               </div>
@@ -161,12 +161,12 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
         <AnimatedSection className="py-16 md:py-24 bg-secondary/30">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12 items-center">
-               <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg md:order-1">
+               <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg group md:order-1">
                  <Image
                     src="https://picsum.photos/seed/solutions/600/600"
                     alt="From Products to Solutions"
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
                     data-ai-hint="sustainable products"
                   />
               </div>
@@ -213,5 +213,3 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
     </main>
   );
 }
-
-    
