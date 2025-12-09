@@ -31,7 +31,7 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
             />
         </motion.div>
         <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-0 text-left">
-            <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight">KEMAS GREEN JOURNEY</h1>
+            <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight">Beautiful, Smart, Sustainable</h1>
             <p className="mt-4 text-lg max-w-2xl">
             We think that mother earth is under threat as well as the future generation. THE TIME TO ACT IS NOW Please follow us on our green footprint journey.
             </p>
