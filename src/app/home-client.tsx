@@ -8,6 +8,7 @@ import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { AnimatedCounter } from '@/components/animated-counter';
 import type { ImpactSection as ImpactData } from '@/services/greenJourneyService';
+import { AnimatedSection } from '@/components/animated-section';
 
 
 interface HomeClientProps {
@@ -75,6 +76,28 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                 </div>
             </div>
         </section>
+
+        <AnimatedSection className="py-16 md:py-24 bg-background">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-3xl font-bold text-foreground">Precision & Energy Efficiency</h2>
+                <p className="mt-4 text-muted-foreground">
+                  At KEMAS, we use high-precision molding machines to maximize productivity and minimize waste. Our facility features insulated barrels and smart automated systems that prevent heat loss and power down idle machinery. Combined with advanced Arburg technology and rigorous maintenance, this reduces our energy consumption by up to 50%.
+                </p>
+              </div>
+              <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg">
+                 <Image
+                    src="https://picsum.photos/seed/efficiency/600/600"
+                    alt="Precision & Energy Efficiency"
+                    fill
+                    className="object-cover"
+                    data-ai-hint="factory machinery"
+                  />
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
     </main>
   );
 }
