@@ -137,7 +137,7 @@ export async function getGreenJourneyPageData(): Promise<GreenJourneyPageData> {
         description: "By partnering with us, brands are making a measurable difference for the planet. Here's what we've achieved together so far.",
         metrics: [
             { value: 330, suffix: " Ton", label: "Carbon Emissions Reduced/Year" },
-            { value: 100, suffix: "%", label: "Water Recycling (Anodizing)" },
+            { value: 100, suffix: "%", label: "Water Recycling (Anodizing Facility)" },
             { value: 50, suffix: "%", label: "Energy Saving (Cooling Machine)" },
             { value: 95, suffix: "%", label: "Recyclability Rate Achieved" },
         ]
