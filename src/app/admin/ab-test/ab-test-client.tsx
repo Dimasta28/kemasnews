@@ -19,6 +19,7 @@ import { BarChart, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 function GreenJourneyFormVariantB() {
     const [step, setStep] = useState(1);
@@ -75,6 +76,7 @@ function GreenJourneyFormVariantB() {
 
 export function ABTestClient() {
   const [isFormTestActive, setIsFormTestActive] = useState(true);
+  const [isNewTestDialogOpen, setIsNewTestDialogOpen] = useState(false);
 
   return (
     <div className="grid gap-6">
@@ -85,7 +87,36 @@ export function ABTestClient() {
             Create and manage experiments for your buttons and forms.
           </p>
         </div>
-        <Button>Create New Test</Button>
+        <Dialog open={isNewTestDialogOpen} onOpenChange={setIsNewTestDialogOpen}>
+          <DialogTrigger asChild>
+            <Button>Create New Test</Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Create New A/B Test</DialogTitle>
+              <DialogDescription>
+                Set up a new experiment to optimize your user experience.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="test-name" className="text-right">
+                  Test Name
+                </Label>
+                <Input id="test-name" placeholder="e.g., Homepage CTA Button" className="col-span-3" />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="test-description" className="text-right">
+                  Description
+                </Label>
+                <Textarea id="test-description" placeholder="What is the hypothesis for this test?" className="col-span-3" />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="submit" onClick={() => setIsNewTestDialogOpen(false)}>Create Test</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
        <Card>
