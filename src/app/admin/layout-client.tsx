@@ -11,6 +11,7 @@ import {
   Settings,
   Shield,
   ExternalLink,
+  FlaskConical,
 } from 'lucide-react';
 
 import {
@@ -151,6 +152,17 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 </SidebarMenuButton>
               </SidebarMenuItem>
             <SidebarSeparator />
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname.startsWith('/admin/ab-test')}
+              >
+                <Link href="/admin/ab-test">
+                  <FlaskConical />
+                  A/B Testing
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
