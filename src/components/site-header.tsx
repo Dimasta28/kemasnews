@@ -30,6 +30,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Input } from './ui/input';
 import { Post } from '@/services/postService';
+import { ThemeToggle } from './theme-toggle';
 
 interface SiteHeaderProps {
   settings: FrontendSettings;
@@ -79,7 +80,9 @@ export function SiteHeader({
             <div className="flex items-center justify-between h-16">
                 <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-white">
                     <Link href="/" className="hover:text-primary-foreground/80 transition-colors">Home</Link>
+                    <Link href="/green-journey" className="hover:text-primary-foreground/80 transition-colors">Green Journey</Link>
                     <Link href="/green-plan" className="hover:text-primary-foreground/80 transition-colors">Green Plan</Link>
+                    <Link href="/careers" className="hover:text-primary-foreground/80 transition-colors">Careers</Link>
                 </nav>
 
                 <div className="flex items-center">
@@ -95,6 +98,7 @@ export function SiteHeader({
                 </div>
                 
                  <div className="flex items-center gap-2 md:hidden">
+                  <ThemeToggle />
                   <button
                     onClick={() => setIsMobileMenuOpen(true)}
                     className="md:hidden p-2 hover:bg-secondary rounded-full transition text-white"
@@ -138,7 +142,13 @@ export function SiteHeader({
                         <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Home</Link>
                     </li>
                      <li>
+                        <Link href="/green-journey" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Journey</Link>
+                    </li>
+                     <li>
                         <Link href="/green-plan" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Plan</Link>
+                    </li>
+                     <li>
+                        <Link href="/careers" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Careers</Link>
                     </li>
                 </ul>
             </nav>
