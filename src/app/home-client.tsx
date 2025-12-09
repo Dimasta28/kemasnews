@@ -107,7 +107,7 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
         <AnimatedSection className="py-16 md:py-24 bg-secondary/30">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12 items-center">
-               <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg">
+               <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg md:order-1">
                  <Image
                     src="https://picsum.photos/seed/waste-management/600/600"
                     alt="Smart Waste Management"
@@ -116,11 +116,16 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                     data-ai-hint="recycling water"
                   />
               </div>
-              <div>
+              <div className="md:order-2">
                 <h2 className="text-3xl font-bold text-foreground">Smart Waste Management</h2>
                 <p className="mt-4 text-muted-foreground">
                   We are committed to a zero-waste philosophy. We recycle 100% of the water used in our anodization facility and capture chemical waste from spray lines to be repurposed as fuel. Additionally, all organic waste is composted and used as fertilizer for our factory grounds.
                 </p>
+                <Button asChild variant="outline" className="mt-6">
+                  <Link href="#">
+                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>
@@ -134,6 +139,11 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                 <p className="mt-4 text-muted-foreground">
                   Our use of highly automated equipment improves efficiency and reduces human error (scrap). This technology also allows us to operate with a leaner workforce, which significantly lowers our carbon footprint—cutting an estimated 330 metric tons of CO2 per year simply by reducing daily commuting emissions.
                 </p>
+                 <Button asChild variant="outline" className="mt-6">
+                  <Link href="#">
+                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </div>
               <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg">
                  <Image
