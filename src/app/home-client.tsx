@@ -1,3 +1,4 @@
+
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -57,25 +58,23 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
 
         <div className="absolute bottom-0 left-0 right-0 z-20 p-4 md:p-8">
             <div className="max-w-6xl mx-auto">
-                <Card className="bg-black/30 backdrop-blur-md border-white/20">
-                    <div className="p-6">
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-                        {impactData.metrics.map((metric, index) => (
-                            <div key={index} className="text-center text-white">
-                                <div className="text-4xl font-extrabold">
-                                    <AnimatedCounter 
-                                    from={0} 
-                                    to={metric.value} 
-                                    prefix={metric.prefix}
-                                    suffix={metric.suffix}
-                                    />
-                                </div>
-                                <p className="mt-2 text-sm text-white/80">{metric.label}</p>
+                 <div className="p-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                    {impactData.metrics.map((metric, index) => (
+                        <div key={index} className="text-center text-white">
+                            <div className="text-4xl font-extrabold">
+                                <AnimatedCounter 
+                                from={0} 
+                                to={metric.value} 
+                                prefix={metric.prefix}
+                                suffix={metric.suffix}
+                                />
                             </div>
-                        ))}
+                            <p className="mt-2 text-sm text-white/80">{metric.label}</p>
                         </div>
+                    ))}
                     </div>
-                </Card>
+                </div>
             </div>
         </div>
         </section>
