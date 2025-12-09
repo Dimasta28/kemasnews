@@ -12,6 +12,7 @@ import {
   Shield,
   ExternalLink,
   FlaskConical,
+  Inbox,
 } from 'lucide-react';
 
 import {
@@ -140,6 +141,17 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
+             <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname.startsWith('/admin/submissions')}
+                >
+                  <Link href="/admin/submissions">
+                    <Inbox />
+                    Submissions
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
              <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
