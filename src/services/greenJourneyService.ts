@@ -139,7 +139,6 @@ export async function getGreenJourneyPageData(): Promise<GreenJourneyPageData> {
             { value: 330, suffix: " Ton", label: "Carbon Emissions Reduced/Year" },
             { value: 100, suffix: "%", label: "Water Recycling (Anodizing Facility)" },
             { value: 50, suffix: "%", label: "Energy Saving (Cooling Machine)" },
-            { value: 95, suffix: "%", label: "Recyclability Rate Achieved" },
         ]
     },
     journeyTimeline: [
