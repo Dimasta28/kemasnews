@@ -19,7 +19,7 @@ import { TagsTable } from './tags-table';
 import { db } from '@/lib/firebase';
 import { collection, query, orderBy, onSnapshot, getDocs, Timestamp } from 'firebase/firestore';
 
-interface MediaClientProps {
+interface PostsClientProps {
   initialPosts: Post[];
   initialCategories: Category[];
   initialTags: any[];
@@ -31,7 +31,7 @@ export function PostsClient({
   initialCategories,
   initialTags,
   activeTab,
-}: MediaClientProps) {
+}: PostsClientProps) {
   const router = useRouter();
   const [posts, setPosts] = useState<Post[]>(initialPosts);
   const [categories, setCategories] = useState<Category[]>(initialCategories);

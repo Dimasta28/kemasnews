@@ -1,7 +1,7 @@
 
 import { getPosts } from '@/services/postService';
 import { getCategories } from '@/services/categoryService';
-import { PostsClient } from './media-client';
+import { PostsClient } from './posts-client';
 
 export default async function PostsPage({
   searchParams,

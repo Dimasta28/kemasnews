@@ -123,9 +123,9 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
              <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                isActive={pathname.startsWith('/admin/media')}
+                isActive={pathname.startsWith('/admin/posts')}
               >
-                <Link href="/admin/media">
+                <Link href="/admin/posts">
                   <FileText />
                   Posts
                 </Link>
