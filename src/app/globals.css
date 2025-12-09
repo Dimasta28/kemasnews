@@ -99,3 +99,18 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+@layer utilities {
+  .clip-path-zigzag-right {
+    clip-path: polygon(0 0, 100% 0, 100% 10%, 95% 15%, 100% 20%, 95% 25%, 100% 30%, 95% 35%, 100% 40%, 95% 45%, 100% 50%, 95% 55%, 100% 60%, 95% 65%, 100% 70%, 95% 75%, 100% 80%, 95% 85%, 100% 90%, 100% 100%, 0 100%);
+  }
+  .clip-path-zigzag-left {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 90%, 5% 85%, 0 80%, 5% 75%, 0 70%, 5% 65%, 0 60%, 5% 55%, 0 50%, 5% 45%, 0 40%, 5% 35%, 0 30%, 5% 25%, 0 20%, 5% 15%, 0 10%);
+  }
+
+  @media (max-width: 767px) {
+    .clip-path-zigzag-right, .clip-path-zigzag-left {
+        clip-path: none;
+    }
+  }
+}
