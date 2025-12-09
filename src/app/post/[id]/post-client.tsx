@@ -15,7 +15,7 @@ import { Badge } from '@/components/ui/badge';
 import { Sidebar } from './sidebar';
 import { CommentsSection } from './comments-section';
 import { BackToTopButton } from '@/components/back-to-top-button';
-import { SiteHeader } from '@/components/site-header';
+import { SiteHeaderWrapper } from '@/components/site-header-wrapper';
 import { SiteFooter } from '@/components/site-footer';
 import { SocialShare } from '@/components/social-share';
 import { useAuth } from '@/hooks/use-auth';
@@ -48,7 +48,7 @@ export function PostClient({ post, recentPosts, comments, settings, error }: Pos
     if (error || !post || !settings) {
         return (
              <div className="flex flex-col min-h-screen bg-[#EFECE9] dark:bg-[#050505]">
-                {settings && <SiteHeader settings={settings} posts={[]} />}
+                {settings && <SiteHeaderWrapper />}
                 <main className="flex-grow flex items-center justify-center p-4">
                     <Alert variant="destructive" className="max-w-2xl">
                     <Terminal className="h-4 w-4" />
@@ -84,10 +84,7 @@ export function PostClient({ post, recentPosts, comments, settings, error }: Pos
 
     return (
         <div className="bg-[#EFECE9] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9]">
-            <SiteHeader 
-                settings={settings} 
-                posts={recentPosts}
-            />
+            <SiteHeaderWrapper />
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                     <Link href="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
