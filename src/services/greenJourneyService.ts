@@ -133,10 +133,10 @@ export async function getGreenJourneyPageData(): Promise<GreenJourneyPageData> {
         title: "Powering The Future With The Renew",
         description: "By partnering with us, brands are making a measurable difference for the planet. Here's what we've achieved together so far.",
         metrics: [
-            { value: 6561, label: "Team members", iconName: 'Recycle' },
-            { value: 600, label: "Completed Projects", iconName: 'Briefcase' },
-            { value: 250, label: "Winning award", iconName: 'Award' },
-            { value: 590, label: "Clients Review", iconName: 'Star' },
+            { value: 50, label: "Energy Reduction", suffix: "%", iconName: "BatteryCharging" },
+            { value: 100, label: "Water Recycled", suffix: "%", iconName: "Droplets" },
+            { value: 100, label: "Waste Management", suffix: "%", iconName: "Trash2" },
+            { value: 330, label: "Carbon Emissions Reduced/Year", suffix: " Ton", iconName: "Wind" },
         ]
     },
     journeyTimeline: [

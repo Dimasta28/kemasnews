@@ -1,3 +1,4 @@
+
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -81,7 +82,7 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
         </section>
 
         <section className="bg-primary text-primary-foreground py-12 md:py-16">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
                     <div className="md:col-span-2">
                         <p className="text-sm font-bold uppercase tracking-wider text-primary-foreground/80 mb-2">Talk to us</p>
@@ -99,7 +100,7 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                                         to={metric.value} 
                                         prefix={metric.prefix}
                                         suffix={metric.suffix}
-                                        />+
+                                        />
                                     </div>
                                     <p className="mt-1 text-xs text-primary-foreground/80">{metric.label}</p>
                                 </div>
