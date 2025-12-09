@@ -136,7 +136,7 @@ export async function getGreenJourneyPageData(): Promise<GreenJourneyPageData> {
             { value: 50, label: "Energy Reduction", suffix: "%", iconName: "BatteryCharging" },
             { value: 100, label: "Water Recycled", suffix: "%", iconName: "Droplets" },
             { value: 100, label: "Waste Management", suffix: "%", iconName: "Trash2" },
-            { value: 330, label: "Carbon Emissions Reduced/Year", suffix: " Ton", iconName: "Wind" },
+            { value: 330, label: "Carbon Emissions Reduced/Year", suffix: " Ton+", iconName: "Wind" },
         ]
     },
     journeyTimeline: [
