@@ -78,13 +78,6 @@ export function SiteHeader({
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
-                <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-white">
-                    <Link href="/" className="hover:text-primary-foreground/80 transition-colors">Home</Link>
-                    <Link href="/green-journey" className="hover:text-primary-foreground/80 transition-colors">Green Journey</Link>
-                    <Link href="/green-plan" className="hover:text-primary-foreground/80 transition-colors">Green Plan</Link>
-                    <Link href="/careers" className="hover:text-primary-foreground/80 transition-colors">Careers</Link>
-                </nav>
-
                 <div className="flex items-center">
                     <Link href="/" className="flex-shrink-0">
                         <Image
@@ -97,7 +90,13 @@ export function SiteHeader({
                     </Link>
                 </div>
                 
-                 <div className="flex items-center gap-2 md:hidden">
+                <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-white">
+                    <Link href="/" className="hover:text-primary-foreground/80 transition-colors">Home</Link>
+                    <Link href="/green-journey" className="hover:text-primary-foreground/80 transition-colors">Green Journey</Link>
+                    <Link href="/green-plan" className="hover:text-primary-foreground/80 transition-colors">Green Plan</Link>
+                </nav>
+
+                 <div className="flex items-center gap-2">
                   <ThemeToggle />
                   <button
                     onClick={() => setIsMobileMenuOpen(true)}
@@ -146,9 +145,6 @@ export function SiteHeader({
                     </li>
                      <li>
                         <Link href="/green-plan" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Plan</Link>
-                    </li>
-                     <li>
-                        <Link href="/careers" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Careers</Link>
                     </li>
                 </ul>
             </nav>
