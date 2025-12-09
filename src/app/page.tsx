@@ -5,6 +5,7 @@ import { getFrontendSettings } from '@/services/settingsService';
 import { type FrontendSettings } from '@/services/settingsService';
 import { HomeClient } from './home-client';
 import { getGreenJourneyPageData } from '@/services/greenJourneyService';
+import { GreenJourneyForm } from './_components/green-journey-form';
 
 export default async function Home() {
   const [settings, pageData] = await Promise.all([
