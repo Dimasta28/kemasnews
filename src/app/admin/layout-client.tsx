@@ -7,7 +7,6 @@ import Link from 'next/link';
 import {
   FileText,
   Home,
-  MessageSquare,
   Settings,
   Shield,
   ExternalLink,
@@ -127,17 +126,6 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 <Link href="/admin/posts">
                   <FileText />
                   Posts
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname.startsWith('/admin/comments')}
-              >
-                <Link href="/admin/comments">
-                  <MessageSquare />
-                  Comments
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

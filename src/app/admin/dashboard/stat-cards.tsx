@@ -2,7 +2,7 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Eye, FileText, MessageSquare, Users } from "lucide-react";
+import { Eye, FileText, Users } from "lucide-react";
 
 interface StatCardsProps {
     stats: {
@@ -10,22 +10,15 @@ interface StatCardsProps {
         totalUsers: string;
     };
     postsCount: number;
-    commentsCount: number;
     rangeDescription: string;
 }
 
-export function StatCards({ stats, postsCount, commentsCount, rangeDescription }: StatCardsProps) {
+export function StatCards({ stats, postsCount, rangeDescription }: StatCardsProps) {
     const cardData = [
         {
             title: "Total Posts",
             value: postsCount.toString(),
             icon: FileText,
-            description: "All time",
-        },
-        {
-            title: "Total Comments",
-            value: commentsCount.toString(),
-            icon: MessageSquare,
             description: "All time",
         },
         {
@@ -43,7 +36,7 @@ export function StatCards({ stats, postsCount, commentsCount, rangeDescription }
     ];
 
     return (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {cardData.map((card) => (
                 <Card key={card.title}>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

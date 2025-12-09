@@ -22,7 +22,6 @@ interface AnalyticsDashboardProps {
   range: DateRange;
   recentPosts: Post[];
   postsCount: number;
-  commentsCount: number;
 }
 
 const rangeOptions: { value: DateRange; label: string }[] = [
@@ -38,7 +37,6 @@ export function AnalyticsDashboard({
   range,
   recentPosts,
   postsCount,
-  commentsCount,
 }: AnalyticsDashboardProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -85,7 +83,6 @@ export function AnalyticsDashboard({
       <StatCards 
         stats={stats}
         postsCount={postsCount}
-        commentsCount={commentsCount}
         rangeDescription={rangeDescription}
       />
 
