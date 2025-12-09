@@ -2,19 +2,22 @@
 'use client';
 
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Send } from 'lucide-react';
 import { AnimatedSection } from '@/components/animated-section';
+import { submitGreenJourneyForm } from '@/services/greenJourneySubmissionService';
 
 export function GreenJourneyForm() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
+  const [brandName, setBrandName] = useState('');
+  const [needs, setNeeds] = useState('');
 
   const handleNextStep = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -32,16 +35,32 @@ export function GreenJourneyForm() {
   const handleContactSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    toast({
-      title: 'Thank You!',
-      description: "We've received your interest and will be in touch shortly.",
-    });
-    (event.target as HTMLFormElement).reset();
-    setEmail('');
-    setStep(1);
-    setIsSubmitting(false);
+    
+    try {
+      const result = await submitGreenJourneyForm({ email, brandName, needs });
+      if (result.success) {
+        toast({
+          title: 'Thank You!',
+          description: "We've received your interest and will be in touch shortly.",
+        });
+        // Reset form state
+        (event.target as HTMLFormElement).reset();
+        setEmail('');
+        setBrandName('');
+        setNeeds('');
+        setStep(1);
+      } else {
+        throw new Error(result.message);
+      }
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Submission Failed',
+        description: error.message || 'An unexpected error occurred.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -76,11 +95,25 @@ export function GreenJourneyForm() {
                          <div className="space-y-6 animate-in fade-in-50">
                             <div className="space-y-2">
                                 <Label htmlFor="brand-name">Brand Name</Label>
-                                <Input id="brand-name" name="brand-name" placeholder="Your Brand Name" required />
+                                <Input 
+                                    id="brand-name" 
+                                    name="brand-name" 
+                                    placeholder="Your Brand Name" 
+                                    required 
+                                    value={brandName}
+                                    onChange={(e) => setBrandName(e.target.value)}
+                                />
                             </div>
                              <div className="space-y-2">
                                 <Label htmlFor="needs">What are you looking for?</Label>
-                                <Input id="needs" name="needs" placeholder="e.g., Recycled PET jars, Refillable lipstick..." required />
+                                <Input 
+                                    id="needs" 
+                                    name="needs" 
+                                    placeholder="e.g., Recycled PET jars, Refillable lipstick..." 
+                                    required
+                                    value={needs}
+                                    onChange={(e) => setNeeds(e.target.value)}
+                                />
                             </div>
                             <div className="flex gap-2">
                                 <Button variant="outline" onClick={() => setStep(1)} className="w-1/3">Back</Button>
