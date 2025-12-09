@@ -113,13 +113,9 @@ export async function getGreenJourneyPageData(): Promise<GreenJourneyPageData> {
         { name: "Shiseido", logoUrl: "https://picsum.photos/seed/shiseido/158/48" },
     ],
     problem: {
-        title: "The Plastic Problem is Real. The Time to Act is Now.",
-        description: "Every year, millions of tons of plastic waste pollute our ecosystems. The beauty industry plays a significant role, but together, we can lead the change.",
-        stats: [
-            { value: "8M Tons", label: "of plastic enter oceans annually" },
-            { value: "91%", label: "of plastic is never recycled" },
-            { value: "40%", label: "of plastic is single-use" },
-        ]
+        title: "GREEN PROBLEM",
+        description: "Climate change includes both global warming driven by human-induced emissions of greenhouse gases and the resulting large-scale shifts in weather patterns. Though there have been previous periods of climatic change, since the mid-20th century humans have had an unprecedented impact on Earth's climate system and caused change on a global scale. And it's becoming more real at this point, the melt of arctic ice, big flood in Germany, Greece forest fire are fine examples of how these incidents are threatening human life.",
+        stats: []
     },
     solution: {
         title: "Innovation-Driven Sustainable Solutions",
