@@ -4,7 +4,6 @@ import { SiteFooter } from '@/components/site-footer';
 import { getFrontendSettings } from '@/services/settingsService';
 import { type FrontendSettings } from '@/services/settingsService';
 import { HomeClient } from './home-client';
-import { HomeImpactSection } from './home-impact-section';
 import { getGreenJourneyPageData } from '@/services/greenJourneyService';
 
 export default async function Home() {
@@ -28,8 +27,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-[#EFECE9] dark:bg-[#050505]">
       <SiteHeaderWrapper />
-      <HomeClient heroImageUrl={settings.heroImageUrl} />
-      <HomeImpactSection data={pageData.impact} />
+      <HomeClient heroImageUrl={settings.heroImageUrl} impactData={pageData.impact} />
       <SiteFooter settings={settings} />
     </div>
   );

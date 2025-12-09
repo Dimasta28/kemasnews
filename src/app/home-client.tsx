@@ -5,12 +5,17 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import { Card } from '@/components/ui/card';
+import { AnimatedCounter } from '@/components/animated-counter';
+import type { ImpactSection as ImpactData } from '@/services/greenJourneyService';
+
 
 interface HomeClientProps {
   heroImageUrl: string;
+  impactData: ImpactData;
 }
 
-export function HomeClient({ heroImageUrl }: HomeClientProps) {
+export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, -100]);
 
@@ -27,6 +32,7 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
                 fill
                 className="object-cover opacity-40"
                 priority
+                data-ai-hint="nature background"
             />
         </motion.div>
         <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-0 text-left">
@@ -46,6 +52,30 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
                 Learn More <ArrowRight className="ml-2" />
                 </Link>
             </Button>
+            </div>
+        </div>
+
+        <div className="absolute bottom-0 left-0 right-0 z-20 p-4 md:p-8">
+            <div className="max-w-6xl mx-auto">
+                <Card className="bg-black/30 backdrop-blur-md border-white/20">
+                    <div className="p-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                        {impactData.metrics.map((metric, index) => (
+                            <div key={index} className="text-center text-white">
+                                <div className="text-4xl font-extrabold">
+                                    <AnimatedCounter 
+                                    from={0} 
+                                    to={metric.value} 
+                                    prefix={metric.prefix}
+                                    suffix={metric.suffix}
+                                    />
+                                </div>
+                                <p className="mt-2 text-sm text-white/80">{metric.label}</p>
+                            </div>
+                        ))}
+                        </div>
+                    </div>
+                </Card>
             </div>
         </div>
         </section>
