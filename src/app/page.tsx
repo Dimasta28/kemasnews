@@ -4,11 +4,16 @@ import { SiteFooter } from '@/components/site-footer';
 import { getFrontendSettings } from '@/services/settingsService';
 import { type FrontendSettings } from '@/services/settingsService';
 import { HomeClient } from './home-client';
+import { HomeImpactSection } from './home-impact-section';
+import { getGreenJourneyPageData } from '@/services/greenJourneyService';
 
 export default async function Home() {
-  const settings = await getFrontendSettings();
+  const [settings, pageData] = await Promise.all([
+    getFrontendSettings(),
+    getGreenJourneyPageData(),
+  ]);
 
-  if (!settings) {
+  if (!settings || !pageData) {
     // You might want a loading state here
     return (
         <div className="flex flex-col min-h-screen bg-[#EFECE9] dark:bg-[#050505]">
@@ -24,6 +29,7 @@ export default async function Home() {
     <div className="flex flex-col min-h-screen bg-[#EFECE9] dark:bg-[#050505]">
       <SiteHeaderWrapper />
       <HomeClient heroImageUrl={settings.heroImageUrl} />
+      <HomeImpactSection data={pageData.impact} />
       <SiteFooter settings={settings} />
     </div>
   );
