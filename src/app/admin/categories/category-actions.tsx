@@ -2,9 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { MoreHorizontal } from 'lucide-react';
-import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -16,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useToast } from '@/hooks/use-toast';
-import { deleteCategory } from '@/services/categoryService';
+import { deleteCategory, type Category } from '@/services/categoryService';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -27,20 +25,21 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import { CategoryForm } from './category-form';
 
-export function CategoryActions({ categoryId }: { categoryId: string }) {
-  const router = useRouter();
+export function CategoryActions({ category }: { category: Category }) {
   const { toast } = useToast();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   const handleDelete = async () => {
     try {
-      await deleteCategory(categoryId);
+      await deleteCategory(category.id);
       toast({
         title: 'Category Deleted',
         description: 'The category has been successfully deleted.',
       });
-      router.refresh();
+      // Refresh will be handled by real-time listener in the table
     } catch (error) {
       console.error('Failed to delete category:', error);
       toast({
@@ -52,40 +51,47 @@ export function CategoryActions({ categoryId }: { categoryId: string }) {
   };
 
   return (
-    <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-            <Button aria-haspopup="true" size="icon" variant="ghost">
-                <MoreHorizontal className="h-4 w-4" />
-                <span className="sr-only">Toggle menu</span>
-            </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem asChild>
-                    <Link href={`/admin/categories/edit/${categoryId}`}>Edit</Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem 
-                    className="text-red-500 hover:!text-red-500 focus:!text-red-500" 
-                    onSelect={() => setIsAlertOpen(true)}>
-                    Delete
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
-        <AlertDialogContent>
-            <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete this
-                category.
-            </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">Continue</AlertDialogAction>
-            </AlertDialogFooter>
-        </AlertDialogContent>
-    </AlertDialog>
+    <>
+        <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                <Button aria-haspopup="true" size="icon" variant="ghost">
+                    <MoreHorizontal className="h-4 w-4" />
+                    <span className="sr-only">Toggle menu</span>
+                </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                    <DropdownMenuItem onSelect={() => setIsFormOpen(true)}>
+                        Edit
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem 
+                        className="text-red-500 hover:!text-red-500 focus:!text-red-500" 
+                        onSelect={() => setIsAlertOpen(true)}>
+                        Delete
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete this
+                    category.
+                </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">Continue</AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
+        <CategoryForm 
+            isOpen={isFormOpen}
+            setIsOpen={setIsFormOpen}
+            category={category}
+        />
+    </>
   );
 }

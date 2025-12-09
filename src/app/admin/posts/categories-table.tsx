@@ -1,9 +1,8 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { PlusCircle } from 'lucide-react';
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
   Table,
@@ -15,20 +14,21 @@ import {
 } from '@/components/ui/table';
 import type { Category } from '@/services/categoryService';
 import { CategoryActions } from '../categories/category-actions';
+import { CategoryForm } from '../categories/category-form';
 
 interface CategoriesTableProps {
   categories: Category[];
 }
 
 export function CategoriesTable({ categories }: CategoriesTableProps) {
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
   return (
     <>
       <div className="flex justify-end mb-4">
-        <Button asChild size="sm" className="gap-1">
-            <Link href="/admin/categories/create">
-                <PlusCircle className="h-4 w-4" />
-                Create Category
-            </Link>
+        <Button size="sm" className="gap-1" onClick={() => setIsFormOpen(true)}>
+            <PlusCircle className="h-4 w-4" />
+            Create Category
         </Button>
       </div>
       <Table>
@@ -54,7 +54,7 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
                   {category.postCount}
                 </TableCell>
                 <TableCell className="text-right">
-                  <CategoryActions categoryId={category.id} />
+                  <CategoryActions category={category} />
                 </TableCell>
               </TableRow>
             ))
@@ -67,6 +67,7 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
           )}
         </TableBody>
       </Table>
+      <CategoryForm isOpen={isFormOpen} setIsOpen={setIsFormOpen} />
     </>
   );
 }
