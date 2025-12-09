@@ -120,6 +120,28 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
             </div>
           </div>
         </AnimatedSection>
+
+        <AnimatedSection className="py-16 md:py-24 bg-background">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-3xl font-bold text-foreground">Automation & Carbon Reduction</h2>
+                <p className="mt-4 text-muted-foreground">
+                  Our use of highly automated equipment improves efficiency and reduces human error (scrap). This technology also allows us to operate with a leaner workforce, which significantly lowers our carbon footprint—cutting an estimated 330 metric tons of CO2 per year simply by reducing daily commuting emissions.
+                </p>
+              </div>
+              <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg">
+                 <Image
+                    src="https://picsum.photos/seed/automation/600/600"
+                    alt="Automation & Carbon Reduction"
+                    fill
+                    className="object-cover"
+                    data-ai-hint="robotic arm factory"
+                  />
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
     </main>
   );
 }
