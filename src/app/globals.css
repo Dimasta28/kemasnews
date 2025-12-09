@@ -34,7 +34,7 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 0 0% 98%;
     --primary: 138 40% 50%; /* Brighter Green for Dark Mode */
-    --primary-foreground: 0 0% 98%;
+    --primary-foreground: 222.2 84% 4.9%; /* Dark Gray text for buttons in dark mode */
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 0 0% 98%;
     --muted: 217.2 32.6% 17.5%;
