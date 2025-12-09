@@ -1,4 +1,3 @@
-
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -38,7 +37,7 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
             </p>
             <div className="mt-8 flex gap-4">
             <Button asChild size="lg">
-                <Link href="/green-journey">
+                <Link href="/green-plan">
                 Get Started
                 </Link>
             </Button>

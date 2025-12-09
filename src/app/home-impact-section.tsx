@@ -3,8 +3,8 @@
 
 import { Card } from '@/components/ui/card';
 import type { ImpactSection as ImpactData } from '@/services/greenJourneyService';
-import { AnimatedSection } from './green-journey/_components/animated-section';
-import { AnimatedCounter } from './green-journey/_components/animated-counter';
+import { AnimatedSection } from '@/components/animated-section';
+import { AnimatedCounter } from '@/components/animated-counter';
 
 interface HomeImpactSectionProps {
   data: ImpactData;
