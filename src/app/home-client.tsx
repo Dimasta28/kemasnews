@@ -19,6 +19,22 @@ interface HomeClientProps {
 export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, -100]);
+  
+  const heroTextContainer = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const heroTextItem = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' } },
+  };
+
 
   return (
     <main className="flex-grow">
@@ -36,13 +52,18 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                     data-ai-hint="nature background"
                 />
             </motion.div>
-            <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
-                <h2 className="text-lg md:text-2xl font-semibold tracking-wide uppercase text-primary-foreground/80 mb-2">Packaging of the Future</h2>
-                <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight">Beautiful, Smart, Sustainable</h1>
-                <p className="mt-4 text-lg max-w-2xl">
+            <motion.div 
+                className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left"
+                variants={heroTextContainer}
+                initial="hidden"
+                animate="show"
+            >
+                <motion.h2 variants={heroTextItem} className="text-lg md:text-2xl font-semibold tracking-wide uppercase text-primary-foreground/80 mb-2">Packaging of the Future</motion.h2>
+                <motion.h1 variants={heroTextItem} className="text-4xl md:text-7xl font-extrabold tracking-tight">Beautiful, Smart, Sustainable</motion.h1>
+                <motion.p variants={heroTextItem} className="mt-4 text-lg max-w-2xl">
                 Combining manufacturing precision with circular economy principles for a global cosmetics brand
-                </p>
-                <div className="mt-8 flex gap-4">
+                </motion.p>
+                <motion.div variants={heroTextItem} className="mt-8 flex gap-4">
                 <Button asChild size="lg">
                     <Link href="/green-plan">
                     Get Started
@@ -53,13 +74,13 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                     Learn More <ArrowRight className="ml-2" />
                     </Link>
                 </Button>
-                </div>
-            </div>
+                </motion.div>
+            </motion.div>
         </section>
 
         <section className="bg-black text-white py-12 md:py-16">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
                 {impactData.metrics.map((metric, index) => (
                     <div key={index}>
                         <div className="text-4xl md:text-5xl font-extrabold">
