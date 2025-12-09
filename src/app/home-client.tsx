@@ -1,4 +1,3 @@
-
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -11,6 +10,7 @@ import type { ImpactSection as ImpactData } from '@/services/greenJourneyService
 import { AnimatedSection } from '@/components/animated-section';
 import { cn } from '@/lib/utils';
 import { GreenJourneyForm } from './_components/green-journey-form';
+import { DynamicIcon } from '@/components/ui/dynamic-icon';
 
 
 interface HomeClientProps {
@@ -80,22 +80,32 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
             </motion.div>
         </section>
 
-        <section className="bg-black text-white py-12 md:py-16">
+        <section className="bg-primary text-primary-foreground py-12 md:py-16">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
-                {impactData.metrics.map((metric, index) => (
-                    <div key={index}>
-                        <div className="text-4xl md:text-5xl font-extrabold">
-                            <AnimatedCounter 
-                            from={0} 
-                            to={metric.value} 
-                            prefix={metric.prefix}
-                            suffix={metric.suffix}
-                            />
-                        </div>
-                        <p className="mt-2 text-sm text-white/80">{metric.label}</p>
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+                    <div className="md:col-span-2">
+                        <p className="text-sm font-bold uppercase tracking-wider text-primary-foreground/80 mb-2">Talk to us</p>
+                        <h2 className="text-3xl lg:text-4xl font-bold">Powering The Future With The Renew</h2>
                     </div>
-                ))}
+                    <div className="md:col-span-3">
+                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
+                            {impactData.metrics.map((metric, index) => (
+                                <div key={index} className="relative">
+                                    {index > 0 && <div className="absolute left-0 top-0 bottom-0 w-px bg-primary-foreground/20 hidden sm:block"></div>}
+                                    <DynamicIcon name={metric.iconName as any} className="h-8 w-8 mx-auto mb-2 text-primary-foreground" />
+                                    <div className="text-3xl md:text-4xl font-bold">
+                                        <AnimatedCounter 
+                                        from={0} 
+                                        to={metric.value} 
+                                        prefix={metric.prefix}
+                                        suffix={metric.suffix}
+                                        />+
+                                    </div>
+                                    <p className="mt-1 text-xs text-primary-foreground/80">{metric.label}</p>
+                                </div>
+                            ))}
+                         </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -232,5 +242,3 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
     </main>
   );
 }
-
-    

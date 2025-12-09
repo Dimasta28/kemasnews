@@ -46,6 +46,7 @@ export interface ImpactMetric {
     label: string;
     prefix?: string;
     suffix?: string;
+    iconName: string;
 }
 
 export interface ImpactSection {
@@ -129,12 +130,13 @@ export async function getGreenJourneyPageData(): Promise<GreenJourneyPageData> {
         ]
     },
     impact: {
-        title: "Our Collective Impact, Quantified",
+        title: "Powering The Future With The Renew",
         description: "By partnering with us, brands are making a measurable difference for the planet. Here's what we've achieved together so far.",
         metrics: [
-            { value: 330, suffix: " Ton", label: "Carbon Emissions Reduced/Year" },
-            { value: 100, suffix: "%", label: "Water Recycling (Anodizing Facility)" },
-            { value: 50, suffix: "%", label: "Energy Saving (Cooling Machine)" },
+            { value: 6561, label: "Team members", iconName: 'Recycle' },
+            { value: 600, label: "Completed Projects", iconName: 'Briefcase' },
+            { value: 250, label: "Winning award", iconName: 'Award' },
+            { value: 590, label: "Clients Review", iconName: 'Star' },
         ]
     },
     journeyTimeline: [
