@@ -34,7 +34,7 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
             <h2 className="text-lg md:text-2xl font-semibold tracking-wide uppercase text-primary-foreground/80 mb-2">Packaging of the Future</h2>
             <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight">Beautiful, Smart, Sustainable</h1>
             <p className="mt-4 text-lg max-w-2xl">
-            We think that mother earth is under threat as well as the future generation. THE TIME TO ACT IS NOW Please follow us on our green footprint journey.
+            Combining manufacturing precision with circular economy principles for a global cosmetics brand
             </p>
             <div className="mt-8 flex gap-4">
             <Button asChild size="lg">
