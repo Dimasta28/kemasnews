@@ -42,8 +42,10 @@ export interface SolutionSection {
 }
 
 export interface ImpactMetric {
-    value: string;
+    value: number;
     label: string;
+    prefix?: string;
+    suffix?: string;
 }
 
 export interface ImpactSection {
@@ -134,10 +136,10 @@ export async function getGreenJourneyPageData(): Promise<GreenJourneyPageData> {
         title: "Our Collective Impact, Quantified",
         description: "By partnering with us, brands are making a measurable difference for the planet. Here's what we've achieved together so far.",
         metrics: [
-            { value: "1,200 Tons", label: "Virgin Plastic Saved" },
-            { value: "5,500 Tons", label: "CO2 Emissions Reduced" },
-            { value: "30M Liters", label: "Water Conserved" },
-            { value: "95%", label: "Recyclability Rate Achieved" },
+            { value: 330, suffix: " Ton", label: "Carbon Emissions Reduced/Year" },
+            { value: 100, suffix: "%", label: "Water Recycling (Anodizing)" },
+            { value: 50, suffix: "%", label: "Energy Saving (Cooling Machine)" },
+            { value: 95, suffix: "%", label: "Recyclability Rate Achieved" },
         ]
     },
     journeyTimeline: [

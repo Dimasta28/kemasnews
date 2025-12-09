@@ -4,6 +4,7 @@
 import { Card } from '@/components/ui/card';
 import type { ImpactSection as ImpactData } from '@/services/greenJourneyService';
 import { AnimatedSection } from './animated-section';
+import { AnimatedCounter } from './animated-counter';
 
 interface ImpactSectionProps {
   data: ImpactData;
@@ -20,7 +21,14 @@ export function ImpactSection({ data }: ImpactSectionProps) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {data.metrics.map((metric, index) => (
             <Card key={index} className="text-center p-6 border-2 border-transparent hover:border-primary hover:bg-primary/5 transition-all">
-              <h3 className="text-4xl font-extrabold text-primary">{metric.value}</h3>
+              <div className="text-4xl font-extrabold text-primary">
+                <AnimatedCounter 
+                  from={0} 
+                  to={metric.value} 
+                  prefix={metric.prefix}
+                  suffix={metric.suffix}
+                />
+              </div>
               <p className="mt-2 text-muted-foreground">{metric.label}</p>
             </Card>
           ))}
