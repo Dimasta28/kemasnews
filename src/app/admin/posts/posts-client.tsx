@@ -17,7 +17,7 @@ import { PostsTable } from './posts-table';
 import { CategoriesTable } from './categories-table';
 import { TagsTable } from './tags-table';
 import { db } from '@/lib/firebase';
-import { collection, query, orderBy, onSnapshot, getDocs, Timestamp } from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
 
 interface PostsClientProps {
   initialPosts: Post[];
