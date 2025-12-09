@@ -85,6 +85,11 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                 <p className="mt-4 text-muted-foreground">
                   At KEMAS, we use high-precision molding machines to maximize productivity and minimize waste. Our facility features insulated barrels and smart automated systems that prevent heat loss and power down idle machinery. Combined with advanced Arburg technology and rigorous maintenance, this reduces our energy consumption by up to 50%.
                 </p>
+                 <Button asChild variant="outline" className="mt-6">
+                  <Link href="https://www.kemaspkg.com/technology/">
+                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </div>
               <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg">
                  <Image
