@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { AnimatedCounter } from '@/components/animated-counter';
 import type { ImpactSection as ImpactData } from '@/services/greenJourneyService';
 import { AnimatedSection } from '@/components/animated-section';
+import { cn } from '@/lib/utils';
 
 
 interface HomeClientProps {
@@ -98,10 +99,9 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
             </div>
         </section>
 
-        <AnimatedSection className="py-16 md:py-24 bg-background">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
+        <AnimatedSection className="relative bg-background">
+          <div className="grid md:grid-cols-2 gap-0 items-center">
+              <div className="text-left p-8 md:p-12 lg:p-16 md:order-2">
                 <h2 className="text-3xl font-bold text-foreground">Precision & Energy Efficiency</h2>
                 <p className="mt-4 text-muted-foreground">
                   At KEMAS, we use high-precision molding machines to maximize productivity and minimize waste. Our facility features insulated barrels and smart automated systems that prevent heat loss and power down idle machinery. Combined with advanced Arburg technology and rigorous maintenance, this reduces our energy consumption by up to 50%.
@@ -112,7 +112,7 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                   </Link>
                 </Button>
               </div>
-              <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg group">
+              <div className="relative aspect-square md:order-1 group">
                  <Image
                     src="https://picsum.photos/seed/efficiency/600/600"
                     alt="Precision & Energy Efficiency"
@@ -121,14 +121,12 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                     data-ai-hint="factory machinery"
                   />
               </div>
-            </div>
           </div>
         </AnimatedSection>
 
-        <AnimatedSection className="py-16 md:py-24 bg-secondary/30">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-               <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg group md:order-1">
+        <AnimatedSection className="relative bg-secondary/30">
+          <div className="grid md:grid-cols-2 gap-0 items-center">
+              <div className="relative aspect-square md:order-1 group">
                  <Image
                     src="https://picsum.photos/seed/waste-management/600/600"
                     alt="Smart Waste Management"
@@ -137,7 +135,7 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                     data-ai-hint="recycling water"
                   />
               </div>
-              <div className="md:order-2">
+              <div className="text-left p-8 md:p-12 lg:p-16 md:order-2">
                 <h2 className="text-3xl font-bold text-foreground">Smart Waste Management</h2>
                 <p className="mt-4 text-muted-foreground">
                   We are committed to a zero-waste philosophy. We recycle 100% of the water used in our anodization facility and capture chemical waste from spray lines to be repurposed as fuel. Additionally, all organic waste is composted and used as fertilizer for our factory grounds.
@@ -148,14 +146,12 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                   </Link>
                 </Button>
               </div>
-            </div>
           </div>
         </AnimatedSection>
 
-        <AnimatedSection className="py-16 md:py-24 bg-background">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
+        <AnimatedSection className="relative bg-background">
+           <div className="grid md:grid-cols-2 gap-0 items-center">
+              <div className="text-left p-8 md:p-12 lg:p-16 md:order-2">
                 <h2 className="text-3xl font-bold text-foreground">Automation & Carbon Reduction</h2>
                 <p className="mt-4 text-muted-foreground">
                   Our use of highly automated equipment improves efficiency and reduces human error (scrap). This technology also allows us to operate with a leaner workforce, which significantly lowers our carbon footprint—cutting an estimated 330 metric tons of CO2 per year simply by reducing daily commuting emissions.
@@ -166,7 +162,7 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                   </Link>
                 </Button>
               </div>
-              <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg group">
+              <div className="relative aspect-square md:order-1 group">
                  <Image
                     src="https://picsum.photos/seed/automation/600/600"
                     alt="Automation & Carbon Reduction"
@@ -175,14 +171,12 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                     data-ai-hint="robotic arm factory"
                   />
               </div>
-            </div>
           </div>
         </AnimatedSection>
 
-        <AnimatedSection className="py-16 md:py-24 bg-secondary/30">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-               <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg group md:order-1">
+        <AnimatedSection className="relative bg-secondary/30">
+          <div className="grid md:grid-cols-2 gap-0 items-center">
+               <div className="relative aspect-square md:order-1 group">
                  <Image
                     src="https://picsum.photos/seed/solutions/600/600"
                     alt="From Products to Solutions"
@@ -191,7 +185,7 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                     data-ai-hint="sustainable products"
                   />
               </div>
-              <div className="md:order-2">
+              <div className="text-left p-8 md:p-12 lg:p-16 md:order-2">
                 <h2 className="text-3xl font-bold text-foreground">From Products to Solutions</h2>
                 <p className="mt-4 text-muted-foreground">
                   In accordance with the Kyoto Protocol in reducing greenhouse effect and in order to help preserve the environment and the sustainability of the habitat, we at KEMAS have taken serious measures towards reducing cardon emission, reducing petrochemical packaging while providing the best solutions to the Beauty Brands. The measures we took is not just in the greener packaging solutions but also a better manufacturing standard that contributes to less emission being emitted to the environment. We think that mother earth is under threat as well as the future generation.
@@ -229,7 +223,6 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                 </Button>
               </div>
             </div>
-          </div>
         </AnimatedSection>
     </main>
   );
