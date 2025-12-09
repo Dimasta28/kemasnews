@@ -107,7 +107,7 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
         <AnimatedSection className="py-16 md:py-24 bg-secondary/30">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12 items-center">
-               <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg md:order-2">
+               <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg md:order-1">
                  <Image
                     src="https://picsum.photos/seed/waste-management/600/600"
                     alt="Smart Waste Management"
@@ -116,7 +116,7 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                     data-ai-hint="recycling water"
                   />
               </div>
-              <div className="md:order-1">
+              <div className="md:order-2">
                 <h2 className="text-3xl font-bold text-foreground">Smart Waste Management</h2>
                 <p className="mt-4 text-muted-foreground">
                   We are committed to a zero-waste philosophy. We recycle 100% of the water used in our anodization facility and capture chemical waste from spray lines to be repurposed as fuel. Additionally, all organic waste is composted and used as fertilizer for our factory grounds.
@@ -161,7 +161,7 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
         <AnimatedSection className="py-16 md:py-24 bg-secondary/30">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12 items-center">
-               <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg md:order-2">
+               <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg md:order-1">
                  <Image
                     src="https://picsum.photos/seed/solutions/600/600"
                     alt="From Products to Solutions"
@@ -170,7 +170,7 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
                     data-ai-hint="sustainable products"
                   />
               </div>
-              <div className="md:order-1">
+              <div className="md:order-2">
                 <h2 className="text-3xl font-bold text-foreground">From Products to Solutions</h2>
                 <p className="mt-4 text-muted-foreground">
                   In accordance with the Kyoto Protocol in reducing greenhouse effect and in order to help preserve the environment and the sustainability of the habitat, we at KEMAS have taken serious measures towards reducing cardon emission, reducing petrochemical packaging while providing the best solutions to the Beauty Brands. The measures we took is not just in the greener packaging solutions but also a better manufacturing standard that contributes to less emission being emitted to the environment. We think that mother earth is under threat as well as the future generation.
@@ -213,3 +213,5 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
     </main>
   );
 }
+
+    
