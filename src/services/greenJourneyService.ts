@@ -91,7 +91,7 @@ export interface GreenJourneyPageData {
   resources: Resource[];
 }
 
-const GREEN_JOURNEY_DOC_ID = 'green-journey';
+const GREEN_JOURNEY_DOC_ID = 'green-journey-data';
 
 // Get all data for the green journey page
 export async function getGreenJourneyPageData(): Promise<GreenJourneyPageData> {
