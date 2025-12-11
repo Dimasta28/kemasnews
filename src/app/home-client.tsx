@@ -131,20 +131,31 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
 
         <AnimatedSection className="py-16 md:py-24 bg-background">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="max-w-3xl mx-auto space-y-12">
-                    {featureSections.map((section, index) => (
-                        <div key={index} className="flex items-start gap-6">
-                            <span className="text-6xl font-extrabold text-primary leading-none mt-[-2px]">{index + 1}.</span>
-                            <div className="flex-1">
-                                <h3 className="text-xl font-bold text-foreground mb-2">
-                                    {section.title}
-                                </h3>
-                                <p className="text-base text-muted-foreground">
-                                    {section.description}
-                                </p>
+                <div className="grid md:grid-cols-2 gap-12 items-center">
+                    <div className="space-y-12">
+                        {featureSections.map((section, index) => (
+                            <div key={index} className="flex items-start gap-4">
+                                <span className="text-5xl font-extrabold text-primary leading-none">{index + 1}.</span>
+                                <div className="flex-1">
+                                    <h3 className="text-lg font-bold text-foreground mb-2">
+                                        {section.title}
+                                    </h3>
+                                    <p className="text-sm text-muted-foreground">
+                                        {section.description}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
+                    <div className="relative aspect-square rounded-lg overflow-hidden">
+                        <Image 
+                            src="https://picsum.photos/seed/features-combined/800/800"
+                            alt="Sustainable manufacturing"
+                            fill
+                            className="object-cover"
+                            data-ai-hint="sustainable factory"
+                        />
+                    </div>
                 </div>
             </div>
         </AnimatedSection>
