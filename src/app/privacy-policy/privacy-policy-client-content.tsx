@@ -37,7 +37,7 @@ export function PrivacyPolicyClientContent({ content, error }: { content: string
 
     return (
         <div
-            className="prose dark:prose-invert max-w-none md:prose-lg"
+            className="prose max-w-none md:prose-lg"
             dangerouslySetInnerHTML={{ __html: sanitizedContent }}
         />
     );

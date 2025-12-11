@@ -3,7 +3,6 @@ import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { getFrontendSettings } from '@/services/settingsService';
-import { ThemeProvider } from '@/components/theme-provider';
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getFrontendSettings();
@@ -51,14 +50,8 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://use.typekit.net/led6pcw.css" />
       </head>
       <body className="antialiased">
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-          >
-            {children}
-            <Toaster />
-          </ThemeProvider>
+          {children}
+          <Toaster />
       </body>
     </html>
   );

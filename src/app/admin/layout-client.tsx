@@ -39,7 +39,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/hooks/use-auth';
-import { ThemeToggle } from '@/components/theme-toggle';
 
 function AdminLoadingScreen() {
     return (
@@ -91,19 +90,10 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
       <Sidebar>
         <SidebarHeader>
           <Image
-            src="https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png"
-            alt="Kemas Logo"
-            width={150}
-            height={37}
-            className="hidden dark:block"
-            priority
-          />
-          <Image
             src="https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png"
             alt="Kemas Logo"
             width={150}
             height={37}
-            className="block dark:hidden"
             priority
           />
         </SidebarHeader>
@@ -192,7 +182,6 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 View Site
               </Link>
             </Button>
-            <ThemeToggle />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button

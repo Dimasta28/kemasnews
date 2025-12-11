@@ -13,7 +13,7 @@ export default async function Home() {
   if (!settings) {
     // You might want a loading state here
     return (
-        <div className="flex flex-col min-h-screen bg-[#EFECE9] dark:bg-[#050505]">
+        <div className="flex flex-col min-h-screen bg-background">
              <SiteHeaderWrapper />
              <main className="flex-grow flex items-center justify-center">
                 {/* Optional: Add a spinner or skeleton loader */}
@@ -23,7 +23,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#EFECE9] dark:bg-[#050505]">
+    <div className="flex flex-col min-h-screen bg-background">
       <SiteHeaderWrapper />
       <HomeClient heroImageUrl={settings.heroImageUrl} />
       <div id="join-journey">

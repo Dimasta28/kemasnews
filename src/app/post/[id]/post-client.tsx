@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -47,7 +48,7 @@ export function PostClient({ post, recentPosts, comments, settings, error }: Pos
 
     if (error || !post || !settings) {
         return (
-             <div className="flex flex-col min-h-screen bg-[#EFECE9] dark:bg-[#050505]">
+             <div className="flex flex-col min-h-screen bg-background">
                 {settings && <SiteHeaderWrapper />}
                 <main className="flex-grow flex items-center justify-center p-4">
                     <Alert variant="destructive" className="max-w-2xl">
@@ -83,7 +84,7 @@ export function PostClient({ post, recentPosts, comments, settings, error }: Pos
     const finalContent = sanitizedContent;
 
     return (
-        <div className="bg-[#EFECE9] dark:bg-[#050505] text-[#050505] dark:text-[#EFECE9]">
+        <div className="bg-background text-foreground">
             <SiteHeaderWrapper />
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
@@ -154,7 +155,7 @@ export function PostClient({ post, recentPosts, comments, settings, error }: Pos
                         )}
 
                         <motion.div
-                            className="prose dark:prose-invert max-w-none md:prose-lg"
+                            className="prose max-w-none md:prose-lg"
                             custom={4}
                             initial="hidden"
                             animate="visible"

@@ -96,19 +96,10 @@ export default function LoginPage() {
         <div className="mb-8">
             <Link href="/" aria-label="Back to home">
                 <Image
-                    src="https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png"
-                    alt="Kemas Logo"
-                    width={180}
-                    height={45}
-                    className="hidden dark:block"
-                    priority
-                />
-                <Image
                     src="https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png"
                     alt="Kemas Logo"
                     width={180}
                     height={45}
-                    className="block dark:hidden"
                     priority
                 />
             </Link>

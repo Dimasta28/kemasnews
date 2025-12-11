@@ -10,7 +10,7 @@ export default async function RegisterPage() {
   const settings = await getFrontendSettings();
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#EFECE9] dark:bg-[#050505]">
+    <div className="flex flex-col min-h-screen bg-background">
       <SiteHeaderWrapper />
       <main className="flex-grow flex items-center justify-center p-4">
         <Card className="w-full max-w-md text-center">

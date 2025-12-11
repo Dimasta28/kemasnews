@@ -25,28 +25,6 @@
     --input: 0 0% 89%;
     --ring: 138 56% 27%;
   }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 0 0% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 138 40% 50%; /* Brighter Green for Dark Mode */
-    --primary-foreground: 222.2 84% 4.9%; /* Dark Gray text for buttons in dark mode */
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 138 40% 50%;
-  }
 }
 
 @layer base {
@@ -75,19 +53,6 @@
     --tw-prose-pre-bg: hsl(var(--secondary));
     --tw-prose-th-borders: hsl(var(--border));
     --tw-prose-td-borders: hsl(var(--border));
-  }
-  
-  .dark .prose {
-    --tw-prose-body: hsl(var(--foreground) / 0.9);
-    --tw-prose-headings: hsl(var(--primary));
-    --tw-prose-lead: hsl(var(--foreground));
-    --tw-prose-links: hsl(var(--primary));
-    --tw-prose-bold: hsl(var(--foreground));
-    --tw-prose-quotes: hsl(var(--foreground));
-    --tw-prose-quote-borders: hsl(var(--primary));
-    --tw-prose-code: hsl(var(--primary));
-    --tw-prose-pre-code: hsl(var(--foreground)); /* Light text for code blocks */
-    --tw-prose-pre-bg: hsl(0 0% 10%); /* Dark background for code blocks */
   }
 }
 
