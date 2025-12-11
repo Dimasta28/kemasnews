@@ -21,6 +21,21 @@ const heroTextContainer = {
     show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' } },
   };
 
+const innovations = [
+    {
+        title: 'Refillable Systems',
+        description: 'Reduce waste with an elegant refill concept.',
+    },
+    {
+        title: 'Mono-Material',
+        description: 'One material, unlimited recycling.',
+    },
+    {
+        title: 'PCR & Bio-based',
+        description: 'Post-consumer recycled materials and plant-based sources.',
+    },
+];
+
 export default async function OurSolutionsPage() {
   const settings = await getFrontendSettings();
 
@@ -53,6 +68,39 @@ export default async function OurSolutionsPage() {
                 </p>
             </div>
         </section>
+        <AnimatedSection className="py-16 md:py-24 bg-background">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid md:grid-cols-2 gap-16 items-center">
+              <div className="space-y-8">
+                <div className="relative">
+                    <h2 className="text-4xl md:text-5xl font-extrabold text-foreground">
+                        BASED ON<br />
+                        GREEN INNOVATION:
+                    </h2>
+                    <div className="absolute top-0 -left-4 h-full w-1 bg-primary transform -translate-x-full"></div>
+                </div>
+                
+                <ul className="space-y-6 text-lg text-muted-foreground">
+                    {innovations.map((item, index) => (
+                        <li key={index} className="flex">
+                            <span className="text-primary font-bold mr-2">•</span>
+                            <span><strong className="text-foreground">{item.title}:</strong> "{item.description}"</span>
+                        </li>
+                    ))}
+                </ul>
+              </div>
+              <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg">
+                <Image
+                  src="https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  alt="Cosmetic packaging"
+                  fill
+                  className="object-cover"
+                  data-ai-hint="cosmetic packaging"
+                />
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
       </main>
       <SiteFooter settings={settings} />
     </div>
