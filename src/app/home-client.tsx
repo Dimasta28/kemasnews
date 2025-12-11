@@ -131,10 +131,10 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
                     <h2 className="text-3xl lg:text-4xl font-bold">{staticImpactData.title}</h2>
                     <p className="mt-4 text-primary-foreground/80 max-w-3xl mx-auto">{staticImpactData.description}</p>
                 </div>
-                <div className="flex justify-center items-center gap-8 overflow-x-auto scrollbar-hide pb-4">
+                <div className="flex flex-col md:flex-row md:justify-center items-center gap-8 md:gap-12">
                     {staticImpactData.metrics.map((metric, index) => (
                         <React.Fragment key={index}>
-                            <div className="flex flex-col items-center text-center p-2 flex-shrink-0">
+                            <div className="flex flex-col items-center text-center p-2">
                                 <CircularCounter
                                     to={metric.value}
                                     suffix={metric.suffix}
@@ -147,7 +147,10 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
                                  {metric.description && <p className="text-xs text-primary-foreground/60">{metric.description}</p>}
                             </div>
                             {index < staticImpactData.metrics.length - 1 && (
-                                <div className="h-32 w-px bg-primary-foreground/20 self-center flex-shrink-0"></div>
+                                <>
+                                    <div className="h-px w-32 md:hidden bg-primary-foreground/20"></div>
+                                    <div className="h-32 w-px hidden md:block bg-primary-foreground/20 self-center"></div>
+                                </>
                             )}
                         </React.Fragment>
                     ))}
