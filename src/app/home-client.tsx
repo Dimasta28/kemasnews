@@ -32,15 +32,18 @@ const staticImpactData = {
 const featureSections = [
     {
         title: "PRECISION & ENERGY EFFICIENCY",
-        description: "At KEMAS, we use high-precision molding machines to maximize productivity and minimize waste. Our facility features insulated barrels and smart automated systems that prevent heat loss and power down idle machinery. Combined with advanced Arburg technology and rigorous maintenance, this reduces our energy consumption by up to 50%."
+        description: "At KEMAS, we use high-precision molding machines to maximize productivity and minimize waste. Our facility features insulated barrels and smart automated systems that prevent heat loss and power down idle machinery. Combined with advanced Arburg technology and rigorous maintenance, this reduces our energy consumption by up to 50%.",
+        href: "#"
     },
     {
         title: "SMART WASTE MANAGEMENT",
-        description: "We are committed to a zero-waste philosophy. We recycle 100% of the water used in our anodization facility and capture chemical waste from spray lines to be repurposed as fuel. Additionally, all organic waste is composted and used as fertilizer for our factory grounds."
+        description: "We are committed to a zero-waste philosophy. We recycle 100% of the water used in our anodization facility and capture chemical waste from spray lines to be repurposed as fuel. Additionally, all organic waste is composted and used as fertilizer for our factory grounds.",
+        href: "#"
     },
     {
         title: "AUTOMATION & CARBON REDUCTION",
-        description: "Our use of highly automated equipment improves efficiency and reduces human error (scrap). This technology also allows us to operate with a leaner workforce, which significantly lowers our carbon footprint—cutting an estimated 330 metric tons of CO2 per year simply by reducing daily commuting emissions."
+        description: "Our use of highly automated equipment improves efficiency and reduces human error (scrap). This technology also allows us to operate with a leaner workforce, which significantly lowers our carbon footprint—cutting an estimated 330 metric tons of CO2 per year simply by reducing daily commuting emissions.",
+        href: "#"
     }
 ];
 
@@ -165,22 +168,23 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
                         {featureSections.map((section, index) => (
                              <motion.div
                                 key={index}
-                                className="flex items-start gap-4"
                                 custom={index}
                                 initial="hidden"
                                 whileInView="visible"
                                 viewport={{ once: true, amount: 0.5 }}
                                 variants={featureItemVariants}
                             >
-                                <span className="text-5xl font-extrabold text-primary leading-none">{index + 1}.</span>
-                                <div className="flex-1">
-                                    <h3 className="text-xl font-bold text-foreground mb-2">
-                                        {section.title}
-                                    </h3>
-                                    <p className="text-base text-muted-foreground">
-                                        {section.description}
-                                    </p>
-                                </div>
+                                <Link href={section.href} className="flex items-start gap-4 group">
+                                    <span className="text-5xl font-extrabold text-primary leading-none">{index + 1}.</span>
+                                    <div className="flex-1">
+                                        <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                                            {section.title}
+                                        </h3>
+                                        <p className="text-base text-muted-foreground">
+                                            {section.description}
+                                        </p>
+                                    </div>
+                                </Link>
                             </motion.div>
                         ))}
                     </div>
