@@ -48,7 +48,7 @@ export default async function OurSolutionsPage() {
                 className="absolute inset-0 z-0"
             >
                 <Image
-                    src="https://images.pexels.com/photos/957024/pexels-photo-957024.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                    src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN.jpg"
                     alt="Lush green pine tree branches"
                     fill
                     className="object-cover opacity-40"
