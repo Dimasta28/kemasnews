@@ -30,7 +30,6 @@ import {
 import { cn } from '@/lib/utils';
 import { Input } from './ui/input';
 import { Post } from '@/services/postService';
-import { ThemeToggle } from './theme-toggle';
 
 interface SiteHeaderProps {
   settings: FrontendSettings;
@@ -96,7 +95,6 @@ export function SiteHeader({
                 </nav>
 
                  <div className="flex items-center gap-2">
-                  <ThemeToggle />
                   <button
                     onClick={() => setIsMobileMenuOpen(true)}
                     className="md:hidden p-2 hover:bg-secondary rounded-full transition text-white"
