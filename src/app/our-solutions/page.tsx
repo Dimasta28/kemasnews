@@ -3,23 +3,7 @@ import { SiteHeaderWrapper } from '@/components/site-header-wrapper';
 import { SiteFooter } from '@/components/site-footer';
 import { getFrontendSettings } from '@/services/settingsService';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { AnimatedSection } from '@/components/animated-section';
-
-const heroTextContainer = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const heroTextItem = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' } },
-  };
 
 const innovations = [
     {
@@ -36,6 +20,18 @@ const innovations = [
     },
 ];
 
+const productCategories = [
+    {
+        name: 'Skincare',
+        items: '(Jars, Bottles, Droppers)',
+    },
+    {
+        name: 'Makeup',
+        items: '(Compacts, Lipsticks, Mascaras)',
+    }
+];
+
+
 export default async function OurSolutionsPage() {
   const settings = await getFrontendSettings();
 
@@ -48,7 +44,7 @@ export default async function OurSolutionsPage() {
                 className="absolute inset-0 z-0"
             >
                 <Image
-                    src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN.jpg"
+                    src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%203.jpg"
                     alt="Lush green pine tree branches"
                     fill
                     className="object-cover opacity-40"
@@ -68,6 +64,37 @@ export default async function OurSolutionsPage() {
                 </p>
             </div>
         </section>
+        
+        <AnimatedSection className="py-16 md:py-24 bg-secondary">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="relative aspect-video md:aspect-square">
+                 <Image
+                    src="https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                    alt="Cosmetic products and raw material"
+                    fill
+                    className="object-cover rounded-lg shadow-lg"
+                    data-ai-hint="cosmetic products material"
+                 />
+              </div>
+              <div className="space-y-6">
+                <h2 className="text-3xl md:text-4xl font-extrabold text-foreground relative pb-2">
+                    PRODUCTS BY CATEGORY:
+                    <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary"></span>
+                </h2>
+                <div className="space-y-4">
+                    {productCategories.map((category) => (
+                        <div key={category.name}>
+                            <h3 className="text-2xl font-bold">{category.name}</h3>
+                            <p className="text-muted-foreground">{category.items}</p>
+                        </div>
+                    ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
+
         <AnimatedSection className="py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-16 items-center">
@@ -101,6 +128,7 @@ export default async function OurSolutionsPage() {
             </div>
           </div>
         </AnimatedSection>
+
         <AnimatedSection className="py-16 md:py-24 bg-secondary text-secondary-foreground">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid md:grid-cols-2 gap-16 items-center">
