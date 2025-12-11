@@ -10,6 +10,7 @@ import { AnimatedSection } from '@/components/animated-section';
 import { CircularCounter } from '@/components/ui/circular-counter';
 import { GreenJourneyForm } from './_components/green-journey-form';
 import { useState, useEffect } from 'react';
+import React from 'react';
 
 
 interface HomeClientProps {
@@ -126,18 +127,23 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 justify-center">
                     {staticImpactData.metrics.map((metric, index) => (
-                        <div key={index} className="flex flex-col items-center text-center p-2">
-                            <CircularCounter
-                                to={metric.value}
-                                suffix={metric.suffix}
-                                iconName={metric.iconName as any}
-                            />
-                            <p className="mt-4 text-lg font-bold text-primary-foreground">
-                                {metric.value}{metric.suffix || ''} {metric.unit}
-                            </p>
-                            <p className="mt-1 text-sm text-primary-foreground/80">{metric.label}</p>
-                             {metric.description && <p className="text-xs text-primary-foreground/60">{metric.description}</p>}
-                        </div>
+                        <React.Fragment key={index}>
+                            <div className="flex flex-col items-center text-center p-2">
+                                <CircularCounter
+                                    to={metric.value}
+                                    suffix={metric.suffix}
+                                    iconName={metric.iconName as any}
+                                />
+                                <p className="mt-4 text-lg font-bold text-primary-foreground">
+                                    {metric.value}{metric.suffix || ''} {metric.unit}
+                                </p>
+                                <p className="mt-1 text-sm text-primary-foreground/80">{metric.label}</p>
+                                 {metric.description && <p className="text-xs text-primary-foreground/60">{metric.description}</p>}
+                            </div>
+                            {index < staticImpactData.metrics.length - 1 && (
+                                <div className="hidden sm:block h-32 w-px bg-primary-foreground/20 self-center"></div>
+                            )}
+                        </React.Fragment>
                     ))}
                 </div>
             </div>
