@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -140,7 +141,7 @@ export function SiteHeader({
                             </div>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <Link href="/green-journey" className="hover:text-primary transition-colors">Green Journey</Link>
+                    <Link href="/green-plan" className="hover:text-primary transition-colors">Green Plan</Link>
                     <Link href="/careers" className="hover:text-primary transition-colors">Careers</Link>
                 </nav>
 
@@ -207,7 +208,7 @@ export function SiteHeader({
                         </AccordionItem>
                     </Accordion>
                      <li>
-                        <Link href="/green-journey" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Journey</Link>
+                        <Link href="/green-plan" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Plan</Link>
                     </li>
                     <li>
                         <Link href="/careers" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Careers</Link>

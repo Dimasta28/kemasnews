@@ -1,3 +1,4 @@
+
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -5,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
-import type { ImpactSection as ImpactData } from '@/services/greenJourneyService';
 import { AnimatedSection } from '@/components/animated-section';
 import { cn } from '@/lib/utils';
 import { DynamicIcon } from '@/components/ui/dynamic-icon';
@@ -14,10 +14,21 @@ import { CircularCounter } from '@/components/ui/circular-counter';
 
 interface HomeClientProps {
   heroImageUrl: string;
-  impactData: ImpactData;
 }
 
-export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
+// Static data as a fallback since the service is removed
+const staticImpactData = {
+    title: "Powering The Future With The Renew",
+    description: "By partnering with us, brands are making a measurable difference for the planet. Here's what we've achieved together so far.",
+    metrics: [
+        { value: 50, label: "Energy Reduction", suffix: "%", iconName: "BatteryCharging" },
+        { value: 100, label: "Water Recycled", suffix: "%", iconName: "Droplets" },
+        { value: 100, label: "Waste Management", suffix: "%", iconName: "Trash2" },
+        { value: 330, label: "Carbon Emissions Reduced/Year", unit: "Ton+", iconName: "Wind" },
+    ]
+};
+
+export function HomeClient({ heroImageUrl }: HomeClientProps) {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, -100]);
   
@@ -83,11 +94,11 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="max-w-6xl mx-auto text-center mb-12">
                     <p className="text-sm font-bold uppercase tracking-wider text-primary-foreground/80 mb-2">Our Impact</p>
-                    <h2 className="text-3xl lg:text-4xl font-bold">Powering The Future With The Renew</h2>
-                    <p className="mt-4 text-primary-foreground/80 max-w-3xl mx-auto">{impactData.description}</p>
+                    <h2 className="text-3xl lg:text-4xl font-bold">{staticImpactData.title}</h2>
+                    <p className="mt-4 text-primary-foreground/80 max-w-3xl mx-auto">{staticImpactData.description}</p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {impactData.metrics.map((metric, index) => (
+                    {staticImpactData.metrics.map((metric, index) => (
                         <div key={index} className="flex flex-col items-center text-center p-2">
                             <CircularCounter
                                 to={metric.value}
@@ -232,4 +243,3 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
     </main>
   );
 }
-    

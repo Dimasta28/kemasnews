@@ -131,5 +131,3 @@ export function GreenJourneyForm() {
     </AnimatedSection>
   );
 }
-
-    
