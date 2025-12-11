@@ -9,7 +9,7 @@ import type { ImpactSection as ImpactData } from '@/services/greenJourneyService
 import { AnimatedSection } from '@/components/animated-section';
 import { cn } from '@/lib/utils';
 import { DynamicIcon } from '@/components/ui/dynamic-icon';
-import { AnimatedCounter } from '@/app/green-journey/_components/animated-counter';
+import { CircularCounter } from '@/components/ui/circular-counter';
 
 
 interface HomeClientProps {
@@ -79,32 +79,27 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
             </motion.div>
         </section>
 
-        <section className="bg-primary text-primary-foreground py-12 md:py-16">
+        <section className="bg-primary text-primary-foreground py-16 md:py-24">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
-                    <div className="md:col-span-2 text-center md:text-left">
-                        <p className="text-sm font-bold uppercase tracking-wider text-primary-foreground/80 mb-2">Talk to us</p>
-                        <h2 className="text-3xl lg:text-4xl font-bold">Powering The Future With The Renew</h2>
-                    </div>
-                    <div className="md:col-span-3">
-                         <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 text-center">
-                            {impactData.metrics.map((metric, index) => (
-                                <div key={index} className="relative">
-                                    {index > 0 && <div className="absolute -left-4 top-0 bottom-0 w-px bg-primary-foreground/20 hidden sm:block"></div>}
-                                    <DynamicIcon name={metric.iconName as any} className="h-8 w-8 mx-auto mb-2 text-primary-foreground" />
-                                    <div className="text-3xl md:text-4xl font-bold">
-                                        <AnimatedCounter 
-                                        from={0} 
-                                        to={metric.value} 
-                                        prefix={metric.prefix}
-                                        suffix={metric.suffix}
-                                        />
-                                    </div>
-                                    <p className="mt-1 text-xs text-primary-foreground/80">{metric.label}</p>
-                                </div>
-                            ))}
-                         </div>
-                    </div>
+                <div className="max-w-6xl mx-auto text-center mb-12">
+                    <p className="text-sm font-bold uppercase tracking-wider text-primary-foreground/80 mb-2">Our Impact</p>
+                    <h2 className="text-3xl lg:text-4xl font-bold">Powering The Future With The Renew</h2>
+                    <p className="mt-4 text-primary-foreground/80 max-w-3xl mx-auto">{impactData.description}</p>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {impactData.metrics.map((metric, index) => (
+                        <div key={index} className="flex flex-col items-center text-center p-2">
+                            <CircularCounter
+                                to={metric.value}
+                                suffix={metric.suffix}
+                                iconName={metric.iconName as any}
+                            />
+                            <p className="mt-4 text-lg font-bold text-primary-foreground">
+                                {metric.value}{metric.suffix || ''} {metric.unit}
+                            </p>
+                            <p className="mt-1 text-sm text-primary-foreground/80">{metric.label}</p>
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>
@@ -237,5 +232,4 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
     </main>
   );
 }
-
     

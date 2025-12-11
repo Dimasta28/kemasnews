@@ -2,19 +2,22 @@
 
 import { useEffect, useRef } from 'react';
 import { motion, useInView, useMotionValue, useSpring, animate } from 'framer-motion';
+import { DynamicIcon, type IconName } from './dynamic-icon';
 
 interface CircularCounterProps {
   to: number;
   suffix?: string;
   className?: string;
+  iconName?: string;
 }
 
-const CircularCounter = ({ to, suffix = '', className }: CircularCounterProps) => {
+const CircularCounter = ({ to, suffix = '', className, iconName }: CircularCounterProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const numberRef = useRef<HTMLParagraphElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const circumference = 2 * Math.PI * 45; // 2 * pi * radius (50-5)
+  const progress = to / 100;
 
   useEffect(() => {
     if (isInView && numberRef.current) {
@@ -39,8 +42,8 @@ const CircularCounter = ({ to, suffix = '', className }: CircularCounterProps) =
           cx="50"
           cy="50"
           r="45"
-          className="stroke-current text-gray-200 dark:text-gray-700"
-          strokeWidth="10"
+          className="stroke-current text-primary-foreground/10"
+          strokeWidth="6"
           fill="transparent"
         />
         {/* Progress circle */}
@@ -48,26 +51,23 @@ const CircularCounter = ({ to, suffix = '', className }: CircularCounterProps) =
           cx="50"
           cy="50"
           r="45"
-          className="stroke-current text-primary"
-          strokeWidth="10"
+          className="stroke-current text-primary-foreground"
+          strokeWidth="6"
           fill="transparent"
           strokeLinecap="round"
           strokeDasharray={circumference}
           initial={{ strokeDashoffset: circumference }}
-          animate={isInView ? { strokeDashoffset: circumference - (to / 100) * circumference } : {}}
+          animate={isInView ? { strokeDashoffset: circumference * (1 - progress) } : {}}
           transition={{ duration: 2, ease: "easeOut" }}
           transform="rotate(-90 50 50)"
         />
-        {/* Inner filled circle */}
-        <circle
-            cx="50"
-            cy="50"
-            r="35"
-            className="fill-current text-primary"
-        />
       </svg>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <p ref={numberRef} className="text-3xl font-bold text-primary-foreground">0</p>
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-primary-foreground">
+        {iconName && <DynamicIcon name={iconName} className="h-6 w-6 mb-1" />}
+        <div className="flex items-baseline">
+            <p ref={numberRef} className="text-4xl font-bold">0</p>
+            {suffix && <span className="text-xl font-bold">{suffix}</span>}
+        </div>
       </div>
     </div>
   );

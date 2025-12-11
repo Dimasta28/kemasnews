@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Card } from '@/components/ui/card';
@@ -24,6 +23,7 @@ export function ImpactSection({ data }: ImpactSectionProps) {
                <CircularCounter
                   to={metric.value}
                   suffix={metric.suffix}
+                  iconName={metric.iconName}
                 />
               <p className="mt-4 text-lg font-bold">
                 {metric.value}{metric.suffix || ''} {metric.unit}
@@ -36,5 +36,4 @@ export function ImpactSection({ data }: ImpactSectionProps) {
     </AnimatedSection>
   );
 }
-
     
