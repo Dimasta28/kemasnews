@@ -20,7 +20,7 @@ const staticImpactData = {
     title: "Powering The Future With The Renew",
     description: "By partnering with us, brands are making a measurable difference for the planet. Here's what we've achieved together so far.",
     metrics: [
-        { value: 330, label: "Carbon Emissions Reduced", description: "Reduced/Year", unit: "Ton+", iconName: "Wind" },
+        { value: 330, label: "Carbon Emissions Reduced", description: "Ton/Year", unit: "Ton+", iconName: "Wind" },
         { value: 100, label: "Water Recycling", description: "(Anodizing Facility)", suffix: "%", iconName: "Droplets" },
         { value: 50, label: "Energy Saving", description: "(Cooling Machine)", suffix: "%", iconName: "BatteryCharging" },
     ]
@@ -103,7 +103,7 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
             </motion.div>
         </section>
 
-        <section className="bg-primary text-primary-foreground py-16 md:py-24">
+        <AnimatedSection className="bg-primary text-primary-foreground py-16 md:py-24">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="max-w-6xl mx-auto text-center mb-12">
                     <p className="text-sm font-bold uppercase tracking-wider text-primary-foreground/80 mb-2">Our Impact</p>
@@ -127,7 +127,7 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
                     ))}
                 </div>
             </div>
-        </section>
+        </AnimatedSection>
 
         <AnimatedSection className="py-16 md:py-24 bg-background">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
