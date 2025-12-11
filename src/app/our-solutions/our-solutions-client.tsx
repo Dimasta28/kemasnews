@@ -85,7 +85,7 @@ export function OurSolutionsClient({ settings }: { settings: any }) {
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div className="relative aspect-video md:aspect-square">
                  <Image
-                    src="https://images.pexels.com/photos/7262998/pexels-photo-7262998.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                    src="https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                     alt="Cosmetic products and raw material"
                     fill
                     className="object-cover rounded-lg shadow-lg"
@@ -133,7 +133,7 @@ export function OurSolutionsClient({ settings }: { settings: any }) {
               </div>
               <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg">
                 <Image
-                  src="https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%203.jpg"
                   alt="Cosmetic packaging"
                   fill
                   className="object-cover"
