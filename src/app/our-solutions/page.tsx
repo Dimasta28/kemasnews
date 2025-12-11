@@ -91,7 +91,7 @@ export default async function OurSolutionsPage() {
               </div>
               <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg">
                 <Image
-                  src="https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%203.jpg"
                   alt="Cosmetic packaging"
                   fill
                   className="object-cover"
@@ -106,7 +106,7 @@ export default async function OurSolutionsPage() {
                 <div className="grid md:grid-cols-2 gap-16 items-center">
                     <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg order-last md:order-first">
                         <Image
-                            src="https://images.pexels.com/photos/1778412/pexels-photo-1778412.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                            src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%205.jpg"
                             alt="Decoration capabilities"
                             fill
                             className="object-cover"

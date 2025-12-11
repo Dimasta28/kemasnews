@@ -76,14 +76,14 @@ export function SiteHeader({
         )}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16">
+            <div className="flex items-center justify-between h-20">
                 <div className="flex items-center">
                     <Link href="/" className="flex-shrink-0">
                         <Image
                             src={settings.darkModeLogoUrl}
                             alt="Kemas Logo"
-                            width={100}
-                            height={25}
+                            width={150}
+                            height={37}
                             priority
                         />
                     </Link>
@@ -91,7 +91,7 @@ export function SiteHeader({
                 
                 <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-white">
                     <Link href="/" className="hover:text-primary-foreground/80 transition-colors">Home</Link>
-                    <Link href="/green-plan" className="hover:text-primary-foreground/80 transition-colors">Green Plan</Link>
+                    <Link href="/our-solutions" className="hover:text-primary-foreground/80 transition-colors">Our Solutions</Link>
                 </nav>
 
                  <div className="flex items-center gap-2">
@@ -120,8 +120,8 @@ export function SiteHeader({
                   <Image
                     src={settings.lightModeLogoUrl}
                     alt="Kemas Logo"
-                    width={100}
-                    height={25}
+                    width={150}
+                    height={37}
                   />
                 </Link>
                 <button
@@ -138,7 +138,7 @@ export function SiteHeader({
                         <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Home</Link>
                     </li>
                      <li>
-                        <Link href="/green-plan" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Plan</Link>
+                        <Link href="/our-solutions" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Our Solutions</Link>
                     </li>
                 </ul>
             </nav>
