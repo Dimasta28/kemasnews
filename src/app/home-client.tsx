@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { AnimatedSection } from '@/components/animated-section';
 import { CircularCounter } from '@/components/ui/circular-counter';
 import { GreenJourneyForm } from './_components/green-journey-form';
+import { useState, useEffect } from 'react';
 
 
 interface HomeClientProps {
@@ -44,6 +45,11 @@ const featureSections = [
 export function HomeClient({ heroImageUrl }: HomeClientProps) {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, -100]);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   
   const heroTextContainer = {
     hidden: { opacity: 0 },
@@ -182,7 +188,7 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
         </AnimatedSection>
         
         <div id="join-journey">
-            <GreenJourneyForm />
+            {isMounted && <GreenJourneyForm />}
         </div>
     </main>
   );
