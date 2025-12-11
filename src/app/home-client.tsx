@@ -23,7 +23,6 @@ const staticImpactData = {
     metrics: [
         { value: 50, label: "Energy Reduction", suffix: "%", iconName: "BatteryCharging" },
         { value: 100, label: "Water Recycled", suffix: "%", iconName: "Droplets" },
-        { value: 100, label: "Waste Management", suffix: "%", iconName: "Trash2" },
         { value: 330, label: "Carbon Emissions Reduced/Year", unit: "Ton+", iconName: "Wind" },
     ]
 };
@@ -97,7 +96,7 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
                     <h2 className="text-3xl lg:text-4xl font-bold">{staticImpactData.title}</h2>
                     <p className="mt-4 text-primary-foreground/80 max-w-3xl mx-auto">{staticImpactData.description}</p>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
                     {staticImpactData.metrics.map((metric, index) => (
                         <div key={index} className="flex flex-col items-center text-center p-2">
                             <CircularCounter
