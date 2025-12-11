@@ -5,7 +5,7 @@ import { getFrontendSettings } from '@/services/settingsService';
 import { type FrontendSettings } from '@/services/settingsService';
 import { HomeClient } from './home-client';
 import { getGreenJourneyPageData } from '@/services/greenJourneyService';
-import { GreenJourneyForm } from './_components/green-journey-form';
+import { CtaSection } from './green-journey/_components/cta-section';
 
 export default async function Home() {
   const [settings, pageData] = await Promise.all([
@@ -29,6 +29,9 @@ export default async function Home() {
     <div className="flex flex-col min-h-screen bg-[#EFECE9] dark:bg-[#050505]">
       <SiteHeaderWrapper />
       <HomeClient heroImageUrl={settings.heroImageUrl} impactData={pageData.impact} />
+      <div id="join-journey">
+        <CtaSection data={pageData.cta} />
+      </div>
       <SiteFooter settings={settings} />
     </div>
   );

@@ -10,7 +10,6 @@ import { AnimatedCounter } from '@/components/animated-counter';
 import type { ImpactSection as ImpactData } from '@/services/greenJourneyService';
 import { AnimatedSection } from '@/components/animated-section';
 import { cn } from '@/lib/utils';
-import { GreenJourneyForm } from './_components/green-journey-form';
 import { DynamicIcon } from '@/components/ui/dynamic-icon';
 
 
@@ -236,10 +235,6 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
               </div>
             </div>
         </AnimatedSection>
-
-        <div id="join-journey">
-            <GreenJourneyForm />
-        </div>
     </main>
   );
 }
