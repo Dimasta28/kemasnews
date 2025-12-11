@@ -8,6 +8,7 @@ import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { AnimatedSection } from '@/components/animated-section';
 import { CircularCounter } from '@/components/ui/circular-counter';
+import { GreenJourneyForm } from './_components/green-journey-form';
 
 
 interface HomeClientProps {
@@ -128,34 +129,29 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
             </div>
         </section>
 
-        <AnimatedSection className="relative bg-background">
-          <div className="grid md:grid-cols-2 gap-0 items-center">
-              <div className="text-left p-8 md:p-12 lg:p-16">
-                 <div className="max-w-md mx-auto space-y-10">
+        <AnimatedSection className="py-16 md:py-24 bg-background">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-3xl mx-auto space-y-12">
                     {featureSections.map((section, index) => (
-                        <div key={index}>
-                            <h3 className="text-2xl font-bold text-foreground mb-3">
-                                <span className="text-primary text-4xl font-extrabold mr-2">{index + 1}.</span>
-                                {section.title}
-                            </h3>
-                            <p className="text-base text-muted-foreground ml-10">
-                                {section.description}
-                            </p>
+                        <div key={index} className="flex items-start gap-6">
+                            <span className="text-6xl font-extrabold text-primary leading-none mt-[-2px]">{index + 1}.</span>
+                            <div className="flex-1">
+                                <h3 className="text-xl font-bold text-foreground mb-2">
+                                    {section.title}
+                                </h3>
+                                <p className="text-base text-muted-foreground">
+                                    {section.description}
+                                </p>
+                            </div>
                         </div>
                     ))}
-                 </div>
-              </div>
-              <div className="relative aspect-square md:aspect-auto md:h-full group overflow-hidden">
-                 <Image
-                    src="https://images.pexels.com/photos/3214533/pexels-photo-3214533.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                    alt="Grassy hills"
-                    fill
-                    className="object-cover"
-                    data-ai-hint="grassy hills"
-                  />
-              </div>
-          </div>
+                </div>
+            </div>
         </AnimatedSection>
+        
+        <div id="join-journey">
+            <GreenJourneyForm />
+        </div>
     </main>
   );
 }
