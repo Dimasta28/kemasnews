@@ -59,6 +59,19 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' } },
   };
+  
+  const featureItemVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: (i: number) => ({
+      opacity: 1,
+      x: 0,
+      transition: {
+        delay: i * 0.2,
+        duration: 0.5,
+        ease: 'easeOut',
+      },
+    }),
+  };
 
 
   return (
@@ -134,17 +147,25 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div className="space-y-12">
                         {featureSections.map((section, index) => (
-                            <div key={index} className="flex items-start gap-4">
+                             <motion.div
+                                key={index}
+                                className="flex items-start gap-4"
+                                custom={index}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, amount: 0.5 }}
+                                variants={featureItemVariants}
+                            >
                                 <span className="text-5xl font-extrabold text-primary leading-none">{index + 1}.</span>
                                 <div className="flex-1">
-                                    <h3 className="text-lg font-bold text-foreground mb-2">
+                                    <h3 className="text-xl font-bold text-foreground mb-2">
                                         {section.title}
                                     </h3>
-                                    <p className="text-sm text-muted-foreground">
+                                    <p className="text-base text-muted-foreground">
                                         {section.description}
                                     </p>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                     <div className="relative aspect-square rounded-lg overflow-hidden">
