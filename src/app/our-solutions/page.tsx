@@ -101,6 +101,36 @@ export default async function OurSolutionsPage() {
             </div>
           </div>
         </AnimatedSection>
+        <AnimatedSection className="py-16 md:py-24 bg-secondary text-secondary-foreground">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid md:grid-cols-2 gap-16 items-center">
+                    <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg order-last md:order-first">
+                        <Image
+                            src="https://images.pexels.com/photos/1778412/pexels-photo-1778412.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                            alt="Decoration capabilities"
+                            fill
+                            className="object-cover"
+                            data-ai-hint="cosmetic products"
+                        />
+                    </div>
+                    <div className="space-y-8">
+                        <div className="relative">
+                            <h2 className="text-4xl md:text-5xl font-extrabold">
+                                DECORATION<br />
+                                CAPABILITIES:
+                            </h2>
+                            <div className="absolute top-0 -left-4 h-full w-1 bg-primary transform -translate-x-full"></div>
+                        </div>
+                        <p className="text-lg">
+                            Featuring Metal Anodization and Spray Lines
+                            capabilities as an aesthetic added value that
+                            remains environmentally friendly (due to the
+                            lacquer waste capture system).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </AnimatedSection>
       </main>
       <SiteFooter settings={settings} />
     </div>
