@@ -11,6 +11,7 @@ import { CircularCounter } from '@/components/ui/circular-counter';
 import { GreenJourneyForm } from './_components/green-journey-form';
 import { useState, useEffect } from 'react';
 import React from 'react';
+import { cn } from '@/lib/utils';
 
 
 interface HomeClientProps {
@@ -109,9 +110,14 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
                 Combining manufacturing precision with circular economy principles for a global cosmetics brand
                 </motion.p>
                 <motion.div variants={heroTextItem} className="mt-8 flex gap-4">
-                <Button asChild size="lg" variant="outline">
+                <Button asChild size="lg" className="btn-fill-hover btn-default-variant">
                     <Link href="#join-journey">
-                    Join The Journey <ArrowRight className="ml-2" />
+                        Get Started <ArrowRight className="ml-2" />
+                    </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="btn-fill-hover btn-outline-variant border-primary-foreground text-primary-foreground hover:border-primary">
+                    <Link href="/our-solutions">
+                        Learn More
                     </Link>
                 </Button>
                 </motion.div>

@@ -64,3 +64,41 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+@layer components {
+    .btn-fill-hover {
+        @apply relative overflow-hidden z-10 transition-colors duration-300;
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+    .btn-fill-hover::before {
+        content: '';
+        @apply absolute w-full h-full bg-primary top-full left-0 z-[-1] transition-all duration-300 ease-in-out;
+    }
+    .btn-fill-hover:hover::before {
+        @apply top-0;
+    }
+    .btn-fill-hover:hover {
+        @apply text-primary-foreground;
+    }
+
+    /* Style for outline variant */
+    .btn-fill-hover.btn-outline-variant {
+        @apply border-primary text-primary;
+    }
+    .btn-fill-hover.btn-outline-variant:hover {
+        @apply text-primary-foreground border-primary;
+    }
+    
+    /* Style for default variant */
+    .btn-fill-hover.btn-default-variant {
+        @apply bg-primary text-primary-foreground;
+    }
+     .btn-fill-hover.btn-default-variant::before {
+        @apply bg-primary-foreground;
+    }
+    .btn-fill-hover.btn-default-variant:hover {
+        @apply text-primary;
+    }
+}
