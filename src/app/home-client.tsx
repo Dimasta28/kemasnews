@@ -149,7 +149,7 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
                     </div>
                     <div className="relative aspect-square rounded-lg overflow-hidden">
                         <Image 
-                            src="https://picsum.photos/seed/features-combined/800/800"
+                            src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/images/Home/kemas-green-jurney.jpg"
                             alt="Sustainable manufacturing"
                             fill
                             className="object-cover"
