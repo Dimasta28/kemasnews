@@ -44,7 +44,7 @@ const featureSections = [
 
 export function HomeClient({ heroImageUrl }: HomeClientProps) {
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, -100]);
+  const y = useTransform(scrollY, [0, 800], [0, 150]);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
