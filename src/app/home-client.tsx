@@ -22,7 +22,7 @@ const staticImpactData = {
     description: "By partnering with us, brands are making a measurable difference for the planet. Here's what we've achieved together so far.",
     metrics: [
         { value: 50, label: "Energy Reduction", suffix: "%", iconName: "BatteryCharging" },
-        { value: 100, label: "Water Recycled", suffix: "%", iconName: "Droplets" },
+        { value: 100, label: "Water Recycling", description: "(Anodizing Facility)", suffix: "%", iconName: "Droplets" },
         { value: 330, label: "Carbon Emissions Reduced/Year", unit: "Ton+", iconName: "Wind" },
     ]
 };
@@ -108,6 +108,7 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
                                 {metric.value}{metric.suffix || ''} {metric.unit}
                             </p>
                             <p className="mt-1 text-sm text-primary-foreground/80">{metric.label}</p>
+                             {metric.description && <p className="text-xs text-primary-foreground/60">{metric.description}</p>}
                         </div>
                     ))}
                 </div>
