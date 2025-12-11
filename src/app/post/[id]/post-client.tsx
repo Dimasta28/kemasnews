@@ -137,7 +137,7 @@ export function PostClient({ post, recentPosts, comments, settings, error }: Pos
 
                         {post.featuredImage && (
                             <motion.div
-                                className="relative w-full aspect-video mb-8 rounded-lg overflow-hidden shadow-lg"
+                                className="relative w-full aspect-video mb-8 rounded-lg overflow-hidden"
                                 custom={3}
                                 initial="hidden"
                                 animate="visible"

@@ -140,8 +140,8 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
 
       toast({ title: 'Tags Generated!' });
     } catch (error) {
-        console.error("AI tag generation failed:", error);
-        toast({ variant: 'destructive', title: 'AI Generation Failed' });
+      console.error("AI tag generation failed:", error);
+      toast({ variant: 'destructive', title: 'AI Generation Failed' });
     } finally {
         setIsTagsGenerating(false);
     }

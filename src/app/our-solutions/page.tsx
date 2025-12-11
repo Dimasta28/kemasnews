@@ -73,7 +73,7 @@ export default async function OurSolutionsPage() {
                     src="https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                     alt="Cosmetic products and raw material"
                     fill
-                    className="object-cover rounded-lg shadow-lg"
+                    className="object-cover rounded-lg"
                     data-ai-hint="cosmetic products material"
                  />
               </div>
@@ -116,7 +116,7 @@ export default async function OurSolutionsPage() {
                     ))}
                 </ul>
               </div>
-              <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg">
+              <div className="relative aspect-square rounded-lg overflow-hidden">
                 <Image
                   src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%203.jpg"
                   alt="Cosmetic packaging"
@@ -132,7 +132,7 @@ export default async function OurSolutionsPage() {
         <AnimatedSection className="py-16 md:py-24 bg-secondary text-secondary-foreground">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid md:grid-cols-2 gap-16 items-center">
-                    <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg order-last md:order-first">
+                    <div className="relative aspect-square rounded-lg overflow-hidden order-last md:order-first">
                         <Image
                             src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%205.jpg"
                             alt="Decoration capabilities"

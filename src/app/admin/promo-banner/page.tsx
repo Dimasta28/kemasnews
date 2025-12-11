@@ -183,7 +183,7 @@ export default function PromoBannerPage() {
 
                     <div className="space-y-2">
                         <Label>Banner Preview</Label>
-                         <div className="relative w-full aspect-[21/9] rounded-lg overflow-hidden shadow-lg border">
+                         <div className="relative w-full aspect-[21/9] rounded-lg overflow-hidden border">
                             <Image
                                 src={settings.homepageBanner?.imageUrl || 'https://placehold.co/1200x450.png'}
                                 alt="Homepage banner preview"
