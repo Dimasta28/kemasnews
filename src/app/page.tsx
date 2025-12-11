@@ -5,7 +5,6 @@ import { SiteFooter } from '@/components/site-footer';
 import { getFrontendSettings } from '@/services/settingsService';
 import { type FrontendSettings } from '@/services/settingsService';
 import { HomeClient } from './home-client';
-import { GreenJourneyForm } from './_components/green-journey-form';
 
 export default async function Home() {
   const settings = await getFrontendSettings();
@@ -26,9 +25,6 @@ export default async function Home() {
     <div className="flex flex-col min-h-screen bg-background">
       <SiteHeaderWrapper />
       <HomeClient heroImageUrl={settings.heroImageUrl} />
-      <div id="join-journey">
-        <GreenJourneyForm />
-      </div>
       <SiteFooter settings={settings} />
     </div>
   );
