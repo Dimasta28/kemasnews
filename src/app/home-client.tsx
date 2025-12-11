@@ -108,11 +108,6 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
                 Combining manufacturing precision with circular economy principles for a global cosmetics brand
                 </motion.p>
                 <motion.div variants={heroTextItem} className="mt-8 flex gap-4">
-                <Button asChild size="lg">
-                    <Link href="/green-plan">
-                    Our Green Plan
-                    </Link>
-                </Button>
                 <Button asChild size="lg" variant="outline">
                     <Link href="#join-journey">
                     Join The Journey <ArrowRight className="ml-2" />
