@@ -4,11 +4,9 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { AnimatedSection } from '@/components/animated-section';
-import { cn } from '@/lib/utils';
-import { DynamicIcon } from '@/components/ui/dynamic-icon';
 import { CircularCounter } from '@/components/ui/circular-counter';
 
 
@@ -26,6 +24,21 @@ const staticImpactData = {
         { value: 50, label: "Energy Saving", description: "(Cooling Machine)", suffix: "%", iconName: "BatteryCharging" },
     ]
 };
+
+const featureSections = [
+    {
+        title: "PRECISION & ENERGY EFFICIENCY",
+        description: "At KEMAS, we use high-precision molding machines to maximize productivity and minimize waste. Our facility features insulated barrels and smart automated systems that prevent heat loss and power down idle machinery. Combined with advanced Arburg technology and rigorous maintenance, this reduces our energy consumption by up to 50%."
+    },
+    {
+        title: "SMART WASTE MANAGEMENT",
+        description: "We are committed to a zero-waste philosophy. We recycle 100% of the water used in our anodization facility and capture chemical waste from spray lines to be repurposed as fuel. Additionally, all organic waste is composted and used as fertilizer for our factory grounds."
+    },
+    {
+        title: "AUTOMATION & CARBON REDUCTION",
+        description: "Our use of highly automated equipment improves efficiency and reduces human error (scrap). This technology also allows us to operate with a leaner workforce, which significantly lowers our carbon footprint—cutting an estimated 330 metric tons of CO2 per year simply by reducing daily commuting emissions."
+    }
+];
 
 export function HomeClient({ heroImageUrl }: HomeClientProps) {
   const { scrollY } = useScroll();
@@ -117,128 +130,30 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
 
         <AnimatedSection className="relative bg-background">
           <div className="grid md:grid-cols-2 gap-0 items-center">
-              <div className="relative aspect-square md:order-2 group overflow-hidden">
-                 <Image
-                    src="https://picsum.photos/seed/efficiency/600/600"
-                    alt="Precision & Energy Efficiency"
-                    fill
-                    className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
-                    data-ai-hint="factory machinery"
-                  />
+              <div className="text-left p-8 md:p-12 lg:p-16">
+                 <div className="max-w-md mx-auto space-y-12">
+                    {featureSections.map((section, index) => (
+                        <div key={index}>
+                            <h2 className="text-2xl font-bold text-foreground mb-3">
+                                <span className="text-3xl font-extrabold">{index + 1}.</span> {section.title}
+                            </h2>
+                            <p className="text-muted-foreground">
+                                {section.description}
+                            </p>
+                        </div>
+                    ))}
+                 </div>
               </div>
-              <div className="text-left p-8 md:p-12 lg:p-16 md:order-1">
-                <h2 className="text-3xl font-bold text-foreground">Precision & Energy Efficiency</h2>
-                <p className="mt-4 text-muted-foreground">
-                  At KEMAS, we use high-precision molding machines to maximize productivity and minimize waste. Our facility features insulated barrels and smart automated systems that prevent heat loss and power down idle machinery. Combined with advanced Arburg technology and rigorous maintenance, this reduces our energy consumption by up to 50%.
-                </p>
-                 <Button asChild variant="outline" className="mt-6">
-                  <Link href="https://www.kemaspkg.com/technology/">
-                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
+              <div className="relative aspect-square md:aspect-auto md:h-full group overflow-hidden">
+                 <Image
+                    src="https://images.pexels.com/photos/3214533/pexels-photo-3214533.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                    alt="Grassy hills"
+                    fill
+                    className="object-cover"
+                    data-ai-hint="grassy hills"
+                  />
               </div>
           </div>
-        </AnimatedSection>
-
-        <AnimatedSection className="relative bg-secondary/30">
-          <div className="grid md:grid-cols-2 gap-0 items-center">
-              <div className="relative aspect-square md:order-1 group overflow-hidden">
-                 <Image
-                    src="https://picsum.photos/seed/waste-management/600/600"
-                    alt="Smart Waste Management"
-                    fill
-                    className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
-                    data-ai-hint="recycling water"
-                  />
-              </div>
-              <div className="text-left p-8 md:p-12 lg:p-16 md:order-2">
-                <h2 className="text-3xl font-bold text-foreground">Smart Waste Management</h2>
-                <p className="mt-4 text-muted-foreground">
-                  We are committed to a zero-waste philosophy. We recycle 100% of the water used in our anodization facility and capture chemical waste from spray lines to be repurposed as fuel. Additionally, all organic waste is composted and used as fertilizer for our factory grounds.
-                </p>
-                <Button asChild variant="outline" className="mt-6">
-                  <Link href="#">
-                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-          </div>
-        </AnimatedSection>
-
-        <AnimatedSection className="relative bg-background">
-           <div className="grid md:grid-cols-2 gap-0 items-center">
-              <div className="relative aspect-square md:order-2 group overflow-hidden">
-                 <Image
-                    src="https://picsum.photos/seed/automation/600/600"
-                    alt="Automation & Carbon Reduction"
-                    fill
-                    className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
-                    data-ai-hint="robotic arm factory"
-                  />
-              </div>
-              <div className="text-left p-8 md:p-12 lg:p-16 md:order-1">
-                <h2 className="text-3xl font-bold text-foreground">Automation & Carbon Reduction</h2>
-                <p className="mt-4 text-muted-foreground">
-                  Our use of highly automated equipment improves efficiency and reduces human error (scrap). This technology also allows us to operate with a leaner workforce, which significantly lowers our carbon footprint—cutting an estimated 330 metric tons of CO2 per year simply by reducing daily commuting emissions.
-                </p>
-                 <Button asChild variant="outline" className="mt-6">
-                  <Link href="#">
-                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-          </div>
-        </AnimatedSection>
-
-        <AnimatedSection className="relative bg-secondary/30">
-          <div className="grid md:grid-cols-2 gap-0 items-center">
-               <div className="relative aspect-square md:order-1 group overflow-hidden">
-                 <Image
-                    src="https://picsum.photos/seed/solutions/600/600"
-                    alt="From Products to Solutions"
-                    fill
-                    className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
-                    data-ai-hint="sustainable products"
-                  />
-              </div>
-              <div className="text-left p-8 md:p-12 lg:p-16 md:order-2">
-                <h2 className="text-3xl font-bold text-foreground">From Products to Solutions</h2>
-                <p className="mt-4 text-muted-foreground">
-                  In accordance with the Kyoto Protocol in reducing greenhouse effect and in order to help preserve the environment and the sustainability of the habitat, we at KEMAS have taken serious measures towards reducing cardon emission, reducing petrochemical packaging while providing the best solutions to the Beauty Brands. The measures we took is not just in the greener packaging solutions but also a better manufacturing standard that contributes to less emission being emitted to the environment. We think that mother earth is under threat as well as the future generation.
-                </p>
-                <p className="mt-4 text-muted-foreground font-semibold">The time to act is now. So here is our journey…</p>
-                
-                <div className="mt-6 space-y-4">
-                    <div>
-                        <h3 className="font-semibold">Products By Category:</h3>
-                        <ul className="mt-2 list-disc list-inside text-muted-foreground space-y-1">
-                            <li>Skincare (Jars, Bottles, Droppers).</li>
-                            <li>Makeup (Compacts, Lipsticks, Mascaras).</li>
-                        </ul>
-                    </div>
-                     <div>
-                        <h3 className="font-semibold">Based on Green Innovation:</h3>
-                        <ul className="mt-2 text-muted-foreground space-y-2">
-                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" /><span><strong className="text-foreground">Refillable Systems:</strong> "Reduce waste with an elegant refill concept."</span></li>
-                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" /><span><strong className="text-foreground">Mono-Material:</strong> "One material, unlimited recycling."</span></li>
-                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" /><span><strong className="text-foreground">PCR & Bio-based:</strong> "Post-consumer recycled materials and plant-based sources."</span></li>
-                        </ul>
-                    </div>
-                     <div>
-                        <h3 className="font-semibold">Decoration Capabilities:</h3>
-                        <p className="mt-2 text-muted-foreground">
-                            Featuring Metal Anodization and Spray Lines capabilities as an aesthetic added value that remains environmentally friendly (due to the lacquer waste capture system).
-                        </p>
-                    </div>
-                </div>
-
-                <Button asChild variant="outline" className="mt-6">
-                  <Link href="#">
-                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
         </AnimatedSection>
     </main>
   );
