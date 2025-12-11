@@ -38,6 +38,17 @@ const innovations = [
     },
 ];
 
+const productCategories = [
+    {
+        name: 'Skincare',
+        items: '(Jars, Bottles, Droppers)',
+    },
+    {
+        name: 'Makeup',
+        items: '(Compacts, Lipsticks, Mascaras)',
+    }
+];
+
 export function OurSolutionsClient({ settings }: { settings: any }) {
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -68,6 +79,37 @@ export function OurSolutionsClient({ settings }: { settings: any }) {
                 </p>
             </div>
         </section>
+        
+        <AnimatedSection className="py-16 md:py-24 bg-secondary">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="relative aspect-video md:aspect-square">
+                 <Image
+                    src="https://images.pexels.com/photos/7262998/pexels-photo-7262998.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                    alt="Cosmetic products and raw material"
+                    fill
+                    className="object-cover rounded-lg shadow-lg"
+                    data-ai-hint="cosmetic products material"
+                 />
+              </div>
+              <div className="space-y-6">
+                <h2 className="text-3xl md:text-4xl font-extrabold text-foreground relative pb-2">
+                    PRODUCTS BY CATEGORY:
+                    <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary"></span>
+                </h2>
+                <div className="space-y-4">
+                    {productCategories.map((category) => (
+                        <div key={category.name}>
+                            <h3 className="text-2xl font-bold">{category.name}</h3>
+                            <p className="text-muted-foreground">{category.items}</p>
+                        </div>
+                    ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
+
         <AnimatedSection className="py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-16 items-center">
@@ -101,6 +143,7 @@ export function OurSolutionsClient({ settings }: { settings: any }) {
             </div>
           </div>
         </AnimatedSection>
+
         <AnimatedSection className="py-16 md:py-24 bg-secondary text-secondary-foreground">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid md:grid-cols-2 gap-16 items-center">
