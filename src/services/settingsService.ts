@@ -51,7 +51,7 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
   const defaults: Omit<FrontendSettings, 'privacyPolicy' | 'ogTitle' | 'ogDescription' | 'ogImageUrl' | 'heroPostIds' | 'footer' | 'dropdownLinks' | 'lightModeLogoUrl' | 'darkModeLogoUrl' | 'heroImageUrl'> & { heroImageUrl: string, footer: FooterSettings, dropdownLinks: NavigationLink[], lightModeLogoUrl: string, darkModeLogoUrl: string, privacyPolicy: string, ogTitle: string, ogDescription: string, ogImageUrl: string, heroPostIds: string[] } = {
     lightModeLogoUrl: 'https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png',
     darkModeLogoUrl: 'https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png',
-    heroImageUrl: 'https://images.pexels.com/photos/3214533/pexels-photo-3214533.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    heroImageUrl: 'https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%202.jpg',
     homepageBanner: {
       imageUrl: 'https://placehold.co/1200x450.png',
       title: 'Homepage Banner Title',
