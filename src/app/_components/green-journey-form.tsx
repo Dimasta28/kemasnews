@@ -64,7 +64,7 @@ export function GreenJourneyForm() {
   };
 
   return (
-    <AnimatedSection className="py-16 md:py-24 bg-background">
+    <AnimatedSection className="py-16 md:py-24 bg-[#025729]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Card className="overflow-hidden shadow-2xl">
           <div className="grid md:grid-cols-2">
@@ -72,7 +72,7 @@ export function GreenJourneyForm() {
                 <h2 className="text-3xl font-bold">Join the Green Journey</h2>
                 <p className="mt-4 text-primary-foreground/80">Let’s build the next-generation sustainable packaging together. Start by entering your email.</p>
             </div>
-            <div className="p-8">
+            <div className="p-8 bg-card text-card-foreground">
                 <form onSubmit={handleContactSubmit}>
                     {step === 1 && (
                          <div className="space-y-6">
