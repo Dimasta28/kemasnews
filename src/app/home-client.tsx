@@ -21,7 +21,7 @@ const staticImpactData = {
     title: "Powering The Future With The Renew",
     description: "By partnering with us, brands are making a measurable difference for the planet. Here's what we've achieved together so far.",
     metrics: [
-        { value: 50, label: "Energy Reduction", suffix: "%", iconName: "BatteryCharging" },
+        { value: 50, label: "Energy Saving", description: "(Cooling Machine)", suffix: "%", iconName: "BatteryCharging" },
         { value: 100, label: "Water Recycling", description: "(Anodizing Facility)", suffix: "%", iconName: "Droplets" },
         { value: 330, label: "Carbon Emissions Reduced/Year", unit: "Ton+", iconName: "Wind" },
     ]
