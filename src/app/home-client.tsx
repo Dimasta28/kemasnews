@@ -1,4 +1,3 @@
-
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -6,11 +5,11 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
-import { AnimatedCounter } from '@/components/animated-counter';
 import type { ImpactSection as ImpactData } from '@/services/greenJourneyService';
 import { AnimatedSection } from '@/components/animated-section';
 import { cn } from '@/lib/utils';
 import { DynamicIcon } from '@/components/ui/dynamic-icon';
+import { AnimatedCounter } from '@/app/green-journey/_components/animated-counter';
 
 
 interface HomeClientProps {
@@ -238,3 +237,5 @@ export function HomeClient({ heroImageUrl, impactData }: HomeClientProps) {
     </main>
   );
 }
+
+    

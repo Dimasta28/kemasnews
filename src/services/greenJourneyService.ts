@@ -44,6 +44,7 @@ export interface SolutionSection {
 export interface ImpactMetric {
     value: number;
     label: string;
+    unit?: string;
     prefix?: string;
     suffix?: string;
     iconName: string;
@@ -136,7 +137,7 @@ export async function getGreenJourneyPageData(): Promise<GreenJourneyPageData> {
             { value: 50, label: "Energy Reduction", suffix: "%", iconName: "BatteryCharging" },
             { value: 100, label: "Water Recycled", suffix: "%", iconName: "Droplets" },
             { value: 100, label: "Waste Management", suffix: "%", iconName: "Trash2" },
-            { value: 330, label: "Carbon Emissions Reduced/Year", suffix: " Ton+", iconName: "Wind" },
+            { value: 330, label: "Carbon Emissions Reduced/Year", unit: "Ton+", iconName: "Wind" },
         ]
     },
     journeyTimeline: [
@@ -183,3 +184,5 @@ export async function getGreenJourneyPageData(): Promise<GreenJourneyPageData> {
     return defaults;
   }
 }
+
+    
