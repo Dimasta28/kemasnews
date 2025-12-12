@@ -7,6 +7,7 @@ import { Pencil } from 'lucide-react';
 import { AnimatedSection } from '@/components/animated-section';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 
 const innovations = [
     {
@@ -37,6 +38,21 @@ const productCategories = [
 export function OurSolutionsClient() {
   const { user } = useAuth();
   
+  const heroTextContainer = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const heroTextItem = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' } },
+  };
+
   return (
       <main className="flex-grow">
          <section className="relative flex items-center justify-center h-[70vh] bg-black text-white overflow-hidden">
@@ -60,11 +76,14 @@ export function OurSolutionsClient() {
                     data-ai-hint="pine tree"
                 />
             </div>
-            <div
+            <motion.div
                 className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left"
+                variants={heroTextContainer}
+                initial="hidden"
+                animate="show"
             >
-                <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">FROM PRODUCTS TO SOLUTIONS</h1>
-            </div>
+                <motion.h1 variants={heroTextItem} className="text-5xl md:text-7xl font-extrabold tracking-tight">FROM PRODUCTS TO SOLUTIONS</motion.h1>
+            </motion.div>
         </section>
 
         <AnimatedSection className="py-16 md:py-24 bg-primary text-primary-foreground">
