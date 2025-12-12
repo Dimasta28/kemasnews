@@ -133,28 +133,8 @@ export function OurSolutionsClient() {
           </div>
         </AnimatedSection>
 
-        <AnimatedSection className="py-16 md:py-24 bg-background">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-2 gap-16 items-center">
-              <div className="space-y-8">
-                <div className="relative">
-                    <h2 className="text-4xl md:text-5xl font-extrabold text-foreground">
-                        BASED ON<br />
-                        GREEN INNOVATION
-                    </h2>
-                    <div className="absolute top-0 -left-4 h-full w-1 bg-primary transform -translate-x-full"></div>
-                </div>
-
-                <ul className="space-y-6 text-lg text-muted-foreground">
-                    {innovations.map((item, index) => (
-                        <li key={index} className="flex">
-                            <span className="text-primary font-bold mr-2">•</span>
-                            <span><strong className="text-foreground">{item.title}:</strong> "{item.description}"</span>
-                        </li>
-                    ))}
-                </ul>
-              </div>
-              <div className="relative aspect-square rounded-lg overflow-hidden">
+        <AnimatedSection className="py-16 md:py-24 relative text-primary-foreground overflow-hidden">
+           <div className="absolute inset-0 z-0">
                 <Image
                   src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%203.jpg"
                   alt="Cosmetic packaging"
@@ -162,6 +142,30 @@ export function OurSolutionsClient() {
                   className="object-cover"
                   data-ai-hint="cosmetic packaging"
                 />
+                <div className="absolute inset-0 bg-black/60" />
+           </div>
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="grid md:grid-cols-2 gap-16 items-center">
+              <div className="space-y-8">
+                <div className="relative">
+                    <h2 className="text-4xl md:text-5xl font-extrabold text-primary-foreground">
+                        BASED ON<br />
+                        GREEN INNOVATION
+                    </h2>
+                    <div className="absolute top-0 -left-4 h-full w-1 bg-primary-foreground transform -translate-x-full"></div>
+                </div>
+
+                <ul className="space-y-6 text-lg text-primary-foreground/80">
+                    {innovations.map((item, index) => (
+                        <li key={index} className="flex">
+                            <span className="text-primary-foreground font-bold mr-2">•</span>
+                            <span><strong className="text-primary-foreground">{item.title}:</strong> "{item.description}"</span>
+                        </li>
+                    ))}
+                </ul>
+              </div>
+              <div>
+                {/* This div is intentionally left empty to push the text content to the left side on medium screens and up */}
               </div>
             </div>
           </div>
