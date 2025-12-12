@@ -2,6 +2,23 @@
 # https://firebase.google.com/docs/app-hosting/configure
 
 runConfig:
+  # The CPU resource in millicores (1/1000 of a core) to allocate to each instance.
+  # For a typical Next.js app, a value between 0.5 and 1 cores (500-1000 millicores) is a good starting point.
+  cpu: 1
+
+  # The amount of memory in MiB to allocate to each instance.
+  # For a typical Next.js app, 512MiB or 1024MiB is a reasonable start.
+  memoryMiB: 512
+
+  # The maximum number of instances to run.
   # Increase this value if you'd like to automatically spin up
   # more instances in response to increased traffic.
-  maxInstances: 1
+  maxInstances: 10
+
+  # The minimum number of instances to keep running at all times.
+  # This can help reduce cold starts.
+  minInstances: 1
+
+# Concurrency specifies the maximum number of concurrent requests
+# an instance can receive.
+concurrency: 80
