@@ -86,21 +86,27 @@ export function OurSolutionsClient() {
             </motion.div>
         </section>
 
-        <AnimatedSection className="py-16 md:py-24 bg-primary text-primary-foreground">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="max-w-4xl mx-auto">
-                    <p className="mt-4 text-lg">
-                        We are taking serious measures to reduce carbon emissions and petrochemical packaging, providing better solutions for Beauty Brands and the planet. In accordance with the Kyoto Protocol in reducing greenhouse effect and in order to help preserve the environment and the sustainability of the habitat, we at KEMAS have taken serious measures towards reducing carbon emission, reducing petrochemical packaging while providing the best solutions to the Beauty Brands. The measures we took is not just in the greener packaging solutions but also a better manufacturing standard that contributes to less emission being emitted to the environment. We think that mother earth is under threat as well as the future generation.
-                    </p>
-                    <p className="mt-4 text-lg font-bold text-center">
-                        The time to act is now. So here is our journey...
-                    </p>
-                </div>
-            </div>
-        </AnimatedSection>
-
-        <AnimatedSection className="py-16 md:py-24 bg-secondary">
+        <section className="relative py-16 md:py-24 bg-primary text-primary-foreground">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto">
+              <p className="mt-4 text-lg">
+                We are taking serious measures to reduce carbon emissions and petrochemical packaging, providing better solutions for Beauty Brands and the planet. In accordance with the Kyoto Protocol in reducing greenhouse effect and in order to help preserve the environment and the sustainability of the habitat, we at KEMAS have taken serious measures towards reducing carbon emission, reducing petrochemical packaging while providing the best solutions to the Beauty Brands. The measures we took is not just in the greener packaging solutions but also a better manufacturing standard that contributes to less emission being emitted to the environment. We think that mother earth is under threat as well as the future generation.
+              </p>
+              <p className="mt-4 text-lg font-bold text-center">
+                The time to act is now. So here is our journey...
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <AnimatedSection className="py-16 md:py-24 bg-background relative">
+          <Image
+            src="https://images.pexels.com/photos/326311/pexels-photo-326311.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            alt="Abstract background"
+            fill
+            className="object-cover opacity-10"
+          />
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div className="relative aspect-video md:aspect-square">
                  <Image
@@ -119,7 +125,7 @@ export function OurSolutionsClient() {
                 <div className="space-y-4">
                     {productCategories.map((category) => (
                         <div key={category.name}>
-                            <h3 className="text-2xl font-bold">{category.name}</h3>
+                            <h3 className="text-2xl font-bold text-foreground">{category.name}</h3>
                             <p className="text-muted-foreground">{category.items}</p>
                         </div>
                     ))}
