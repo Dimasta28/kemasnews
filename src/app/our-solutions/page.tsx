@@ -85,7 +85,7 @@ export default async function OurSolutionsPage() {
               </div>
               <div className="space-y-6">
                 <h2 className="text-3xl md:text-4xl font-extrabold text-foreground relative pb-2">
-                    PRODUCTS BY CATEGORY:
+                    PRODUCTS BY CATEGORY
                     <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary"></span>
                 </h2>
                 <div className="space-y-4">
@@ -165,7 +165,7 @@ export default async function OurSolutionsPage() {
             </div>
         </AnimatedSection>
       </main>
-      <SiteFooter settings={settings} />
+      {settings && <SiteFooter settings={settings} />}
     </div>
   );
 }
