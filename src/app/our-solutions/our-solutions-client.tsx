@@ -52,7 +52,7 @@ export function OurSolutionsClient() {
                 className="absolute inset-0 z-0"
             >
                 <Image
-                    src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN.jpg"
+                    src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Hero%20image/Black%20and%20White%20Modern%20Travel%20Agency%20Presentation.jpg"
                     alt="Lush green pine tree branches"
                     fill
                     className="object-cover opacity-40"
