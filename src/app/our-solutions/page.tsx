@@ -54,7 +54,7 @@ export default async function OurSolutionsPage() {
             <div 
                 className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left"
             >
-                <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">FROM PRODUCTS<br/>TO SOLUTIONS:</h1>
+                <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">FROM PRODUCTS<br/>TO SOLUTIONS</h1>
             </div>
         </section>
 
@@ -108,7 +108,7 @@ export default async function OurSolutionsPage() {
                 <div className="relative">
                     <h2 className="text-4xl md:text-5xl font-extrabold text-foreground">
                         BASED ON<br />
-                        GREEN INNOVATION:
+                        GREEN INNOVATION
                     </h2>
                     <div className="absolute top-0 -left-4 h-full w-1 bg-primary transform -translate-x-full"></div>
                 </div>
