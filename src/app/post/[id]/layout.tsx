@@ -30,7 +30,17 @@ export async function generateMetadata(
     title: post.title,
     description: description,
     openGraph: {
-      images: [{ url: post.featuredImage }, ...previousImages],
+      title: post.title,
+      description: description,
+      images: [
+        { 
+          url: post.featuredImage,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        }, 
+        ...previousImages
+      ],
     },
   }
 }

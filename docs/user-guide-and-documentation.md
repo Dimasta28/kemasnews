@@ -21,7 +21,7 @@ Untuk pemahaman mendalam tentang struktur direktori, silakan merujuk ke `docs/pr
 
 *   **Area Admin (`/admin`):
     *   **Dasbor (`/admin/dashboard`):** Ringkasan analitik, postingan terbaru, dan statistik lainnya.
-    *   **Manajemen Konten:** Mengelola postingan, kategori, tag, dan media.
+    *   **Manajemen Konten:** Mengelola postingan, kategori, dan tag.
     *   **Manajemen Pengguna:** Mengawasi anggota terdaftar.
     *   **Pengaturan:** Mengonfigurasi spanduk promosi, kebijakan privasi, dan pengaturan situs lainnya.
 
@@ -32,8 +32,12 @@ Untuk pemahaman mendalam tentang struktur direktori, silakan merujuk ke `docs/pr
 *   **Next.js:** Kerangka kerja React untuk rendering sisi server dan pembuatan situs statis.
 *   **React & TypeScript:** Untuk membangun antarmuka pengguna yang kuat dan dapat dipelihara.
 *   **Tailwind CSS & Shadcn UI:** Untuk styling dan komponen UI.
-*   **Firebase:** Untuk layanan backend seperti otentikasi dan basis data.
+*   **Firebase:** Untuk layanan backend seperti otentikasi dan basis data (Firestore).
 *   **Genkit AI:** Untuk alur kerja AI seperti pembuatan konten dan terjemahan.
+
+### Alur Kerja AI
+
+Untuk dokumentasi terperinci tentang alur kerja AI, silakan merujuk ke `docs/ai-workflows.md`.
 
 ### Menambah Fitur Baru
 

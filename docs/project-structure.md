@@ -24,7 +24,6 @@ This document outlines the directory structure of this web application project. 
     │   │   ├── privacy-policy/
     │   │   ├── promo-banner/
     │   │   ├── settings/
-    │   │   ├── submissions/
     │   │   └── tags/
     │   ├── _components/
     │   ├── green-journey/
