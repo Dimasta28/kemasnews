@@ -100,30 +100,33 @@ export function OurSolutionsClient() {
           </div>
         </section>
 
-        <AnimatedSection className="py-16 md:py-24 bg-background">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div className="relative aspect-video md:aspect-square">
-                 <Image
+        <AnimatedSection className="py-16 md:py-24 relative text-primary-foreground overflow-hidden">
+           <div className="absolute inset-0 z-0">
+                <Image
                     src="https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                     alt="Cosmetic products and raw material"
                     fill
-                    className="object-cover rounded-lg"
+                    className="object-cover"
                     data-ai-hint="cosmetic products material"
-                 />
-              </div>
-              <div className="space-y-6">
-                <h2 className="text-3xl md:text-4xl font-extrabold text-foreground relative pb-2">
-                    PRODUCTS BY CATEGORY
-                    <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary"></span>
-                </h2>
-                <div className="space-y-4">
-                    {productCategories.map((category) => (
-                        <div key={category.name}>
-                            <h3 className="text-2xl font-bold text-foreground">{category.name}</h3>
-                            <p className="text-muted-foreground">{category.items}</p>
-                        </div>
-                    ))}
+                />
+                <div className="absolute inset-0 bg-black/50" />
+           </div>
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="md:col-start-2">
+                <div className="space-y-6">
+                  <h2 className="text-3xl md:text-4xl font-extrabold relative pb-2">
+                      PRODUCTS BY CATEGORY
+                      <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary-foreground"></span>
+                  </h2>
+                  <div className="space-y-4">
+                      {productCategories.map((category) => (
+                          <div key={category.name}>
+                              <h3 className="text-2xl font-bold">{category.name}</h3>
+                              <p className="text-primary-foreground/80">{category.items}</p>
+                          </div>
+                      ))}
+                  </div>
                 </div>
               </div>
             </div>
