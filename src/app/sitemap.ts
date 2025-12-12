@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next';
 import { getPosts } from '@/services/postService';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://www.kemaspkg.com'; // Replace with your actual domain
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:9002'; 
 
   // Get all published posts
   const posts = await getPosts();
