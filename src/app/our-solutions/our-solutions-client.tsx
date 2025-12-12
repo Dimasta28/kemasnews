@@ -38,7 +38,7 @@ const productCategories = [
 ];
 
 
-function ParallaxSection({ children, src, alt, hint }: { children: React.ReactNode, src: string, alt: string, hint: string }) {
+function ParallaxSection({ children, src, alt, hint, overlay = true }: { children: React.ReactNode, src: string, alt: string, hint: string, overlay?: boolean }) {
     const ref = useRef(null);
     const { user } = useAuth();
     const { scrollYProgress } = useScroll({
@@ -67,7 +67,7 @@ function ParallaxSection({ children, src, alt, hint }: { children: React.ReactNo
                         data-ai-hint={hint}
                     />
                 </motion.div>
-                <div className="absolute inset-0 bg-black/60" />
+                {overlay && <div className="absolute inset-0 bg-black/60" />}
            </div>
            <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {children}
@@ -205,6 +205,7 @@ export function OurSolutionsClient() {
             src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%205.jpg"
             alt="Decoration capabilities"
             hint="cosmetic products"
+            overlay={false}
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
                 <div>
