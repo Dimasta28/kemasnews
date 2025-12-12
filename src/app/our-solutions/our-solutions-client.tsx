@@ -7,7 +7,8 @@ import { Pencil } from 'lucide-react';
 import { AnimatedSection } from '@/components/animated-section';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 
 const innovations = [
     {
@@ -34,6 +35,37 @@ const productCategories = [
         items: '(Compacts, Lipsticks, Mascaras)',
     }
 ];
+
+
+function ParallaxSection({ children, src, alt, hint }: { children: React.ReactNode, src: string, alt: string, hint: string }) {
+    const ref = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ["start end", "end start"]
+    });
+    const y = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+
+    return (
+        <section ref={ref} className="py-16 md:py-24 relative text-primary-foreground overflow-hidden">
+             <div className="absolute inset-0 z-0">
+                <motion.div className="absolute inset-0" style={{ y }}>
+                    <Image
+                        src={src}
+                        alt={alt}
+                        fill
+                        className="object-cover"
+                        data-ai-hint={hint}
+                    />
+                </motion.div>
+                <div className="absolute inset-0 bg-black/60" />
+           </div>
+           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                {children}
+           </div>
+        </section>
+    )
+}
+
 
 export function OurSolutionsClient() {
   const { user } = useAuth();
@@ -66,7 +98,6 @@ export function OurSolutionsClient() {
             )}
             <motion.div
                 className="absolute inset-0 z-0"
-                style={{ y: 0 }}
             >
                 <Image
                     src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Hero%20image/Black%20and%20White%20Modern%20Travel%20Agency%20Presentation.jpg"
@@ -100,51 +131,36 @@ export function OurSolutionsClient() {
           </div>
         </section>
 
-        <AnimatedSection className="py-16 md:py-24 relative text-primary-foreground overflow-hidden">
-           <div className="absolute inset-0 z-0">
-                <Image
-                    src="https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                    alt="Cosmetic products and raw material"
-                    fill
-                    className="object-cover"
-                    data-ai-hint="cosmetic products material"
-                />
-                <div className="absolute inset-0 bg-black/50" />
-           </div>
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <ParallaxSection
+            src="https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            alt="Cosmetic products and raw material"
+            hint="cosmetic products material"
+        >
             <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div className="md:col-start-2">
-                <div className="space-y-6">
-                  <h2 className="text-3xl md:text-4xl font-extrabold relative pb-2">
-                      PRODUCTS BY CATEGORY
-                      <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary-foreground"></span>
-                  </h2>
-                  <div className="space-y-4">
-                      {productCategories.map((category) => (
-                          <div key={category.name}>
-                              <h3 className="text-2xl font-bold">{category.name}</h3>
-                              <p className="text-primary-foreground/80">{category.items}</p>
-                          </div>
-                      ))}
-                  </div>
+                <div className="md:col-start-2">
+                    <div className="space-y-6">
+                        <h2 className="text-3xl md:text-4xl font-extrabold relative pb-2">
+                            PRODUCTS BY CATEGORY
+                            <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary-foreground"></span>
+                        </h2>
+                        <div className="space-y-4">
+                            {productCategories.map((category) => (
+                                <div key={category.name}>
+                                    <h3 className="text-2xl font-bold">{category.name}</h3>
+                                    <p className="text-primary-foreground/80">{category.items}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </AnimatedSection>
+        </ParallaxSection>
 
-        <AnimatedSection className="py-16 md:py-24 relative text-primary-foreground overflow-hidden">
-           <div className="absolute inset-0 z-0">
-                <Image
-                  src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%203.jpg"
-                  alt="Cosmetic packaging"
-                  fill
-                  className="object-cover"
-                  data-ai-hint="cosmetic packaging"
-                />
-                <div className="absolute inset-0 bg-black/60" />
-           </div>
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <ParallaxSection
+            src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%203.jpg"
+            alt="Cosmetic packaging"
+            hint="cosmetic packaging"
+        >
             <div className="grid md:grid-cols-2 gap-16 items-center">
               <div className="space-y-8">
                 <div className="relative">
@@ -168,39 +184,30 @@ export function OurSolutionsClient() {
                 {/* This div is intentionally left empty to push the text content to the left side on medium screens and up */}
               </div>
             </div>
-          </div>
-        </AnimatedSection>
+        </ParallaxSection>
 
-        <AnimatedSection className="py-16 md:py-24 relative text-primary-foreground overflow-hidden">
-            <div className="absolute inset-0 z-0">
-                <Image
-                    src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%205.jpg"
-                    alt="Decoration capabilities"
-                    fill
-                    className="object-cover"
-                    data-ai-hint="cosmetic products"
-                />
-                <div className="absolute inset-0 bg-black/60" />
-            </div>
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="grid md:grid-cols-2 gap-16 items-center">
-                    <div className="md:col-start-2 space-y-8">
-                        <div className="relative">
-                            <h2 className="text-4xl md:text-5xl font-extrabold">
-                                DECORATION CAPABILITIES
-                            </h2>
-                            <div className="absolute top-0 -right-4 h-full w-1 bg-primary-foreground transform translate-x-full"></div>
-                        </div>
-                        <p className="text-lg">
-                            Featuring Metal Anodization and Spray Lines
-                            capabilities as an aesthetic added value that
-                            remains environmentally friendly (due to the
-                            lacquer waste capture system)
-                        </p>
+        <ParallaxSection
+            src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%205.jpg"
+            alt="Decoration capabilities"
+            hint="cosmetic products"
+        >
+            <div className="grid md:grid-cols-2 gap-16 items-center">
+                <div className="md:col-start-2 space-y-8">
+                    <div className="relative">
+                        <h2 className="text-4xl md:text-5xl font-extrabold">
+                            DECORATION CAPABILITIES
+                        </h2>
+                        <div className="absolute top-0 -right-4 h-full w-1 bg-primary-foreground transform translate-x-full"></div>
                     </div>
+                    <p className="text-lg">
+                        Featuring Metal Anodization and Spray Lines
+                        capabilities as an aesthetic added value that
+                        remains environmentally friendly (due to the
+                        lacquer waste capture system)
+                    </p>
                 </div>
             </div>
-        </AnimatedSection>
+        </ParallaxSection>
       </main>
   );
 }
