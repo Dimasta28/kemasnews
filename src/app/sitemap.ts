@@ -1,4 +1,3 @@
-
 import { MetadataRoute } from 'next';
 import { getPosts } from '@/services/postService';
 
@@ -26,6 +25,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/our-solutions`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/green-footprint`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/who-we-are`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/insights`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.7,

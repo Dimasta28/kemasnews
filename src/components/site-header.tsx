@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -76,22 +75,25 @@ export function SiteHeader({
         )}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16">
+            <div className="flex items-center justify-between h-20">
                 <div className="flex items-center">
                     <Link href="/" className="flex-shrink-0">
                         <Image
                             src={settings.darkModeLogoUrl}
                             alt="Kemas Logo"
-                            width={100}
-                            height={25}
+                            width={150}
+                            height={37}
                             priority
                         />
                     </Link>
                 </div>
                 
                 <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-white">
-                    <Link href="/" className="hover:text-primary-foreground/80 transition-colors">Home</Link>
-                    <Link href="/our-solutions" className="hover:text-primary-foreground/80 transition-colors">Our Solutions</Link>
+                    <Link href="/" className="hover:text-primary-foreground/80 transition-colors">Beranda</Link>
+                    <Link href="/our-solutions" className="hover:text-primary-foreground/80 transition-colors">Solusi Kemasan</Link>
+                    <Link href="/green-footprint" className="hover:text-primary-foreground/80 transition-colors">Jejak Hijau</Link>
+                    <Link href="/who-we-are" className="hover:text-primary-foreground/80 transition-colors">Tentang Kami</Link>
+                    <Link href="/insights" className="hover:text-primary-foreground/80 transition-colors">Wawasan</Link>
                 </nav>
 
                  <div className="flex items-center gap-2">
@@ -120,8 +122,8 @@ export function SiteHeader({
                   <Image
                     src={settings.lightModeLogoUrl}
                     alt="Kemas Logo"
-                    width={100}
-                    height={25}
+                    width={150}
+                    height={37}
                   />
                 </Link>
                 <button
@@ -135,10 +137,19 @@ export function SiteHeader({
             <nav className="text-left w-full">
                 <ul className="space-y-2 text-xl font-medium">
                     <li>
-                        <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Home</Link>
+                        <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Beranda</Link>
+                    </li>
+                     <li>
+                        <Link href="/our-solutions" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Solusi Kemasan</Link>
                     </li>
                     <li>
-                        <Link href="/our-solutions" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Our Solutions</Link>
+                        <Link href="/green-footprint" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Jejak Hijau</Link>
+                    </li>
+                    <li>
+                        <Link href="/who-we-are" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Tentang Kami</Link>
+                    </li>
+                    <li>
+                        <Link href="/insights" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Wawasan</Link>
                     </li>
                 </ul>
             </nav>
