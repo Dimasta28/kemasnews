@@ -29,8 +29,7 @@ const productCategories = [
         name: 'Makeup',
         items: '(Compacts, Lipsticks, Mascaras)',
     }
-];
-
+]
 
 export default async function OurSolutionsPage() {
   const settings = await getFrontendSettings();
@@ -151,7 +150,7 @@ export default async function OurSolutionsPage() {
                     <div className="space-y-8">
                         <div className="relative">
                             <h2 className="text-4xl md:text-5xl font-extrabold">
-                                DECORATION CAPABILITIES:
+                                DECORATION CAPABILITIES
                             </h2>
                             <div className="absolute top-0 -left-4 h-full w-1 bg-primary transform -translate-x-full"></div>
                         </div>
