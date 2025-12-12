@@ -64,8 +64,9 @@ export function OurSolutionsClient() {
                     </Link>
                 </Button>
             )}
-            <div
+            <motion.div
                 className="absolute inset-0 z-0"
+                style={{ y: 0 }}
             >
                 <Image
                     src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Hero%20image/Black%20and%20White%20Modern%20Travel%20Agency%20Presentation.jpg"
@@ -75,7 +76,7 @@ export function OurSolutionsClient() {
                     priority
                     data-ai-hint="pine tree"
                 />
-            </div>
+            </motion.div>
             <motion.div
                 className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left"
                 variants={heroTextContainer}
@@ -99,14 +100,8 @@ export function OurSolutionsClient() {
           </div>
         </section>
 
-        <AnimatedSection className="py-16 md:py-24 bg-background relative">
-          <Image
-            src="https://images.pexels.com/photos/326311/pexels-photo-326311.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt="Abstract background"
-            fill
-            className="object-cover opacity-10"
-          />
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <AnimatedSection className="py-16 md:py-24 bg-background">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div className="relative aspect-video md:aspect-square">
                  <Image
