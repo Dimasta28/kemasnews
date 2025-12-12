@@ -2,8 +2,8 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Jejak Hijau',
-  description: 'Pelajari tentang keberlanjutan dan manufaktur ramah lingkungan kami.',
+  title: 'Green Footprint',
+  description: 'Learn about our sustainability and green manufacturing.',
 };
 
 export default function GreenFootprintLayout({

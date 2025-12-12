@@ -10,7 +10,7 @@ export default async function WhoWeArePage() {
     <div className="flex flex-col min-h-screen bg-background">
       <SiteHeaderWrapper />
       <main className="flex-grow flex items-center justify-center">
-        <h1 className="text-4xl font-bold">Tentang Kami</h1>
+        <h1 className="text-4xl font-bold">Who We Are</h1>
       </main>
       {settings && <SiteFooter settings={settings} />}
     </div>

@@ -10,7 +10,7 @@ export default async function GreenFootprintPage() {
     <div className="flex flex-col min-h-screen bg-background">
       <SiteHeaderWrapper />
       <main className="flex-grow flex items-center justify-center">
-        <h1 className="text-4xl font-bold">Jejak Hijau</h1>
+        <h1 className="text-4xl font-bold">Green Footprint</h1>
       </main>
       {settings && <SiteFooter settings={settings} />}
     </div>

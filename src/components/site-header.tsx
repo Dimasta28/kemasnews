@@ -89,11 +89,11 @@ export function SiteHeader({
                 </div>
                 
                 <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-white">
-                    <Link href="/" className="hover:text-primary-foreground/80 transition-colors">Beranda</Link>
-                    <Link href="/our-solutions" className="hover:text-primary-foreground/80 transition-colors">Solusi Kemasan</Link>
-                    <Link href="/green-footprint" className="hover:text-primary-foreground/80 transition-colors">Jejak Hijau</Link>
-                    <Link href="/who-we-are" className="hover:text-primary-foreground/80 transition-colors">Tentang Kami</Link>
-                    <Link href="/insights" className="hover:text-primary-foreground/80 transition-colors">Wawasan</Link>
+                    <Link href="/" className="hover:text-primary-foreground/80 transition-colors">Home</Link>
+                    <Link href="/our-solutions" className="hover:text-primary-foreground/80 transition-colors">Our Solutions</Link>
+                    <Link href="/green-footprint" className="hover:text-primary-foreground/80 transition-colors">Green Footprint</Link>
+                    <Link href="/who-we-are" className="hover:text-primary-foreground/80 transition-colors">Who We Are</Link>
+                    <Link href="/insights" className="hover:text-primary-foreground/80 transition-colors">Insights</Link>
                 </nav>
 
                  <div className="flex items-center gap-2">
@@ -137,19 +137,19 @@ export function SiteHeader({
             <nav className="text-left w-full">
                 <ul className="space-y-2 text-xl font-medium">
                     <li>
-                        <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Beranda</Link>
+                        <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Home</Link>
                     </li>
                      <li>
-                        <Link href="/our-solutions" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Solusi Kemasan</Link>
+                        <Link href="/our-solutions" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Our Solutions</Link>
                     </li>
                     <li>
-                        <Link href="/green-footprint" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Jejak Hijau</Link>
+                        <Link href="/green-footprint" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Footprint</Link>
                     </li>
                     <li>
-                        <Link href="/who-we-are" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Tentang Kami</Link>
+                        <Link href="/who-we-are" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Who We Are</Link>
                     </li>
                     <li>
-                        <Link href="/insights" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Wawasan</Link>
+                        <Link href="/insights" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Insights</Link>
                     </li>
                 </ul>
             </nav>

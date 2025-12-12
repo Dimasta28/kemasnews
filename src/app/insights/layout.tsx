@@ -2,8 +2,8 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Wawasan',
-  description: 'Blog, berita, dan edukasi seputar industri kami.',
+  title: 'Insights',
+  description: 'Our blog, news, and industry education.',
 };
 
 export default function InsightsLayout({

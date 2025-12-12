@@ -2,8 +2,8 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Tentang Kami',
-  description: 'Pelajari tentang visi, misi, dan sertifikasi kami.',
+  title: 'Who We Are',
+  description: 'Learn about our vision, mission, and certifications.',
 };
 
 export default function WhoWeAreLayout({
