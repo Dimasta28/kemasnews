@@ -54,14 +54,21 @@ export default async function OurSolutionsPage() {
             <div 
                 className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left"
             >
-                <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">FROM PRODUCTS<br/>TO SOLUTIONS</h1>
+                <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">FROM PRODUCTS TO SOLUTIONS</h1>
             </div>
         </section>
 
-        <AnimatedSection className="py-16 md:py-24 bg-background">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="max-w-4xl mx-auto">
-                    <p className="mt-4 text-lg text-muted-foreground">
+        <AnimatedSection className="relative py-16 md:py-24 text-white">
+             <Image
+                src="https://images.pexels.com/photos/1529360/pexels-photo-1529360.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                alt="Rain on green leaves"
+                layout="fill"
+                className="object-cover -z-10 opacity-40"
+                data-ai-hint="rain leaves"
+            />
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div className="max-w-4xl mx-auto bg-black/50 p-8 rounded-lg">
+                    <p className="mt-4 text-lg">
                         We are taking serious measures to reduce carbon emissions and petrochemical packaging, providing better solutions for Beauty Brands and the planet. In accordance with the Kyoto Protocol in reducing greenhouse effect and in order to help preserve the environment and the sustainability of the habitat, we at KEMAS have taken serious measures towards reducing carbon emission, reducing petrochemical packaging while providing the best solutions to the Beauty Brands. The measures we took is not just in the greener packaging solutions but also a better manufacturing standard that contributes to less emission being emitted to the environment. We think that mother earth is under threat as well as the future generation.
                     </p>
                     <p className="mt-4 text-lg font-bold text-center">
@@ -158,7 +165,7 @@ export default async function OurSolutionsPage() {
                             Featuring Metal Anodization and Spray Lines
                             capabilities as an aesthetic added value that
                             remains environmentally friendly (due to the
-                            lacquer waste capture system).
+                            lacquer waste capture system)
                         </p>
                     </div>
                 </div>
