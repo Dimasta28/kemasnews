@@ -1,0 +1,104 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 98%; /* Almost White */
+    --foreground: 222.2 84% 4.9%; /* Dark Gray */
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 138 56% 27%; /* Dark Green */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 93%; /* Light Gray */
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 0 0% 93%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 0 0% 93%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89%;
+    --input: 0 0% 89%;
+    --ring: 138 56% 27%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Custom prose styles */
+ .prose {
+    --tw-prose-body: hsl(var(--foreground) / 0.9);
+    --tw-prose-headings: hsl(var(--primary));
+    --tw-prose-lead: hsl(var(--foreground));
+    --tw-prose-links: hsl(var(--primary));
+    --tw-prose-bold: hsl(var(--foreground));
+    --tw-prose-counters: hsl(var(--muted-foreground));
+    --tw-prose-bullets: hsl(var(--border));
+    --tw-prose-hr: hsl(var(--border));
+    --tw-prose-quotes: hsl(var(--foreground));
+    --tw-prose-quote-borders: hsl(var(--primary));
+    --tw-prose-captions: hsl(var(--muted-foreground));
+    --tw-prose-code: hsl(var(--primary));
+    --tw-prose-pre-code: hsl(var(--primary-foreground));
+    --tw-prose-pre-bg: hsl(var(--secondary));
+    --tw-prose-th-borders: hsl(var(--border));
+    --tw-prose-td-borders: hsl(var(--border));
+  }
+}
+
+/* For hiding scrollbar */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@layer components {
+    .btn-fill-hover {
+        @apply relative overflow-hidden z-10 transition-colors duration-300;
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+    .btn-fill-hover::before {
+        content: '';
+        @apply absolute w-full h-full bg-primary top-full left-0 z-[-1] transition-all duration-300 ease-in-out;
+    }
+    .btn-fill-hover:hover::before {
+        @apply top-0;
+    }
+    .btn-fill-hover:hover {
+        @apply text-primary-foreground;
+    }
+
+    /* Style for outline variant */
+    .btn-fill-hover.btn-outline-variant {
+        @apply border-primary text-primary;
+    }
+    .btn-fill-hover.btn-outline-variant:hover {
+        @apply text-primary-foreground border-primary;
+    }
+    
+    /* Style for default variant */
+    .btn-fill-hover.btn-default-variant {
+        @apply bg-primary text-primary-foreground;
+    }
+     .btn-fill-hover.btn-default-variant::before {
+        @apply bg-primary-foreground;
+    }
+    .btn-fill-hover.btn-default-variant:hover {
+        @apply text-primary;
+    }
+}
