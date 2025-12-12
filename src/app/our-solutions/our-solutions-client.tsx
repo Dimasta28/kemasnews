@@ -2,7 +2,11 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
+import { Pencil } from 'lucide-react';
 import { AnimatedSection } from '@/components/animated-section';
+import { useAuth } from '@/hooks/use-auth';
+import { Button } from '@/components/ui/button';
 
 const innovations = [
     {
@@ -31,9 +35,19 @@ const productCategories = [
 ];
 
 export function OurSolutionsClient() {
+  const { user } = useAuth();
+  
   return (
       <main className="flex-grow">
          <section className="relative flex items-center justify-center h-[70vh] bg-black text-white overflow-hidden">
+            {user && (
+                <Button asChild variant="secondary" size="icon" className="absolute top-4 right-4 z-20 h-9 w-9 rounded-full">
+                    <Link href="/admin/settings">
+                        <Pencil className="h-4 w-4" />
+                        <span className="sr-only">Change Hero Image</span>
+                    </Link>
+                </Button>
+            )}
             <div
                 className="absolute inset-0 z-0"
             >
