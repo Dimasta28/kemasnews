@@ -4,7 +4,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ChevronLeft, MessageCircle, User, Calendar, Folder, Terminal } from 'lucide-react';
+import { ChevronLeft, MessageCircle, User, Calendar, Folder, Terminal, Pencil } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
 
@@ -22,6 +22,7 @@ import { SocialShare } from '@/components/social-share';
 import { useAuth } from '@/hooks/use-auth';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { format, parseISO } from 'date-fns';
+import { Button } from '@/components/ui/button';
 
 interface PostClientProps {
     post: Post | null;
@@ -143,6 +144,14 @@ export function PostClient({ post, recentPosts, comments, settings, error }: Pos
                                 animate="visible"
                                 variants={variants}
                             >
+                                {user && (
+                                    <Button asChild variant="secondary" size="icon" className="absolute top-2 right-2 z-10 h-8 w-8 rounded-full">
+                                        <Link href={`/admin/posts/edit/${post.id}`}>
+                                            <Pencil className="h-4 w-4" />
+                                            <span className="sr-only">Change Featured Image</span>
+                                        </Link>
+                                    </Button>
+                                )}
                                 <Image
                                     src={post.featuredImage}
                                     alt={post.title}

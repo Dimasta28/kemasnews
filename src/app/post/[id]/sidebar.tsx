@@ -13,25 +13,38 @@ import { Separator } from '@/components/ui/separator';
 import type { Post } from '@/services/postService';
 import type { BannerSettings } from '@/services/settingsService';
 import { format, parseISO } from 'date-fns';
+import { useAuth } from '@/hooks/use-auth';
+import { Pencil } from 'lucide-react';
 
 export function Sidebar({ recentPosts, banner }: { recentPosts: Post[], banner: BannerSettings }) {
   const router = useRouter();
+  const { user } = useAuth();
 
   return (
     <div className="sticky top-24 space-y-8">
       {/* Campaign/Banner Widget */}
       <Card className="overflow-hidden">
         <CardContent className="p-0">
-          <Link href={banner.buttonLink || '#'} className="block group">
-             <Image
-                src={banner.imageUrl}
-                alt={banner.title}
-                width={600}
-                height={400}
-                className="h-auto w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
-                data-ai-hint="advertisement banner"
-            />
-          </Link>
+          <div className="relative">
+            {user && (
+              <Button asChild variant="secondary" size="icon" className="absolute top-2 right-2 z-10 h-8 w-8 rounded-full">
+                <Link href="/admin/promo-banner">
+                  <Pencil className="h-4 w-4" />
+                  <span className="sr-only">Change Banner Image</span>
+                </Link>
+              </Button>
+            )}
+            <Link href={banner.buttonLink || '#'} className="block group">
+              <Image
+                  src={banner.imageUrl}
+                  alt={banner.title}
+                  width={600}
+                  height={400}
+                  className="h-auto w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+                  data-ai-hint="advertisement banner"
+              />
+            </Link>
+          </div>
            <div className="p-4">
             <h3 className="font-semibold">{banner.title}</h3>
             <p className="text-sm text-muted-foreground mt-1">{banner.description}</p>

@@ -199,6 +199,14 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
                         ))}
                     </div>
                     <div className="relative aspect-square rounded-lg overflow-hidden">
+                        {user && (
+                            <Button asChild variant="secondary" size="icon" className="absolute top-2 right-2 z-10 h-8 w-8 rounded-full">
+                                <Link href="/admin/settings">
+                                    <Pencil className="h-4 w-4" />
+                                    <span className="sr-only">Change Image</span>
+                                </Link>
+                            </Button>
+                        )}
                         <Image 
                             src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/images/Home/kemas-green-jurney.jpg"
                             alt="Sustainable manufacturing"

@@ -39,6 +39,7 @@ const productCategories = [
 
 function ParallaxSection({ children, src, alt, hint }: { children: React.ReactNode, src: string, alt: string, hint: string }) {
     const ref = useRef(null);
+    const { user } = useAuth();
     const { scrollYProgress } = useScroll({
         target: ref,
         offset: ["start end", "end start"]
@@ -47,6 +48,14 @@ function ParallaxSection({ children, src, alt, hint }: { children: React.ReactNo
 
     return (
         <section ref={ref} className="py-16 md:py-24 relative text-primary-foreground overflow-hidden">
+             {user && (
+                <Button asChild variant="secondary" size="icon" className="absolute top-4 right-4 z-20 h-9 w-9 rounded-full">
+                    <Link href="/admin/settings">
+                        <Pencil className="h-4 w-4" />
+                        <span className="sr-only">Change Background Image</span>
+                    </Link>
+                </Button>
+            )}
              <div className="absolute inset-0 z-0">
                 <motion.div className="absolute inset-0" style={{ y }}>
                     <Image
