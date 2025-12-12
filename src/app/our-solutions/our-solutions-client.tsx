@@ -8,7 +8,8 @@ import { AnimatedSection } from '@/components/animated-section';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import { GreenJourneyForm } from '../_components/green-journey-form';
 
 const innovations = [
     {
@@ -78,6 +79,11 @@ function ParallaxSection({ children, src, alt, hint }: { children: React.ReactNo
 
 export function OurSolutionsClient() {
   const { user } = useAuth();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   
   const heroTextContainer = {
     hidden: { opacity: 0 },
@@ -219,6 +225,7 @@ export function OurSolutionsClient() {
                 </div>
             </div>
         </ParallaxSection>
+        {isMounted && <GreenJourneyForm />}
       </main>
   );
 }
