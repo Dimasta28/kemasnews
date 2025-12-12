@@ -4,7 +4,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Pencil } from 'lucide-react';
 import Image from 'next/image';
 import { AnimatedSection } from '@/components/animated-section';
 import { CircularCounter } from '@/components/ui/circular-counter';
@@ -12,6 +12,7 @@ import { GreenJourneyForm } from './_components/green-journey-form';
 import { useState, useEffect } from 'react';
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/hooks/use-auth';
 
 
 interface HomeClientProps {
@@ -51,6 +52,7 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 800], [0, 150]);
   const [isMounted, setIsMounted] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     setIsMounted(true);
@@ -88,6 +90,14 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
   return (
     <main className="flex-grow">
         <section className="relative flex items-center justify-center h-[90vh] bg-black text-white overflow-hidden">
+             {user && (
+                <Button asChild variant="secondary" size="icon" className="absolute top-4 right-4 z-20 h-9 w-9 rounded-full">
+                    <Link href="/admin/settings">
+                        <Pencil className="h-4 w-4" />
+                        <span className="sr-only">Change Hero Image</span>
+                    </Link>
+                </Button>
+            )}
             <motion.div
                 className="absolute inset-0 z-0"
                 style={{ y }}
