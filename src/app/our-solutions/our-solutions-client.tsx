@@ -192,19 +192,21 @@ export function OurSolutionsClient() {
             hint="cosmetic products"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
-                <div className="md:col-start-2 space-y-8">
-                    <div className="relative">
-                        <h2 className="text-4xl md:text-5xl font-extrabold">
-                            DECORATION CAPABILITIES
-                        </h2>
-                        <div className="absolute top-0 -right-4 h-full w-1 bg-primary-foreground transform translate-x-full"></div>
+                <div>
+                     <div className="bg-background text-foreground p-8 md:p-12 shadow-2xl max-w-md">
+                        <div className="space-y-4">
+                            <div className="w-16 h-1 bg-primary"></div>
+                            <h2 className="text-3xl md:text-4xl font-extrabold text-primary">
+                                DECORATION CAPABILITIES:
+                            </h2>
+                            <p className="text-base text-muted-foreground">
+                                Featuring Metal Anodization and Spray Lines
+                                capabilities as an aesthetic added value that
+                                remains environmentally friendly (due to the
+                                lacquer waste capture system).
+                            </p>
+                        </div>
                     </div>
-                    <p className="text-lg">
-                        Featuring Metal Anodization and Spray Lines
-                        capabilities as an aesthetic added value that
-                        remains environmentally friendly (due to the
-                        lacquer waste capture system)
-                    </p>
                 </div>
             </div>
         </ParallaxSection>
