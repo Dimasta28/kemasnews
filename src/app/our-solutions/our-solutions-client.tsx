@@ -51,7 +51,7 @@ function ParallaxSection({ children, src, alt, hint, overlay = true, className, 
     const y = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
 
     return (
-        <section ref={ref} className={cn(`py-16 md:py-24 relative overflow-hidden`, className)}>
+        <section ref={ref} className={cn(`relative overflow-hidden`, className)}>
              {user && settingKey && (
                 <ImageEditDialog
                     settingKey={settingKey}
@@ -108,12 +108,12 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             src={settings.heroImageUrl || "https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Hero%20image/Black%20and%20White%20Modern%20Travel%20Agency%20Presentation.jpg"}
             alt="Lush green pine tree branches"
             hint="pine tree"
-            className="h-[70vh] flex items-center justify-center"
+            className="h-[70vh] flex items-center justify-center py-16 md:py-24"
             overlay={true}
             settingKey="heroImageUrl"
         >
             <motion.div 
-                className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left"
+                className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left md:text-center"
                 variants={heroTextContainer}
                 initial="hidden"
                 animate="show"
@@ -140,6 +140,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             alt="Cosmetic products and raw material"
             hint="cosmetic products material"
             overlay={false}
+            className="py-16 md:py-24"
             settingKey="solutionsProductCategoryImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -171,10 +172,11 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             alt="Cosmetic packaging"
             hint="cosmetic packaging"
             overlay={false}
+            className="py-16 md:py-24"
             settingKey="solutionsGreenInnovationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
-              <div className="bg-background p-6 rounded-lg shadow-2xl md:bg-transparent md:p-0 md:rounded-none md:shadow-none text-left">
+              <div className="bg-background p-6 rounded-lg shadow-2xl md:bg-transparent md:p-0 md:rounded-none md-shadow-none text-left">
                 <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
                     BASED ON<br />
                     GREEN INNOVATION
@@ -201,6 +203,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             alt="Decoration capabilities"
             hint="cosmetic products"
             overlay={false}
+            className="py-16 md:py-24"
             settingKey="solutionsDecorationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
