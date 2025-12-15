@@ -4,7 +4,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Pencil } from 'lucide-react';
-import { AnimatedSection } from '@/components/animated-section';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -123,7 +122,7 @@ export function OurSolutionsClient() {
                     data-ai-hint="pine tree"
                 />
             </motion.div>
-            <motion.div
+            <motion.div 
                 className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left"
                 variants={heroTextContainer}
                 initial="hidden"
@@ -154,7 +153,7 @@ export function OurSolutionsClient() {
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="md:col-start-2">
                     <div className="space-y-6">
-                        <h2 className="text-3xl md:text-4xl font-extrabold relative pb-2">
+                        <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4">
                             PRODUCTS BY<br />CATEGORY
                             <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary-foreground"></span>
                         </h2>
@@ -178,13 +177,11 @@ export function OurSolutionsClient() {
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
               <div className="space-y-8">
-                <div className="relative">
-                    <h2 className="text-4xl md:text-5xl font-extrabold text-primary-foreground">
-                        BASED ON<br />
-                        GREEN INNOVATION
-                    </h2>
-                    <div className="absolute top-0 -left-4 h-full w-1 bg-primary-foreground transform -translate-x-full"></div>
-                </div>
+                <h2 className="text-4xl md:text-5xl font-extrabold text-primary-foreground relative pb-4">
+                    BASED ON<br />
+                    GREEN INNOVATION
+                    <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary-foreground"></span>
+                </h2>
 
                 <ul className="space-y-6 text-lg text-primary-foreground/80">
                     {innovations.map((item, index) => (
@@ -211,9 +208,9 @@ export function OurSolutionsClient() {
                 <div>
                      <div className="bg-background text-foreground p-8 md:p-12 shadow-2xl max-w-md">
                         <div className="space-y-4">
-                            <div className="w-16 h-1 bg-primary"></div>
-                            <h2 className="text-3xl md:text-4xl font-extrabold text-primary">
+                            <h2 className="text-3xl md:text-4xl font-extrabold text-primary relative pb-4">
                                 DECORATION CAPABILITIES:
+                                <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary"></span>
                             </h2>
                             <p className="text-base text-muted-foreground">
                                 Featuring Metal Anodization and Spray Lines
