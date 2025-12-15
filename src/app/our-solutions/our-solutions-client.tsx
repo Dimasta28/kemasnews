@@ -42,17 +42,17 @@ const productCategories = [
 
 const sectionAnimation = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.6, 0.05, -0.01, 0.9] } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } }
 };
 
 const slideInLeft = {
     hidden: { opacity: 0, x: -50 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.6, 0.05, -0.01, 0.9] } }
+    visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeOut" } }
 };
 
 const slideInRight = {
     hidden: { opacity: 0, x: 50 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.6, 0.05, -0.01, 0.9] } }
+    visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeOut" } }
 };
 
 
@@ -133,7 +133,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
                 initial="hidden"
                 animate="show"
             >
-                <motion.h1 variants={heroTextItem} className="text-3xl md:text-4xl font-extrabold tracking-tight text-white">FROM PRODUCTS TO SOLUTIONS</motion.h1>
+                <motion.h1 variants={heroTextItem} className="text-3xl md:text-4xl font-extrabold tracking-tight text-white md:text-center">FROM PRODUCTS TO SOLUTIONS</motion.h1>
             </motion.div>
         </ParallaxSection>
 
@@ -161,7 +161,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             alt="Cosmetic products and raw material"
             hint="cosmetic products material"
             overlay={false}
-            className="py-20 md:py-40"
+            className="py-32 md:py-60"
             settingKey="solutionsProductCategoryImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -199,7 +199,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             alt="Cosmetic packaging"
             hint="cosmetic packaging"
             overlay={false}
-            className="py-20 md:py-40"
+            className="py-32 md:py-60"
             settingKey="solutionsGreenInnovationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
