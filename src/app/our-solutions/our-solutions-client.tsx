@@ -125,7 +125,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         <section className="relative py-16 md:py-24 bg-primary text-primary-foreground">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
-              <p className="mt-4 text-lg">
+              <p className="mt-4 text-lg md:text-center">
                 We are taking serious measures to reduce carbon emissions and petrochemical packaging, providing better solutions for Beauty Brands and the planet. In accordance with the Kyoto Protocol in reducing greenhouse effect and in order to help preserve the environment and the sustainability of the habitat, we at KEMAS have taken serious measures towards reducing carbon emission, reducing petrochemical packaging while providing the best solutions to the Beauty Brands. The measures we took is not just in the greener packaging solutions but also a better manufacturing standard that contributes to less emission being emitted to the environment. We think that mother earth is under threat as well as the future generation.
               </p>
               <p className="mt-4 text-lg font-bold text-center">
@@ -204,7 +204,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             settingKey="solutionsDecorationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
-                <div className="bg-background p-6 rounded-lg shadow-2xl text-left md:bg-background md:p-6 md:rounded-lg md:shadow-2xl">
+                <div className="bg-background p-6 rounded-lg shadow-xl md:bg-background md:p-6 md:rounded-lg md:shadow-xl">
                      <div className="max-w-md">
                         <div className="space-y-4">
                             <h2 className="text-3xl md:text-4xl font-extrabold text-primary relative pb-4">
