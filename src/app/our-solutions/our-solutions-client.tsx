@@ -155,7 +155,7 @@ export function OurSolutionsClient() {
                 <div className="md:col-start-2">
                     <div className="space-y-6">
                         <h2 className="text-3xl md:text-4xl font-extrabold relative pb-2">
-                            PRODUCTS BY CATEGORY
+                            PRODUCTS BY<br />CATEGORY
                             <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary-foreground"></span>
                         </h2>
                         <div className="space-y-4">
