@@ -58,8 +58,8 @@ function ParallaxSection({ children, src, alt, hint, overlay = true, className, 
                     triggerClassName="absolute top-4 right-4 z-20 h-9 w-9 rounded-full"
                 />
             )}
-             <div className="absolute inset-0 z-0">
-                <motion.div className="absolute -inset-y-1/4 inset-x-0" style={{ y }}>
+             <div className="absolute inset-0 z-0 overflow-hidden">
+                <motion.div className="absolute -inset-y-1/4 -inset-x-2" style={{ y }}>
                     <Image
                         src={src}
                         alt={alt}
@@ -144,7 +144,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         >
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="md:col-start-2">
-                    <div className="space-y-6 md:text-right bg-background/90 p-6 rounded-lg md:bg-transparent md:p-0 md:rounded-none">
+                    <div className="space-y-6 bg-background/90 p-6 rounded-lg md:bg-transparent md:p-0 md:rounded-none md:text-right">
                         <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
                            PRODUCTS BY
                             <br />
@@ -174,7 +174,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
               <div className="space-y-8 bg-background/90 p-6 rounded-lg md:bg-transparent md:p-0 md:rounded-none">
-                <h2 className="text-4xl md:text-5xl font-extrabold relative pb-4 text-primary">
+                <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
                     BASED ON<br />
                     GREEN INNOVATION
                     <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary"></span>
@@ -205,7 +205,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
                 <div>
-                     <div className="bg-background text-foreground p-8 md:p-12 shadow-2xl max-w-md">
+                     <div className="bg-background/90 p-6 rounded-lg md:bg-transparent md:p-0 md:rounded-none md:shadow-none text-foreground shadow-2xl max-w-md">
                         <div className="space-y-4">
                             <h2 className="text-3xl md:text-4xl font-extrabold text-primary relative pb-4">
                                 DECORATION CAPABILITIES:
