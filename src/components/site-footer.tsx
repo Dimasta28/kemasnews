@@ -30,9 +30,6 @@ export function SiteFooter({ settings }: { settings: FrontendSettings }) {
              <Link href="/privacy-policy" className="hover:opacity-80 transition-opacity">
               Privacy Policy
             </Link>
-            <Link href="/login" className="hover:opacity-80 transition-opacity">
-              Login
-            </Link>
             <Link href="/sitemap.xml" className="hover:opacity-80 transition-opacity">
               Sitemap
             </Link>
