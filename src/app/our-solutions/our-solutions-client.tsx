@@ -59,7 +59,7 @@ function ParallaxSection({ children, src, alt, hint, overlay = true, className, 
                 />
             )}
              <div className="absolute inset-0 z-0">
-                <motion.div className="absolute inset-0" style={{ y }}>
+                <motion.div className="absolute -inset-y-1/4 inset-x-0" style={{ y }}>
                     <Image
                         src={src}
                         alt={alt}
@@ -144,8 +144,8 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         >
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="md:col-start-2">
-                    <div className="space-y-6 md:text-right bg-background/90 md:bg-transparent p-6 md:p-0 rounded-lg md:rounded-none">
-                        <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4">
+                    <div className="space-y-6 md:text-right bg-background/90 p-6 rounded-lg md:bg-transparent md:p-0 md:rounded-none">
+                        <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
                            PRODUCTS BY
                             <br />
                              CATEGORY
@@ -173,8 +173,8 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             settingKey="solutionsGreenInnovationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
-              <div className="space-y-8 bg-background/90 md:bg-transparent p-6 md:p-0 rounded-lg md:rounded-none">
-                <h2 className="text-4xl md:text-5xl font-extrabold relative pb-4">
+              <div className="space-y-8 bg-background/90 p-6 rounded-lg md:bg-transparent md:p-0 md:rounded-none">
+                <h2 className="text-4xl md:text-5xl font-extrabold relative pb-4 text-primary">
                     BASED ON<br />
                     GREEN INNOVATION
                     <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary"></span>
