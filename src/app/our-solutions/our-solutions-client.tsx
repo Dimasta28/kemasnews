@@ -108,8 +108,8 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             src={settings.heroImageUrl || "https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Hero%20image/Black%20and%20White%20Modern%20Travel%20Agency%20Presentation.jpg"}
             alt="Lush green pine tree branches"
             hint="pine tree"
-            className="h-[70vh] text-primary-foreground flex items-center justify-center"
-            overlay={true}
+            className="h-[70vh] flex items-center justify-center"
+            overlay={false}
             settingKey="heroImageUrl"
         >
             <motion.div 
@@ -118,7 +118,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
                 initial="hidden"
                 animate="show"
             >
-                <motion.h1 variants={heroTextItem} className="text-4xl md:text-5xl font-extrabold tracking-tight">FROM PRODUCTS TO SOLUTIONS</motion.h1>
+                <motion.h1 variants={heroTextItem} className="text-3xl md:text-4xl font-extrabold tracking-tight text-primary">FROM PRODUCTS TO SOLUTIONS</motion.h1>
             </motion.div>
         </ParallaxSection>
 
@@ -144,7 +144,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         >
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="md:col-start-2">
-                    <div className="bg-background/90 p-6 rounded-lg shadow-2xl md:bg-transparent md:p-0 md:rounded-none md:shadow-none">
+                    <div className="bg-background/90 p-6 rounded-lg shadow-2xl md:bg-transparent md:p-0 md:rounded-none md:shadow-none md:text-right">
                         <div className="md:text-right">
                             <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
                                 PRODUCTS BY
@@ -205,7 +205,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
                 <div>
-                     <div className="bg-background/90 p-6 rounded-lg shadow-2xl md:bg-transparent md:p-0 md:rounded-none md:shadow-none max-w-md">
+                     <div className="bg-background/90 md:bg-background p-6 rounded-lg shadow-2xl max-w-md">
                         <div className="space-y-4">
                             <h2 className="text-3xl md:text-4xl font-extrabold text-primary relative pb-4">
                                 DECORATION CAPABILITIES:
