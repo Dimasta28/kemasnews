@@ -145,7 +145,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="md:col-start-2">
                     <div className="bg-background/90 p-6 rounded-lg shadow-2xl md:bg-transparent md:p-0 md:rounded-none md:shadow-none md:text-right">
-                        <div className="md:text-right">
+                        <div className="text-left md:text-right">
                             <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
                                 PRODUCTS BY
                                 <br />
@@ -174,7 +174,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             settingKey="solutionsGreenInnovationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
-              <div className="bg-background/90 p-6 rounded-lg shadow-2xl md:bg-transparent md:p-0 md:rounded-none md:shadow-none">
+              <div className="bg-background/90 p-6 rounded-lg shadow-2xl md:bg-transparent md:p-0 md:rounded-none md:shadow-none text-left">
                 <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
                     BASED ON<br />
                     GREEN INNOVATION
@@ -205,7 +205,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
                 <div>
-                     <div className="bg-background/90 md:bg-background p-6 rounded-lg shadow-2xl max-w-md">
+                     <div className="bg-background p-6 rounded-lg shadow-2xl max-w-md text-left">
                         <div className="space-y-4">
                             <h2 className="text-3xl md:text-4xl font-extrabold text-primary relative pb-4">
                                 DECORATION CAPABILITIES:
@@ -226,3 +226,5 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
       </main>
   );
 }
+
+    
