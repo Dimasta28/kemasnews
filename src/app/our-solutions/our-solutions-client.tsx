@@ -144,13 +144,13 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         >
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="md:col-start-2">
-                    <div className="bg-background/90 p-6 rounded-lg shadow-2xl md:bg-transparent md:p-0 md:rounded-none md:shadow-none md:text-right">
+                    <div className="bg-background p-6 rounded-lg shadow-2xl md:bg-transparent md:p-0 md:rounded-none md:shadow-none">
                         <div className="text-left md:text-right">
                             <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
                                 PRODUCTS BY
                                 <br />
                                  CATEGORY
-                                <span className="absolute bottom-0 right-0 w-24 h-1 bg-primary"></span>
+                                <span className="absolute bottom-0 left-0 md:left-auto md:right-0 w-24 h-1 bg-primary"></span>
                             </h2>
                             <div className="mt-8 space-y-4">
                                 {productCategories.map((category) => (
@@ -174,7 +174,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             settingKey="solutionsGreenInnovationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
-              <div className="bg-background/90 p-6 rounded-lg shadow-2xl md:bg-transparent md:p-0 md:rounded-none md:shadow-none text-left">
+              <div className="bg-background p-6 rounded-lg shadow-2xl md:bg-transparent md:p-0 md:rounded-none md:shadow-none text-left">
                 <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
                     BASED ON<br />
                     GREEN INNOVATION
@@ -205,7 +205,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
                 <div>
-                     <div className="bg-background p-6 rounded-lg shadow-2xl max-w-md text-left">
+                     <div className="md:bg-background p-6 rounded-lg md:shadow-2xl max-w-md text-left">
                         <div className="space-y-4">
                             <h2 className="text-3xl md:text-4xl font-extrabold text-primary relative pb-4">
                                 DECORATION CAPABILITIES:
@@ -226,5 +226,3 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
       </main>
   );
 }
-
-    
