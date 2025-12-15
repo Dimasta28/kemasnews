@@ -144,12 +144,12 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         >
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="md:col-start-2">
-                    <div className="space-y-6">
+                    <div className="space-y-6 text-right">
                         <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4">
                            PRODUCTS BY
                             <br />
                              CATEGORY
-                            <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary"></span>
+                            <span className="absolute bottom-0 right-0 w-24 h-1 bg-primary"></span>
                         </h2>
                         <div className="space-y-4 text-foreground">
                             {productCategories.map((category) => (
