@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import Image from 'next/image';
@@ -134,22 +135,23 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         </section>
 
         <ParallaxSection
-            src="https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            src={settings.solutionsProductCategoryImageUrl || "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"}
             alt="Cosmetic products and raw material"
             hint="cosmetic products material"
             overlay={false}
-            className="text-foreground"
+            className="text-primary"
+            settingKey="solutionsProductCategoryImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="md:col-start-2">
                     <div className="space-y-6">
-                        <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
+                        <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4">
                            PRODUCTS BY
                             <br />
                              CATEGORY
                             <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary"></span>
                         </h2>
-                        <div className="space-y-4">
+                        <div className="space-y-4 text-foreground">
                             {productCategories.map((category) => (
                                 <div key={category.name}>
                                     <h3 className="text-2xl font-bold">{category.name}</h3>
@@ -163,15 +165,16 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         </ParallaxSection>
 
         <ParallaxSection
-            src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%_20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%203.jpg"
+            src={settings.solutionsGreenInnovationImageUrl || "https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%_20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%203.jpg"}
             alt="Cosmetic packaging"
             hint="cosmetic packaging"
             overlay={false}
-            className="text-foreground"
+            className="text-primary"
+            settingKey="solutionsGreenInnovationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
               <div className="space-y-8">
-                <h2 className="text-4xl md:text-5xl font-extrabold text-primary relative pb-4">
+                <h2 className="text-4xl md:text-5xl font-extrabold relative pb-4">
                     BASED ON<br />
                     GREEN INNOVATION
                     <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary"></span>
@@ -193,11 +196,12 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         </ParallaxSection>
 
         <ParallaxSection
-            src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%_20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%205.jpg"
+            src={settings.solutionsDecorationImageUrl || "https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%_20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%205.jpg"}
             alt="Decoration capabilities"
             hint="cosmetic products"
             overlay={false}
-            className="text-foreground"
+            className="text-primary"
+            settingKey="solutionsDecorationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
                 <div>

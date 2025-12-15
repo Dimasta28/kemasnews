@@ -39,6 +39,10 @@ export interface FrontendSettings {
   heroImageUrl: string;
   heroPostIds: string[];
   footer: FooterSettings;
+  solutionsProductCategoryImageUrl: string;
+  solutionsGreenInnovationImageUrl: string;
+
+  solutionsDecorationImageUrl: string;
 }
 
 const SETTINGS_DOC_ID = 'frontend';
@@ -48,7 +52,7 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
   const settingsDocRef = doc(db, 'settings', SETTINGS_DOC_ID);
   const docSnap = await getDoc(settingsDocRef);
 
-  const defaults: Omit<FrontendSettings, 'privacyPolicy' | 'ogTitle' | 'ogDescription' | 'ogImageUrl' | 'heroPostIds' | 'footer' | 'dropdownLinks' | 'lightModeLogoUrl' | 'darkModeLogoUrl' | 'heroImageUrl'> & { heroImageUrl: string, footer: FooterSettings, dropdownLinks: NavigationLink[], lightModeLogoUrl: string, darkModeLogoUrl: string, privacyPolicy: string, ogTitle: string, ogDescription: string, ogImageUrl: string, heroPostIds: string[] } = {
+  const defaults: Omit<FrontendSettings, 'privacyPolicy' | 'ogTitle' | 'ogDescription' | 'ogImageUrl' | 'heroPostIds' | 'footer' | 'dropdownLinks' | 'lightModeLogoUrl' | 'darkModeLogoUrl' | 'heroImageUrl' | 'solutionsProductCategoryImageUrl' | 'solutionsGreenInnovationImageUrl' | 'solutionsDecorationImageUrl'> & { heroImageUrl: string, footer: FooterSettings, dropdownLinks: NavigationLink[], lightModeLogoUrl: string, darkModeLogoUrl: string, privacyPolicy: string, ogTitle: string, ogDescription: string, ogImageUrl: string, heroPostIds: string[], solutionsProductCategoryImageUrl: string, solutionsGreenInnovationImageUrl: string, solutionsDecorationImageUrl: string } = {
     lightModeLogoUrl: 'https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png',
     darkModeLogoUrl: 'https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png',
     heroImageUrl: 'https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%202.jpg',
@@ -89,7 +93,10 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
       instagramUrl: '#',
       linkedinUrl: '#',
       footerLogoUrl: 'https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png',
-    }
+    },
+    solutionsProductCategoryImageUrl: "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    solutionsGreenInnovationImageUrl: "https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%_20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%203.jpg",
+    solutionsDecorationImageUrl: "https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%_20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%205.jpg",
   };
 
   if (docSnap.exists()) {
@@ -119,6 +126,9 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
             ...defaults.footer,
             ...(data.footer || {}),
         },
+        solutionsProductCategoryImageUrl: data.solutionsProductCategoryImageUrl || defaults.solutionsProductCategoryImageUrl,
+        solutionsGreenInnovationImageUrl: data.solutionsGreenInnovationImageUrl || defaults.solutionsGreenInnovationImageUrl,
+        solutionsDecorationImageUrl: data.solutionsDecorationImageUrl || defaults.solutionsDecorationImageUrl,
     };
     return settings;
   } else {
