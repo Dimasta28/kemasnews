@@ -12,6 +12,7 @@ import { useRef, useState, useEffect } from 'react';
 import { GreenJourneyForm } from '../_components/green-journey-form';
 import { ImageEditDialog } from '@/components/image-edit-dialog';
 import { getFrontendSettings, type FrontendSettings } from '@/services/settingsService';
+import { cn } from '@/lib/utils';
 
 const innovations = [
     {
@@ -50,7 +51,7 @@ function ParallaxSection({ children, src, alt, hint, overlay = true, className, 
     const y = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
 
     return (
-        <section ref={ref} className={`py-16 md:py-24 relative overflow-hidden ${className}`}>
+        <section ref={ref} className={cn(`py-16 md:py-24 relative overflow-hidden`, className)}>
              {user && settingKey && (
                 <ImageEditDialog
                     settingKey={settingKey}
@@ -139,23 +140,22 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             alt="Cosmetic products and raw material"
             hint="cosmetic products material"
             overlay={false}
-            className="text-primary"
             settingKey="solutionsProductCategoryImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="md:col-start-2">
-                    <div className="bg-background/90 p-6 rounded-lg md:bg-transparent md:p-0 md:rounded-none md:shadow-none shadow-2xl">
+                    <div className="bg-background/90 p-6 rounded-lg shadow-2xl md:bg-transparent md:p-0 md:rounded-none md:shadow-none">
                         <div className="md:text-right">
-                            <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4">
-                               PRODUCTS BY
+                            <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
+                                PRODUCTS BY
                                 <br />
                                  CATEGORY
                                 <span className="absolute bottom-0 right-0 w-24 h-1 bg-primary"></span>
                             </h2>
-                            <div className="space-y-4">
+                            <div className="mt-8 space-y-4">
                                 {productCategories.map((category) => (
                                     <div key={category.name}>
-                                        <h3 className="text-2xl font-bold text-primary">{category.name}</h3>
+                                        <h3 className="text-2xl font-bold text-foreground">{category.name}</h3>
                                         <p className="text-muted-foreground">{category.items}</p>
                                     </div>
                                 ))}
@@ -171,18 +171,17 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             alt="Cosmetic packaging"
             hint="cosmetic packaging"
             overlay={false}
-            className="text-primary"
             settingKey="solutionsGreenInnovationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
-              <div className="bg-background/90 p-6 rounded-lg md:bg-transparent md:p-0 md:rounded-none md:shadow-none shadow-2xl">
+              <div className="bg-background/90 p-6 rounded-lg shadow-2xl md:bg-transparent md:p-0 md:rounded-none md:shadow-none">
                 <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
                     BASED ON<br />
                     GREEN INNOVATION
                     <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary"></span>
                 </h2>
 
-                <ul className="space-y-6 text-lg text-muted-foreground">
+                <ul className="mt-8 space-y-6 text-lg text-muted-foreground">
                     {innovations.map((item, index) => (
                         <li key={index} className="flex">
                             <span className="text-primary font-bold mr-2">•</span>
@@ -202,12 +201,11 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             alt="Decoration capabilities"
             hint="cosmetic products"
             overlay={false}
-            className="text-primary"
             settingKey="solutionsDecorationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
                 <div>
-                     <div className="bg-background/90 p-6 rounded-lg md:bg-transparent md:p-0 md:rounded-none md:shadow-none shadow-2xl max-w-md">
+                     <div className="bg-background/90 p-6 rounded-lg shadow-2xl md:bg-transparent md:p-0 md:rounded-none md:shadow-none max-w-md">
                         <div className="space-y-4">
                             <h2 className="text-3xl md:text-4xl font-extrabold text-primary relative pb-4">
                                 DECORATION CAPABILITIES:
@@ -228,5 +226,3 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
       </main>
   );
 }
-
-    
