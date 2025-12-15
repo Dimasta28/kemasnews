@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/use-auth';
+import { ImageEditDialog } from '@/components/image-edit-dialog';
 
 
 interface HomeClientProps {
@@ -91,12 +92,11 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
     <main className="flex-grow">
         <section className="relative flex items-center justify-center h-[90vh] bg-black text-white overflow-hidden">
              {user && (
-                <Button asChild variant="secondary" size="icon" className="absolute top-4 right-4 z-20 h-9 w-9 rounded-full">
-                    <Link href="/admin/settings">
-                        <Pencil className="h-4 w-4" />
-                        <span className="sr-only">Change Hero Image</span>
-                    </Link>
-                </Button>
+                <ImageEditDialog
+                    settingKey="heroImageUrl"
+                    currentImageUrl={heroImageUrl}
+                    triggerClassName="absolute top-4 right-4 z-20 h-9 w-9 rounded-full"
+                />
             )}
             <motion.div
                 className="absolute inset-0 z-0"

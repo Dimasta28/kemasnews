@@ -62,7 +62,7 @@ export default function SettingsPage() {
   }, [toast]);
 
   const handleInputChange = (
-    field: keyof Omit<FrontendSettings, 'homepageBanner' | 'sidebarBanner' | 'dropdownLinks' | 'privacyPolicy' | 'heroPostIds' | 'footer'>,
+    field: keyof FrontendSettings,
     value: string
   ) => {
     setSettings((prev) => ({ ...prev, [field]: value }));

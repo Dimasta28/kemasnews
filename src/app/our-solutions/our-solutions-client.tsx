@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import { GreenJourneyForm } from '../_components/green-journey-form';
+import { ImageEditDialog } from '@/components/image-edit-dialog';
 
 const innovations = [
     {
@@ -37,7 +38,7 @@ const productCategories = [
 ];
 
 
-function ParallaxSection({ children, src, alt, hint, overlay = true, className }: { children: React.ReactNode, src: string, alt: string, hint: string, overlay?: boolean, className?: string }) {
+function ParallaxSection({ children, src, alt, hint, overlay = true, className, settingKey }: { children: React.ReactNode, src: string, alt: string, hint: string, overlay?: boolean, className?: string, settingKey?: any }) {
     const ref = useRef(null);
     const { user } = useAuth();
     const { scrollYProgress } = useScroll({
@@ -48,13 +49,12 @@ function ParallaxSection({ children, src, alt, hint, overlay = true, className }
 
     return (
         <section ref={ref} className={`py-16 md:py-24 relative overflow-hidden ${className}`}>
-             {user && (
-                <Button asChild variant="secondary" size="icon" className="absolute top-4 right-4 z-20 h-9 w-9 rounded-full">
-                    <Link href="/admin/settings">
-                        <Pencil className="h-4 w-4" />
-                        <span className="sr-only">Change Background Image</span>
-                    </Link>
-                </Button>
+             {user && settingKey && (
+                <ImageEditDialog
+                    settingKey={settingKey}
+                    currentImageUrl={src}
+                    triggerClassName="absolute top-4 right-4 z-20 h-9 w-9 rounded-full"
+                />
             )}
              <div className="absolute inset-0 z-0">
                 <motion.div className="absolute inset-0" style={{ y }}>
@@ -156,7 +156,7 @@ export function OurSolutionsClient() {
                 <div className="md:col-start-2">
                     <div className="space-y-6">
                         <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
-                            PRODUCTS BY
+                           PRODUCTS BY
                             <br />
                              CATEGORY
                             <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary"></span>
@@ -175,7 +175,7 @@ export function OurSolutionsClient() {
         </ParallaxSection>
 
         <ParallaxSection
-            src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%203.jpg"
+            src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%_20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%203.jpg"
             alt="Cosmetic packaging"
             hint="cosmetic packaging"
             overlay={false}
