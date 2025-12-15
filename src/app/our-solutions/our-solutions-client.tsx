@@ -40,6 +40,21 @@ const productCategories = [
     }
 ];
 
+const sectionAnimation = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.6, 0.05, -0.01, 0.9] } }
+};
+
+const slideInLeft = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.6, 0.05, -0.01, 0.9] } }
+};
+
+const slideInRight = {
+    hidden: { opacity: 0, x: 50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.6, 0.05, -0.01, 0.9] } }
+};
+
 
 function ParallaxSection({ children, src, alt, hint, overlay = true, className, settingKey }: { children: React.ReactNode, src: string, alt: string, hint: string, overlay?: boolean, className?: string, settingKey?: any }) {
     const ref = useRef(null);
@@ -122,7 +137,13 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             </motion.div>
         </ParallaxSection>
 
-        <section className="relative py-16 md:py-24 bg-primary text-primary-foreground">
+        <motion.section 
+            className="relative py-16 md:py-24 bg-primary text-primary-foreground"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={sectionAnimation}
+        >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
               <p className="mt-4 text-lg text-left md:text-center">
@@ -133,20 +154,26 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
               </p>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         <ParallaxSection
             src={settings.solutionsProductCategoryImageUrl || "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"}
             alt="Cosmetic products and raw material"
             hint="cosmetic products material"
             overlay={false}
-            className="py-20 md:py-32"
+            className="py-20 md:py-40"
             settingKey="solutionsProductCategoryImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="md:col-start-2">
-                    <div className="bg-background p-6 rounded-lg text-left md:bg-transparent md:p-0 md:rounded-none">
-                        <div className="md:text-right">
+                    <motion.div 
+                        className="bg-background/80 backdrop-blur-sm p-6 rounded-lg text-left md:bg-transparent md:p-0 md:rounded-none"
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.5 }}
+                        variants={slideInRight}
+                    >
+                        <div className="text-left md:text-right">
                             <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
                                 PRODUCTS BY
                                 <br />
@@ -162,7 +189,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
                                 ))}
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </ParallaxSection>
@@ -172,11 +199,17 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             alt="Cosmetic packaging"
             hint="cosmetic packaging"
             overlay={false}
-            className="py-20 md:py-32"
+            className="py-20 md:py-40"
             settingKey="solutionsGreenInnovationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
-              <div className="bg-background p-6 rounded-lg text-left md:bg-transparent md:p-0 md:rounded-none">
+              <motion.div 
+                className="bg-background/80 backdrop-blur-sm p-6 rounded-lg text-left md:bg-transparent md:p-0 md:rounded-none"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.5 }}
+                variants={slideInLeft}
+              >
                 <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
                     BASED ON<br />
                     GREEN INNOVATION
@@ -191,7 +224,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
                         </li>
                     ))}
                 </ul>
-              </div>
+              </motion.div>
               <div>
                 {/* This div is intentionally left empty to push the text content to the left side on medium screens and up */}
               </div>
@@ -207,7 +240,13 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             settingKey="solutionsDecorationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
-                <div className="bg-background p-6 rounded-lg text-left">
+                <motion.div 
+                    className="bg-background p-6 rounded-lg text-left"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.5 }}
+                    variants={slideInLeft}
+                >
                      <div className="max-w-md">
                         <div className="space-y-4">
                             <h2 className="text-3xl md:text-4xl font-extrabold text-primary relative pb-4">
@@ -222,7 +261,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
                             </p>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </ParallaxSection>
         {isMounted && <GreenJourneyForm />}
