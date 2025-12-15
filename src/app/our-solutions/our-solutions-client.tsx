@@ -181,11 +181,11 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
                     <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary"></span>
                 </h2>
 
-                <ul className="mt-8 space-y-6 text-lg text-muted-foreground">
+                <ul className="mt-8 space-y-6 text-lg">
                     {innovations.map((item, index) => (
                         <li key={index} className="flex">
                             <span className="text-primary font-bold mr-2">•</span>
-                            <span><strong className="text-foreground">{item.title}:</strong> "{item.description}"</span>
+                            <span><strong className="text-foreground">{item.title}:</strong> <span className="text-muted-foreground">"{item.description}"</span></span>
                         </li>
                     ))}
                 </ul>
@@ -205,7 +205,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
                 <div>
-                     <div className="md:bg-background p-6 rounded-lg md:shadow-2xl max-w-md text-left">
+                     <div className="bg-background p-6 rounded-lg shadow-2xl md:bg-background md:p-6 md:rounded-lg md:shadow-2xl max-w-md text-left">
                         <div className="space-y-4">
                             <h2 className="text-3xl md:text-4xl font-extrabold text-primary relative pb-4">
                                 DECORATION CAPABILITIES:
