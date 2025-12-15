@@ -144,7 +144,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         >
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="md:col-start-2">
-                    <div className="space-y-6 text-right">
+                    <div className="space-y-6 md:text-right bg-background/90 md:bg-transparent p-6 md:p-0 rounded-lg md:rounded-none">
                         <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4">
                            PRODUCTS BY
                             <br />
@@ -173,7 +173,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             settingKey="solutionsGreenInnovationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
-              <div className="space-y-8">
+              <div className="space-y-8 bg-background/90 md:bg-transparent p-6 md:p-0 rounded-lg md:rounded-none">
                 <h2 className="text-4xl md:text-5xl font-extrabold relative pb-4">
                     BASED ON<br />
                     GREEN INNOVATION
