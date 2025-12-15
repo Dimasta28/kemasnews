@@ -59,7 +59,7 @@ function ParallaxSection({ children, src, alt, hint, overlay = true, className, 
                 />
             )}
              <div className="absolute inset-0 z-0 overflow-hidden">
-                <motion.div className="absolute -inset-y-1/4 -inset-x-2" style={{ y }}>
+                <motion.div className="absolute -inset-y-[25%] -inset-x-2" style={{ y }}>
                     <Image
                         src={src}
                         alt={alt}
@@ -117,7 +117,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
                 initial="hidden"
                 animate="show"
             >
-                <motion.h1 variants={heroTextItem} className="text-5xl md:text-7xl font-extrabold tracking-tight">FROM PRODUCTS TO SOLUTIONS</motion.h1>
+                <motion.h1 variants={heroTextItem} className="text-4xl md:text-5xl font-extrabold tracking-tight">FROM PRODUCTS TO SOLUTIONS</motion.h1>
             </motion.div>
         </ParallaxSection>
 
@@ -143,13 +143,13 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             settingKey="solutionsProductCategoryImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div className="md:col-start-2">
-                    <div className="space-y-6 bg-background/90 p-6 rounded-lg md:bg-transparent md:p-0 md:rounded-none md:text-right">
+                <div className="md:col-start-1">
+                    <div className="bg-background/90 p-6 rounded-lg md:bg-transparent md:p-0 md:rounded-none md:shadow-none text-foreground shadow-2xl">
                         <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
                            PRODUCTS BY
                             <br />
                              CATEGORY
-                            <span className="absolute bottom-0 right-0 w-24 h-1 bg-primary"></span>
+                            <span className="absolute bottom-0 left-0 w-24 h-1 bg-primary"></span>
                         </h2>
                         <div className="space-y-4 text-foreground">
                             {productCategories.map((category) => (
@@ -173,7 +173,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             settingKey="solutionsGreenInnovationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
-              <div className="space-y-8 bg-background/90 p-6 rounded-lg md:bg-transparent md:p-0 md:rounded-none">
+              <div className="bg-background/90 p-6 rounded-lg md:bg-transparent md:p-0 md:rounded-none md:shadow-none text-foreground shadow-2xl">
                 <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
                     BASED ON<br />
                     GREEN INNOVATION
