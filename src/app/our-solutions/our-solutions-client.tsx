@@ -176,7 +176,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             settingKey="solutionsGreenInnovationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
-              <div className="bg-background p-6 rounded-lg shadow-2xl md:bg-transparent md:p-0 md:rounded-none md-shadow-none text-left">
+              <div className="bg-background p-6 rounded-lg shadow-2xl text-left md:bg-transparent md:p-0 md:shadow-none md:rounded-none">
                 <h2 className="text-3xl md:text-4xl font-extrabold relative pb-4 text-primary">
                     BASED ON<br />
                     GREEN INNOVATION
@@ -207,7 +207,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             settingKey="solutionsDecorationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
-                <div className="bg-background p-6 rounded-lg shadow-xl md:bg-background md:p-6 md:rounded-lg md:shadow-xl">
+                <div className="bg-background p-6 rounded-lg shadow-xl md:bg-background md:p-6 md:rounded-lg md:shadow-xl text-left">
                      <div className="max-w-md">
                         <div className="space-y-4">
                             <h2 className="text-3xl md:text-4xl font-extrabold text-primary relative pb-4">
