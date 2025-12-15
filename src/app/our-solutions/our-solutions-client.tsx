@@ -10,6 +10,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import { GreenJourneyForm } from '../_components/green-journey-form';
 import { ImageEditDialog } from '@/components/image-edit-dialog';
+import { getFrontendSettings, type FrontendSettings } from '@/services/settingsService';
 
 const innovations = [
     {
@@ -76,7 +77,7 @@ function ParallaxSection({ children, src, alt, hint, overlay = true, className, 
 }
 
 
-export function OurSolutionsClient() {
+export function OurSolutionsClient({ settings }: { settings: FrontendSettings }) {
   const { user } = useAuth();
   const [isMounted, setIsMounted] = useState(false);
 
@@ -101,27 +102,14 @@ export function OurSolutionsClient() {
 
   return (
       <main className="flex-grow">
-         <section className="relative flex items-center justify-center h-[70vh] bg-black text-white overflow-hidden">
-            {user && (
-                <Button asChild variant="secondary" size="icon" className="absolute top-4 right-4 z-20 h-9 w-9 rounded-full">
-                    <Link href="/admin/settings">
-                        <Pencil className="h-4 w-4" />
-                        <span className="sr-only">Change Hero Image</span>
-                    </Link>
-                </Button>
-            )}
-            <motion.div
-                className="absolute inset-0 z-0"
-            >
-                <Image
-                    src="https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Hero%20image/Black%20and%20White%20Modern%20Travel%20Agency%20Presentation.jpg"
-                    alt="Lush green pine tree branches"
-                    fill
-                    className="object-cover opacity-40"
-                    priority
-                    data-ai-hint="pine tree"
-                />
-            </motion.div>
+         <ParallaxSection
+            src={settings.heroImageUrl || "https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Hero%20image/Black%20and%20White%20Modern%20Travel%20Agency%20Presentation.jpg"}
+            alt="Lush green pine tree branches"
+            hint="pine tree"
+            className="h-[70vh] text-primary-foreground flex items-center justify-center"
+            overlay={true}
+            settingKey="heroImageUrl"
+        >
             <motion.div 
                 className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left"
                 variants={heroTextContainer}
@@ -130,7 +118,7 @@ export function OurSolutionsClient() {
             >
                 <motion.h1 variants={heroTextItem} className="text-5xl md:text-7xl font-extrabold tracking-tight">FROM PRODUCTS TO SOLUTIONS</motion.h1>
             </motion.div>
-        </section>
+        </ParallaxSection>
 
         <section className="relative py-16 md:py-24 bg-primary text-primary-foreground">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -209,6 +197,7 @@ export function OurSolutionsClient() {
             alt="Decoration capabilities"
             hint="cosmetic products"
             overlay={false}
+            className="text-foreground"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
                 <div>

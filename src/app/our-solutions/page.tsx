@@ -10,7 +10,7 @@ export default async function OurSolutionsPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <SiteHeaderWrapper />
-      <OurSolutionsClient />
+      <OurSolutionsClient settings={settings} />
       {settings && <SiteFooter settings={settings} />}
     </div>
   );
