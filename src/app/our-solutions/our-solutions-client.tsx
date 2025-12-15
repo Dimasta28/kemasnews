@@ -161,7 +161,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             alt="Cosmetic products and raw material"
             hint="cosmetic products material"
             overlay={false}
-            className="py-32 md:py-60"
+            className="py-24 md:py-32"
             settingKey="solutionsProductCategoryImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -199,12 +199,12 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             alt="Cosmetic packaging"
             hint="cosmetic packaging"
             overlay={false}
-            className="py-32 md:py-60"
+            className="py-24 md:py-32"
             settingKey="solutionsGreenInnovationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
               <motion.div 
-                className="bg-background/80 backdrop-blur-sm p-6 rounded-lg text-left md:bg-transparent md:p-0 md:rounded-none"
+                className="bg-background/80 backdrop-blur-sm p-6 rounded-lg text-left md:bg-transparent md:p-0 md:rounded-none md:shadow-none"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.5 }}
@@ -236,12 +236,12 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
             alt="Decoration capabilities"
             hint="cosmetic products"
             overlay={false}
-            className="py-16 md:py-24"
+            className="py-16 md:py-20"
             settingKey="solutionsDecorationImageUrl"
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
                 <motion.div 
-                    className="bg-background p-6 rounded-lg text-left"
+                    className="bg-background p-6 rounded-lg text-left md:shadow-none"
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.5 }}
