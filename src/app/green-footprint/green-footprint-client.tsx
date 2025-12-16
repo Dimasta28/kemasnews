@@ -8,6 +8,7 @@ import { Award, Factory, Leaf, Recycle, ShieldCheck, Waves, Zap, Package, Extern
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { AnimatedSection } from '@/components/animated-section';
+import { SpotlightCard } from '@/components/ui/spotlight-card';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -135,28 +136,26 @@ export function GreenFootprintClient() {
            <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="grid md:grid-cols-3 gap-8">
                 {plantFootprintItems.map((item, index) => (
                     <motion.div key={index} variants={fadeIn}>
-                        <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                             <CardHeader className="p-0">
-                                <div className="relative aspect-video">
-                                    <Image 
-                                        src={item.imageUrl}
-                                        alt={item.title}
-                                        fill
-                                        className="object-cover"
-                                        data-ai-hint={item.imageHint}
-                                    />
-                                </div>
-                            </CardHeader>
-                            <CardContent className="p-6 text-center">
+                        <SpotlightCard className="h-full overflow-hidden">
+                             <div className="relative aspect-video">
+                                <Image 
+                                    src={item.imageUrl}
+                                    alt={item.title}
+                                    fill
+                                    className="object-cover"
+                                    data-ai-hint={item.imageHint}
+                                />
+                            </div>
+                            <div className="p-6 text-center">
                                 <div className="flex justify-center -mt-12">
                                      <div className="bg-primary text-primary-foreground p-3 rounded-full ring-4 ring-background">
                                         <item.icon className="h-7 w-7" />
                                     </div>
                                 </div>
-                                <CardTitle className="mt-4 text-xl">{item.title}</CardTitle>
+                                <h3 className="mt-4 text-xl font-bold">{item.title}</h3>
                                 <p className="text-muted-foreground mt-2">{item.description}</p>
-                            </CardContent>
-                        </Card>
+                            </div>
+                        </SpotlightCard>
                     </motion.div>
                 ))}
           </motion.div>
