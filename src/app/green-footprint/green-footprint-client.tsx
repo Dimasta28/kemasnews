@@ -45,7 +45,7 @@ export function GreenFootprintClient() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
                  <p className="text-lg text-muted-foreground">
-                    As Indonesia's leading integrated cosmetic packaging manufacturer since 1980, PT Kemas Indah Maju (KEMASPKG) is determined to lead the industry toward a more responsible future. We align our strengths in innovation and technology with a commitment to "improving mother earth's health" and reducing carbon emissions, in line with global environmental protocols.
+                    As Indonesia's leading integrated cosmetic packaging manufacturer since 1979, PT Kemas Indah Maju (KEMASPKG) is determined to lead the industry toward a more responsible future. We align our strengths in innovation and technology with a commitment to "improving mother earth's health" and reducing carbon emissions, in line with global environmental protocols.
                 </p>
             </div>
         </div>
