@@ -100,26 +100,22 @@ export function GreenFootprintClient() {
           <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {governanceItems.map((item, index) => (
                  <motion.div key={index} variants={fadeIn}>
-                    <Card className="h-full text-center hover:shadow-lg transition-shadow">
-                        <CardHeader>
+                    <div className="relative h-full text-center p-6 rounded-lg bg-gradient-to-br from-background to-muted/50 shadow-lg hover:shadow-primary/20 transition-shadow duration-300">
                         <div className="flex justify-center mb-4">
-                            <div className="bg-primary/10 p-3 rounded-full">
+                            <div className="relative w-16 h-16 rounded-full flex items-center justify-center bg-primary/10 before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-tr before:from-primary/20 before:to-transparent before:animate-pulse">
                                 <item.icon className="h-8 w-8 text-primary" />
                             </div>
                         </div>
-                        <CardTitle>{item.title}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-muted-foreground">{item.description}</p>
-                            {item.title === 'EcoVadis Silver Medal' && (
-                                <div className="text-xs mt-4">
-                                    <Link href="https://support.ecovadis.com/hc/en-us/articles/210460227-Understanding-EcoVadis-Medals-and-Badges" target="_blank" className="flex items-center justify-center text-muted-foreground hover:text-primary">
-                                        <ExternalLink className="mr-1 h-3 w-3" /> Learn about EcoVadis Medals
-                                    </Link>
-                                </div>
-                            )}
-                        </CardContent>
-                    </Card>
+                        <h3 className="text-xl font-bold text-foreground">{item.title}</h3>
+                        <p className="mt-2 text-muted-foreground">{item.description}</p>
+                        {item.title === 'EcoVadis Silver Medal' && (
+                            <div className="text-xs mt-4">
+                                <Link href="https://support.ecovadis.com/hc/en-us/articles/210460227-Understanding-EcoVadis-Medals-and-Badges" target="_blank" className="flex items-center justify-center text-muted-foreground hover:text-primary">
+                                    <ExternalLink className="mr-1 h-3 w-3" /> Learn about EcoVadis Medals
+                                </Link>
+                            </div>
+                        )}
+                    </div>
                 </motion.div>
             ))}
           </motion.div>
