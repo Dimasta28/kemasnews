@@ -4,11 +4,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Award, Factory, Leaf, Recycle, ShieldCheck, Waves, Zap, Package, ExternalLink, Globe, Users, CheckCircle, Target } from 'lucide-react';
+import { Award, Factory, Leaf, Recycle, ShieldCheck, Waves, Zap, Package, ExternalLink, Globe, Users, CheckCircle, Target, Pencil } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { AnimatedSection } from '@/components/animated-section';
 import { SpotlightCard } from '@/components/ui/spotlight-card';
+import { useAuth } from '@/hooks/use-auth';
+import { ImageEditDialog } from '@/components/image-edit-dialog';
+import { getFrontendSettings, type FrontendSettings } from '@/services/settingsService';
+import { useEffect, useState } from 'react';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -38,31 +42,46 @@ const governanceItems = [
     }
 ];
 
-const plantFootprintItems = [
+export function GreenFootprintClient() {
+  const { user } = useAuth();
+  const [settings, setSettings] = useState<FrontendSettings | null>(null);
+
+  useEffect(() => {
+    getFrontendSettings().then(setSettings);
+  }, []);
+  
+  if (!settings) {
+    // You can return a loading skeleton here if desired
+    return null;
+  }
+
+  const plantFootprintItems = [
     {
         icon: Waves,
         title: '100% Water Recycling',
         description: 'Our Metal Anodizing facility uses a closed-loop system, recycling and reusing 100% of its water.',
-        imageUrl: 'https://picsum.photos/seed/water-recycling/800/600',
-        imageHint: 'water treatment facility'
+        imageUrl: settings.greenFootprintWaterImageUrl,
+        imageHint: 'water treatment facility',
+        settingKey: 'greenFootprintWaterImageUrl',
     },
     {
         icon: Zap,
         title: 'Smart Energy Efficiency',
         description: 'Insulated barrels and optimized hydraulics save up to 20% energy and reduce cooling needs by 50%.',
-        imageUrl: 'https://picsum.photos/seed/energy-efficiency/800/600',
-        imageHint: 'modern factory machine'
+        imageUrl: settings.greenFootprintEnergyImageUrl,
+        imageHint: 'modern factory machine',
+        settingKey: 'greenFootprintEnergyImageUrl',
     },
     {
         icon: Recycle,
         title: 'Circular Waste Management',
         description: 'Lacquer waste is repurposed into fuel, and organic waste is composted for our factory grounds.',
-        imageUrl: 'https://picsum.photos/seed/waste-management/800/600',
-        imageHint: 'compost pile'
+        imageUrl: settings.greenFootprintWasteImageUrl,
+        imageHint: 'compost pile',
+        settingKey: 'greenFootprintWasteImageUrl',
     }
-];
+  ];
 
-export function GreenFootprintClient() {
   return (
     <main className="flex-grow">
       {/* Hero Section */}
@@ -135,6 +154,13 @@ export function GreenFootprintClient() {
                         <SpotlightCard className="h-full">
                             <div className="relative">
                                 <div className="relative aspect-video overflow-hidden rounded-t-xl">
+                                    {user && (
+                                        <ImageEditDialog
+                                            settingKey={item.settingKey as keyof FrontendSettings}
+                                            currentImageUrl={item.imageUrl}
+                                            triggerClassName="absolute top-2 right-2 z-20 h-8 w-8 rounded-full"
+                                        />
+                                    )}
                                     <Image 
                                         src={item.imageUrl}
                                         alt={item.title}
@@ -144,8 +170,8 @@ export function GreenFootprintClient() {
                                     />
                                 </div>
                                 <div className="p-6 text-center">
-                                    <div className="flex justify-center -mt-12 relative z-10">
-                                        <div className="bg-primary text-primary-foreground p-3 rounded-full ring-4 ring-background">
+                                    <div className="flex justify-center -mt-12">
+                                        <div className="relative z-10 bg-primary text-primary-foreground p-3 rounded-full ring-4 ring-background">
                                             <item.icon className="h-7 w-7" />
                                         </div>
                                     </div>

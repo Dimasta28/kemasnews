@@ -41,8 +41,10 @@ export interface FrontendSettings {
   footer: FooterSettings;
   solutionsProductCategoryImageUrl: string;
   solutionsGreenInnovationImageUrl: string;
-
   solutionsDecorationImageUrl: string;
+  greenFootprintWaterImageUrl: string;
+  greenFootprintEnergyImageUrl: string;
+  greenFootprintWasteImageUrl: string;
 }
 
 const SETTINGS_DOC_ID = 'frontend';
@@ -52,7 +54,7 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
   const settingsDocRef = doc(db, 'settings', SETTINGS_DOC_ID);
   const docSnap = await getDoc(settingsDocRef);
 
-  const defaults: Omit<FrontendSettings, 'privacyPolicy' | 'ogTitle' | 'ogDescription' | 'ogImageUrl' | 'heroPostIds' | 'footer' | 'dropdownLinks' | 'lightModeLogoUrl' | 'darkModeLogoUrl' | 'heroImageUrl' | 'solutionsProductCategoryImageUrl' | 'solutionsGreenInnovationImageUrl' | 'solutionsDecorationImageUrl'> & { heroImageUrl: string, footer: FooterSettings, dropdownLinks: NavigationLink[], lightModeLogoUrl: string, darkModeLogoUrl: string, privacyPolicy: string, ogTitle: string, ogDescription: string, ogImageUrl: string, heroPostIds: string[], solutionsProductCategoryImageUrl: string, solutionsGreenInnovationImageUrl: string, solutionsDecorationImageUrl: string } = {
+  const defaults: FrontendSettings = {
     lightModeLogoUrl: 'https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png',
     darkModeLogoUrl: 'https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png',
     heroImageUrl: 'https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%202.jpg',
@@ -97,38 +99,30 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
     solutionsProductCategoryImageUrl: "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     solutionsGreenInnovationImageUrl: "https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%_20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%203.jpg",
     solutionsDecorationImageUrl: "https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%_20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%205.jpg",
+    greenFootprintWaterImageUrl: 'https://picsum.photos/seed/water-recycling/800/600',
+    greenFootprintEnergyImageUrl: 'https://picsum.photos/seed/energy-efficiency/800/600',
+    greenFootprintWasteImageUrl: 'https://picsum.photos/seed/waste-management/800/600',
   };
 
   if (docSnap.exists()) {
     const data = docSnap.data();
     // By explicitly picking properties, we avoid passing non-serializable
     // data like Firestore Timestamps to client components.
-    // data.banner is kept for backward compatibility.
     const settings: FrontendSettings = {
-        lightModeLogoUrl: data.lightModeLogoUrl || defaults.lightModeLogoUrl,
-        darkModeLogoUrl: data.darkModeLogoUrl || defaults.darkModeLogoUrl,
-        heroImageUrl: data.heroImageUrl || defaults.heroImageUrl,
+        ...defaults,
+        ...data,
         homepageBanner: {
             ...defaults.homepageBanner,
-            ...(data.homepageBanner || data.banner || {}),
+            ...(data.homepageBanner || {}),
         },
         sidebarBanner: {
             ...defaults.sidebarBanner,
-            ...(data.sidebarBanner || data.banner || {}),
+            ...(data.sidebarBanner || {}),
         },
-        dropdownLinks: data.dropdownLinks && data.dropdownLinks.length > 0 ? data.dropdownLinks : defaults.dropdownLinks,
-        privacyPolicy: data.privacyPolicy || defaults.privacyPolicy,
-        ogTitle: data.ogTitle || defaults.ogTitle,
-        ogDescription: data.ogDescription || defaults.ogDescription,
-        ogImageUrl: data.ogImageUrl || defaults.ogImageUrl,
-        heroPostIds: data.heroPostIds || defaults.heroPostIds,
         footer: {
             ...defaults.footer,
             ...(data.footer || {}),
         },
-        solutionsProductCategoryImageUrl: data.solutionsProductCategoryImageUrl || defaults.solutionsProductCategoryImageUrl,
-        solutionsGreenInnovationImageUrl: data.solutionsGreenInnovationImageUrl || defaults.solutionsGreenInnovationImageUrl,
-        solutionsDecorationImageUrl: data.solutionsDecorationImageUrl || defaults.solutionsDecorationImageUrl,
     };
     return settings;
   } else {
