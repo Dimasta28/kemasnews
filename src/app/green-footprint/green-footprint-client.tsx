@@ -2,7 +2,6 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Award, Factory, Leaf, Recycle, ShieldCheck, Waves, Zap, Package, ExternalLink, Globe, Users, CheckCircle, Target, Pencil, Wind, Droplets, BatteryCharging } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -34,30 +33,30 @@ const staggerContainer = {
 const certifications = [
     {
         name: 'ISO 14001',
-        description: 'Sistem Manajemen Lingkungan menyeluruh di seluruh proses produksi.',
+        description: 'Comprehensive Environmental Management System across all production processes.',
         icon: Globe
     },
     {
         name: 'ISCC',
-        description: 'Validasi sumber daya berkelanjutan & rendah karbon.',
+        description: 'Validation of sustainable, low-carbon resources.',
         icon: CheckCircle
     },
     {
         name: 'ISO 9001, ISO 22716, C-GMP',
-        description: 'Kualitas & GMP kosmetik kelas global.',
+        description: 'Global-standard quality & cosmetic GMP.',
         icon: Award
     },
     {
         name: 'SA8000 & Sedex',
-        description: 'Etika kerja, keselamatan, dan transparansi rantai pasok.',
+        description: 'Work ethics, safety, and supply chain transparency.',
         icon: Users
     }
 ];
 
 const limexMetrics = [
-    { indicator: "Pengurangan plastik", impact: "Hingga 46%" },
-    { indicator: "Penurunan CO₂ (total LCA)", impact: "36%" },
-    { indicator: "Emisi karbon hulu", impact: "1/50 dibanding petrokimia" },
+    { indicator: "Plastic Reduction", impact: "Up to 46%" },
+    { indicator: "CO₂ Reduction (Total LCA)", impact: "36%" },
+    { indicator: "Upstream Carbon Emissions", impact: "1/50 vs. Petrochemicals" },
 ]
 
 
@@ -110,7 +109,7 @@ export function GreenFootprintClient() {
           <motion.div variants={staggerContainer} initial="hidden" animate="visible">
             <motion.h1 variants={fadeIn} className="text-4xl md:text-6xl font-extrabold tracking-tight">Green Footprint</motion.h1>
             <motion.p variants={fadeIn} className="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-primary-foreground/80">
-                Dari Inovasi Material ke Kepemimpinan ESG Global
+                From Material Innovation to Global ESG Leadership.
             </motion.p>
           </motion.div>
         </div>
@@ -121,7 +120,7 @@ export function GreenFootprintClient() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
                  <p className="text-lg text-muted-foreground">
-                    PT Kemas Indah Maju (KEMASPKG) membangun jejak lingkungan (green footprint) yang terukur melalui tata kelola yang disiplin, inovasi material berbasis sains, dan komitmen operasional jangka panjang. Halaman ini dirancang sebagai rujukan profesional bagi mitra dan merek global yang menempatkan keberlanjutan sebagai standar, bukan slogan.
+                    PT Kemas Indah Maju (KEMASPKG) builds a measurable green footprint through disciplined governance, science-based material innovation, and long-term operational commitment. This page is designed as a professional reference for global partners and brands that treat sustainability as a standard, not a slogan.
                 </p>
             </div>
         </div>
@@ -132,9 +131,9 @@ export function GreenFootprintClient() {
       <AnimatedSection className="bg-muted/50 py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary">Ringkasan Eksekutif</h2>
+            <h2 className="text-3xl font-bold text-primary">Executive Summary</h2>
             <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">
-                Sebagai produsen kemasan kesehatan dan kecantikan yang melayani 100+ merek global, KEMASPKG mengintegrasikan keberlanjutan ke dalam strategi inti melalui prinsip <strong className="text-foreground">STEP-UP.</strong>
+                As a health and beauty packaging manufacturer serving 100+ global brands, KEMASPKG integrates sustainability into its core strategy through the <strong className="text-foreground">STEP-UP principle.</strong>
             </p>
           </div>
           <div className="max-w-5xl mx-auto text-center p-8 border-2 border-dashed border-primary/20 rounded-lg bg-background">
@@ -144,22 +143,22 @@ export function GreenFootprintClient() {
                 <div className="flex items-start gap-3">
                     <Wind className="h-8 w-8 text-primary mt-1 flex-shrink-0" />
                     <div>
-                        <p className="font-bold text-foreground">Pengurangan Plastik 46%</p>
-                        <p className="text-sm text-muted-foreground">melalui material LIMEX.</p>
+                        <p className="font-bold text-foreground">46% Plastic Reduction</p>
+                        <p className="text-sm text-muted-foreground">via LIMEX material.</p>
                     </div>
                 </div>
                 <div className="flex items-start gap-3">
                     <Droplets className="h-8 w-8 text-primary mt-1 flex-shrink-0" />
                      <div>
-                        <p className="font-bold text-foreground">Penurunan Emisi CO₂ 36%</p>
-                        <p className="text-sm text-muted-foreground">pada total siklus hidup produk.</p>
+                        <p className="font-bold text-foreground">36% CO₂ Emission Reduction</p>
+                        <p className="text-sm text-muted-foreground">in total product life cycle.</p>
                     </div>
                 </div>
                  <div className="flex items-start gap-3">
                     <BatteryCharging className="h-8 w-8 text-primary mt-1 flex-shrink-0" />
                      <div>
-                        <p className="font-bold text-foreground">Efisiensi Karbon Hulu 1/50</p>
-                        <p className="text-sm text-muted-foreground">dibanding material petrokimia.</p>
+                        <p className="font-bold text-foreground">1/50 Upstream Carbon</p>
+                        <p className="text-sm text-muted-foreground">compared to petrochemical materials.</p>
                     </div>
                 </div>
              </div>
@@ -172,9 +171,9 @@ export function GreenFootprintClient() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                     <h2 className="text-3xl font-bold text-primary">Tata Kelola Lingkungan & Kepatuhan</h2>
+                     <h2 className="text-3xl font-bold text-primary">Environmental Governance & Compliance</h2>
                     <p className="mt-4 text-muted-foreground">
-                        <strong className="text-foreground">KEMAS Green Journey</strong> adalah inisiatif payung keberlanjutan yang menargetkan pengurangan emisi, penurunan ketergantungan petrokimia, dan peningkatan standar manufaktur. Fokusnya jelas: dampak nyata dari hulu ke hilir.
+                        The <strong className="text-foreground">KEMAS Green Journey</strong> is a sustainability umbrella initiative targeting emission reductions, decreased petrochemical dependency, and elevated manufacturing standards. The focus is clear: tangible impact from upstream to downstream.
                     </p>
                      <div className="mt-8 space-y-4">
                         {certifications.map((cert, index) => (
@@ -191,13 +190,13 @@ export function GreenFootprintClient() {
                     </div>
                 </div>
                 <div className="space-y-6">
-                    <Card className="bg-primary/5 border-primary/20">
+                    <Card className="bg-primary/5 border-primary/20 transition-all hover:shadow-lg hover:border-primary/30">
                         <CardHeader>
-                            <CardTitle className="flex items-center gap-3"><Users className="h-6 w-6 text-primary" /> Pilar Sosial & Tata Kelola</CardTitle>
+                            <CardTitle className="flex items-center gap-3"><Users className="h-6 w-6 text-primary" /> Social & Governance Pillar</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4 text-muted-foreground">
-                            <p><strong className="text-foreground">60% tenaga kerja perempuan</strong> sebagai komitmen nyata pemberdayaan gender.</p>
-                            <p>Program <strong className="text-foreground">KEMAS Care & Caring</strong> dan <strong className="text-foreground">KEMAS Replant Tree</strong> untuk dampak sosial & lingkungan lokal.</p>
+                            <p><strong className="text-foreground">60% female workforce</strong> as a tangible commitment to gender empowerment.</p>
+                            <p>Programs like <strong className="text-foreground">KEMAS Care & Caring</strong> and <strong className="text-foreground">KEMAS Replant Tree</strong> for local social & environmental impact.</p>
                         </CardContent>
                     </Card>
                 </div>
@@ -209,8 +208,8 @@ export function GreenFootprintClient() {
       <AnimatedSection className="bg-muted/50 py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-primary">Inovasi Material</h2>
-                <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">Portofolio solusi berkelanjutan kami mencakup PCR & PIR, PLA (bio-polimer), desain mono-material, dan inovasi unggulan berbasis batu kapur: LIMEX.</p>
+                <h2 className="text-3xl font-bold text-primary">Material Innovation</h2>
+                <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">Our sustainable solutions portfolio includes PCR & PIR, PLA (bio-polymers), mono-material design, and our flagship limestone-based innovation: LIMEX.</p>
             </div>
 
             <Card className="overflow-hidden shadow-lg transition-shadow hover:shadow-xl max-w-5xl mx-auto">
@@ -226,16 +225,16 @@ export function GreenFootprintClient() {
                         <Image src={settings.greenFootprintLimexImageUrl} alt="LIMEX Material" fill className="object-cover" data-ai-hint="limestone cosmetic" />
                     </div>
                     <div className="p-6 md:p-8">
-                        <Badge variant="secondary" className="mb-2 bg-primary/10 text-primary">Inovasi Unggulan</Badge>
-                        <h3 className="text-2xl font-bold">LIMEX: Bukti Nyata Pengurangan Dampak</h3>
-                        <p className="mt-4 text-muted-foreground">LIMEX mengandung &gt;50% batu kapur, menggantikan plastik berbasis minyak bumi. Terdaftar sebagai teknologi berkelanjutan internasional dan menawarkan *luxurious heavy feel* yang diminati merek premium.</p>
+                        <Badge variant="secondary" className="mb-2 bg-primary/10 text-primary">Flagship Innovation</Badge>
+                        <h3 className="text-2xl font-bold">LIMEX: Tangible Impact Reduction</h3>
+                        <p className="mt-4 text-muted-foreground">LIMEX contains >50% limestone, replacing petroleum-based plastics. It is registered as an international sustainable technology and offers a *luxurious heavy feel* sought by premium brands.</p>
                          <div className="mt-6">
-                            <h4 className="font-semibold mb-2">Metrik Utama LIMEX</h4>
+                            <h4 className="font-semibold mb-2">Key LIMEX Metrics</h4>
                             <Table>
                                 <TableHeader>
                                     <TableRow>
-                                    <TableHead>Indikator</TableHead>
-                                    <TableHead className="text-right">Dampak</TableHead>
+                                    <TableHead>Indicator</TableHead>
+                                    <TableHead className="text-right">Impact</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -247,7 +246,7 @@ export function GreenFootprintClient() {
                                     ))}
                                 </TableBody>
                             </Table>
-                            <p className="text-xs text-muted-foreground mt-2">Keunggulan terbesar LIMEX ada di Lingkup 3 (hulu)—area paling krusial bagi merek global dalam target dekarbonisasi.</p>
+                            <p className="text-xs text-muted-foreground mt-2">LIMEX's greatest advantage lies in **Scope 3 (upstream)**—the most critical area for global brands in their decarbonization targets.</p>
                          </div>
                     </div>
                 </div>
@@ -259,21 +258,49 @@ export function GreenFootprintClient() {
        <AnimatedSection className="py-16 md:py-24">
          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-primary">Efisiensi Operasional & Inovasi Non-Kemasan</h2>
+                <h2 className="text-3xl font-bold text-primary">Operational Efficiency & Non-Packaging Innovations</h2>
                  <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">
-                    Fasilitas modern kami dirancang untuk efisiensi energi dan minimisasi emisi, sejalan dengan ISO 14001 dan prinsip pemanfaatan sumber daya.
+                    Our modern facilities are designed for energy efficiency and emission minimization, in line with ISO 14001 and resource utilization principles.
                 </p>
             </div>
-             <Card className="max-w-3xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-6">
+                {plantFootprintItems.map((item, index) => (
+                    <SpotlightCard key={index} className="overflow-hidden">
+                        <div className="relative aspect-video">
+                            {user && (
+                                <ImageEditDialog
+                                    settingKey={item.settingKey}
+                                    currentImageUrl={item.imageUrl}
+                                    triggerClassName="absolute top-2 right-2 z-20 h-8 w-8 rounded-full"
+                                />
+                            )}
+                            <Image src={item.imageUrl} alt={item.title} fill className="object-cover" data-ai-hint={item.imageHint}/>
+                        </div>
+                         <div className="p-6">
+                            <div className="relative">
+                               <div className="relative z-10 flex items-center justify-center -mt-12">
+                                 <div className="bg-primary text-primary-foreground rounded-full p-3 border-4 border-background">
+                                     <item.icon className="w-7 h-7" />
+                                 </div>
+                               </div>
+                            </div>
+                           
+                            <h3 className="text-lg font-bold text-center mt-4">{item.title}</h3>
+                            <p className="mt-2 text-sm text-muted-foreground text-center">{item.description}</p>
+                        </div>
+                    </SpotlightCard>
+                ))}
+            </div>
+             <Card className="max-w-3xl mx-auto mt-16">
                  <CardHeader>
-                    <CardTitle>Studi Kasus: NBR Cosmetic Puff</CardTitle>
-                    <CardDescription>Keberlanjutan kami tidak berhenti di botol—hingga ke aksesori.</CardDescription>
+                    <CardTitle>Case Study: NBR Cosmetic Puff</CardTitle>
+                    <CardDescription>Our sustainability efforts extend beyond bottles—all the way to accessories.</CardDescription>
                  </CardHeader>
                  <CardContent>
                      <ul className="space-y-3 text-muted-foreground list-disc pl-5">
-                        <li><strong className="text-foreground">Substitusi bahan kimia berbahaya:</strong> Mengganti komponen berisiko dengan alternatif yang lebih aman.</li>
-                        <li><strong className="text-foreground">Optimasi proses & efisiensi bahan baku:</strong> Mengurangi limbah selama produksi.</li>
-                        <li><strong className="text-foreground">Produk lebih tahan lama:</strong> Menciptakan produk yang lebih awet, sehingga mengurangi frekuensi penggantian dan limbah konsumen.</li>
+                        <li><strong className="text-foreground">Substitution of hazardous chemicals:</strong> Replacing risky components with safer alternatives.</li>
+                        <li><strong className="text-foreground">Process optimization & raw material efficiency:</strong> Reducing waste during production.</li>
+                        <li><strong className="text-foreground">More durable products:</strong> Creating longer-lasting products, thus reducing replacement frequency and consumer waste.</li>
                     </ul>
                  </CardContent>
              </Card>
@@ -283,9 +310,9 @@ export function GreenFootprintClient() {
        {/* Call to Action */}
        <AnimatedSection className="py-16 md:py-24 text-center bg-primary text-primary-foreground">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl md:text-3xl font-bold">Lebih hijau, tetap mewah, dan siap masa depan.</h2>
+            <h2 className="text-2xl md:text-3xl font-bold">Greener, still luxurious, and future-ready.</h2>
             <p className="mt-4 max-w-3xl mx-auto text-primary-foreground/80">
-              Dengan metrik yang terukur, sertifikasi global, dan adopsi pasar premium, kami membantu merek global mengurangi dampak lingkungan tanpa mengorbankan kualitas maupun estetika.
+              With measurable metrics, global certifications, and premium market adoption, we help global brands reduce their environmental impact without sacrificing quality or aesthetics.
             </p>
           </div>
        </AnimatedSection>
@@ -293,3 +320,5 @@ export function GreenFootprintClient() {
     </main>
   );
 }
+
+    
