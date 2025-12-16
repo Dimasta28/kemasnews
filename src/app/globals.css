@@ -37,7 +37,7 @@
 
   /* Custom prose styles */
  .prose {
-    --tw-prose-body: hsl(var(--foreground) / 0.9);
+    --tw-prose-body: hsl(var(--foreground));
     --tw-prose-headings: hsl(var(--primary));
     --tw-prose-lead: hsl(var(--foreground));
     --tw-prose-links: hsl(var(--primary));
