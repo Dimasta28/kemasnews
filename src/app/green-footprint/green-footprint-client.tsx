@@ -204,7 +204,14 @@ export function GreenFootprintClient() {
                             <p className="mt-4 text-muted-foreground">An innovative material composed of up to 80% limestone, significantly reducing plastic use and CO2 emissions. We launched the first cosmetic product in Asia with packaging made entirely from LIMEX.</p>
                         </div>
                         <div className="relative h-64 md:h-full">
-                            <Image src="https://picsum.photos/seed/limex/800/600" alt="LIMEX Material" fill className="object-cover" data-ai-hint="limestone cosmetic" />
+                             {user && (
+                                <ImageEditDialog
+                                    settingKey="greenFootprintLimexImageUrl"
+                                    currentImageUrl={settings.greenFootprintLimexImageUrl}
+                                    triggerClassName="absolute top-2 right-2 z-20 h-8 w-8 rounded-full"
+                                />
+                            )}
+                            <Image src={settings.greenFootprintLimexImageUrl} alt="LIMEX Material" fill className="object-cover" data-ai-hint="limestone cosmetic" />
                         </div>
                     </div>
                 </Card>
@@ -213,7 +220,14 @@ export function GreenFootprintClient() {
                 <Card className="overflow-hidden shadow-sm transition-shadow hover:shadow-xl">
                      <div className="grid md:grid-cols-2 items-center">
                          <div className="relative h-64 md:h-full md:order-last">
-                            <Image src="https://picsum.photos/seed/recycled/800/600" alt="Recycled Materials" fill className="object-cover" data-ai-hint="recycled plastic" />
+                            {user && (
+                                <ImageEditDialog
+                                    settingKey="greenFootprintRecycledImageUrl"
+                                    currentImageUrl={settings.greenFootprintRecycledImageUrl}
+                                    triggerClassName="absolute top-2 right-2 z-20 h-8 w-8 rounded-full"
+                                />
+                            )}
+                            <Image src={settings.greenFootprintRecycledImageUrl} alt="Recycled Materials" fill className="object-cover" data-ai-hint="recycled plastic" />
                         </div>
                         <div className="p-6 md:p-8">
                             <h3 className="text-2xl font-bold">2. Recycled Content & Bio-Based Alternatives</h3>

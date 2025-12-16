@@ -45,6 +45,8 @@ export interface FrontendSettings {
   greenFootprintWaterImageUrl: string;
   greenFootprintEnergyImageUrl: string;
   greenFootprintWasteImageUrl: string;
+  greenFootprintLimexImageUrl: string;
+  greenFootprintRecycledImageUrl: string;
 }
 
 const SETTINGS_DOC_ID = 'frontend';
@@ -102,33 +104,12 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
     greenFootprintWaterImageUrl: 'https://picsum.photos/seed/water-recycling/800/600',
     greenFootprintEnergyImageUrl: 'https://picsum.photos/seed/energy-efficiency/800/600',
     greenFootprintWasteImageUrl: 'https://picsum.photos/seed/waste-management/800/600',
+    greenFootprintLimexImageUrl: 'https://picsum.photos/seed/limex/800/600',
+    greenFootprintRecycledImageUrl: 'https://picsum.photos/seed/recycled/800/600',
   };
 
   if (docSnap.exists()) {
-    const data = docSnap.data();
-    // By explicitly picking properties, we avoid passing non-serializable
-    // data like Firestore Timestamps to client components.
-    const settings: FrontendSettings = {
-        lightModeLogoUrl: data.lightModeLogoUrl || defaults.lightModeLogoUrl,
-        darkModeLogoUrl: data.darkModeLogoUrl || defaults.darkModeLogoUrl,
-        heroImageUrl: data.heroImageUrl || defaults.heroImageUrl,
-        homepageBanner: { ...defaults.homepageBanner, ...(data.homepageBanner || {}) },
-        sidebarBanner: { ...defaults.sidebarBanner, ...(data.sidebarBanner || {}) },
-        dropdownLinks: data.dropdownLinks || defaults.dropdownLinks,
-        privacyPolicy: data.privacyPolicy || defaults.privacyPolicy,
-        ogTitle: data.ogTitle || defaults.ogTitle,
-        ogDescription: data.ogDescription || defaults.ogDescription,
-        ogImageUrl: data.ogImageUrl || defaults.ogImageUrl,
-        heroPostIds: data.heroPostIds || defaults.heroPostIds,
-        footer: { ...defaults.footer, ...(data.footer || {}) },
-        solutionsProductCategoryImageUrl: data.solutionsProductCategoryImageUrl || defaults.solutionsProductCategoryImageUrl,
-        solutionsGreenInnovationImageUrl: data.solutionsGreenInnovationImageUrl || defaults.solutionsGreenInnovationImageUrl,
-        solutionsDecorationImageUrl: data.solutionsDecorationImageUrl || defaults.solutionsDecorationImageUrl,
-        greenFootprintWaterImageUrl: data.greenFootprintWaterImageUrl || defaults.greenFootprintWaterImageUrl,
-        greenFootprintEnergyImageUrl: data.greenFootprintEnergyImageUrl || defaults.greenFootprintEnergyImageUrl,
-        greenFootprintWasteImageUrl: data.greenFootprintWasteImageUrl || defaults.greenFootprintWasteImageUrl,
-    };
-    return settings;
+    return { ...defaults, ...docSnap.data() };
   } else {
     // If the document doesn't exist, create it with default values
     await setDoc(settingsDocRef, { ...defaults, createdAt: serverTimestamp() });
