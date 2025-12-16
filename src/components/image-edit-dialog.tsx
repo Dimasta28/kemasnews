@@ -20,15 +20,17 @@ import { useToast } from '@/hooks/use-toast';
 import { updateFrontendSettings, type FrontendSettings } from '@/services/settingsService';
 
 interface ImageEditDialogProps {
-  settingKey: keyof FrontendSettings;
+  settingKey: keyof FrontendSettings | string; // Allow string for dynamic keys like posts.id.featuredImage
   currentImageUrl: string;
   triggerClassName?: string;
+  onSave?: (newUrl: string) => Promise<void>;
 }
 
 export function ImageEditDialog({
   settingKey,
   currentImageUrl,
   triggerClassName,
+  onSave,
 }: ImageEditDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [newImageUrl, setNewImageUrl] = useState(currentImageUrl);
@@ -38,15 +40,22 @@ export function ImageEditDialog({
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      await updateFrontendSettings({ [settingKey]: newImageUrl } as Partial<FrontendSettings>);
+      if (onSave) {
+        await onSave(newImageUrl);
+      } else {
+        await updateFrontendSettings({ [settingKey]: newImageUrl } as Partial<FrontendSettings>);
+      }
+      
       toast({
         title: 'Success!',
         description: 'Image URL has been updated.',
       });
-      // You might need a mechanism to refresh the parent component's state
-      // For now, we'll just close the dialog and rely on a page refresh
+      
+      // Use a soft refresh (re-validation) instead of a hard reload if possible.
+      // For now, a reload is the simplest way to see changes everywhere.
       window.location.reload(); 
       setIsOpen(false);
+
     } catch (error) {
       console.error('Failed to save image URL:', error);
       toast({

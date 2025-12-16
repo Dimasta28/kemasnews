@@ -1,33 +1,16 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu as MenuIcon,
-  Bell as BellIcon,
-  Sun,
-  Moon,
-  ChevronDown as ChevronDownIcon,
   X as XIcon,
 } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import type { FrontendSettings } from '@/services/settingsService';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import { Input } from './ui/input';
 import { Post } from '@/services/postService';
 
 interface SiteHeaderProps {
@@ -35,17 +18,16 @@ interface SiteHeaderProps {
   posts: Post[];
 }
 
-
 export function SiteHeader({ 
     settings: initialSettings, 
     posts: allPosts,
 }: SiteHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { toast } = useToast();
-  const router = useRouter();
   
   const [settings, setSettings] = useState(initialSettings);
+  const lastScrollY = useRef(0);
 
   // This effect will sync state if the initial props change (e.g., on navigation)
   useEffect(() => {
@@ -54,7 +36,20 @@ export function SiteHeader({
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
+      const currentScrollY = window.scrollY;
+      
+      // Logic to show/hide header on scroll direction
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        // Scrolling down
+        setIsHidden(true);
+      } else {
+        // Scrolling up
+        setIsHidden(false);
+      }
+      lastScrollY.current = currentScrollY;
+
+      // Logic to change header background
+      if (currentScrollY > 50) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -70,8 +65,9 @@ export function SiteHeader({
     <>
       <header
         className={cn(
-            "fixed top-0 z-50 w-full transition-all",
-            isScrolled ? "bg-primary" : "bg-transparent"
+            "fixed top-0 z-50 w-full transition-all duration-300",
+            isScrolled ? "bg-primary" : "bg-transparent",
+            isHidden ? "-translate-y-full" : "translate-y-0"
         )}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

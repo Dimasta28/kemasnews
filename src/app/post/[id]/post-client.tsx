@@ -20,7 +20,8 @@ import { SocialShare } from '@/components/social-share';
 import { useAuth } from '@/hooks/use-auth';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { format, parseISO } from 'date-fns';
-import { Button } from '@/components/ui/button';
+import { ImageEditDialog } from '@/components/image-edit-dialog';
+import { updatePost } from '@/services/postService';
 
 interface PostClientProps {
     post: Post | null;
@@ -86,7 +87,7 @@ export function PostClient({ post, recentPosts, settings, error }: PostClientPro
             <SiteHeaderWrapper />
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-                    <Link href="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+                    <Link href="/insights" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
                         <ChevronLeft className="h-4 w-4" />
                         <span>Back to all articles</span>
                     </Link>
@@ -137,12 +138,12 @@ export function PostClient({ post, recentPosts, settings, error }: PostClientPro
                                 variants={variants}
                             >
                                 {user && (
-                                    <Button asChild variant="secondary" size="icon" className="absolute top-2 right-2 z-10 h-8 w-8 rounded-full">
-                                        <Link href={`/admin/posts/edit/${post.id}`}>
-                                            <Pencil className="h-4 w-4" />
-                                            <span className="sr-only">Change Featured Image</span>
-                                        </Link>
-                                    </Button>
+                                    <ImageEditDialog
+                                        settingKey={`posts.${post.id}.featuredImage`}
+                                        currentImageUrl={post.featuredImage}
+                                        onSave={(newUrl) => updatePost(post.id, { featuredImage: newUrl })}
+                                        triggerClassName="absolute top-2 right-2 z-10 h-8 w-8 rounded-full"
+                                    />
                                 )}
                                 <Image
                                     src={post.featuredImage}
