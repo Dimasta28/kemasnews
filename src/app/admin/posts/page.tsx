@@ -1,26 +1,32 @@
 
 import { getPosts } from '@/services/postService';
-import { getCategories } from '@/services/categoryService';
-import { PostsClient } from './posts-client';
+import { PostsTable } from './posts-table';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
-export default async function PostsPage({
-  searchParams,
-}: {
-  searchParams?: { tab?: string };
-}) {
-  const [initialPosts, initialCategories] = await Promise.all([
-    getPosts(),
-    getCategories()
-  ]);
-
-  const activeTab = searchParams?.tab === 'categories' ? 'categories' : (searchParams?.tab === 'tags' ? 'tags' : 'posts');
+export default async function PostsPage() {
+  const initialPosts = await getPosts();
 
   return (
-    <PostsClient
-      initialPosts={initialPosts}
-      initialCategories={initialCategories}
-      initialTags={[]} // Placeholder for tags
-      activeTab={activeTab}
-    />
+    <div className="flex flex-col gap-6">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">Posts</h1>
+          <p className="text-muted-foreground">Manage your posts, categories, and tags.</p>
+        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>All Posts</CardTitle>
+            <CardDescription>View, create, and manage all your articles.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <PostsTable posts={initialPosts} />
+          </CardContent>
+        </Card>
+    </div>
   );
 }

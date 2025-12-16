@@ -12,6 +12,8 @@ import {
   Shield,
   ExternalLink,
   FlaskConical,
+  Tags,
+  LayoutGrid,
 } from 'lucide-react';
 
 import {
@@ -117,6 +119,28 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 <Link href="/admin/posts">
                   <FileText />
                   Posts
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+             <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname.startsWith('/admin/categories')}
+              >
+                <Link href="/admin/categories">
+                  <LayoutGrid />
+                  Categories
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+             <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname.startsWith('/admin/tags')}
+              >
+                <Link href="/admin/tags">
+                  <Tags />
+                  Tags
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

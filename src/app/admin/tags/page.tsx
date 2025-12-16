@@ -1,16 +1,34 @@
 
-'use client';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { TagsTable } from '../posts/tags-table';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+export default async function TagsPage() {
+  // In a real app, you would fetch real tags data here
+  const initialTags: any[] = []; 
 
-export default function TagsRedirectPage() {
-  const router = useRouter();
-
-  useEffect(() => {
-    // Redirect to the new, consolidated page with the tags tab active
-    router.replace('/admin/posts?tab=tags');
-  }, [router]);
-
-  return null; // Render nothing while redirecting
+  return (
+    <div className="flex flex-col gap-6">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight">Tags</h1>
+        <p className="text-muted-foreground">Use tags to add specific keywords to your posts.</p>
+      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>All Tags</CardTitle>
+          <CardDescription>
+            View and manage all tags used across your posts.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <TagsTable tags={initialTags} />
+        </CardContent>
+      </Card>
+    </div>
+  );
 }
