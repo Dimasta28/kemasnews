@@ -1,47 +1,47 @@
-# Panduan Pengguna dan Dokumentasi Proyek
+# Project User Guide and Documentation
 
-Dokumen ini menyediakan panduan pengguna dan dokumentasi teknis untuk proyek ini.
+This document provides a user guide and technical documentation for this project.
 
-## 1. Gambaran Umum Proyek
+## 1. Project Overview
 
-Aplikasi ini adalah platform berbasis web yang dibangun menggunakan Next.js, Tailwind CSS, dan Shadcn UI, dengan backend yang didukung oleh Firebase dan fungsionalitas AI yang disediakan oleh Genkit AI. Tujuannya adalah untuk menyediakan platform yang kaya fitur untuk penerbitan konten, manajemen pengguna, dan inisiatif keberlanjutan.
+This application is a web-based platform built using Next.js, Tailwind CSS, and Shadcn UI, with a backend powered by Firebase and AI functionality provided by Genkit AI. Its goal is to provide a feature-rich platform for content publishing, user management, and sustainability initiatives.
 
-## 2. Struktur Proyek
+## 2. Project Structure
 
-Untuk pemahaman mendalam tentang struktur direktori, silakan merujuk ke `docs/project-structure.md`.
+For a detailed understanding of the directory structure, please refer to `docs/project-structure.md`.
 
-## 3. Panduan Pengguna
+## 3. User Guide
 
-### Fitur Utama
+### Key Features
 
-*   **Halaman Publik:**
-    *   **Beranda (`/`):** Halaman utama yang menampilkan konten unggulan.
-    *   **Postingan (`/post/[id]`):** Membaca artikel lengkap dengan komentar dan opsi berbagi sosial.
-    *   **Inisiatif Hijau (`/green-journey`, `/green-plan`, `/our-solutions`):** Mempelajari dan berpartisipasi dalam program keberlanjutan.
+*   **Public Pages:**
+    *   **Home (`/`):** The main page displaying featured content.
+    *   **Posts (`/post/[id]`):** Read full articles with comments and social sharing options.
+    *   **Green Initiatives (`/green-journey`, `/green-plan`, `/our-solutions`):** Learn about and participate in sustainability programs.
 
-*   **Area Admin (`/admin`):
-    *   **Dasbor (`/admin/dashboard`):** Ringkasan analitik, postingan terbaru, dan statistik lainnya.
-    *   **Manajemen Konten:** Mengelola postingan, kategori, dan tag.
-    *   **Manajemen Pengguna:** Mengawasi anggota terdaftar.
-    *   **Pengaturan:** Mengonfigurasi spanduk promosi, kebijakan privasi, dan pengaturan situs lainnya.
+*   **Admin Area (`/admin`):**
+    *   **Dashboard (`/admin/dashboard`):** A summary of analytics, recent posts, and other stats.
+    *   **Content Management:** Manage posts, categories, and tags.
+    *   **User Management:** Supervise registered members.
+    *   **Settings:** Configure promotional banners, privacy policy, and other site settings.
 
-## 4. Dokumentasi Pengembang
+## 4. Developer Documentation
 
-### Teknologi yang Digunakan
+### Technologies Used
 
-*   **Next.js:** Kerangka kerja React untuk rendering sisi server dan pembuatan situs statis.
-*   **React & TypeScript:** Untuk membangun antarmuka pengguna yang kuat dan dapat dipelihara.
-*   **Tailwind CSS & Shadcn UI:** Untuk styling dan komponen UI.
-*   **Firebase:** Untuk layanan backend seperti otentikasi dan basis data (Firestore).
-*   **Genkit AI:** Untuk alur kerja AI seperti pembuatan konten dan terjemahan.
+*   **Next.js:** A React framework for server-side rendering and static site generation.
+*   **React & TypeScript:** For building robust and maintainable user interfaces.
+*   **Tailwind CSS & Shadcn UI:** For styling and UI components.
+*   **Firebase:** For backend services like authentication and database (Firestore).
+*   **Genkit AI:** For AI workflows like content generation and translation.
 
-### Alur Kerja AI
+### AI Workflows
 
-Untuk dokumentasi terperinci tentang alur kerja AI, silakan merujuk ke `docs/ai-workflows.md`.
+For detailed documentation on the AI workflows, please refer to `docs/ai-workflows.md`.
 
-### Menambah Fitur Baru
+### Adding New Features
 
-1.  **Halaman Baru:** Buat direktori baru di dalam `src/app/` sesuai dengan rute yang diinginkan.
-2.  **Komponen Baru:** Tambahkan file `.tsx` baru di dalam `src/components/`.
-3.  **Layanan Backend:** Perluas fungsionalitas di `src/services/` untuk berinteraksi dengan Firebase.
-4.  **Alur Kerja AI:** Tentukan alur kerja AI baru di `src/ai/flows/`.
+1.  **New Page:** Create a new directory inside `src/app/` corresponding to the desired route.
+2.  **New Component:** Add a new `.tsx` file inside `src/components/`.
+3.  **Backend Service:** Extend the functionality in `src/services/` to interact with Firebase.
+4.  **AI Workflow:** Define new AI workflows in `src/ai/flows/`.

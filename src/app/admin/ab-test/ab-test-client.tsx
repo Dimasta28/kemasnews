@@ -26,7 +26,7 @@ function GreenJourneyFormVariantB() {
     
     return (
         <div className="p-8 border-dashed border-2 rounded-lg text-left">
-            <p className="text-center text-sm font-semibold mb-4">Kemas Green Journey — karena masa depan kosmetik lebih hijau.</p>
+            <p className="text-center text-sm font-semibold mb-4">Kemas Green Journey — because the future of cosmetics is greener.</p>
             {step === 1 && (
                 <div className="space-y-4">
                     <p className="text-center text-muted-foreground">"Let’s build the next-generation sustainable packaging together."</p>
@@ -44,9 +44,9 @@ function GreenJourneyFormVariantB() {
                         <Input id="brand-name-b" placeholder="Your Brand" />
                     </div>
                      <div className="space-y-2">
-                        <Label>Produk Fokus</Label>
+                        <Label>Focus Product</Label>
                         <Select>
-                            <SelectTrigger><SelectValue placeholder="Pilih produk..." /></SelectTrigger>
+                            <SelectTrigger><SelectValue placeholder="Select a product..." /></SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="jar">Jar</SelectItem>
                                 <SelectItem value="lipstick">Lipstick</SelectItem>
@@ -57,7 +57,7 @@ function GreenJourneyFormVariantB() {
                      <div className="space-y-2">
                         <Label>Priority</Label>
                          <Select>
-                            <SelectTrigger><SelectValue placeholder="Pilih prioritas..." /></SelectTrigger>
+                            <SelectTrigger><SelectValue placeholder="Select a priority..." /></SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="recycled">Recycled</SelectItem>
                                 <SelectItem value="bio-based">Bio-based</SelectItem>
@@ -145,21 +145,21 @@ export function ABTestClient() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4 text-center p-8 border-dashed border-2 rounded-lg">
-                <p className="text-sm font-semibold">Program sustainability untuk brand cosmetic modern.</p>
+                <p className="text-sm font-semibold">Sustainability program for modern cosmetic brands.</p>
                 <div className="space-y-4 text-left">
                     <div className="space-y-2">
-                        <Label htmlFor="brand-name-a">Nama Brand</Label>
-                        <Input id="brand-name-a" placeholder="Nama brand Anda" />
+                        <Label htmlFor="brand-name-a">Brand Name</Label>
+                        <Input id="brand-name-a" placeholder="Your brand name" />
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="email-a">Contact Email</Label>
                         <Input id="email-a" type="email" placeholder="your@company.com" />
                     </div>
                     <div className="space-y-2">
-                        <Label>Minat Sustainability</Label>
+                        <Label>Sustainability Interest</Label>
                         <Select>
                             <SelectTrigger>
-                                <SelectValue placeholder="Pilih minat..." />
+                                <SelectValue placeholder="Select interest..." />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="recycled-resin">Recycled Resin</SelectItem>
@@ -169,10 +169,10 @@ export function ABTestClient() {
                         </Select>
                     </div>
                      <div className="space-y-2">
-                        <Label htmlFor="message-a">Pesan Tambahan (Optional)</Label>
-                        <Textarea id="message-a" placeholder="Ada lagi yang ingin disampaikan?" />
+                        <Label htmlFor="message-a">Additional Message (Optional)</Label>
+                        <Textarea id="message-a" placeholder="Is there anything else you'd like to share?" />
                     </div>
-                    <Button className="w-full">Mulai Green Journey</Button>
+                    <Button className="w-full">Start Green Journey</Button>
                 </div>
               </div>
             </CardContent>
