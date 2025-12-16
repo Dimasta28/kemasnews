@@ -14,8 +14,14 @@ import {
   FlaskConical,
   Tags,
   LayoutGrid,
+  ChevronRight,
 } from 'lucide-react';
 
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
 import {
   Sidebar,
   SidebarContent,
@@ -40,6 +46,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/hooks/use-auth';
+import { cn } from '@/lib/utils';
 
 function AdminLoadingScreen() {
     return (
@@ -76,6 +83,10 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
   const { user, isLoading, logout } = useAuth();
   const router = useRouter();
 
+  const isPostsSectionActive = pathname.startsWith('/admin/posts') ||
+                               pathname.startsWith('/admin/categories') ||
+                               pathname.startsWith('/admin/tags');
+
   useEffect(() => {
     if (!isLoading && !user) {
       router.replace('/login');
@@ -111,39 +122,43 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
-             <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname.startsWith('/admin/posts')}
-              >
-                <Link href="/admin/posts">
-                  <FileText />
-                  Posts
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-             <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname.startsWith('/admin/categories')}
-              >
-                <Link href="/admin/categories">
-                  <LayoutGrid />
-                  Categories
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-             <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname.startsWith('/admin/tags')}
-              >
-                <Link href="/admin/tags">
-                  <Tags />
-                  Tags
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+
+            <Collapsible defaultOpen={isPostsSectionActive}>
+              <SidebarMenuItem>
+                <CollapsibleTrigger asChild>
+                   <SidebarMenuButton
+                    className="justify-between"
+                    isActive={isPostsSectionActive && !pathname.startsWith('/admin/posts/')}
+                  >
+                    <div className="flex items-center gap-2">
+                      <FileText />
+                      <span>Posts</span>
+                    </div>
+                    <ChevronRight className="h-4 w-4 transition-transform [&[data-state=open]]:rotate-90" />
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+              </SidebarMenuItem>
+               <CollapsibleContent asChild>
+                <SidebarMenuSub>
+                  <SidebarMenuSubItem>
+                    <SidebarMenuSubButton asChild isActive={pathname === '/admin/posts' || pathname.startsWith('/admin/posts/edit') || pathname.startsWith('/admin/posts/create')} >
+                      <Link href="/admin/posts">All Posts</Link>
+                    </SidebarMenuSubButton>
+                  </SidebarMenuSubItem>
+                  <SidebarMenuSubItem>
+                    <SidebarMenuSubButton asChild isActive={pathname.startsWith('/admin/categories')}>
+                      <Link href="/admin/categories">Categories</Link>
+                    </SidebarMenuSubButton>
+                  </SidebarMenuSubItem>
+                  <SidebarMenuSubItem>
+                     <SidebarMenuSubButton asChild isActive={pathname.startsWith('/admin/tags')}>
+                      <Link href="/admin/tags">Tags</Link>
+                    </SidebarMenuSubButton>
+                  </SidebarMenuSubItem>
+                </SidebarMenuSub>
+              </CollapsibleContent>
+            </Collapsible>
+
              <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
