@@ -131,7 +131,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 <CollapsibleTrigger asChild>
                    <SidebarMenuButton
                     className="justify-between"
-                    isActive={isPostsSectionActive && !pathname.startsWith('/admin/posts/')}
+                    isActive={isPostsSectionActive}
                   >
                     <div className="flex items-center gap-2">
                       <FileText />
@@ -144,7 +144,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                <CollapsibleContent asChild>
                 <SidebarMenuSub>
                   <SidebarMenuSubItem>
-                    <SidebarMenuSubButton asChild isActive={pathname === '/admin/posts' || pathname.startsWith('/admin/posts/edit') || pathname.startsWith('/admin/posts/create')} >
+                    <SidebarMenuSubButton asChild isActive={pathname.startsWith('/admin/posts')}>
                       <Link href="/admin/posts">All Posts</Link>
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
