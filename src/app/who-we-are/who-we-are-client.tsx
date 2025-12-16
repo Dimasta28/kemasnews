@@ -78,7 +78,7 @@ export function WhoWeAreClient() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
                  <p className="text-lg text-muted-foreground">
-                    PT Kemas Indah Maju (KEMASPKG) views sustainability not just as a goal, but as the core of our every innovation and operation. We call this integrated commitment the **Kemas Green Journey**.
+                    PT Kemas Indah Maju (KEMASPKG) views sustainability not just as a goal, but as the core of our every innovation and operation. We call this integrated commitment the <strong className="text-foreground">Kemas Green Journey</strong>.
                 </p>
             </div>
         </div>
@@ -98,12 +98,12 @@ export function WhoWeAreClient() {
                  <div>
                     <h2 className="text-3xl font-bold text-primary flex items-center gap-3"><Target className="h-8 w-8"/>Mission & Journey</h2>
                     <p className="mt-4 text-muted-foreground">
-                       The **Kemas Green Journey** is our mission to translate environmental commitments into measurable practices across the value chain:
+                       The <strong className="text-foreground">Kemas Green Journey</strong> is our mission to translate environmental commitments into measurable practices across the value chain:
                     </p>
                     <ul className="mt-4 space-y-3 text-muted-foreground">
-                        <li className="flex gap-3"><span className="font-bold text-primary">1.</span><span>**Innovative Green Packaging:** Providing the greenest packaging solutions for cosmetic brands, such as limestone-based Limex and recycled content.</span></li>
-                        <li className="flex gap-3"><span className="font-bold text-primary">2.</span><span>**Superior Manufacturing Standards:** Implementing advanced practices that actively contribute to lower emissions, including 100% water recycling and factory energy efficiency.</span></li>
-                        <li className="flex gap-3"><span className="font-bold text-primary">3.</span><span>**Ethical Governance:** Managing our operations with integrity through a robust policy framework, including our Environmental Policy and Code of Conduct.</span></li>
+                        <li className="flex gap-3"><span className="font-bold text-primary">1.</span><span><strong>Innovative Green Packaging:</strong> Providing the greenest packaging solutions for cosmetic brands, such as limestone-based Limex and recycled content.</span></li>
+                        <li className="flex gap-3"><span className="font-bold text-primary">2.</span><span><strong>Superior Manufacturing Standards:</strong> Implementing advanced practices that actively contribute to lower emissions, including 100% water recycling and factory energy efficiency.</span></li>
+                        <li className="flex gap-3"><span className="font-bold text-primary">3.</span><span><strong>Ethical Governance:</strong> Managing our operations with integrity through a robust policy framework, including our Environmental Policy and Code of Conduct.</span></li>
                     </ul>
                 </div>
             </div>
