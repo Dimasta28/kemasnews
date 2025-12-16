@@ -42,11 +42,13 @@ export function SiteHeader({
     posts: allPosts,
 }: SiteHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
   
   const [settings, setSettings] = useState(initialSettings);
+  const lastScrollY = useRef(0);
 
   // This effect will sync state if the initial props change (e.g., on navigation)
   useEffect(() => {
@@ -55,7 +57,20 @@ export function SiteHeader({
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
+      const currentScrollY = window.scrollY;
+      
+      // Logic to show/hide header on scroll direction
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        // Scrolling down
+        setIsHidden(true);
+      } else {
+        // Scrolling up
+        setIsHidden(false);
+      }
+      lastScrollY.current = currentScrollY;
+
+      // Logic to change header background
+      if (currentScrollY > 50) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -71,8 +86,9 @@ export function SiteHeader({
     <>
       <header
         className={cn(
-            "fixed top-0 z-50 w-full transition-all",
-            isScrolled ? "bg-primary" : "bg-transparent"
+            "fixed top-0 z-50 w-full transition-all duration-300",
+            isScrolled ? "bg-primary" : "bg-transparent",
+            isHidden ? "-translate-y-full" : "translate-y-0"
         )}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -92,6 +108,9 @@ export function SiteHeader({
                 <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-white">
                     <Link href="/" className="hover:text-primary-foreground/80 transition-colors">Home</Link>
                     <Link href="/our-solutions" className="hover:text-primary-foreground/80 transition-colors">Our Solutions</Link>
+                    <Link href="/green-footprint" className="hover:text-primary-foreground/80 transition-colors">Green Footprint</Link>
+                    <Link href="/who-we-are" className="hover:text-primary-foreground/80 transition-colors">Who We Are</Link>
+                    <Link href="/insights" className="hover:text-primary-foreground/80 transition-colors">Insights</Link>
                 </nav>
 
                  <div className="flex items-center gap-2">
@@ -139,6 +158,15 @@ export function SiteHeader({
                     </li>
                      <li>
                         <Link href="/our-solutions" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Our Solutions</Link>
+                    </li>
+                    <li>
+                        <Link href="/green-footprint" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Green Footprint</Link>
+                    </li>
+                    <li>
+                        <Link href="/who-we-are" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Who We Are</Link>
+                    </li>
+                    <li>
+                        <Link href="/insights" onClick={() => setIsMobileMenuOpen(false)} className="block py-2">Insights</Link>
                     </li>
                 </ul>
             </nav>
