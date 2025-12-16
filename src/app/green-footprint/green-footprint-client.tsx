@@ -136,24 +136,26 @@ export function GreenFootprintClient() {
            <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="grid md:grid-cols-3 gap-8">
                 {plantFootprintItems.map((item, index) => (
                     <motion.div key={index} variants={fadeIn}>
-                        <SpotlightCard className="h-full overflow-hidden">
-                             <div className="relative aspect-video">
-                                <Image 
-                                    src={item.imageUrl}
-                                    alt={item.title}
-                                    fill
-                                    className="object-cover"
-                                    data-ai-hint={item.imageHint}
-                                />
-                            </div>
-                            <div className="p-6 text-center">
-                                <div className="flex justify-center -mt-12">
-                                     <div className="bg-primary text-primary-foreground p-3 rounded-full ring-4 ring-background">
-                                        <item.icon className="h-7 w-7" />
-                                    </div>
+                        <SpotlightCard className="h-full">
+                            <div className="relative">
+                                <div className="relative aspect-video overflow-hidden rounded-t-xl">
+                                    <Image 
+                                        src={item.imageUrl}
+                                        alt={item.title}
+                                        fill
+                                        className="object-cover"
+                                        data-ai-hint={item.imageHint}
+                                    />
                                 </div>
-                                <h3 className="mt-4 text-xl font-bold">{item.title}</h3>
-                                <p className="text-muted-foreground mt-2">{item.description}</p>
+                                <div className="p-6 text-center">
+                                    <div className="flex justify-center -mt-12 relative z-10">
+                                        <div className="bg-primary text-primary-foreground p-3 rounded-full ring-4 ring-background">
+                                            <item.icon className="h-7 w-7" />
+                                        </div>
+                                    </div>
+                                    <h3 className="mt-4 text-xl font-bold">{item.title}</h3>
+                                    <p className="text-muted-foreground mt-2">{item.description}</p>
+                                </div>
                             </div>
                         </SpotlightCard>
                     </motion.div>
