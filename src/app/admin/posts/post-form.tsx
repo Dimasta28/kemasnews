@@ -200,7 +200,7 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
                   <div className="flex items-center justify-between">
                      <div>
                         <CardTitle>Post Details</CardTitle>
-                        <CardDescription>Fill in the main content for your post.</CardDescription>
+                        <CardDescription className="text-muted-foreground">Fill in the main content for your post.</CardDescription>
                      </div>
                      <Button type="button" variant="secondary" onClick={handleGeneratePost} disabled={isGenerating}>
                         {isGenerating ? <Loader2 className="mr-2 animate-spin" /> : <Wand2 className="mr-2" />}
@@ -211,14 +211,14 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
                 <CardContent className="space-y-6">
                   <FormField control={form.control} name="title" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Title</FormLabel>
+                      <FormLabel className="text-foreground">Title</FormLabel>
                       <FormControl><Input placeholder="Your Awesome Post Title" {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="content" render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Content</FormLabel>
+                        <FormLabel className="text-foreground">Content</FormLabel>
                         <FormControl>
                             <RichTextEditor
                                 value={field.value}
@@ -240,7 +240,7 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
                 <CardContent className="space-y-6">
                   <FormField control={form.control} name="status" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Status</FormLabel>
+                      <FormLabel className="text-foreground">Status</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
@@ -258,7 +258,7 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
                   )} />
                    <FormField control={form.control} name="featuredImage" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Featured Image URL</FormLabel>
+                      <FormLabel className="text-foreground">Featured Image URL</FormLabel>
                       <FormControl><Input placeholder="https://placehold.co/600x400.png" {...field} /></FormControl>
                       {currentFeaturedImage && (
                           <div className="mt-2 relative aspect-video w-full rounded-md overflow-hidden border">
@@ -304,7 +304,7 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
                 <CardContent className="space-y-6">
                   <FormField control={form.control} name="categories" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Categories</FormLabel>
+                      <FormLabel className="text-foreground">Categories</FormLabel>
                       <FormControl>
                          <MultiSelectCombobox
                             options={categories}
@@ -321,7 +321,7 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
                   <FormField control={form.control} name="tags" render={({ field }) => (
                     <FormItem>
                         <div className="flex items-center justify-between">
-                            <FormLabel>Tags</FormLabel>
+                            <FormLabel className="text-foreground">Tags</FormLabel>
                             <Button type="button" size="sm" variant="ghost" onClick={handleGenerateTags} disabled={isTagsGenerating}>
                                 {isTagsGenerating ? <Loader2 className="mr-2 animate-spin" /> : <Sparkles className="mr-2" />}
                                 Generate
