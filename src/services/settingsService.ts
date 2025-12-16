@@ -51,12 +51,8 @@ export interface FrontendSettings {
 
 const SETTINGS_DOC_ID = 'frontend';
 
-// Get settings from Firestore
-export async function getFrontendSettings(): Promise<FrontendSettings> {
-  const settingsDocRef = doc(db, 'settings', SETTINGS_DOC_ID);
-  const docSnap = await getDoc(settingsDocRef);
-
-  const defaults: FrontendSettings = {
+// Default values for settings
+const defaults: FrontendSettings = {
     lightModeLogoUrl: 'https://www.kemaspkg.com/wp-content/uploads/2024/04/logo-baru-kemas-2023-01.png',
     darkModeLogoUrl: 'https://kemaspkg.com/media/wp-content/uploads/2024/04/logo-baru-kemas-2023-03.png',
     heroImageUrl: 'https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Home/Web%20Kemas%20GREEN%20JOURNEY%20DESIGN%202.jpg',
@@ -106,10 +102,24 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
     greenFootprintWasteImageUrl: 'https://picsum.photos/seed/waste-management/800/600',
     greenFootprintLimexImageUrl: 'https://picsum.photos/seed/limex/800/600',
     greenFootprintRecycledImageUrl: 'https://picsum.photos/seed/recycled/800/600',
-  };
+};
+
+// Get settings from Firestore
+export async function getFrontendSettings(): Promise<FrontendSettings> {
+  const settingsDocRef = doc(db, 'settings', SETTINGS_DOC_ID);
+  const docSnap = await getDoc(settingsDocRef);
 
   if (docSnap.exists()) {
-    return { ...defaults, ...docSnap.data() };
+    const data = docSnap.data();
+    // Manually construct the settings object to ensure it's a plain object
+    // and doesn't contain non-serializable data like Timestamps.
+    const plainSettings: Partial<FrontendSettings> = {};
+    for (const key in defaults) {
+        if (Object.prototype.hasOwnProperty.call(defaults, key)) {
+            plainSettings[key as keyof FrontendSettings] = data[key] ?? defaults[key as keyof FrontendSettings];
+        }
+    }
+    return plainSettings as FrontendSettings;
   } else {
     // If the document doesn't exist, create it with default values
     await setDoc(settingsDocRef, { ...defaults, createdAt: serverTimestamp() });
