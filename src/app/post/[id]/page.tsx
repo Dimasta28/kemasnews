@@ -2,10 +2,8 @@
 import { getPost, getPosts } from '@/services/postService';
 import { notFound } from 'next/navigation';
 import { getFrontendSettings } from '@/services/settingsService';
-import { getComments } from '@/services/commentService';
 import { PostClient } from './post-client';
 import type { Post } from '@/services/postService';
-import type { Comment } from '@/services/commentService';
 import type { FrontendSettings } from '@/services/settingsService';
 
 
@@ -13,7 +11,6 @@ export default async function PostPage({ params }: { params: { id: string } }) {
   let post: Post | null = null;
   let recentPosts: Post[] = [];
   let settings: FrontendSettings | null = null;
-  let comments: Comment[] = [];
   let error: string | null = null;
   
   // The `params.id` can be either the document ID or the slug
@@ -26,12 +23,8 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     ]);
     
     if (post) {
-      const [allPosts, postComments] = await Promise.all([
-        getPosts(),
-        getComments(post.id) // Use the actual post ID for comments
-      ]);
+      const allPosts = await getPosts();
       recentPosts = allPosts.filter(p => p.id !== post.id).slice(0, 5);
-      comments = postComments;
     } else {
         // If post is null even without an error, it's a genuine 404
         notFound();
@@ -45,7 +38,6 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     <PostClient 
       post={post}
       recentPosts={recentPosts}
-      comments={comments}
       settings={settings}
       error={error}
     />

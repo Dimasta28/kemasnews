@@ -4,17 +4,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ChevronLeft, MessageCircle, User, Calendar, Folder, Terminal, Pencil } from 'lucide-react';
+import { ChevronLeft, User, Calendar, Folder, Terminal, Pencil } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
 
 import type { Post } from '@/services/postService';
-import type { Comment } from '@/services/commentService';
-import type { BannerSettings, FrontendSettings } from '@/services/settingsService';
+import type { FrontendSettings } from '@/services/settingsService';
 
 import { Badge } from '@/components/ui/badge';
 import { Sidebar } from './sidebar';
-import { CommentsSection } from './comments-section';
 import { BackToTopButton } from '@/components/back-to-top-button';
 import { SiteHeaderWrapper } from '@/components/site-header-wrapper';
 import { SiteFooter } from '@/components/site-footer';
@@ -27,12 +25,11 @@ import { Button } from '@/components/ui/button';
 interface PostClientProps {
     post: Post | null;
     recentPosts: Post[];
-    comments: Comment[];
     settings: FrontendSettings | null;
     error?: string | null;
 }
 
-export function PostClient({ post, recentPosts, comments, settings, error }: PostClientProps) {
+export function PostClient({ post, recentPosts, settings, error }: PostClientProps) {
     const [sanitizedContent, setSanitizedContent] = useState('');
     const [currentUrl, setCurrentUrl] = useState('');
     const { user } = useAuth();
@@ -129,11 +126,6 @@ export function PostClient({ post, recentPosts, comments, settings, error }: Pos
                                 <Folder className="h-4 w-4" />
                                 <span className="capitalize">{post.categories?.join(', ')}</span>
                             </div>
-                            <span className="hidden sm:inline">&bull;</span>
-                            <div className="flex items-center gap-1.5">
-                                <MessageCircle className="h-4 w-4" />
-                                <span>{comments.length} Comments</span>
-                            </div>
                         </motion.div>
 
                         {post.featuredImage && (
@@ -195,10 +187,6 @@ export function PostClient({ post, recentPosts, comments, settings, error }: Pos
                             </div>
                         </motion.div>
 
-                        <CommentsSection 
-                            postId={post.id} 
-                            initialComments={comments}
-                        />
                     </article>
 
                     {/* Sidebar */}
