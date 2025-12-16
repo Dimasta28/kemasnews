@@ -107,7 +107,7 @@ export function GreenFootprintClient() {
         <div className="absolute inset-0 bg-grid-white/[0.05] [mask-image:linear-gradient(to_bottom,white_50%,transparent_100%)]"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div variants={staggerContainer} initial="hidden" animate="visible">
-            <motion.h1 variants={fadeIn} className="text-4xl md:text-6xl font-extrabold tracking-tight">Green Footprint</motion.h1>
+            <motion.h1 variants={fadeIn} className="text-4xl md:text-6xl font-extrabold tracking-tight">Our Green Footprint</motion.h1>
             <motion.p variants={fadeIn} className="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-primary-foreground/80">
                 From Material Innovation to Global ESG Leadership.
             </motion.p>
@@ -120,7 +120,7 @@ export function GreenFootprintClient() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
                  <p className="text-lg text-muted-foreground">
-                    PT Kemas Indah Maju (KEMASPKG) builds a measurable green footprint through disciplined governance, science-based material innovation, and long-term operational commitment. This page is designed as a professional reference for global partners and brands that treat sustainability as a standard, not a slogan.
+                    At PT Kemas Indah Maju, sustainability isn't just a goal—it's our operational blueprint. We build a measurable green footprint through disciplined governance, science-based material innovation, and a long-term commitment to operational excellence. This is more than a report; it's a reference for partners who see sustainability as a standard, not a slogan.
                 </p>
             </div>
         </div>
@@ -131,9 +131,9 @@ export function GreenFootprintClient() {
       <AnimatedSection className="bg-muted/50 py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary">Executive Summary</h2>
+            <h2 className="text-3xl font-bold text-primary">Our Commitment: The STEP-UP Principle</h2>
             <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">
-                As a health and beauty packaging manufacturer serving 100+ global brands, KEMASPKG integrates sustainability into its core strategy through the <strong className="text-foreground">STEP-UP principle.</strong>
+                As a packaging partner to over 100 global brands, we recognize the moral challenge of our industry. We answer it with the <strong className="text-foreground">STEP-UP principle,</strong> our core strategy for integrating real sustainability into everything we do.
             </p>
           </div>
           <div className="max-w-5xl mx-auto text-center p-8 border-2 border-dashed border-primary/20 rounded-lg bg-background">
@@ -144,21 +144,21 @@ export function GreenFootprintClient() {
                     <Wind className="h-8 w-8 text-primary mt-1 flex-shrink-0" />
                     <div>
                         <p className="font-bold text-foreground">46% Plastic Reduction</p>
-                        <p className="text-sm text-muted-foreground">via LIMEX material.</p>
+                        <p className="text-sm text-muted-foreground">achieved with our LIMEX material.</p>
                     </div>
                 </div>
                 <div className="flex items-start gap-3">
                     <Droplets className="h-8 w-8 text-primary mt-1 flex-shrink-0" />
                      <div>
                         <p className="font-bold text-foreground">36% CO₂ Emission Reduction</p>
-                        <p className="text-sm text-muted-foreground">in total product life cycle.</p>
+                        <p className="text-sm text-muted-foreground">across the total product life cycle.</p>
                     </div>
                 </div>
                  <div className="flex items-start gap-3">
                     <BatteryCharging className="h-8 w-8 text-primary mt-1 flex-shrink-0" />
                      <div>
-                        <p className="font-bold text-foreground">1/50 Upstream Carbon</p>
-                        <p className="text-sm text-muted-foreground">compared to petrochemical materials.</p>
+                        <p className="font-bold text-foreground">1/50th Upstream Carbon</p>
+                        <p className="text-sm text-muted-foreground">compared to traditional petrochemicals.</p>
                     </div>
                 </div>
              </div>
@@ -171,9 +171,9 @@ export function GreenFootprintClient() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                     <h2 className="text-3xl font-bold text-primary">Environmental Governance & Compliance</h2>
+                     <h2 className="text-3xl font-bold text-primary">Governance & Environmental Compliance</h2>
                     <p className="mt-4 text-muted-foreground">
-                        The <strong className="text-foreground">KEMAS Green Journey</strong> is a sustainability umbrella initiative targeting emission reductions, decreased petrochemical dependency, and elevated manufacturing standards. The focus is clear: tangible impact from upstream to downstream.
+                        The <strong className="text-foreground">KEMAS Green Journey</strong> is our unified initiative to reduce emissions, decrease petrochemical dependency, and elevate manufacturing standards. Our focus is clear: deliver tangible impact from upstream to downstream, verified by the world's most respected standards.
                     </p>
                      <div className="mt-8 space-y-4">
                         {certifications.map((cert, index) => (
@@ -192,11 +192,11 @@ export function GreenFootprintClient() {
                 <div className="space-y-6">
                     <Card className="bg-primary/5 border-primary/20 transition-all hover:shadow-lg hover:border-primary/30">
                         <CardHeader>
-                            <CardTitle className="flex items-center gap-3"><Users className="h-6 w-6 text-primary" /> Social & Governance Pillar</CardTitle>
+                            <CardTitle className="flex items-center gap-3"><Users className="h-6 w-6 text-primary" /> Our Social & Governance Pillar</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4 text-muted-foreground">
-                            <p><strong className="text-foreground">60% female workforce</strong> as a tangible commitment to gender empowerment.</p>
-                            <p>Programs like <strong className="text-foreground">KEMAS Care & Caring</strong> and <strong className="text-foreground">KEMAS Replant Tree</strong> for local social & environmental impact.</p>
+                            <p><strong className="text-foreground">Empowering our community</strong> is central to our mission. With a <strong className="text-foreground">60% female workforce,</strong> we are a tangible force for gender empowerment.</p>
+                            <p>Programs like <strong className="text-foreground">KEMAS Care & Caring</strong> and <strong className="text-foreground">KEMAS Replant Tree</strong> extend our commitment beyond our factory walls to the local community and environment.</p>
                         </CardContent>
                     </Card>
                 </div>
@@ -208,8 +208,8 @@ export function GreenFootprintClient() {
       <AnimatedSection className="bg-muted/50 py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-primary">Material Innovation</h2>
-                <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">Our sustainable solutions portfolio includes PCR & PIR, PLA (bio-polymers), mono-material design, and our flagship limestone-based innovation: LIMEX.</p>
+                <h2 className="text-3xl font-bold text-primary">Innovation in Every Granule</h2>
+                <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">Our sustainable solutions portfolio is where science meets responsibility. We offer PCR & PIR, PLA (bio-polymers), mono-material design, and our flagship limestone-based innovation: LIMEX.</p>
             </div>
 
             <Card className="overflow-hidden shadow-lg transition-shadow hover:shadow-xl max-w-5xl mx-auto">
@@ -226,8 +226,8 @@ export function GreenFootprintClient() {
                     </div>
                     <div className="p-6 md:p-8">
                         <Badge variant="secondary" className="mb-2 bg-primary/10 text-primary">Flagship Innovation</Badge>
-                        <h3 className="text-2xl font-bold">LIMEX: Tangible Impact Reduction</h3>
-                        <p className="mt-4 text-muted-foreground">LIMEX contains >50% limestone, replacing petroleum-based plastics. It is registered as an international sustainable technology and offers a *luxurious heavy feel* sought by premium brands.</p>
+                        <h3 className="text-2xl font-bold">LIMEX: Redefining Luxury Packaging</h3>
+                        <p className="mt-4 text-muted-foreground">Containing over 50% limestone, LIMEX directly replaces petroleum-based plastics while offering the luxurious, heavy feel sought by premium brands. It's not just a material; it's a statement.</p>
                          <div className="mt-6">
                             <h4 className="font-semibold mb-2">Key LIMEX Metrics</h4>
                             <Table>
@@ -258,9 +258,9 @@ export function GreenFootprintClient() {
        <AnimatedSection className="py-16 md:py-24">
          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-primary">Operational Efficiency & Non-Packaging Innovations</h2>
+                <h2 className="text-3xl font-bold text-primary">Smarter Factories, Greener Products</h2>
                  <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">
-                    Our modern facilities are designed for energy efficiency and emission minimization, in line with ISO 14001 and resource utilization principles.
+                    Our modern facilities are ecosystems of efficiency. Aligned with ISO 14001, we design every process to minimize energy use and eliminate waste.
                 </p>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
@@ -293,14 +293,14 @@ export function GreenFootprintClient() {
             </div>
              <Card className="max-w-3xl mx-auto mt-16">
                  <CardHeader>
-                    <CardTitle>Case Study: NBR Cosmetic Puff</CardTitle>
-                    <CardDescription>Our sustainability efforts extend beyond bottles—all the way to accessories.</CardDescription>
+                    <CardTitle>Case Study: The Sustainable NBR Cosmetic Puff</CardTitle>
+                    <CardDescription>Our commitment to sustainability extends beyond primary packaging to the accessories your customers use every day.</CardDescription>
                  </CardHeader>
                  <CardContent>
                      <ul className="space-y-3 text-muted-foreground list-disc pl-5">
-                        <li><strong className="text-foreground">Substitution of hazardous chemicals:</strong> Replacing risky components with safer alternatives.</li>
-                        <li><strong className="text-foreground">Process optimization & raw material efficiency:</strong> Reducing waste during production.</li>
-                        <li><strong className="text-foreground">More durable products:</strong> Creating longer-lasting products, thus reducing replacement frequency and consumer waste.</li>
+                        <li><strong className="text-foreground">Safer Materials:</strong> We proactively substitute hazardous chemicals with safer alternatives.</li>
+                        <li><strong className="text-foreground">Optimized Processes:</strong> We fine-tune production to improve material efficiency and drastically reduce waste.</li>
+                        <li><strong className="text-foreground">Enhanced Durability:</strong> We create longer-lasting products, reducing replacement frequency and post-consumer waste.</li>
                     </ul>
                  </CardContent>
              </Card>
@@ -310,9 +310,9 @@ export function GreenFootprintClient() {
        {/* Call to Action */}
        <AnimatedSection className="py-16 md:py-24 text-center bg-primary text-primary-foreground">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl md:text-3xl font-bold">Greener, still luxurious, and future-ready.</h2>
+            <h2 className="text-2xl md:text-3xl font-bold">Greener, Still Luxurious, and Future-Ready.</h2>
             <p className="mt-4 max-w-3xl mx-auto text-primary-foreground/80">
-              With measurable metrics, global certifications, and premium market adoption, we help global brands reduce their environmental impact without sacrificing quality or aesthetics.
+              With measurable metrics, global certifications, and premium market adoption, we empower brands to reduce their environmental impact without sacrificing quality or aesthetics.
             </p>
           </div>
        </AnimatedSection>
