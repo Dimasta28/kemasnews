@@ -32,9 +32,9 @@ export function GreenFootprintClient() {
         <div className="absolute inset-0 bg-grid-white/[0.05] [mask-image:linear-gradient(to_bottom,white_50%,transparent_100%)]"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div variants={staggerContainer} initial="hidden" animate="visible">
-            <motion.h1 variants={fadeIn} className="text-4xl md:text-6xl font-extrabold tracking-tight">Jejak Hijau KEMASPKG</motion.h1>
+            <motion.h1 variants={fadeIn} className="text-4xl md:text-6xl font-extrabold tracking-tight">KEMASPKG's Green Footprint</motion.h1>
             <motion.p variants={fadeIn} className="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-primary-foreground/80">
-              Inovasi Berkelanjutan dalam Kemasan Kosmetik
+              Sustainable Innovation in Cosmetic Packaging
             </motion.p>
           </motion.div>
         </div>
@@ -45,7 +45,7 @@ export function GreenFootprintClient() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
                  <p className="text-lg text-muted-foreground">
-                    Sebagai produsen kemasan kosmetik terintegrasi terkemuka di Indonesia sejak tahun 1980, PT Kemas Indah Maju (KEMASPKG) bertekad untuk memimpin industri menuju masa depan yang lebih bertanggung jawab. Kami menyelaraskan kekuatan inovasi dan teknologi kami dengan komitmen untuk "meningkatkan kesehatan ibu pertiwi" dan mengurangi emisi karbon, sejalan dengan protokol lingkungan global.
+                    As Indonesia's leading integrated cosmetic packaging manufacturer since 1980, PT Kemas Indah Maju (KEMASPKG) is determined to lead the industry toward a more responsible future. We align our strengths in innovation and technology with a commitment to "improving mother earth's health" and reducing carbon emissions, in line with global environmental protocols.
                 </p>
             </div>
         </div>
@@ -56,8 +56,8 @@ export function GreenFootprintClient() {
       <AnimatedSection className="bg-muted/50 py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary">I. Komitmen dan Tata Kelola Keberlanjutan</h2>
-            <p className="mt-2 text-muted-foreground">Fondasi keberlanjutan kami yang kuat, tervalidasi oleh pengakuan internasional.</p>
+            <h2 className="text-3xl font-bold text-primary">I. Sustainability Commitment & Governance</h2>
+            <p className="mt-2 text-muted-foreground">Our strong sustainability foundation, validated by international recognition.</p>
           </div>
           <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <motion.div variants={fadeIn}>
@@ -68,10 +68,10 @@ export function GreenFootprintClient() {
                         <ShieldCheck className="h-8 w-8 text-primary" />
                      </div>
                   </div>
-                  <CardTitle>Sertifikasi Sistem</CardTitle>
+                  <CardTitle>System Certifications</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">KEMASPKG memegang sertifikasi ISO 14001 untuk Sistem Manajemen Lingkungan dan SA 8000 untuk akuntabilitas sosial.</p>
+                  <p className="text-muted-foreground">KEMASPKG holds ISO 14001 certification for Environmental Management Systems and SA 8000 for social accountability.</p>
                 </CardContent>
               </Card>
             </motion.div>
@@ -86,7 +86,7 @@ export function GreenFootprintClient() {
                   <CardTitle>EcoVadis Silver Medal</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">Menempatkan kami di Top 15% perusahaan global, menunjukkan sistem manajemen keberlanjutan kami yang terstruktur.</p>
+                  <p className="text-muted-foreground">Placing us in the Top 15% of global companies, demonstrating our structured sustainability management system.</p>
                    <div className="text-xs mt-4 space-y-2">
                         <Link href="https://support.ecovadis.com/hc/en-us/articles/210460227-Understanding-EcoVadis-Medals-and-Badges" target="_blank" className="flex items-center justify-center text-muted-foreground hover:text-primary">
                             <ExternalLink className="mr-1 h-3 w-3" /> Understanding EcoVadis Medals
@@ -106,18 +106,18 @@ export function GreenFootprintClient() {
       <AnimatedSection className="py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary">II. Jejak Hijau Operasional Pabrik</h2>
-            <p className="mt-2 text-muted-foreground">Mengurangi dampak lingkungan langsung kami melalui teknologi dan praktik canggih.</p>
+            <h2 className="text-3xl font-bold text-primary">II. Plant Green Footprint</h2>
+            <p className="mt-2 text-muted-foreground">Reducing our direct environmental impact through advanced technology and practices.</p>
           </div>
            <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="grid md:grid-cols-3 gap-8">
                 <motion.div variants={fadeIn}>
                     <Card className="h-full">
                         <CardHeader>
                             <Waves className="h-8 w-8 text-primary mb-2" />
-                            <CardTitle>Daur Ulang Air 100%</CardTitle>
+                            <CardTitle>100% Water Recycling</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p className="text-muted-foreground">Fasilitas Anodisasi Logam kami menerapkan sistem closed-loop, berhasil mendaur ulang, menyaring, dan menggunakan kembali 100% air yang dibutuhkan.</p>
+                            <p className="text-muted-foreground">Our Metal Anodizing facility implements a closed-loop system, successfully recycling, filtering, and reusing 100% of the water required.</p>
                         </CardContent>
                     </Card>
                 </motion.div>
@@ -125,10 +125,10 @@ export function GreenFootprintClient() {
                     <Card className="h-full">
                         <CardHeader>
                             <Zap className="h-8 w-8 text-primary mb-2" />
-                            <CardTitle>Efisiensi Energi Cerdas</CardTitle>
+                            <CardTitle>Smart Energy Efficiency</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p className="text-muted-foreground">Barel berinsulasi dan sistem hidrolik yang dioptimalkan dapat memberikan penghematan energi hingga 20% dan mengurangi kebutuhan pendinginan hingga 50%.</p>
+                            <p className="text-muted-foreground">Insulated barrels and optimized hydraulic systems can yield energy savings of up to 20% and reduce cooling requirements by up to 50%.</p>
                         </CardContent>
                     </Card>
                 </motion.div>
@@ -136,10 +136,10 @@ export function GreenFootprintClient() {
                     <Card className="h-full">
                         <CardHeader>
                             <Recycle className="h-8 w-8 text-primary mb-2" />
-                            <CardTitle>Pengelolaan Limbah Sirkular</CardTitle>
+                            <CardTitle>Circular Waste Management</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p className="text-muted-foreground">Limbah lacquer di daur ulang menjadi bahan bakar oleh pihak ketiga, dan sampah organik diolah menjadi kompos untuk pupuk di area pabrik.</p>
+                            <p className="text-muted-foreground">Lacquer waste is recycled into fuel by third parties, and organic waste is composted for fertilizer in the factory area.</p>
                         </CardContent>
                     </Card>
                 </motion.div>
@@ -151,8 +151,8 @@ export function GreenFootprintClient() {
       <AnimatedSection className="bg-muted/50 py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-primary">III. Inovasi Kemasan Revolusioner</h2>
-                <p className="mt-2 text-muted-foreground">Menawarkan alternatif untuk mengurangi ketergantungan pada plastik berbasis minyak bumi.</p>
+                <h2 className="text-3xl font-bold text-primary">III. Packaging Green Footprint</h2>
+                <p className="mt-2 text-muted-foreground">Offering alternatives to reduce dependency on petroleum-based plastics.</p>
             </div>
 
             <div className="space-y-12">
@@ -160,9 +160,9 @@ export function GreenFootprintClient() {
                 <Card className="overflow-hidden">
                     <div className="grid md:grid-cols-2 items-center">
                         <div className="p-6 md:p-8">
-                            <Badge variant="secondary" className="mb-2">Pionir di Asia</Badge>
-                            <h3 className="text-2xl font-bold">1. LIMEX (Bahan Dasar Batu Kapur)</h3>
-                            <p className="mt-4 text-muted-foreground">Material inovatif yang terdiri dari 60% batu kapur, secara signifikan mengurangi penggunaan plastik dan emisi CO2. Kami meluncurkan produk kosmetik pertama di Asia yang kemasannya terbuat seluruhnya dari LIMEX.</p>
+                            <Badge variant="secondary" className="mb-2">Pioneer in Asia</Badge>
+                            <h3 className="text-2xl font-bold">1. LIMEX (Limestone-Based Material)</h3>
+                            <p className="mt-4 text-muted-foreground">An innovative material composed of 60% limestone, significantly reducing plastic use and CO2 emissions. We launched the first cosmetic product in Asia with packaging made entirely from LIMEX.</p>
                         </div>
                         <div className="relative h-64 md:h-full">
                             <Image src="https://picsum.photos/seed/limex/800/600" alt="LIMEX Material" fill className="object-cover" data-ai-hint="limestone cosmetic" />
@@ -177,11 +177,11 @@ export function GreenFootprintClient() {
                             <Image src="https://picsum.photos/seed/recycled/800/600" alt="Recycled Materials" fill className="object-cover" data-ai-hint="recycled plastic" />
                         </div>
                         <div className="p-6 md:p-8">
-                            <h3 className="text-2xl font-bold">2. Konten Daur Ulang dan Alternatif Bio-Based</h3>
+                            <h3 className="text-2xl font-bold">2. Recycled Content & Bio-Based Alternatives</h3>
                             <ul className="mt-4 space-y-3 text-muted-foreground">
-                                <li className="flex gap-3"><Package className="h-5 w-5 text-primary flex-shrink-0 mt-1" /><span><strong className="text-foreground">PIR & PCR:</strong> Mengembangkan kompatibilitas cetakan dengan hingga 50% PCR (Post-Consumer) dan menggunakan PIR (Post-Industrial) untuk komponen logam.</span></li>
-                                <li className="flex gap-3"><Leaf className="h-5 w-5 text-primary flex-shrink-0 mt-1" /><span><strong className="text-foreground">Desain Mono-Material:</strong> Mempermudah proses daur ulang dengan menggunakan satu jenis resin seperti PET Crystal One.</span></li>
-                                <li className="flex gap-3"><Recycle className="h-5 w-5 text-primary flex-shrink-0 mt-1" /><span><strong className="text-foreground">Material Bio-Based:</strong> Mencakup material yang dapat terurai seperti PBS dan Ecozen yang bebas BPA dan dapat didaur ulang.</span></li>
+                                <li className="flex gap-3"><Package className="h-5 w-5 text-primary flex-shrink-0 mt-1" /><span><strong className="text-foreground">PIR & PCR:</strong> Developing mold compatibility with up to 50% PCR (Post-Consumer Recycled) content and using PIR (Post-Industrial Recycled) for metal components.</span></li>
+                                <li className="flex gap-3"><Leaf className="h-5 w-5 text-primary flex-shrink-0 mt-1" /><span><strong className="text-foreground">Mono-Material Design:</strong> Facilitating recycling by using a single type of recycled resin (e.g., PET Crystal One).</span></li>
+                                <li className="flex gap-3"><Recycle className="h-5 w-5 text-primary flex-shrink-0 mt-1" /><span><strong className="text-foreground">Bio-Based Materials:</strong> Our portfolio includes bio-based alternatives like PBS (biodegradable and compostable) and Ecozen (bio-based, recyclable, and BPA-free).</span></li>
                             </ul>
                         </div>
                     </div>
@@ -193,9 +193,9 @@ export function GreenFootprintClient() {
        {/* Call to Action */}
        <AnimatedSection className="py-16 md:py-24 text-center bg-primary text-primary-foreground">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl md:text-3xl font-bold">KEMASPKG: Mitra Anda dalam Menciptakan Keindahan yang Bertanggung Jawab</h2>
+            <h2 className="text-2xl md:text-3xl font-bold">KEMASPKG: Your Partner in Creating Responsible Beauty</h2>
             <p className="mt-4 max-w-2xl mx-auto text-primary-foreground/80">
-              Mari bersama-sama membangun masa depan yang lebih hijau untuk industri kecantikan.
+              Let's build a greener future for the beauty industry together.
             </p>
           </div>
        </AnimatedSection>
