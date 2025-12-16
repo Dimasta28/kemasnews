@@ -308,7 +308,7 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
                       <FormControl>
                          <MultiSelectCombobox
                             options={categories}
-                            value={field.value}
+                            value={field.value || []}
                             onChange={field.onChange}
                             placeholder="Select categories..."
                             searchPlaceholder="Search categories..."
@@ -358,3 +358,5 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
     </Form>
   );
 }
+
+    
