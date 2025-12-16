@@ -169,37 +169,35 @@ export function GreenFootprintClient() {
       {/* Governance & Compliance */}
       <AnimatedSection className="py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                     <h2 className="text-3xl font-bold text-primary">Governance & Environmental Compliance</h2>
-                    <p className="mt-4 text-muted-foreground">
-                        The <strong className="text-foreground">KEMAS Green Journey</strong> is our unified initiative to reduce emissions, decrease petrochemical dependency, and elevate manufacturing standards. Our focus is clear: deliver tangible impact from upstream to downstream, verified by the world's most respected standards.
-                    </p>
-                     <div className="mt-8 space-y-4">
-                        {certifications.map((cert, index) => (
-                             <div key={index} className="flex items-start gap-4">
-                                <div className="p-2 bg-primary/10 rounded-full flex-shrink-0">
-                                    <cert.icon className="w-5 h-5 text-primary" />
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-foreground">{cert.name}</h4>
-                                    <p className="text-sm text-muted-foreground">{cert.description}</p>
-                                </div>
-                             </div>
-                        ))}
+            <div className="max-w-4xl mx-auto text-center">
+                 <h2 className="text-3xl font-bold text-primary">Governance & Environmental Compliance</h2>
+                <p className="mt-4 text-muted-foreground">
+                    The <strong className="text-foreground">KEMAS Green Journey</strong> is our unified initiative to reduce emissions, decrease petrochemical dependency, and elevate manufacturing standards. Our focus is clear: deliver tangible impact from upstream to downstream, verified by the world's most respected standards.
+                </p>
+            </div>
+            <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                {certifications.map((cert, index) => (
+                    <div key={index} className="flex items-start gap-4">
+                        <div className="p-2 bg-primary/10 rounded-full flex-shrink-0">
+                            <cert.icon className="w-5 h-5 text-primary" />
+                        </div>
+                        <div>
+                            <h4 className="font-semibold text-foreground">{cert.name}</h4>
+                            <p className="text-sm text-muted-foreground">{cert.description}</p>
+                        </div>
                     </div>
-                </div>
-                <div className="space-y-6">
-                    <Card className="bg-primary/5 border-primary/20 transition-all hover:shadow-lg hover:border-primary/30">
-                        <CardHeader>
-                            <CardTitle className="flex items-center gap-3"><Users className="h-6 w-6 text-primary" /> Our Social & Governance Pillar</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4 text-muted-foreground">
-                            <p><strong className="text-foreground">Empowering our community</strong> is central to our mission. With a <strong className="text-foreground">60% female workforce,</strong> we are a tangible force for gender empowerment.</p>
-                            <p>Programs like <strong className="text-foreground">KEMAS Care & Caring</strong> and <strong className="text-foreground">KEMAS Replant Tree</strong> extend our commitment beyond our factory walls to the local community and environment.</p>
-                        </CardContent>
-                    </Card>
-                </div>
+                ))}
+            </div>
+             <div className="mt-16 max-w-4xl mx-auto">
+                <Card className="bg-primary/5 border-primary/20 transition-all hover:shadow-lg hover:border-primary/30">
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-3"><Users className="h-6 w-6 text-primary" /> Our Social & Governance Pillar</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4 text-muted-foreground">
+                        <p><strong className="text-foreground">Empowering our community</strong> is central to our mission. With a <strong className="text-foreground">60% female workforce,</strong> we are a tangible force for gender empowerment.</p>
+                        <p>Programs like <strong className="text-foreground">KEMAS Care & Caring</strong> and <strong className="text-foreground">KEMAS Replant Tree</strong> extend our commitment beyond our factory walls to the local community and environment.</p>
+                    </CardContent>
+                </Card>
             </div>
         </div>
       </AnimatedSection>
@@ -320,5 +318,3 @@ export function GreenFootprintClient() {
     </main>
   );
 }
-
-    
