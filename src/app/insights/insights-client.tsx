@@ -64,7 +64,7 @@ export function InsightsClient({ posts }: InsightsClientProps) {
             >
               {posts.map((post) => (
                 <motion.div key={post.id} variants={postVariant}>
-                  <Link href={`/post/${post.id}`} className="group block">
+                  <Link href={`/post/${post.slug}`} className="group block">
                     <div className="relative aspect-video overflow-hidden rounded-lg shadow-md">
                       <Image
                         src={post.featuredImage}
@@ -100,3 +100,5 @@ export function InsightsClient({ posts }: InsightsClientProps) {
     </main>
   );
 }
+
+    

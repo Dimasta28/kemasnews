@@ -16,18 +16,21 @@ export default async function PostPage({ params }: { params: { id: string } }) {
   let comments: Comment[] = [];
   let error: string | null = null;
   
+  // The `params.id` can be either the document ID or the slug
+  const idOrSlug = params.id;
+  
   try {
     [post, settings] = await Promise.all([
-      getPost(params.id),
+      getPost(idOrSlug),
       getFrontendSettings(),
     ]);
     
     if (post) {
       const [allPosts, postComments] = await Promise.all([
         getPosts(),
-        getComments(params.id)
+        getComments(post.id) // Use the actual post ID for comments
       ]);
-      recentPosts = allPosts.filter(p => p.id !== params.id).slice(0, 5);
+      recentPosts = allPosts.filter(p => p.id !== post.id).slice(0, 5);
       comments = postComments;
     } else {
         // If post is null even without an error, it's a genuine 404
@@ -48,3 +51,5 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     />
   );
 }
+
+    

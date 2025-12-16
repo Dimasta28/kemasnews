@@ -2,7 +2,7 @@
 'use server';
 
 import { db } from '@/lib/firebase';
-import { collection, addDoc, getDocs, serverTimestamp, Timestamp, doc, getDoc, updateDoc, deleteDoc, query, orderBy } from "firebase/firestore"; 
+import { collection, addDoc, getDocs, serverTimestamp, Timestamp, doc, getDoc, updateDoc, deleteDoc, query, orderBy, where } from "firebase/firestore"; 
 
 // In a real application, this would be your database.
 // For now, we'll use a mock data array.
@@ -10,6 +10,7 @@ import { collection, addDoc, getDocs, serverTimestamp, Timestamp, doc, getDoc, u
 export interface Post {
   id: string;
   title: string;
+  slug: string;
   description: string;
   content: string;
   status: 'Published' | 'Draft' | 'Archived';
@@ -43,6 +44,7 @@ export async function getPosts(): Promise<Post[]> {
     return {
         id: doc.id,
         title: data.title || '',
+        slug: data.slug || doc.id,
         description: data.description || '',
         status: data.status || 'Draft',
         author: data.author || 'KEMAS', // Default author
@@ -57,38 +59,55 @@ export async function getPosts(): Promise<Post[]> {
   return postList;
 }
 
-export async function getPost(id: string): Promise<Post | null> {
-    const postDocRef = doc(db, 'posts', id);
-    const postSnap = await getDoc(postDocRef);
-  
-    if (postSnap.exists()) {
-      const data = postSnap.data();
-      const date = (data.createdAt as Timestamp)?.toDate() || new Date();
-      
-      // Backward compatibility for categories
-      let categories: string[] = [];
-      if (data.categories && Array.isArray(data.categories)) {
-        categories = data.categories;
-      } else if (data.category && typeof data.category === 'string') {
-        categories = [data.category];
-      }
-      
-      return {
-          id: postSnap.id,
-          title: data.title || '',
-          description: data.description || '',
-          content: data.content || '',
-          status: data.status || 'Draft',
-          categories: categories, // Use categories array
-          tags: data.tags || [],
-          featuredImage: data.featuredImage || 'https://placehold.co/300x300.png',
-          author: data.author || 'KEMAS',
-          date: date.toISOString(),
-      } as Post;
-    } else {
-      console.log("No such document!");
-      return null;
+export async function getPost(idOrSlug: string): Promise<Post | null> {
+    // First, try to get the document by its ID
+    const postDocRefById = doc(db, 'posts', idOrSlug);
+    const postSnapById = await getDoc(postDocRefById);
+
+    if (postSnapById.exists()) {
+        return processPostDoc(postSnapById);
     }
+
+    // If not found by ID, try to find it by slug
+    const postsCol = collection(db, 'posts');
+    const q = query(postsCol, where("slug", "==", idOrSlug));
+    const querySnapshot = await getDocs(q);
+    
+    if (!querySnapshot.empty) {
+        // Return the first document found with the matching slug
+        const postSnapBySlug = querySnapshot.docs[0];
+        return processPostDoc(postSnapBySlug);
+    }
+    
+    console.log("No such document found with ID or slug:", idOrSlug);
+    return null;
+}
+
+function processPostDoc(postSnap: any): Post {
+    const data = postSnap.data();
+    const date = (data.createdAt as Timestamp)?.toDate() || new Date();
+    
+    // Backward compatibility for categories
+    let categories: string[] = [];
+    if (data.categories && Array.isArray(data.categories)) {
+        categories = data.categories;
+    } else if (data.category && typeof data.category === 'string') {
+        categories = [data.category];
+    }
+    
+    return {
+        id: postSnap.id,
+        title: data.title || '',
+        slug: data.slug || postSnap.id,
+        description: data.description || '',
+        content: data.content || '',
+        status: data.status || 'Draft',
+        categories: categories, // Use categories array
+        tags: data.tags || [],
+        featuredImage: data.featuredImage || 'https://placehold.co/300x300.png',
+        author: data.author || 'KEMAS',
+        date: date.toISOString(),
+    } as Post;
 }
 
 
@@ -128,3 +147,5 @@ export async function deletePost(id: string): Promise<void> {
         throw new Error("Could not delete post");
     }
 }
+
+    

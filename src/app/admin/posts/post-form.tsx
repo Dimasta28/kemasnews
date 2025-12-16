@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -29,6 +29,7 @@ import { useToast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
   title: z.string().min(1, 'Title is required.'),
+  slug: z.string().min(1, 'Slug is required.'),
   description: z.string().optional(),
   content: z.string().min(1, 'Content is required.'),
   status: z.enum(['Draft', 'Published', 'Archived']),
@@ -44,6 +45,18 @@ interface PostFormProps {
   categories: Option[];
   allTags: string[];
 }
+
+// Function to generate a URL-friendly slug from a string
+function createSlug(name: string): string {
+    return name
+        .toLowerCase()
+        .replace(/&/g, 'and')
+        .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
+        .trim()
+        .replace(/\s+/g, '-') // Replace spaces with hyphens
+        .replace(/-+/g, '-'); // Replace multiple hyphens with a single one
+}
+
 
 export function PostForm({ post, categories, allTags }: PostFormProps) {
   const router = useRouter();
@@ -61,6 +74,7 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: post?.title || '',
+      slug: post?.slug || '',
       description: post?.description || '',
       content: post?.content || '',
       status: post?.status || 'Draft',
@@ -69,6 +83,16 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
       featuredImage: post?.featuredImage || '',
     },
   });
+
+  const titleValue = form.watch('title');
+
+  useEffect(() => {
+    // Only auto-generate slug if it's a new post and the slug is empty
+    if (!post && titleValue) {
+      const newSlug = createSlug(titleValue);
+      form.setValue('slug', newSlug, { shouldValidate: true, shouldDirty: true });
+    }
+  }, [titleValue, form, post]);
   
   const handleGeneratePost = async () => {
     const title = form.getValues('title');
@@ -149,13 +173,18 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
 
   const onSubmit: SubmitHandler<PostFormData> = async (data) => {
     setIsSaving(true);
+    const submissionData = {
+        ...data,
+        slug: createSlug(data.slug) // Ensure slug is clean before submission
+    };
+
     try {
       if (post) {
-        await updatePost(post.id, data);
+        await updatePost(post.id, submissionData);
         toast({ title: 'Success!', description: 'Post has been updated.' });
         router.push('/admin/posts');
       } else {
-        await createPost(data);
+        await createPost(submissionData);
         toast({ title: 'Success!', description: 'New post has been created.' });
         router.push('/admin/posts');
       }
@@ -213,6 +242,13 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
                     <FormItem>
                       <FormLabel className="text-foreground">Title</FormLabel>
                       <FormControl><Input placeholder="Your Awesome Post Title" {...field} /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+                   <FormField control={form.control} name="slug" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-foreground">Slug</FormLabel>
+                      <FormControl><Input placeholder="your-awesome-post-title" {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />

@@ -47,7 +47,7 @@ export function PostsTable({ posts }: PostsTableProps) {
                             <span className="sr-only">Image</span>
                         </TableHead>
                         <TableHead>Title</TableHead>
-                        <TableHead>Status</TableHead>
+                        <TableHead>Slug</TableHead>
                         <TableHead className="hidden md:table-cell">Categories</TableHead>
                         <TableHead className="hidden md:table-cell text-right">
                             Date
@@ -73,7 +73,7 @@ export function PostsTable({ posts }: PostsTableProps) {
                                 {post.title}
                             </TableCell>
                             <TableCell>
-                                <Badge variant={post.status === 'Published' ? 'secondary' : 'outline'}>{post.status}</Badge>
+                                <Badge variant={'outline'}>{post.slug}</Badge>
                             </TableCell>
                             <TableCell className="hidden md:table-cell capitalize">
                                {post.categories.join(', ')}
@@ -111,3 +111,5 @@ export function PostsTable({ posts }: PostsTableProps) {
         </>
     );
 }
+
+    
