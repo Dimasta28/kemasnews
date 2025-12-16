@@ -109,20 +109,24 @@ export async function getFrontendSettings(): Promise<FrontendSettings> {
     // By explicitly picking properties, we avoid passing non-serializable
     // data like Firestore Timestamps to client components.
     const settings: FrontendSettings = {
-        ...defaults,
-        ...data,
-        homepageBanner: {
-            ...defaults.homepageBanner,
-            ...(data.homepageBanner || {}),
-        },
-        sidebarBanner: {
-            ...defaults.sidebarBanner,
-            ...(data.sidebarBanner || {}),
-        },
-        footer: {
-            ...defaults.footer,
-            ...(data.footer || {}),
-        },
+        lightModeLogoUrl: data.lightModeLogoUrl || defaults.lightModeLogoUrl,
+        darkModeLogoUrl: data.darkModeLogoUrl || defaults.darkModeLogoUrl,
+        heroImageUrl: data.heroImageUrl || defaults.heroImageUrl,
+        homepageBanner: { ...defaults.homepageBanner, ...(data.homepageBanner || {}) },
+        sidebarBanner: { ...defaults.sidebarBanner, ...(data.sidebarBanner || {}) },
+        dropdownLinks: data.dropdownLinks || defaults.dropdownLinks,
+        privacyPolicy: data.privacyPolicy || defaults.privacyPolicy,
+        ogTitle: data.ogTitle || defaults.ogTitle,
+        ogDescription: data.ogDescription || defaults.ogDescription,
+        ogImageUrl: data.ogImageUrl || defaults.ogImageUrl,
+        heroPostIds: data.heroPostIds || defaults.heroPostIds,
+        footer: { ...defaults.footer, ...(data.footer || {}) },
+        solutionsProductCategoryImageUrl: data.solutionsProductCategoryImageUrl || defaults.solutionsProductCategoryImageUrl,
+        solutionsGreenInnovationImageUrl: data.solutionsGreenInnovationImageUrl || defaults.solutionsGreenInnovationImageUrl,
+        solutionsDecorationImageUrl: data.solutionsDecorationImageUrl || defaults.solutionsDecorationImageUrl,
+        greenFootprintWaterImageUrl: data.greenFootprintWaterImageUrl || defaults.greenFootprintWaterImageUrl,
+        greenFootprintEnergyImageUrl: data.greenFootprintEnergyImageUrl || defaults.greenFootprintEnergyImageUrl,
+        greenFootprintWasteImageUrl: data.greenFootprintWasteImageUrl || defaults.greenFootprintWasteImageUrl,
     };
     return settings;
   } else {
