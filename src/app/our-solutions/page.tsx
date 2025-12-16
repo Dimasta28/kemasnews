@@ -28,6 +28,8 @@ export async function generateMetadata(): Promise<Metadata> {
                     alt: title,
                 },
             ],
+            siteName: 'KEMASPKG',
+            locale: 'en_US',
         },
         twitter: {
             card: 'summary_large_image',

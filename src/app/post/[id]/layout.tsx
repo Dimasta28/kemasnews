@@ -41,6 +41,8 @@ export async function generateMetadata(
         }, 
         ...previousImages
       ],
+      siteName: 'KEMASPKG',
+      locale: 'en_US',
     },
   }
 }
