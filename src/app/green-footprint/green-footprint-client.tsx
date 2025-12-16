@@ -42,16 +42,22 @@ const plantFootprintItems = [
         icon: Waves,
         title: '100% Water Recycling',
         description: 'Our Metal Anodizing facility uses a closed-loop system, recycling and reusing 100% of its water.',
+        imageUrl: 'https://picsum.photos/seed/water-recycling/800/600',
+        imageHint: 'water treatment facility'
     },
     {
         icon: Zap,
         title: 'Smart Energy Efficiency',
         description: 'Insulated barrels and optimized hydraulics save up to 20% energy and reduce cooling needs by 50%.',
+        imageUrl: 'https://picsum.photos/seed/energy-efficiency/800/600',
+        imageHint: 'modern factory machine'
     },
     {
         icon: Recycle,
         title: 'Circular Waste Management',
         description: 'Lacquer waste is repurposed into fuel, and organic waste is composted for our factory grounds.',
+        imageUrl: 'https://picsum.photos/seed/waste-management/800/600',
+        imageHint: 'compost pile'
     }
 ];
 
@@ -129,13 +135,26 @@ export function GreenFootprintClient() {
            <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="grid md:grid-cols-3 gap-8">
                 {plantFootprintItems.map((item, index) => (
                     <motion.div key={index} variants={fadeIn}>
-                        <Card className="h-full hover:border-primary/50 transition-colors">
-                            <CardHeader>
-                                <item.icon className="h-8 w-8 text-primary mb-2" />
-                                <CardTitle>{item.title}</CardTitle>
+                        <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                             <CardHeader className="p-0">
+                                <div className="relative aspect-video">
+                                    <Image 
+                                        src={item.imageUrl}
+                                        alt={item.title}
+                                        fill
+                                        className="object-cover"
+                                        data-ai-hint={item.imageHint}
+                                    />
+                                </div>
                             </CardHeader>
-                            <CardContent>
-                                <p className="text-muted-foreground">{item.description}</p>
+                            <CardContent className="p-6 text-center">
+                                <div className="flex justify-center -mt-12">
+                                     <div className="bg-primary text-primary-foreground p-3 rounded-full ring-4 ring-background">
+                                        <item.icon className="h-7 w-7" />
+                                    </div>
+                                </div>
+                                <CardTitle className="mt-4 text-xl">{item.title}</CardTitle>
+                                <p className="text-muted-foreground mt-2">{item.description}</p>
                             </CardContent>
                         </Card>
                     </motion.div>
@@ -200,5 +219,3 @@ export function GreenFootprintClient() {
     </main>
   );
 }
-
-    
