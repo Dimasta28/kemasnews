@@ -26,27 +26,32 @@ const certifications = [
     {
         name: 'EcoVadis Silver Medal',
         focus: 'Corporate Sustainability Assessment',
-        significance: 'Places KEMASPKG in the Top 15% of all companies assessed globally across four sustainability themes: Environment, Labor & Human Rights, Ethics, and Sustainable Procurement.'
+        significance: 'Places KEMASPKG in the Top 15% of all companies assessed globally across four sustainability themes: Environment, Labor & Human Rights, Ethics, and Sustainable Procurement.',
+        icon: Award
     },
     {
         name: 'ISO 14001',
         focus: 'Environmental Management System (EMS)',
-        significance: 'Ensures we have a formal framework to manage environmental aspects, legal compliance, and continuous performance improvement.'
+        significance: 'Ensures we have a formal framework to manage environmental aspects, legal compliance, and continuous performance improvement.',
+        icon: Globe
     },
     {
         name: 'SA 8000',
         focus: 'Social Accountability',
-        significance: 'Affirms commitment to ethical standards and fair labor practices.'
+        significance: 'Affirms commitment to ethical standards and fair labor practices.',
+        icon: Users
     },
     {
         name: 'SMETA & SEDEX',
         focus: 'Ethical Trade Audit',
-        significance: 'Demonstrates compliance with ethical and social responsibility standards in the supply chain.'
+        significance: 'Demonstrates compliance with ethical and social responsibility standards in the supply chain.',
+        icon: CheckCircle
     },
     {
         name: 'ISO 9001 & ISO 22716',
         focus: 'Quality Management & Cosmetic GMP',
-        significance: 'Guarantees high product quality, which indirectly supports sustainability by reducing defects and production waste.'
+        significance: 'Guarantees high product quality, which indirectly supports sustainability by reducing defects and production waste.',
+        icon: CheckCircle
     }
 ];
 
@@ -62,7 +67,7 @@ export function WhoWeAreClient() {
                 Vision, Mission, & Certifications
             </motion.h1>
             <motion.p variants={fadeIn} className="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-primary-foreground/80">
-                The Pillars of the Kemas Green Journey
+                The Pillars of the Kemas Green Journey.
             </motion.p>
           </motion.div>
         </div>
@@ -123,30 +128,32 @@ export function WhoWeAreClient() {
                     Our commitments and management systems are validated by leading third parties, ensuring KEMASPKG operates in line with the highest international standards.
                 </p>
             </div>
-            <Card>
-                <CardContent className="p-0">
-                     <div className="overflow-x-auto">
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                <TableHead className="font-bold text-primary">Certification/Award</TableHead>
-                                <TableHead>Focus</TableHead>
-                                <TableHead>Significance</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {certifications.map((cert) => (
-                                <TableRow key={cert.name}>
-                                    <TableCell className="font-semibold">{cert.name}</TableCell>
-                                    <TableCell>{cert.focus}</TableCell>
-                                    <TableCell className="text-muted-foreground">{cert.significance}</TableCell>
-                                </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </div>
-                </CardContent>
-            </Card>
+            <motion.div 
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+                {certifications.map((cert, index) => (
+                    <motion.div key={index} variants={fadeIn}>
+                        <Card className="h-full flex flex-col">
+                            <CardHeader>
+                                <div className="flex items-start justify-between gap-4">
+                                    <CardTitle className="text-lg">{cert.name}</CardTitle>
+                                    <div className="p-2 bg-primary/10 rounded-full flex-shrink-0">
+                                        <cert.icon className="w-6 h-6 text-primary" />
+                                    </div>
+                                </div>
+                                <CardDescription>{cert.focus}</CardDescription>
+                            </CardHeader>
+                            <CardContent className="flex-grow">
+                                <p className="text-sm text-muted-foreground">{cert.significance}</p>
+                            </CardContent>
+                        </Card>
+                    </motion.div>
+                ))}
+            </motion.div>
         </div>
       </AnimatedSection>
     </main>
