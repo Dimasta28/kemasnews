@@ -3,6 +3,7 @@
 import { SiteHeaderWrapper } from '@/components/site-header-wrapper';
 import { SiteFooter } from '@/components/site-footer';
 import { getFrontendSettings } from '@/services/settingsService';
+import { getPosts, type Post } from '@/services/postService';
 import { type FrontendSettings } from '@/services/settingsService';
 import { HomeClient } from './home-client';
 import type { Metadata } from 'next';
@@ -43,6 +44,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
   const settings = await getFrontendSettings();
+  const allPosts = await getPosts();
+  const recentPosts = allPosts.filter(p => p.status === 'Published').slice(0, 3);
 
   if (!settings) {
     // You might want a loading state here
@@ -59,7 +62,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <SiteHeaderWrapper />
-      <HomeClient heroImageUrl={settings.heroImageUrl} />
+      <HomeClient heroImageUrl={settings.heroImageUrl} recentPosts={recentPosts} />
       <SiteFooter settings={settings} />
     </div>
   );

@@ -14,10 +14,13 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/use-auth';
 import { ImageEditDialog } from '@/components/image-edit-dialog';
+import type { Post } from '@/services/postService';
+import { RecentPostsSection } from './_components/recent-posts-section';
 
 
 interface HomeClientProps {
   heroImageUrl: string;
+  recentPosts: Post[];
 }
 
 // Static data as a fallback since the service is removed
@@ -49,7 +52,7 @@ const featureSections = [
     }
 ];
 
-export function HomeClient({ heroImageUrl }: HomeClientProps) {
+export function HomeClient({ heroImageUrl, recentPosts }: HomeClientProps) {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 800], [0, 150]);
   const [isMounted, setIsMounted] = useState(false);
@@ -219,6 +222,8 @@ export function HomeClient({ heroImageUrl }: HomeClientProps) {
             </div>
         </AnimatedSection>
         
+        <RecentPostsSection posts={recentPosts} />
+
         <div id="join-journey">
             {isMounted && <GreenJourneyForm />}
         </div>
