@@ -1,9 +1,10 @@
+
 'use client';
 
+import React, { useEffect, useState } from 'react';
 import { getFrontendSettings } from '@/services/settingsService';
 import { getPosts } from '@/services/postService';
 import { SiteHeader } from './site-header';
-import { useEffect, useState } from 'react';
 import type { FrontendSettings } from '@/services/settingsService';
 import type { Post } from '@/services/postService';
 
