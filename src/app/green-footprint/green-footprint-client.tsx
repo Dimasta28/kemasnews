@@ -4,7 +4,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Award, Factory, Leaf, Recycle, ShieldCheck, Waves, Zap, Package, ExternalLink, Globe, Users, CheckCircle, Target, Pencil } from 'lucide-react';
+import { Award, Factory, Leaf, Recycle, ShieldCheck, Waves, Zap, Package, ExternalLink, Globe, Users, CheckCircle, Target, Pencil, Wind, Droplets, BatteryCharging } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { AnimatedSection } from '@/components/animated-section';
@@ -13,6 +13,8 @@ import { useAuth } from '@/hooks/use-auth';
 import { ImageEditDialog } from '@/components/image-edit-dialog';
 import { getFrontendSettings, type FrontendSettings } from '@/services/settingsService';
 import { useEffect, useState } from 'react';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -29,18 +31,35 @@ const staggerContainer = {
   },
 };
 
-const governanceItems = [
+const certifications = [
     {
-        icon: ShieldCheck,
-        title: 'System Certifications',
-        description: 'KEMASPKG holds ISO 14001 for Environmental Management and SA 8000 for social accountability.',
+        name: 'ISO 14001',
+        description: 'Sistem Manajemen Lingkungan menyeluruh di seluruh proses produksi.',
+        icon: Globe
     },
     {
-        icon: Award,
-        title: 'EcoVadis Silver Medal',
-        description: 'Placing us in the Top 15% of global companies, validating our structured sustainability approach.',
+        name: 'ISCC',
+        description: 'Validasi sumber daya berkelanjutan & rendah karbon.',
+        icon: CheckCircle
+    },
+    {
+        name: 'ISO 9001, ISO 22716, C-GMP',
+        description: 'Kualitas & GMP kosmetik kelas global.',
+        icon: Award
+    },
+    {
+        name: 'SA8000 & Sedex',
+        description: 'Etika kerja, keselamatan, dan transparansi rantai pasok.',
+        icon: Users
     }
 ];
+
+const limexMetrics = [
+    { indicator: "Pengurangan plastik", impact: "Hingga 46%" },
+    { indicator: "Penurunan CO₂ (total LCA)", impact: "36%" },
+    { indicator: "Emisi karbon hulu", impact: "1/50 dibanding petrokimia" },
+]
+
 
 export function GreenFootprintClient() {
   const { user } = useAuth();
@@ -89,9 +108,9 @@ export function GreenFootprintClient() {
         <div className="absolute inset-0 bg-grid-white/[0.05] [mask-image:linear-gradient(to_bottom,white_50%,transparent_100%)]"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div variants={staggerContainer} initial="hidden" animate="visible">
-            <motion.h1 variants={fadeIn} className="text-4xl md:text-6xl font-extrabold tracking-tight">KEMASPKG's Green Footprint</motion.h1>
+            <motion.h1 variants={fadeIn} className="text-4xl md:text-6xl font-extrabold tracking-tight">Green Footprint</motion.h1>
             <motion.p variants={fadeIn} className="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-primary-foreground/80">
-              Sustainable Innovation in Cosmetic Packaging
+                Dari Inovasi Material ke Kepemimpinan ESG Global
             </motion.p>
           </motion.div>
         </div>
@@ -102,153 +121,171 @@ export function GreenFootprintClient() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
                  <p className="text-lg text-muted-foreground">
-                    As Indonesia's leading integrated cosmetic packaging manufacturer since 1979, PT Kemas Indah Maju (KEMASPKG) is determined to lead the industry toward a more responsible future. We align our strengths in innovation and technology with a commitment to "improving mother earth's health" and reducing carbon emissions, in line with global environmental protocols.
+                    PT Kemas Indah Maju (KEMASPKG) membangun jejak lingkungan (green footprint) yang terukur melalui tata kelola yang disiplin, inovasi material berbasis sains, dan komitmen operasional jangka panjang. Halaman ini dirancang sebagai rujukan profesional bagi mitra dan merek global yang menempatkan keberlanjutan sebagai standar, bukan slogan.
                 </p>
             </div>
         </div>
       </AnimatedSection>
 
 
-      {/* Sustainability Commitment Section */}
+      {/* Executive Summary */}
       <AnimatedSection className="bg-muted/50 py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary">Sustainability Commitment & Governance</h2>
-            <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">Our strong sustainability foundation, validated by international recognition and a robust management system.</p>
+            <h2 className="text-3xl font-bold text-primary">Ringkasan Eksekutif</h2>
+            <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">
+                Sebagai produsen kemasan kesehatan dan kecantikan yang melayani 100+ merek global, KEMASPKG mengintegrasikan keberlanjutan ke dalam strategi inti melalui prinsip <strong className="text-foreground">STEP-UP.</strong>
+            </p>
           </div>
-          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {governanceItems.map((item, index) => (
-                 <motion.div key={index} variants={fadeIn}>
-                    <div className="relative h-full text-center p-6 rounded-lg bg-gradient-to-br from-background to-muted/50 shadow-lg hover:shadow-primary/20 transition-shadow duration-300">
-                        <div className="flex justify-center mb-4">
-                            <div className="relative w-16 h-16 rounded-full flex items-center justify-center bg-primary/10 before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-tr before:from-primary/20 before:to-transparent before:animate-pulse">
-                                <item.icon className="h-8 w-8 text-primary" />
-                            </div>
-                        </div>
-                        <h3 className="text-xl font-bold text-foreground">{item.title}</h3>
-                        <p className="mt-2 text-muted-foreground">{item.description}</p>
-                        {item.title === 'EcoVadis Silver Medal' && (
-                            <div className="text-xs mt-4">
-                                <Link href="https://support.ecovadis.com/hc/en-us/articles/210460227-Understanding-EcoVadis-Medals-and-Badges" target="_blank" className="flex items-center justify-center text-muted-foreground hover:text-primary">
-                                    <ExternalLink className="mr-1 h-3 w-3" /> Learn about EcoVadis Medals
-                                </Link>
-                            </div>
-                        )}
+          <div className="max-w-5xl mx-auto text-center p-8 border-2 border-dashed border-primary/20 rounded-lg bg-background">
+            <h3 className="font-bold text-primary text-2xl tracking-widest">S.T.E.P. - U.P.</h3>
+            <p className="text-muted-foreground mt-2">Technology Innovation, Social Responsibility, Positive Corporate Culture, Utilization of Resources, and Productivity Focus.</p>
+             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-8 text-left">
+                <div className="flex items-start gap-3">
+                    <Wind className="h-8 w-8 text-primary mt-1 flex-shrink-0" />
+                    <div>
+                        <p className="font-bold text-foreground">Pengurangan Plastik 46%</p>
+                        <p className="text-sm text-muted-foreground">melalui material LIMEX.</p>
                     </div>
-                </motion.div>
-            ))}
-          </motion.div>
+                </div>
+                <div className="flex items-start gap-3">
+                    <Droplets className="h-8 w-8 text-primary mt-1 flex-shrink-0" />
+                     <div>
+                        <p className="font-bold text-foreground">Penurunan Emisi CO₂ 36%</p>
+                        <p className="text-sm text-muted-foreground">pada total siklus hidup produk.</p>
+                    </div>
+                </div>
+                 <div className="flex items-start gap-3">
+                    <BatteryCharging className="h-8 w-8 text-primary mt-1 flex-shrink-0" />
+                     <div>
+                        <p className="font-bold text-foreground">Efisiensi Karbon Hulu 1/50</p>
+                        <p className="text-sm text-muted-foreground">dibanding material petrokimia.</p>
+                    </div>
+                </div>
+             </div>
+          </div>
         </div>
       </AnimatedSection>
       
-      {/* Operational Footprint Section */}
+      {/* Governance & Compliance */}
       <AnimatedSection className="py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary">Our Plant's Green Footprint</h2>
-            <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">Reducing our direct environmental impact through advanced technology and resource management.</p>
-          </div>
-           <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="grid md:grid-cols-3 gap-8">
-                {plantFootprintItems.map((item, index) => (
-                    <motion.div key={index} variants={fadeIn}>
-                        <SpotlightCard className="h-full">
-                            <div className="relative">
-                                <div className="relative aspect-video overflow-hidden rounded-t-xl">
-                                    {user && (
-                                        <ImageEditDialog
-                                            settingKey={item.settingKey as keyof FrontendSettings}
-                                            currentImageUrl={item.imageUrl}
-                                            triggerClassName="absolute top-2 right-2 z-20 h-8 w-8 rounded-full"
-                                        />
-                                    )}
-                                    <Image 
-                                        src={item.imageUrl}
-                                        alt={item.title}
-                                        fill
-                                        className="object-cover"
-                                        data-ai-hint={item.imageHint}
-                                    />
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                     <h2 className="text-3xl font-bold text-primary">Tata Kelola Lingkungan & Kepatuhan</h2>
+                    <p className="mt-4 text-muted-foreground">
+                        <strong className="text-foreground">KEMAS Green Journey</strong> adalah inisiatif payung keberlanjutan yang menargetkan pengurangan emisi, penurunan ketergantungan petrokimia, dan peningkatan standar manufaktur. Fokusnya jelas: dampak nyata dari hulu ke hilir.
+                    </p>
+                     <div className="mt-8 space-y-4">
+                        {certifications.map((cert, index) => (
+                             <div key={index} className="flex items-start gap-4">
+                                <div className="p-2 bg-primary/10 rounded-full flex-shrink-0">
+                                    <cert.icon className="w-5 h-5 text-primary" />
                                 </div>
-                                <div className="p-6 text-center">
-                                    <div className="flex justify-center -mt-12">
-                                        <div className="relative z-10 bg-primary text-primary-foreground p-3 rounded-full ring-4 ring-background">
-                                            <item.icon className="h-7 w-7" />
-                                        </div>
-                                    </div>
-                                    <h3 className="mt-4 text-xl font-bold">{item.title}</h3>
-                                    <p className="text-muted-foreground mt-2">{item.description}</p>
+                                <div>
+                                    <h4 className="font-semibold text-foreground">{cert.name}</h4>
+                                    <p className="text-sm text-muted-foreground">{cert.description}</p>
                                 </div>
-                            </div>
-                        </SpotlightCard>
-                    </motion.div>
-                ))}
-          </motion.div>
+                             </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="space-y-6">
+                    <Card className="bg-primary/5 border-primary/20">
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-3"><Users className="h-6 w-6 text-primary" /> Pilar Sosial & Tata Kelola</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4 text-muted-foreground">
+                            <p><strong className="text-foreground">60% tenaga kerja perempuan</strong> sebagai komitmen nyata pemberdayaan gender.</p>
+                            <p>Program <strong className="text-foreground">KEMAS Care & Caring</strong> dan <strong className="text-foreground">KEMAS Replant Tree</strong> untuk dampak sosial & lingkungan lokal.</p>
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
         </div>
       </AnimatedSection>
       
-      {/* Packaging Innovation Section */}
+      {/* Material Innovation */}
       <AnimatedSection className="bg-muted/50 py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-primary">Packaging's Green Footprint</h2>
-                <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">Offering innovative material alternatives to reduce dependency on petroleum-based plastics and support a circular economy.</p>
+                <h2 className="text-3xl font-bold text-primary">Inovasi Material</h2>
+                <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">Portofolio solusi berkelanjutan kami mencakup PCR & PIR, PLA (bio-polimer), desain mono-material, dan inovasi unggulan berbasis batu kapur: LIMEX.</p>
             </div>
 
-            <div className="space-y-12">
-                {/* LIMEX Section */}
-                <Card className="overflow-hidden shadow-sm transition-shadow hover:shadow-xl">
-                    <div className="grid md:grid-cols-2 items-center">
-                        <div className="p-6 md:p-8">
-                            <Badge variant="secondary" className="mb-2 bg-primary/10 text-primary">Pioneer in Asia</Badge>
-                            <h3 className="text-2xl font-bold">1. LIMEX (Limestone-Based Material)</h3>
-                            <p className="mt-4 text-muted-foreground">An innovative material composed of up to 80% limestone, significantly reducing plastic use and CO2 emissions. We launched the first cosmetic product in Asia with packaging made entirely from LIMEX.</p>
-                        </div>
-                        <div className="relative h-64 md:h-full">
-                             {user && (
-                                <ImageEditDialog
-                                    settingKey="greenFootprintLimexImageUrl"
-                                    currentImageUrl={settings.greenFootprintLimexImageUrl}
-                                    triggerClassName="absolute top-2 right-2 z-20 h-8 w-8 rounded-full"
-                                />
-                            )}
-                            <Image src={settings.greenFootprintLimexImageUrl} alt="LIMEX Material" fill className="object-cover" data-ai-hint="limestone cosmetic" />
-                        </div>
+            <Card className="overflow-hidden shadow-lg transition-shadow hover:shadow-xl max-w-5xl mx-auto">
+                <div className="grid md:grid-cols-2 items-center">
+                    <div className="relative h-80 md:h-full">
+                        {user && (
+                            <ImageEditDialog
+                                settingKey="greenFootprintLimexImageUrl"
+                                currentImageUrl={settings.greenFootprintLimexImageUrl}
+                                triggerClassName="absolute top-2 right-2 z-20 h-8 w-8 rounded-full"
+                            />
+                        )}
+                        <Image src={settings.greenFootprintLimexImageUrl} alt="LIMEX Material" fill className="object-cover" data-ai-hint="limestone cosmetic" />
                     </div>
-                </Card>
-
-                {/* Recycled & Bio-based Section */}
-                <Card className="overflow-hidden shadow-sm transition-shadow hover:shadow-xl">
-                     <div className="grid md:grid-cols-2 items-center">
-                         <div className="relative h-64 md:h-full md:order-last">
-                            {user && (
-                                <ImageEditDialog
-                                    settingKey="greenFootprintRecycledImageUrl"
-                                    currentImageUrl={settings.greenFootprintRecycledImageUrl}
-                                    triggerClassName="absolute top-2 right-2 z-20 h-8 w-8 rounded-full"
-                                />
-                            )}
-                            <Image src={settings.greenFootprintRecycledImageUrl} alt="Recycled Materials" fill className="object-cover" data-ai-hint="recycled plastic" />
-                        </div>
-                        <div className="p-6 md:p-8">
-                            <h3 className="text-2xl font-bold">2. Recycled Content & Bio-Based Alternatives</h3>
-                            <ul className="mt-4 space-y-4 text-muted-foreground">
-                                <li className="flex gap-4"><Package className="h-5 w-5 text-primary flex-shrink-0 mt-1" /><span><strong className="text-foreground">PIR & PCR:</strong> Developing mold compatibility with up to 50% PCR (Post-Consumer Recycled) content and using PIR (Post-Industrial Recycled) for metal components.</span></li>
-                                <li className="flex gap-4"><Recycle className="h-5 w-5 text-primary flex-shrink-0 mt-1" /><span><strong className="text-foreground">Mono-Material Design:</strong> Facilitating easier recycling by using a single type of recycled resin (e.g., PET Crystal One) in our designs.</span></li>
-                                <li className="flex gap-4"><Leaf className="h-5 w-5 text-primary flex-shrink-0 mt-1" /><span><strong className="text-foreground">Bio-Based Materials:</strong> Our portfolio includes bio-based alternatives like PBS (biodegradable and compostable) and Ecozen (bio-based, recyclable, and BPA-free).</span></li>
-                            </ul>
-                        </div>
+                    <div className="p-6 md:p-8">
+                        <Badge variant="secondary" className="mb-2 bg-primary/10 text-primary">Inovasi Unggulan</Badge>
+                        <h3 className="text-2xl font-bold">LIMEX: Bukti Nyata Pengurangan Dampak</h3>
+                        <p className="mt-4 text-muted-foreground">LIMEX mengandung &gt;50% batu kapur, menggantikan plastik berbasis minyak bumi. Terdaftar sebagai teknologi berkelanjutan internasional dan menawarkan *luxurious heavy feel* yang diminati merek premium.</p>
+                         <div className="mt-6">
+                            <h4 className="font-semibold mb-2">Metrik Utama LIMEX</h4>
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                    <TableHead>Indikator</TableHead>
+                                    <TableHead className="text-right">Dampak</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {limexMetrics.map(metric => (
+                                        <TableRow key={metric.indicator}>
+                                            <TableCell>{metric.indicator}</TableCell>
+                                            <TableCell className="text-right font-medium">{metric.impact}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                            <p className="text-xs text-muted-foreground mt-2">Keunggulan terbesar LIMEX ada di Lingkup 3 (hulu)—area paling krusial bagi merek global dalam target dekarbonisasi.</p>
+                         </div>
                     </div>
-                </Card>
-            </div>
+                </div>
+            </Card>
         </div>
       </AnimatedSection>
+
+      {/* Operational Efficiency */}
+       <AnimatedSection className="py-16 md:py-24">
+         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold text-primary">Efisiensi Operasional & Inovasi Non-Kemasan</h2>
+                 <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">
+                    Fasilitas modern kami dirancang untuk efisiensi energi dan minimisasi emisi, sejalan dengan ISO 14001 dan prinsip pemanfaatan sumber daya.
+                </p>
+            </div>
+             <Card className="max-w-3xl mx-auto">
+                 <CardHeader>
+                    <CardTitle>Studi Kasus: NBR Cosmetic Puff</CardTitle>
+                    <CardDescription>Keberlanjutan kami tidak berhenti di botol—hingga ke aksesori.</CardDescription>
+                 </CardHeader>
+                 <CardContent>
+                     <ul className="space-y-3 text-muted-foreground list-disc pl-5">
+                        <li><strong className="text-foreground">Substitusi bahan kimia berbahaya:</strong> Mengganti komponen berisiko dengan alternatif yang lebih aman.</li>
+                        <li><strong className="text-foreground">Optimasi proses & efisiensi bahan baku:</strong> Mengurangi limbah selama produksi.</li>
+                        <li><strong className="text-foreground">Produk lebih tahan lama:</strong> Menciptakan produk yang lebih awet, sehingga mengurangi frekuensi penggantian dan limbah konsumen.</li>
+                    </ul>
+                 </CardContent>
+             </Card>
+         </div>
+       </AnimatedSection>
       
        {/* Call to Action */}
        <AnimatedSection className="py-16 md:py-24 text-center bg-primary text-primary-foreground">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl md:text-3xl font-bold">KEMASPKG: Your Partner in Creating Responsible Beauty</h2>
-            <p className="mt-4 max-w-2xl mx-auto text-primary-foreground/80">
-              Let's build a greener future for the beauty industry together.
+            <h2 className="text-2xl md:text-3xl font-bold">Lebih hijau, tetap mewah, dan siap masa depan.</h2>
+            <p className="mt-4 max-w-3xl mx-auto text-primary-foreground/80">
+              Dengan metrik yang terukur, sertifikasi global, dan adopsi pasar premium, kami membantu merek global mengurangi dampak lingkungan tanpa mengorbankan kualitas maupun estetika.
             </p>
           </div>
        </AnimatedSection>
