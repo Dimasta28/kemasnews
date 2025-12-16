@@ -40,13 +40,14 @@ export function InsightsClient({ posts }: InsightsClientProps) {
   return (
     <main className="flex-grow">
       {/* Hero Section */}
-      <AnimatedSection className="bg-muted/50 py-16 md:py-24">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-primary">
+      <AnimatedSection className="relative bg-primary text-primary-foreground py-16 md:py-24 text-center overflow-hidden">
+        <div className="absolute inset-0 bg-grid-white/[0.05] [mask-image:linear-gradient(to_bottom,white_50%,transparent_100%)]"></div>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
             Insights
           </h1>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-            Blog, Berita, & Edukasi
+          <p className="mt-4 max-w-2xl mx-auto text-lg text-primary-foreground/80">
+            Blog, News, & Education
           </p>
         </div>
       </AnimatedSection>
