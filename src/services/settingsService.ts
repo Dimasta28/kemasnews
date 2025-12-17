@@ -101,7 +101,7 @@ const defaults: FrontendSettings = {
     greenFootprintEnergyImageUrl: 'https://picsum.photos/seed/energy-efficiency/800/600',
     greenFootprintWasteImageUrl: 'https://picsum.photos/seed/waste-management/800/600',
     greenFootprintLimexImageUrl: 'https://picsum.photos/seed/limex/800/600',
-    greenFootprintRecycledImageUrl: 'https://picsum.photos/seed/recycled/800/600',
+    greenFootprintRecycledImageUrl: 'https://picsum.photos/seed/recycled-puff/800/600',
 };
 
 // Get settings from Firestore
@@ -138,3 +138,5 @@ export async function updateFrontendSettings(settings: Partial<FrontendSettings>
     throw new Error("Could not update settings");
   }
 }
+
+    

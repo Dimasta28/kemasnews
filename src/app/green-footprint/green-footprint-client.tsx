@@ -59,6 +59,24 @@ const limexMetrics = [
     { indicator: "Upstream Carbon Emissions", impact: "1/50 vs. Petrochemicals" },
 ]
 
+const caseStudyPoints = [
+    {
+        title: 'Safer Materials',
+        description: 'We proactively substitute hazardous chemicals with safer alternatives, ensuring consumer safety.',
+        icon: ShieldCheck
+    },
+    {
+        title: 'Optimized Processes',
+        description: 'We fine-tune production to improve material efficiency and drastically reduce waste.',
+        icon: Factory
+    },
+    {
+        title: 'Enhanced Durability',
+        description: 'We create longer-lasting products, reducing replacement frequency and post-consumer waste.',
+        icon: Recycle
+    }
+];
+
 
 export function GreenFootprintClient() {
   const { user } = useAuth();
@@ -289,19 +307,39 @@ export function GreenFootprintClient() {
                     </SpotlightCard>
                 ))}
             </div>
-             <Card className="max-w-3xl mx-auto mt-16">
-                 <CardHeader>
-                    <CardTitle>Case Study: The Sustainable NBR Cosmetic Puff</CardTitle>
-                    <CardDescription>Our commitment to sustainability extends beyond primary packaging to the accessories your customers use every day.</CardDescription>
-                 </CardHeader>
-                 <CardContent>
-                     <ul className="space-y-3 text-muted-foreground list-disc pl-5">
-                        <li><strong className="text-foreground">Safer Materials:</strong> We proactively substitute hazardous chemicals with safer alternatives.</li>
-                        <li><strong className="text-foreground">Optimized Processes:</strong> We fine-tune production to improve material efficiency and drastically reduce waste.</li>
-                        <li><strong className="text-foreground">Enhanced Durability:</strong> We create longer-lasting products, reducing replacement frequency and post-consumer waste.</li>
-                    </ul>
-                 </CardContent>
-             </Card>
+             <div className="max-w-5xl mx-auto mt-24">
+                <Card className="overflow-hidden">
+                    <div className="grid md:grid-cols-2 items-center">
+                         <div className="p-6 md:p-8">
+                            <h3 className="text-2xl font-bold text-primary">Case Study: The Sustainable NBR Cosmetic Puff</h3>
+                            <p className="mt-2 text-muted-foreground">Our commitment extends beyond primary packaging to the accessories your customers use every day.</p>
+                            <div className="mt-6 space-y-4">
+                                {caseStudyPoints.map((point) => (
+                                    <div key={point.title} className="flex items-start gap-4">
+                                        <div className="p-2 bg-primary/10 text-primary rounded-full">
+                                            <point.icon className="w-5 h-5"/>
+                                        </div>
+                                        <div>
+                                            <h4 className="font-semibold text-foreground">{point.title}</h4>
+                                            <p className="text-sm text-muted-foreground">{point.description}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="relative h-64 md:h-full min-h-[300px]">
+                            {user && (
+                                <ImageEditDialog
+                                    settingKey="greenFootprintRecycledImageUrl"
+                                    currentImageUrl={settings.greenFootprintRecycledImageUrl}
+                                    triggerClassName="absolute top-2 right-2 z-20 h-8 w-8 rounded-full"
+                                />
+                            )}
+                            <Image src={settings.greenFootprintRecycledImageUrl} alt="Cosmetic Puffs" fill className="object-cover" data-ai-hint="cosmetic puff" />
+                        </div>
+                    </div>
+                </Card>
+             </div>
          </div>
        </AnimatedSection>
       
@@ -318,3 +356,5 @@ export function GreenFootprintClient() {
     </main>
   );
 }
+
+    
