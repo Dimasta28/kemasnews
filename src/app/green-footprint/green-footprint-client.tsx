@@ -54,6 +54,16 @@ const caseStudyPoints = [
     }
 ];
 
+const slideInLeft = {
+    hidden: { opacity: 0, x: -30 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeOut" } }
+};
+
+const slideInRight = {
+    hidden: { opacity: 0, x: 30 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeOut" } }
+};
+
 
 export function GreenFootprintClient() {
   const { user } = useAuth();
@@ -206,18 +216,25 @@ export function GreenFootprintClient() {
       </AnimatedSection>
 
       {/* Operational Efficiency */}
-       <AnimatedSection className="py-16 md:py-24 bg-muted/50">
+       <AnimatedSection className="py-16 md:py-24 bg-muted/50 overflow-hidden">
          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
+            <div className="text-center mb-16">
                 <h2 className="text-3xl font-bold text-primary">Smarter Factories, Greener Products</h2>
-                 <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">
-                    Our modern facilities are ecosystems of efficiency. Aligned with ISO 14001, we design every process to minimize energy use and eliminate waste.
+                 <p className="mt-2 text-muted-foreground max-w-3xl mx-auto">
+                    Our modern facilities are ecosystems of efficiency. Aligned with ISO 14001, we design every process to minimize energy use and eliminate waste, turning our operational footprint into a competitive advantage.
                 </p>
             </div>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="space-y-20">
                 {plantFootprintItems.map((item, index) => (
-                    <SpotlightCard key={index} className="overflow-hidden">
-                        <div className="relative aspect-video">
+                    <motion.div 
+                        key={item.title} 
+                        className="grid md:grid-cols-2 gap-8 md:gap-12 items-center"
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.3 }}
+                        variants={index % 2 === 0 ? slideInLeft : slideInRight}
+                    >
+                        <div className={`relative aspect-video rounded-lg overflow-hidden shadow-lg ${index % 2 === 1 ? 'md:order-last' : ''}`}>
                             {user && (
                                 <ImageEditDialog
                                     settingKey={item.settingKey}
@@ -227,19 +244,16 @@ export function GreenFootprintClient() {
                             )}
                             <Image src={item.imageUrl} alt={item.title} fill className="object-cover" data-ai-hint={item.imageHint}/>
                         </div>
-                         <div className="p-6">
-                            <div className="relative">
-                               <div className="relative z-10 flex items-center justify-center -mt-12">
-                                 <div className="bg-primary text-primary-foreground rounded-full p-3 border-4 border-background">
-                                     <item.icon className="w-7 h-7" />
-                                 </div>
-                               </div>
-                            </div>
-                           
-                            <h3 className="text-lg font-bold text-center mt-4">{item.title}</h3>
-                            <p className="mt-2 text-sm text-muted-foreground text-center">{item.description}</p>
+                        <div className="space-y-4">
+                           <div className="inline-flex items-center gap-3">
+                                <div className="p-3 bg-primary text-primary-foreground rounded-full">
+                                    <item.icon className="w-6 h-6" />
+                                </div>
+                                <h3 className="text-2xl font-bold text-foreground">{item.title}</h3>
+                           </div>
+                            <p className="text-muted-foreground text-lg">{item.description}</p>
                         </div>
-                    </SpotlightCard>
+                    </motion.div>
                 ))}
             </div>
          </div>
