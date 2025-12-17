@@ -1,3 +1,4 @@
+
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -37,7 +38,7 @@ const featureSections = [
     {
         title: "PRECISION & ENERGY EFFICIENCY",
         description: "At KEMAS, we use high-precision molding machines to maximize productivity and minimize waste. Our facility features insulated barrels and smart automated systems that prevent heat loss and power down idle machinery. Combined with advanced Arburg technology and rigorous maintenance, this reduces our energy consumption by up to 50%.",
-        href: "/green-footprint"
+        href: "https://kemasid.vercel.app/technology/molding-technology"
     },
     {
         title: "SMART WASTE MANAGEMENT",
