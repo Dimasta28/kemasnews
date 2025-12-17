@@ -34,23 +34,12 @@ const limexMetrics = [
     { indicator: "Upstream Carbon Emissions", impact: "1/50 vs. Petrochemicals" },
 ]
 
-const caseStudyPoints = [
-    {
-        title: 'Safer Materials',
-        description: 'We proactively substitute hazardous chemicals with safer alternatives, ensuring consumer safety.',
-        icon: ShieldCheck
-    },
-    {
-        title: 'Optimized Processes',
-        description: 'We fine-tune production to improve material efficiency and drastically reduce waste.',
-        icon: Factory
-    },
-    {
-        title: 'Enhanced Durability',
-        description: 'We create longer-lasting products, reducing replacement frequency and post-consumer waste.',
-        icon: Recycle
-    }
+const caseStudyMetrics = [
+    { indicator: 'Safer Materials', impact: 'Proactively substitute hazardous chemicals with safer alternatives.' },
+    { indicator: 'Optimized Processes', impact: 'Fine-tune production to improve material efficiency and drastically reduce waste.' },
+    { indicator: 'Enhanced Durability', impact: 'Create longer-lasting products, reducing post-consumer waste.' },
 ];
+
 
 const slideInLeft = {
     hidden: { opacity: 0, x: -30 },
@@ -137,9 +126,9 @@ export function GreenFootprintClient() {
                 <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">Our quest for a better future begins with the very materials we use. We go beyond compliance, pioneering solutions that redefine what's possible in sustainable packaging.</p>
             </div>
 
-            <Card className="overflow-hidden shadow-lg transition-shadow hover:shadow-xl max-w-5xl mx-auto">
-                <div className="grid md:grid-cols-2 items-center">
-                    <div className="relative h-80 md:h-full">
+            <div className="grid lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
+                <Card className="overflow-hidden shadow-lg transition-shadow hover:shadow-xl flex flex-col">
+                    <div className="relative h-64 md:h-80 w-full">
                         {user && (
                             <ImageEditDialog
                                 settingKey="greenFootprintLimexImageUrl"
@@ -149,7 +138,7 @@ export function GreenFootprintClient() {
                         )}
                         <Image src={settings.greenFootprintLimexImageUrl} alt="LIMEX Material" fill className="object-cover" data-ai-hint="limestone cosmetic" />
                     </div>
-                    <div className="p-6 md:p-8">
+                    <div className="p-6 md:p-8 flex-grow">
                         <Badge variant="secondary" className="mb-2 bg-primary/10 text-primary">Flagship Innovation</Badge>
                         <h3 className="text-2xl font-bold">LIMEX: Earth's Oldest Material, Reimagined</h3>
                         <p className="mt-4 text-muted-foreground">We looked to the earth itself for a solution. By combining limestone with a minimal binding agent, we created LIMEX—a revolutionary material that drastically reduces petroleum use while delivering the weight and cool touch of true luxury.</p>
@@ -174,42 +163,44 @@ export function GreenFootprintClient() {
                             <p className="text-xs text-muted-foreground mt-2">Its greatest power lies in reducing Scope 3 (upstream) emissions—the most challenging piece of the decarbonization puzzle for global brands.</p>
                          </div>
                     </div>
-                </div>
-            </Card>
+                </Card>
 
-             <div className="max-w-5xl mx-auto mt-16 md:mt-24">
-                <Card className="overflow-hidden">
-                    <div className="grid md:grid-cols-2 items-center">
-                         <div className="p-6 md:p-8">
-                            <h3 className="text-2xl font-bold text-primary">The Everyday Accessory, Re-engineered</h3>
-                            <p className="mt-2 text-muted-foreground">Our journey doesn't stop at primary packaging. We applied the same rigor to the NBR cosmetic puff, an item used by millions daily, to prove that even small accessories can make a big impact.</p>
-                            <div className="mt-6 space-y-4">
-                                {caseStudyPoints.map((point) => (
-                                    <div key={point.title} className="flex items-start gap-4">
-                                        <div className="p-2 bg-primary/10 text-primary rounded-full">
-                                            <point.icon className="w-5 h-5"/>
-                                        </div>
-                                        <div>
-                                            <h4 className="font-semibold text-foreground">{point.title}</h4>
-                                            <p className="text-sm text-muted-foreground">{point.description}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="relative h-64 md:h-full min-h-[300px]">
-                            {user && (
-                                <ImageEditDialog
-                                    settingKey="greenFootprintRecycledImageUrl"
-                                    currentImageUrl={settings.greenFootprintRecycledImageUrl}
-                                    triggerClassName="absolute top-2 right-2 z-20 h-8 w-8 rounded-full"
-                                />
-                            )}
-                            <Image src={settings.greenFootprintRecycledImageUrl} alt="Cosmetic Puffs" fill className="object-cover" data-ai-hint="cosmetic puff" />
+                <Card className="overflow-hidden shadow-lg transition-shadow hover:shadow-xl flex flex-col">
+                     <div className="relative h-64 md:h-80 w-full">
+                        {user && (
+                            <ImageEditDialog
+                                settingKey="greenFootprintRecycledImageUrl"
+                                currentImageUrl={settings.greenFootprintRecycledImageUrl}
+                                triggerClassName="absolute top-2 right-2 z-20 h-8 w-8 rounded-full"
+                            />
+                        )}
+                        <Image src={settings.greenFootprintRecycledImageUrl} alt="Cosmetic Puffs" fill className="object-cover" data-ai-hint="cosmetic puff" />
+                    </div>
+                     <div className="p-6 md:p-8 flex-grow">
+                        <h3 className="text-2xl font-bold text-primary">The Everyday Accessory, Re-engineered</h3>
+                        <p className="mt-2 text-muted-foreground">Our journey doesn't stop at primary packaging. We applied the same rigor to the NBR cosmetic puff, an item used by millions daily, to prove that even small accessories can make a big impact.</p>
+                        <div className="mt-6">
+                            <h4 className="font-semibold mb-2">The NBR Puff Case Study</h4>
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead>Area of Impact</TableHead>
+                                        <TableHead>Our Action</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {caseStudyMetrics.map(metric => (
+                                        <TableRow key={metric.indicator}>
+                                            <TableCell>{metric.indicator}</TableCell>
+                                            <TableCell>{metric.impact}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
                         </div>
                     </div>
                 </Card>
-             </div>
+            </div>
         </div>
       </AnimatedSection>
 
@@ -270,5 +261,3 @@ export function GreenFootprintClient() {
     </main>
   );
 }
-
-    
