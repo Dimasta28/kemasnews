@@ -120,7 +120,7 @@ export function GreenFootprintClient() {
       </AnimatedSection>
       
       {/* Material Innovation */}
-      <AnimatedSection className="bg-background py-16 md:py-24">
+      <AnimatedSection className="bg-muted/50 py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold text-primary">Innovation in Every Granule</h2>
@@ -216,7 +216,7 @@ export function GreenFootprintClient() {
       </AnimatedSection>
 
       {/* Operational Efficiency */}
-       <AnimatedSection className="py-16 md:py-24 bg-muted/50 overflow-hidden">
+       <AnimatedSection className="py-16 md:py-24 bg-background overflow-hidden">
          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
                 <h2 className="text-3xl font-bold text-primary">Inside Our Smarter Factories</h2>
