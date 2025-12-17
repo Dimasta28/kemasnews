@@ -206,22 +206,33 @@ export function GreenFootprintClient() {
                     </div>
                 ))}
             </div>
-             <div className="mt-16 max-w-4xl mx-auto">
-                <Card className="bg-primary/5 border-primary/20 transition-all hover:shadow-lg hover:border-primary/30">
-                    <CardHeader>
-                        <CardTitle className="flex items-center gap-3"><Users className="h-6 w-6 text-primary" /> Our Social & Governance Pillar</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4 text-muted-foreground">
-                        <p><strong className="text-foreground">Empowering our community</strong> is central to our mission. With a <strong className="text-foreground">60% female workforce,</strong> we are a tangible force for gender empowerment.</p>
-                        <p>Programs like <strong className="text-foreground">KEMAS Care & Caring</strong> and <strong className="text-foreground">KEMAS Replant Tree</strong> extend our commitment beyond our factory walls to the local community and environment.</p>
-                    </CardContent>
-                </Card>
-            </div>
         </div>
       </AnimatedSection>
+
+      {/* Social & Governance Pillar */}
+        <AnimatedSection className="py-16 md:py-24 bg-muted/50">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid md:grid-cols-2 gap-12 items-center">
+                    <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg">
+                        <Image
+                            src="https://picsum.photos/seed/governance/800/600"
+                            alt="Diverse team working together"
+                            fill
+                            className="object-cover"
+                            data-ai-hint="diverse team meeting"
+                        />
+                    </div>
+                    <div>
+                        <h2 className="text-3xl font-bold text-primary flex items-center gap-3"><Users className="h-8 w-8"/>Our Social & Governance Pillar</h2>
+                        <p className="mt-4 text-muted-foreground"><strong className="text-foreground">Empowering our community</strong> is central to our mission. With a <strong className="text-foreground">60% female workforce,</strong> we are a tangible force for gender empowerment in our region.</p>
+                        <p className="mt-4 text-muted-foreground">Programs like <strong className="text-foreground">KEMAS Care & Caring</strong> and <strong className="text-foreground">KEMAS Replant Tree</strong> extend our commitment beyond our factory walls to the local community and environment, creating a positive ripple effect.</p>
+                    </div>
+                </div>
+            </div>
+        </AnimatedSection>
       
       {/* Material Innovation */}
-      <AnimatedSection className="bg-muted/50 py-16 md:py-24">
+      <AnimatedSection className="bg-background py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold text-primary">Innovation in Every Granule</h2>
@@ -271,7 +282,7 @@ export function GreenFootprintClient() {
       </AnimatedSection>
 
       {/* Operational Efficiency */}
-       <AnimatedSection className="py-16 md:py-24">
+       <AnimatedSection className="py-16 md:py-24 bg-muted/50">
          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold text-primary">Smarter Factories, Greener Products</h2>
@@ -356,5 +367,3 @@ export function GreenFootprintClient() {
     </main>
   );
 }
-
-    
