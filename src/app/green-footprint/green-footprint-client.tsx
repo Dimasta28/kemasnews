@@ -30,29 +30,6 @@ const staggerContainer = {
   },
 };
 
-const certifications = [
-    {
-        name: 'ISO 14001',
-        description: 'Comprehensive Environmental Management System across all production processes.',
-        icon: Globe
-    },
-    {
-        name: 'ISCC',
-        description: 'Validation of sustainable, low-carbon resources.',
-        icon: CheckCircle
-    },
-    {
-        name: 'ISO 9001, ISO 22716, C-GMP',
-        description: 'Global-standard quality & cosmetic GMP.',
-        icon: Award
-    },
-    {
-        name: 'SA8000 & Sedex',
-        description: 'Work ethics, safety, and supply chain transparency.',
-        icon: Users
-    }
-];
-
 const limexMetrics = [
     { indicator: "Plastic Reduction", impact: "Up to 46%" },
     { indicator: "CO₂ Reduction (Total LCA)", impact: "36%" },
@@ -143,53 +120,6 @@ export function GreenFootprintClient() {
             </div>
         </div>
       </AnimatedSection>
-
-      {/* Governance & Compliance */}
-      <AnimatedSection className="py-16 md:py-24 bg-muted/50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto text-center">
-                 <h2 className="text-3xl font-bold text-primary">Governance & Environmental Compliance</h2>
-                <p className="mt-4 text-muted-foreground">
-                    The <strong className="text-foreground">KEMAS Green Journey</strong> is our unified initiative to reduce emissions, decrease petrochemical dependency, and elevate manufacturing standards. Our focus is clear: deliver tangible impact from upstream to downstream, verified by the world's most respected standards.
-                </p>
-            </div>
-            <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                {certifications.map((cert, index) => (
-                    <div key={index} className="flex items-start gap-4">
-                        <div className="p-2 bg-primary/10 rounded-full flex-shrink-0">
-                            <cert.icon className="w-5 h-5 text-primary" />
-                        </div>
-                        <div>
-                            <h4 className="font-semibold text-foreground">{cert.name}</h4>
-                            <p className="text-sm text-muted-foreground">{cert.description}</p>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-      </AnimatedSection>
-
-      {/* Social & Governance Pillar */}
-        <AnimatedSection className="py-16 md:py-24">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid md:grid-cols-2 gap-12 items-center">
-                    <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg">
-                        <Image
-                            src="https://picsum.photos/seed/governance/800/600"
-                            alt="Diverse team working together"
-                            fill
-                            className="object-cover"
-                            data-ai-hint="diverse team meeting"
-                        />
-                    </div>
-                    <div>
-                        <h2 className="text-3xl font-bold text-primary flex items-center gap-3"><Users className="h-8 w-8"/>Our Social & Governance Pillar</h2>
-                        <p className="mt-4 text-muted-foreground"><strong className="text-foreground">Empowering our community</strong> is central to our mission. With a <strong className="text-foreground">60% female workforce,</strong> we are a tangible force for gender empowerment in our region.</p>
-                        <p className="mt-4 text-muted-foreground">Programs like <strong className="text-foreground">KEMAS Care & Caring</strong> and <strong className="text-foreground">KEMAS Replant Tree</strong> extend our commitment beyond our factory walls to the local community and environment, creating a positive ripple effect.</p>
-                    </div>
-                </div>
-            </div>
-        </AnimatedSection>
       
       {/* Material Innovation */}
       <AnimatedSection className="bg-background py-16 md:py-24">
@@ -238,6 +168,40 @@ export function GreenFootprintClient() {
                     </div>
                 </div>
             </Card>
+
+             <div className="max-w-5xl mx-auto mt-16 md:mt-24">
+                <Card className="overflow-hidden">
+                    <div className="grid md:grid-cols-2 items-center">
+                         <div className="p-6 md:p-8">
+                            <h3 className="text-2xl font-bold text-primary">Case Study: The Sustainable NBR Cosmetic Puff</h3>
+                            <p className="mt-2 text-muted-foreground">Our commitment extends beyond primary packaging to the accessories your customers use every day.</p>
+                            <div className="mt-6 space-y-4">
+                                {caseStudyPoints.map((point) => (
+                                    <div key={point.title} className="flex items-start gap-4">
+                                        <div className="p-2 bg-primary/10 text-primary rounded-full">
+                                            <point.icon className="w-5 h-5"/>
+                                        </div>
+                                        <div>
+                                            <h4 className="font-semibold text-foreground">{point.title}</h4>
+                                            <p className="text-sm text-muted-foreground">{point.description}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="relative h-64 md:h-full min-h-[300px]">
+                            {user && (
+                                <ImageEditDialog
+                                    settingKey="greenFootprintRecycledImageUrl"
+                                    currentImageUrl={settings.greenFootprintRecycledImageUrl}
+                                    triggerClassName="absolute top-2 right-2 z-20 h-8 w-8 rounded-full"
+                                />
+                            )}
+                            <Image src={settings.greenFootprintRecycledImageUrl} alt="Cosmetic Puffs" fill className="object-cover" data-ai-hint="cosmetic puff" />
+                        </div>
+                    </div>
+                </Card>
+             </div>
         </div>
       </AnimatedSection>
 
@@ -278,39 +242,6 @@ export function GreenFootprintClient() {
                     </SpotlightCard>
                 ))}
             </div>
-             <div className="max-w-5xl mx-auto mt-24">
-                <Card className="overflow-hidden">
-                    <div className="grid md:grid-cols-2 items-center">
-                         <div className="p-6 md:p-8">
-                            <h3 className="text-2xl font-bold text-primary">Case Study: The Sustainable NBR Cosmetic Puff</h3>
-                            <p className="mt-2 text-muted-foreground">Our commitment extends beyond primary packaging to the accessories your customers use every day.</p>
-                            <div className="mt-6 space-y-4">
-                                {caseStudyPoints.map((point) => (
-                                    <div key={point.title} className="flex items-start gap-4">
-                                        <div className="p-2 bg-primary/10 text-primary rounded-full">
-                                            <point.icon className="w-5 h-5"/>
-                                        </div>
-                                        <div>
-                                            <h4 className="font-semibold text-foreground">{point.title}</h4>
-                                            <p className="text-sm text-muted-foreground">{point.description}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="relative h-64 md:h-full min-h-[300px]">
-                            {user && (
-                                <ImageEditDialog
-                                    settingKey="greenFootprintRecycledImageUrl"
-                                    currentImageUrl={settings.greenFootprintRecycledImageUrl}
-                                    triggerClassName="absolute top-2 right-2 z-20 h-8 w-8 rounded-full"
-                                />
-                            )}
-                            <Image src={settings.greenFootprintRecycledImageUrl} alt="Cosmetic Puffs" fill className="object-cover" data-ai-hint="cosmetic puff" />
-                        </div>
-                    </div>
-                </Card>
-             </div>
          </div>
        </AnimatedSection>
       
