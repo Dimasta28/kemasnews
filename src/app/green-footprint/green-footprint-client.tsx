@@ -12,6 +12,7 @@ import { ImageEditDialog } from '@/components/image-edit-dialog';
 import { getFrontendSettings, type FrontendSettings } from '@/services/settingsService';
 import { useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { CardFooter } from '@/components/ui/card';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -138,10 +139,12 @@ export function GreenFootprintClient() {
                         )}
                         <Image src={settings.greenFootprintLimexImageUrl} alt="LIMEX Material" fill className="object-cover" data-ai-hint="limestone cosmetic" />
                     </div>
-                    <div className="p-6 md:p-8 flex-grow">
-                        <Badge variant="secondary" className="mb-2 bg-primary/10 text-primary">Flagship Innovation</Badge>
+                    <CardHeader className="flex-grow">
+                        <Badge variant="secondary" className="mb-2 bg-primary/10 text-primary w-fit">Flagship Innovation</Badge>
                         <h3 className="text-2xl font-bold text-primary">LIMEX: Earth's Oldest Material, Reimagined</h3>
                         <p className="mt-4 text-muted-foreground">We looked to the earth itself for a solution. By combining limestone with a minimal binding agent, we created LIMEX—a revolutionary material that drastically reduces petroleum use while delivering the weight and cool touch of true luxury.</p>
+                    </CardHeader>
+                    <CardContent className="flex-grow">
                          <div className="mt-6">
                             <h4 className="font-semibold mb-2">The LIMEX Difference</h4>
                             <Table>
@@ -160,9 +163,11 @@ export function GreenFootprintClient() {
                                     ))}
                                 </TableBody>
                             </Table>
-                            <p className="text-xs text-muted-foreground mt-2">Its greatest power lies in reducing Scope 3 (upstream) emissions—the most challenging piece of the decarbonization puzzle for global brands.</p>
                          </div>
-                    </div>
+                    </CardContent>
+                    <CardFooter>
+                      <p className="text-xs text-muted-foreground">Its greatest power lies in reducing Scope 3 (upstream) emissions—the most challenging piece of the decarbonization puzzle for global brands.</p>
+                    </CardFooter>
                 </Card>
 
                 <Card className="overflow-hidden shadow-lg transition-shadow hover:shadow-xl flex flex-col">
@@ -176,9 +181,12 @@ export function GreenFootprintClient() {
                         )}
                         <Image src={settings.greenFootprintRecycledImageUrl} alt="Cosmetic Puffs" fill className="object-cover" data-ai-hint="cosmetic puff" />
                     </div>
-                     <div className="p-6 md:p-8 flex-grow">
+                     <CardHeader className="flex-grow">
+                        <Badge variant="secondary" className="mb-2 bg-primary/10 text-primary w-fit">Case Study</Badge>
                         <h3 className="text-2xl font-bold text-primary">The Everyday Accessory, Re-engineered</h3>
                         <p className="mt-2 text-muted-foreground">Our journey doesn't stop at primary packaging. We applied the same rigor to the NBR cosmetic puff, an item used by millions daily, to prove that even small accessories can make a big impact.</p>
+                    </CardHeader>
+                    <CardContent className="flex-grow">
                         <div className="mt-6">
                             <h4 className="font-semibold mb-2">The NBR Puff Case Study</h4>
                             <Table>
@@ -198,7 +206,10 @@ export function GreenFootprintClient() {
                                 </TableBody>
                             </Table>
                         </div>
-                    </div>
+                    </CardContent>
+                    <CardFooter>
+                      <p className="text-xs text-muted-foreground">This case study demonstrates that sustainability can be applied to every component, no matter how small.</p>
+                    </CardFooter>
                 </Card>
             </div>
         </div>
