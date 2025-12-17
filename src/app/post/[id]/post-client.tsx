@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, User, Calendar, Folder, Terminal, Pencil } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
+import Head from 'next/head';
 
 import type { Post } from '@/services/postService';
 import type { FrontendSettings } from '@/services/settingsService';
@@ -44,6 +45,47 @@ export function PostClient({ post, recentPosts, settings, error }: PostClientPro
             setCurrentUrl(window.location.href);
         }
     }, [post?.content]);
+    
+    const generateStructuredData = () => {
+        if (!post || !settings) return null;
+        
+        const plainContent = post.content.replace(/<[^>]*>?/gm, '');
+
+        const structuredData = {
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            'mainEntityOfPage': {
+                '@type': 'WebPage',
+                '@id': currentUrl,
+            },
+            'headline': post.title,
+            'description': post.description,
+            'image': post.featuredImage,
+            'author': {
+                '@type': 'Person',
+                'name': post.author,
+            },
+            'publisher': {
+                '@type': 'Organization',
+                'name': 'PT Kemas Indah Maju',
+                'logo': {
+                    '@type': 'ImageObject',
+                    'url': settings.lightModeLogoUrl,
+                },
+            },
+            'datePublished': post.date,
+            'dateModified': post.date, // Assuming date is the last modified date
+            'articleBody': plainContent,
+        };
+
+        return (
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+            />
+        );
+    };
+
 
     if (error || !post || !settings) {
         return (
@@ -84,6 +126,9 @@ export function PostClient({ post, recentPosts, settings, error }: PostClientPro
 
     return (
         <div className="bg-background text-foreground">
+            <Head>
+                {generateStructuredData()}
+            </Head>
             <SiteHeaderWrapper />
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">

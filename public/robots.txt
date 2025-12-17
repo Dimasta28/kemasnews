@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kemas-green-jurney.web.app/sitemap.xml
