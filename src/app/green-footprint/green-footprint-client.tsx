@@ -53,13 +53,8 @@ const slideInRight = {
 };
 
 
-export function GreenFootprintClient() {
+export function GreenFootprintClient({ settings }: { settings: FrontendSettings }) {
   const { user } = useAuth();
-  const [settings, setSettings] = useState<FrontendSettings | null>(null);
-
-  useEffect(() => {
-    getFrontendSettings().then(setSettings);
-  }, []);
   
   if (!settings) {
     // You can return a loading skeleton here if desired

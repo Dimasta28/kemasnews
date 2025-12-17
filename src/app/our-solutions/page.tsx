@@ -7,12 +7,9 @@ import { OurSolutionsClient } from './our-solutions-client';
 import type { Metadata } from 'next';
 
 export async function generateMetadata(): Promise<Metadata> {
-    const settings = await getFrontendSettings();
     const title = 'Our Solutions | PT Kemas Indah Maju';
     const description = 'From products to solutions, our journey towards sustainability.';
-    
-    // Use the hero image from the Our Solutions page for its OG image
-    const imageUrl = settings.heroImageUrl || 'https://idicdhrghiqmqtocapwq.supabase.co/storage/v1/object/public/Kemas%20green%20jurney/Hero%20image/Black%20and%20White%20Modern%20Travel%20Agency%20Presentation.jpg';
+    const imageUrl = 'https://picsum.photos/seed/solutions/1200/630';
 
     return {
         title: title,
