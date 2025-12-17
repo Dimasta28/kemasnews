@@ -1,4 +1,3 @@
-
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -38,17 +37,17 @@ const featureSections = [
     {
         title: "PRECISION & ENERGY EFFICIENCY",
         description: "At KEMAS, we use high-precision molding machines to maximize productivity and minimize waste. Our facility features insulated barrels and smart automated systems that prevent heat loss and power down idle machinery. Combined with advanced Arburg technology and rigorous maintenance, this reduces our energy consumption by up to 50%.",
-        href: "#"
+        href: "/green-footprint"
     },
     {
         title: "SMART WASTE MANAGEMENT",
         description: "We are committed to a zero-waste philosophy. We recycle 100% of the water used in our anodization facility and capture chemical waste from spray lines to be repurposed as fuel. Additionally, all organic waste is composted and used as fertilizer for our factory grounds.",
-        href: "#"
+        href: "/green-footprint"
     },
     {
         title: "AUTOMATION & CARBON REDUCTION",
         description: "Our use of highly automated equipment improves efficiency and reduces human error (scrap). This technology also allows us to operate with a leaner workforce, which significantly lowers our carbon footprint—cutting an estimated 330 metric tons of CO2 per year simply by reducing daily commuting emissions.",
-        href: "#"
+        href: "/green-footprint"
     }
 ];
 
@@ -186,18 +185,22 @@ export function HomeClient({ heroImageUrl, recentPosts }: HomeClientProps) {
                                 whileInView="visible"
                                 viewport={{ once: true, amount: 0.5 }}
                                 variants={featureItemVariants}
+                                className="flex items-start gap-4 group"
                             >
-                                <Link href={section.href} className="flex items-start gap-4 group">
-                                    <span className="text-5xl font-extrabold text-primary leading-none">{index + 1}.</span>
-                                    <div className="flex-1">
-                                        <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-                                            {section.title}
-                                        </h3>
-                                        <p className="text-base text-muted-foreground">
-                                            {section.description}
-                                        </p>
-                                    </div>
-                                </Link>
+                                <span className="text-5xl font-extrabold text-primary leading-none">{index + 1}.</span>
+                                <div className="flex-1">
+                                    <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                                        {section.title}
+                                    </h3>
+                                    <p className="text-base text-muted-foreground">
+                                        {section.description}
+                                    </p>
+                                    <Button asChild variant="link" className="px-0 mt-2">
+                                        <Link href={section.href}>
+                                            Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                                        </Link>
+                                    </Button>
+                                </div>
                             </motion.div>
                         ))}
                     </div>
