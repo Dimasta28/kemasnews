@@ -21,7 +21,7 @@ const SpotlightCard = React.forwardRef<HTMLDivElement, SpotlightCardProps>(
           mouseY.set(e.clientY - top);
         }}
         className={cn(
-          'group relative w-full rounded-xl border border-border/20 bg-background shadow-lg transition-shadow duration-300 hover:shadow-2xl',
+          'group relative w-full rounded-xl border border-border/20 bg-background transition-shadow duration-300',
           className
         )}
         {...props}

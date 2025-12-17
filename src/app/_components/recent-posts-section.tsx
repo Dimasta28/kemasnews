@@ -64,7 +64,7 @@ export function RecentPostsSection({ posts }: RecentPostsSectionProps) {
               variants={postVariant}
               className="group flex flex-col"
             >
-              <Link href={`/post/${post.slug}`} className="flex flex-col h-full bg-card rounded-lg shadow-sm overflow-hidden transition-shadow hover:shadow-lg">
+              <Link href={`/post/${post.slug}`} className="flex flex-col h-full bg-card rounded-lg overflow-hidden transition-shadow">
                 <div className="relative aspect-video overflow-hidden">
                   <Image
                     src={post.featuredImage}

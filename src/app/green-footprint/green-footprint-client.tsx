@@ -128,7 +128,7 @@ export function GreenFootprintClient() {
             </div>
 
             <div className="grid lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
-                <Card className="overflow-hidden shadow-lg transition-shadow hover:shadow-xl flex flex-col">
+                <Card className="overflow-hidden flex flex-col">
                     <div className="relative h-64 md:h-80 w-full">
                         {user && (
                             <ImageEditDialog
@@ -170,7 +170,7 @@ export function GreenFootprintClient() {
                     </CardFooter>
                 </Card>
 
-                <Card className="overflow-hidden shadow-lg transition-shadow hover:shadow-xl flex flex-col">
+                <Card className="overflow-hidden flex flex-col">
                      <div className="relative h-64 md:h-80 w-full">
                         {user && (
                             <ImageEditDialog
@@ -234,7 +234,7 @@ export function GreenFootprintClient() {
                         viewport={{ once: true, amount: 0.3 }}
                         variants={index % 2 === 0 ? slideInLeft : slideInRight}
                     >
-                        <div className={`relative aspect-video rounded-lg overflow-hidden shadow-lg ${index % 2 === 1 ? 'md:order-last' : ''}`}>
+                        <div className={`relative aspect-video rounded-lg overflow-hidden ${index % 2 === 1 ? 'md:order-last' : ''}`}>
                             {user && (
                                 <ImageEditDialog
                                     settingKey={item.settingKey as keyof FrontendSettings}

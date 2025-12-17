@@ -394,5 +394,3 @@ export function PostForm({ post, categories, allTags }: PostFormProps) {
     </Form>
   );
 }
-
-    

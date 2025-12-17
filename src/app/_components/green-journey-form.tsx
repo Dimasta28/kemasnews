@@ -66,7 +66,7 @@ export function GreenJourneyForm() {
   return (
     <AnimatedSection className="py-16 md:py-24 bg-[#025729]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Card className="overflow-hidden shadow-2xl">
+        <Card className="overflow-hidden">
           <div className="grid md:grid-cols-2">
             <div className="p-8 md:p-12 bg-primary text-primary-foreground flex flex-col justify-center">
                 <h2 className="text-3xl font-bold">Join the Green Journey</h2>

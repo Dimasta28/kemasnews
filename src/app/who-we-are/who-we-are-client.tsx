@@ -146,7 +146,7 @@ export function WhoWeAreClient() {
                     </ul>
                 </div>
             </div>
-            <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg">
+            <div className="relative aspect-square rounded-lg overflow-hidden">
                  <img
                     src="https://picsum.photos/seed/vision/800/800"
                     alt="Abstract image representing vision"

@@ -204,7 +204,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
               <motion.div 
-                className="bg-background/80 backdrop-blur-sm p-6 rounded-lg text-left md:bg-transparent md:p-0 md:rounded-none md:shadow-none"
+                className="bg-background/80 backdrop-blur-sm p-6 rounded-lg text-left md:bg-transparent md:p-0 md:rounded-none"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.5 }}
@@ -241,7 +241,7 @@ export function OurSolutionsClient({ settings }: { settings: FrontendSettings })
         >
             <div className="grid md:grid-cols-2 gap-16 items-center">
                 <motion.div 
-                    className="bg-background p-6 rounded-lg text-left md:shadow-none"
+                    className="bg-background p-6 rounded-lg text-left"
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.5 }}
