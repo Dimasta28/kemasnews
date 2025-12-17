@@ -144,48 +144,8 @@ export function GreenFootprintClient() {
         </div>
       </AnimatedSection>
 
-
-      {/* Executive Summary */}
-      <AnimatedSection className="bg-muted/50 py-16 md:py-24">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary">Our Commitment: The STEP-UP Principle</h2>
-            <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">
-                As a packaging partner to over 100 global brands, we recognize the moral challenge of our industry. We answer it with the <strong className="text-foreground">STEP-UP principle,</strong> our core strategy for integrating real sustainability into everything we do.
-            </p>
-          </div>
-          <div className="max-w-5xl mx-auto text-center p-8 border-2 border-dashed border-primary/20 rounded-lg bg-background">
-            <h3 className="font-bold text-primary text-2xl tracking-widest">S.T.E.P. - U.P.</h3>
-            <p className="text-muted-foreground mt-2">Technology Innovation, Social Responsibility, Positive Corporate Culture, Utilization of Resources, and Productivity Focus.</p>
-             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-8 text-left">
-                <div className="flex items-start gap-3">
-                    <Wind className="h-8 w-8 text-primary mt-1 flex-shrink-0" />
-                    <div>
-                        <p className="font-bold text-foreground">46% Plastic Reduction</p>
-                        <p className="text-sm text-muted-foreground">achieved with our LIMEX material.</p>
-                    </div>
-                </div>
-                <div className="flex items-start gap-3">
-                    <Droplets className="h-8 w-8 text-primary mt-1 flex-shrink-0" />
-                     <div>
-                        <p className="font-bold text-foreground">36% CO₂ Emission Reduction</p>
-                        <p className="text-sm text-muted-foreground">across the total product life cycle.</p>
-                    </div>
-                </div>
-                 <div className="flex items-start gap-3">
-                    <BatteryCharging className="h-8 w-8 text-primary mt-1 flex-shrink-0" />
-                     <div>
-                        <p className="font-bold text-foreground">1/50th Upstream Carbon</p>
-                        <p className="text-sm text-muted-foreground">compared to traditional petrochemicals.</p>
-                    </div>
-                </div>
-             </div>
-          </div>
-        </div>
-      </AnimatedSection>
-      
       {/* Governance & Compliance */}
-      <AnimatedSection className="py-16 md:py-24">
+      <AnimatedSection className="py-16 md:py-24 bg-muted/50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
                  <h2 className="text-3xl font-bold text-primary">Governance & Environmental Compliance</h2>
@@ -210,7 +170,7 @@ export function GreenFootprintClient() {
       </AnimatedSection>
 
       {/* Social & Governance Pillar */}
-        <AnimatedSection className="py-16 md:py-24 bg-muted/50">
+        <AnimatedSection className="py-16 md:py-24">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg">
