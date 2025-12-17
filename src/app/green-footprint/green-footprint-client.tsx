@@ -140,7 +140,7 @@ export function GreenFootprintClient() {
                     </div>
                     <div className="p-6 md:p-8 flex-grow">
                         <Badge variant="secondary" className="mb-2 bg-primary/10 text-primary">Flagship Innovation</Badge>
-                        <h3 className="text-2xl font-bold">LIMEX: Earth's Oldest Material, Reimagined</h3>
+                        <h3 className="text-2xl font-bold text-primary">LIMEX: Earth's Oldest Material, Reimagined</h3>
                         <p className="mt-4 text-muted-foreground">We looked to the earth itself for a solution. By combining limestone with a minimal binding agent, we created LIMEX—a revolutionary material that drastically reduces petroleum use while delivering the weight and cool touch of true luxury.</p>
                          <div className="mt-6">
                             <h4 className="font-semibold mb-2">The LIMEX Difference</h4>
